@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 200" width="180" height="200">
+  <title>Technijian Icon - White</title>
+  <!-- Technijian Dot Grid Icon - All White (for dark backgrounds) -->
+  <defs>
+    <style>
+      .cell { rx: 7; ry: 7; fill: #FFFFFF; }
+    </style>
+  </defs>
+  <rect class="cell" x="2"   y="2"  width="38" height="38"/>
+  <rect class="cell" x="46"  y="2"  width="38" height="38"/>
+  <rect class="cell" x="90"  y="2"  width="38" height="38"/>
+  <rect class="cell" x="134" y="2"  width="38" height="38"/>
+  <rect class="cell" x="2"   y="46" width="38" height="38"/>
+  <rect class="cell" x="46"  y="46" width="38" height="38"/>
+  <rect class="cell" x="90"  y="46" width="38" height="38"/>
+  <rect class="cell" x="134" y="46" width="38" height="38"/>
+  <rect class="cell" x="2"   y="90" width="38" height="38"/>
+  <rect class="cell" x="46"  y="90" width="38" height="38"/>
+  <rect class="cell" x="90"  y="90" width="38" height="38"/>
+  <rect class="cell" x="134" y="90" width="38" height="38"/>
+  <rect class="cell" x="2"   y="134" width="38" height="38"/>
+  <rect class="cell" x="46"  y="134" width="38" height="38"/>
+  <rect class="cell" x="90"  y="134" width="38" height="38"/>
+  <rect class="cell" x="134" y="134" width="38" height="38"/>
+  <rect class="cell" x="2"   y="160" width="38" height="38"/>
+  <rect class="cell" x="46"  y="160" width="38" height="38"/>
+  <rect class="cell" x="90"  y="160" width="38" height="38"/>
+  <rect class="cell" x="134" y="160" width="38" height="38"/>
+</svg>

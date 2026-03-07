@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <title>Technijian Social Post - Statistic Template</title>
+  <!-- Technijian Social Post Template: Statistic Highlight -->
+  <rect width="1200" height="630" fill="#006DB6"/>
+  <!-- Subtle grid pattern -->
+  <g opacity="0.05">
+    <rect x="50" y="50" width="80" height="80" rx="8" fill="#FFFFFF"/>
+    <rect x="140" y="50" width="80" height="80" rx="8" fill="#FFFFFF"/>
+    <rect x="50" y="140" width="80" height="80" rx="8" fill="#FFFFFF"/>
+    <rect x="140" y="140" width="80" height="80" rx="8" fill="#FFFFFF"/>
+  </g>
+  <!-- Big stat number -->
+  <text x="600" y="280" font-family="Open Sans, sans-serif" font-size="140" fill="#FFFFFF" font-weight="700" text-anchor="middle">99.9%</text>
+  <!-- Stat label -->
+  <text x="600" y="340" font-family="Open Sans, sans-serif" font-size="28" fill="#FFFFFF" text-anchor="middle" opacity="0.85">Average Uptime Guarantee</text>
+  <!-- Divider -->
+  <rect x="540" y="370" width="120" height="4" fill="#F67D4B"/>
+  <!-- Supporting text -->
+  <text x="600" y="420" font-family="Open Sans, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" opacity="0.7">
+    Supporting context or explanation for the statistic.
+  </text>
+  <!-- Bottom bar -->
+  <rect x="0" y="540" width="1200" height="90" fill="#1A1A2E"/>
+  <text x="60" y="595" font-family="Open Sans, sans-serif" font-size="18" fill="#FFFFFF" font-weight="600" letter-spacing="1">
+    <tspan font-size="22">T</tspan><tspan font-size="16" letter-spacing="2">ECHNIJIAN</tspan>
+  </text>
+  <text x="1140" y="595" font-family="Open Sans, sans-serif" font-size="12" fill="#ADB5BD" text-anchor="end">technology as a solution</text>
+</svg>

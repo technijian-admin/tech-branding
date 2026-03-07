@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#F67D4B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <title>Cybersecurity</title>
+  <!-- Cybersecurity: Shield with lock -->
+  <!-- Shield outline -->
+  <path d="M24 4 L40 12 L40 24 C40 34 32 40 24 44 C16 40 8 34 8 24 L8 12 Z"/>
+  <!-- Lock body -->
+  <rect x="18" y="22" width="12" height="10" rx="2"/>
+  <!-- Lock shackle -->
+  <path d="M20 22 L20 18 C20 14.7 21.8 13 24 13 C26.2 13 28 14.7 28 18 L28 22"/>
+  <!-- Lock keyhole -->
+  <circle cx="24" cy="27" r="1.5"/>
+</svg>

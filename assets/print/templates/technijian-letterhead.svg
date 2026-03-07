@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2550 3300" width="2550" height="3300">
+  <title>Technijian Letterhead</title>
+  <!-- Technijian Letterhead Template -->
+  <!-- 8.5" x 11" at 300dpi = 2550 x 3300 pixels -->
+
+  <!-- White background -->
+  <rect width="2550" height="3300" fill="#FFFFFF"/>
+
+  <!-- Header area -->
+  <!-- Logo (top-left, within 0.75" from top) -->
+  <text x="225" y="180" font-family="Open Sans, sans-serif" font-size="48" font-weight="700" fill="#6D6E71" letter-spacing="2">
+    <tspan font-size="56" font-weight="600">T</tspan><tspan font-size="40" letter-spacing="3">ECHNIJIAN</tspan>
+  </text>
+  <text x="225" y="210" font-family="Open Sans, sans-serif" font-size="13" fill="#006DB6" letter-spacing="5">
+    technology as a solution
+  </text>
+
+  <!-- Blue line under header -->
+  <rect x="225" y="240" width="2100" height="3" fill="#006DB6"/>
+
+  <!-- Body text start marker (2" from top = 600px) -->
+  <!-- Content goes below this line -->
+  <text x="225" y="650" font-family="Open Sans, sans-serif" font-size="24" fill="#CCCCCC" opacity="0.5">
+    [Letter content starts here - delete this placeholder]
+  </text>
+
+  <!-- Footer -->
+  <rect x="225" y="3100" width="2100" height="1" fill="#E9ECEF"/>
+
+  <!-- Footer text -->
+  <text x="225" y="3140" font-family="Open Sans, sans-serif" font-size="14" fill="#59595B">
+    18 Technology Dr., Ste 141, Irvine, CA 92618
+  </text>
+  <text x="225" y="3165" font-family="Open Sans, sans-serif" font-size="14" fill="#59595B">
+    <tspan>P: 949.379.8500</tspan>
+    <tspan dx="30">E: info@technijian.com</tspan>
+    <tspan dx="30">W: technijian.com</tspan>
+  </text>
+
+  <!-- Orange accent at very bottom -->
+  <rect x="0" y="3285" width="2550" height="15" fill="#F67D4B"/>
+</svg>

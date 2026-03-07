@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 130" width="700" height="130">
+  <title>Technijian Wordmark</title>
+  <!-- Technijian Wordmark Only (no icon) -->
+  <text x="0" y="95" font-family="'Open Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="400" font-size="130" fill="#6D6E71" letter-spacing="2">
+    <tspan font-size="140" font-weight="600">T</tspan><tspan font-size="105" letter-spacing="6">ECHNIJIAN</tspan>
+  </text>
+  <text x="0" y="125" font-family="'Open Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="400" font-size="24" fill="#006DB6" letter-spacing="10">
+    t e c h n o l o g y    a s    a    s o l u t i o n
+  </text>
+</svg>

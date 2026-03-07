@@ -1,0 +1,39 @@
+/* Technijian Brand Gradients */
+
+/* Primary: Blue to Teal */
+.gradient-brand-primary {
+  background: linear-gradient(135deg, #006DB6 0%, #1EAAC8 100%);
+}
+
+/* Accent: Blue to Orange (via teal) */
+.gradient-brand-accent {
+  background: linear-gradient(135deg, #006DB6 0%, #1EAAC8 50%, #F67D4B 100%);
+}
+
+/* Dark: Charcoal to Dark Blue */
+.gradient-brand-dark {
+  background: linear-gradient(180deg, #1A1A2E 0%, #0D1B3E 100%);
+}
+
+/* Warm: Orange to Chartreuse */
+.gradient-brand-warm {
+  background: linear-gradient(135deg, #F67D4B 0%, #CBDB2D 100%);
+}
+
+/* Subtle: Off-white with hint of blue */
+.gradient-brand-subtle {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F5FA 100%);
+}
+
+/* Hero overlay: for dark tech photography */
+.gradient-brand-hero-overlay {
+  background: linear-gradient(180deg, rgba(26, 26, 46, 0.85) 0%, rgba(26, 26, 46, 0.6) 100%);
+}
+
+/* Text gradient (for decorative headings) */
+.gradient-brand-text {
+  background: linear-gradient(90deg, #006DB6 0%, #1EAAC8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

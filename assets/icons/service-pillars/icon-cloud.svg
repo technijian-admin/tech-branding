@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#1EAAC8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <title>Cloud Solutions</title>
+  <!-- Cloud Solutions: Cloud with upward arrow -->
+  <!-- Cloud shape -->
+  <path d="M14 32 C8 32 4 28 4 24 C4 19.6 7.4 16 12 16 C12.4 10.8 16.8 7 22 7 C27.6 7 32 11.4 32 17 L32 17 C36.4 17 40 20.6 40 25 C40 29.4 36.4 33 32 33 L14 33 Z"/>
+  <!-- Upload arrow -->
+  <line x1="22" y1="28" x2="22" y2="19"/>
+  <polyline points="17,23 22,18 27,23"/>
+</svg>

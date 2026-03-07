@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#F67D4B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <title>Strategic IT Consulting</title>
+  <!-- Strategic IT Consulting: Chart with trend line -->
+  <!-- Chart axes -->
+  <line x1="8" y1="40" x2="42" y2="40"/>
+  <line x1="8" y1="8" x2="8" y2="40"/>
+  <!-- Bars -->
+  <rect x="14" y="28" width="5" height="12" rx="1" fill="#F67D4B" opacity="0.15"/>
+  <rect x="22" y="22" width="5" height="18" rx="1" fill="#F67D4B" opacity="0.25"/>
+  <rect x="30" y="16" width="5" height="24" rx="1" fill="#F67D4B" opacity="0.35"/>
+  <!-- Trend line -->
+  <polyline points="14,30 22,23 30,17 38,10"/>
+  <!-- Arrow tip on trend -->
+  <polyline points="34,10 38,10 38,14"/>
+</svg>

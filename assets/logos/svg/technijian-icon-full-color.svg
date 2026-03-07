@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 200" width="180" height="200">
+  <title>Technijian Icon - Full Color</title>
+  <!-- Technijian Dot Grid Icon - Full Color -->
+  <!-- 4-column x 5-row grid of interlocking rounded squares -->
+  <!-- Recreated from brand logo raster reference -->
+  <defs>
+    <style>
+      .cell { rx: 7; ry: 7; }
+    </style>
+  </defs>
+  <!-- Grid: 4 cols x 5 rows, each cell ~38x38 with 4px gap -->
+  <!-- Row 1 (top) -->
+  <rect class="cell" x="2"   y="2"  width="38" height="38" fill="#59595B"/>
+  <rect class="cell" x="46"  y="2"  width="38" height="38" fill="#006DB6"/>
+  <rect class="cell" x="90"  y="2"  width="38" height="38" fill="#59595B"/>
+  <rect class="cell" x="134" y="2"  width="38" height="38" fill="#F67D4B"/>
+  <!-- Row 2 -->
+  <rect class="cell" x="2"   y="46" width="38" height="38" fill="#006DB6"/>
+  <rect class="cell" x="46"  y="46" width="38" height="38" fill="#59595B"/>
+  <rect class="cell" x="90"  y="46" width="38" height="38" fill="#F67D4B"/>
+  <rect class="cell" x="134" y="46" width="38" height="38" fill="#59595B"/>
+  <!-- Row 3 -->
+  <rect class="cell" x="2"   y="90" width="38" height="38" fill="#006DB6"/>
+  <rect class="cell" x="46"  y="90" width="38" height="38" fill="#1EAAC8"/>
+  <rect class="cell" x="90"  y="90" width="38" height="38" fill="#F67D4B"/>
+  <rect class="cell" x="134" y="90" width="38" height="38" fill="#59595B"/>
+  <!-- Row 4 -->
+  <rect class="cell" x="2"   y="134" width="38" height="38" fill="#CBDB2D"/>
+  <rect class="cell" x="46"  y="134" width="38" height="38" fill="#1EAAC8"/>
+  <rect class="cell" x="90"  y="134" width="38" height="38" fill="#1EAAC8"/>
+  <rect class="cell" x="134" y="134" width="38" height="38" fill="#59595B"/>
+  <!-- Row 5 (bottom) -->
+  <rect class="cell" x="2"   y="160" width="38" height="38" fill="#CBDB2D"/>
+  <rect class="cell" x="46"  y="160" width="38" height="38" fill="#CBDB2D"/>
+  <rect class="cell" x="90"  y="160" width="38" height="38" fill="#1EAAC8"/>
+  <rect class="cell" x="134" y="160" width="38" height="38" fill="#59595B"/>
+</svg>

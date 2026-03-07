@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" width="900" height="200">
+  <title>Technijian Logo - Full Color</title>
+  <!-- Technijian Full Logo - Full Color -->
+  <!-- Icon + Wordmark + Tagline -->
+
+  <!-- DOT GRID ICON -->
+  <g transform="translate(0, 0)">
+    <!-- Row 1 -->
+    <rect x="2" y="2" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <rect x="42" y="2" width="34" height="34" rx="6" ry="6" fill="#006DB6"/>
+    <rect x="82" y="2" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <rect x="122" y="2" width="34" height="34" rx="6" ry="6" fill="#F67D4B"/>
+    <!-- Row 2 -->
+    <rect x="2" y="42" width="34" height="34" rx="6" ry="6" fill="#006DB6"/>
+    <rect x="42" y="42" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <rect x="82" y="42" width="34" height="34" rx="6" ry="6" fill="#F67D4B"/>
+    <rect x="122" y="42" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <!-- Row 3 -->
+    <rect x="2" y="82" width="34" height="34" rx="6" ry="6" fill="#006DB6"/>
+    <rect x="42" y="82" width="34" height="34" rx="6" ry="6" fill="#1EAAC8"/>
+    <rect x="82" y="82" width="34" height="34" rx="6" ry="6" fill="#F67D4B"/>
+    <rect x="122" y="82" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <!-- Row 4 -->
+    <rect x="2" y="122" width="34" height="34" rx="6" ry="6" fill="#CBDB2D"/>
+    <rect x="42" y="122" width="34" height="34" rx="6" ry="6" fill="#1EAAC8"/>
+    <rect x="82" y="122" width="34" height="34" rx="6" ry="6" fill="#1EAAC8"/>
+    <rect x="122" y="122" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+  </g>
+
+  <!-- WORDMARK: TECHNIJIAN -->
+  <!-- Large T followed by smaller caps ECHNIJIAN -->
+  <text x="185" y="120" font-family="'Open Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="400" font-size="130" fill="#6D6E71" letter-spacing="2">
+    <tspan font-size="140" font-weight="600">T</tspan><tspan font-size="105" letter-spacing="6">ECHNIJIAN</tspan>
+  </text>
+
+  <!-- TAGLINE: technology as a solution -->
+  <text x="185" y="165" font-family="'Open Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="400" font-size="28" fill="#006DB6" letter-spacing="10">
+    t e c h n o l o g y    a s    a    s o l u t i o n
+  </text>
+</svg>

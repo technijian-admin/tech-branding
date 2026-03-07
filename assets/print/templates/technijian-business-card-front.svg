@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600" width="1050" height="600">
+  <title>Technijian Business Card - Front</title>
+  <!-- Technijian Business Card - Front -->
+  <!-- 3.5" x 2" at 300dpi = 1050 x 600 pixels -->
+  <!-- 0.125" bleed included (37.5px each side) -->
+
+  <!-- White background -->
+  <rect width="1050" height="600" fill="#FFFFFF"/>
+
+  <!-- Left accent bar (Core Blue) -->
+  <rect x="37" y="37" width="8" height="526" fill="#006DB6"/>
+
+  <!-- Logo placeholder area (top-left) -->
+  <!-- Replace with actual logo embedded as base64 or linked -->
+  <text x="75" y="95" font-family="Open Sans, sans-serif" font-size="28" font-weight="700" fill="#6D6E71" letter-spacing="1">
+    <tspan font-size="32" font-weight="600">T</tspan><tspan font-size="24" letter-spacing="2">ECHNIJIAN</tspan>
+  </text>
+  <text x="75" y="115" font-family="Open Sans, sans-serif" font-size="8" fill="#006DB6" letter-spacing="4">
+    technology as a solution
+  </text>
+
+  <!-- Name -->
+  <text x="75" y="240" font-family="Open Sans, sans-serif" font-size="24" font-weight="700" fill="#1A1A2E">
+    First Last
+  </text>
+
+  <!-- Title -->
+  <text x="75" y="270" font-family="Open Sans, sans-serif" font-size="14" fill="#006DB6">
+    Job Title
+  </text>
+
+  <!-- Contact details -->
+  <text x="75" y="340" font-family="Open Sans, sans-serif" font-size="12" fill="#59595B">
+    <tspan x="75" dy="0">P: 949.379.8500</tspan>
+    <tspan x="75" dy="22">E: name@technijian.com</tspan>
+    <tspan x="75" dy="22">W: technijian.com</tspan>
+  </text>
+
+  <!-- Address (bottom) -->
+  <text x="75" y="520" font-family="Open Sans, sans-serif" font-size="10" fill="#ADB5BD">
+    18 Technology Dr., Ste 141, Irvine, CA 92618
+  </text>
+
+  <!-- Orange accent line at bottom -->
+  <rect x="37" y="548" width="976" height="3" fill="#F67D4B"/>
+
+  <!-- Trim marks (light grey, outside bleed) -->
+  <line x1="37" y1="0" x2="37" y2="20" stroke="#CCC" stroke-width="0.5"/>
+  <line x1="1013" y1="0" x2="1013" y2="20" stroke="#CCC" stroke-width="0.5"/>
+  <line x1="37" y1="580" x2="37" y2="600" stroke="#CCC" stroke-width="0.5"/>
+  <line x1="1013" y1="580" x2="1013" y2="600" stroke="#CCC" stroke-width="0.5"/>
+  <line x1="0" y1="37" x2="20" y2="37" stroke="#CCC" stroke-width="0.5"/>
+  <line x1="0" y1="563" x2="20" y2="563" stroke="#CCC" stroke-width="0.5"/>
+  <line x1="1030" y1="37" x2="1050" y2="37" stroke="#CCC" stroke-width="0.5"/>
+  <line x1="1030" y1="563" x2="1050" y2="563" stroke="#CCC" stroke-width="0.5"/>
+</svg>
