@@ -17,7 +17,7 @@ Use `email-signature.html` as the base. Replace **all** `[PLACEHOLDER]` values w
 | `[CELL_PHONE]` | Cell number (appears twice: href + display text). Delete the entire `C:` line if not applicable | `714.402.3164` |
 | `[EMAIL]` | Email address (appears twice: href + display text) | `rjain@technijian.com` |
 | `[PHOTO_URL]` | Hosted URL to employee headshot (120x120px square). Delete the photo `<td>` block if no photo | `https://technijian.com/team/ravi-jain.jpg` |
-| `[BOOKING_URL]` | Calendar booking link. Delete the entire booking `<tr>` block if not applicable | `https://calendly.com/ravi-technijian` |
+| `[BOOKING_URL]` | Personal calendar booking link. Delete the "Book a Meeting" `<a>` tag if not applicable | `https://outlook.office.com/bookwithme/...` |
 
 ### Company-Wide Fields (set once, same for all employees)
 
@@ -30,6 +30,7 @@ Use `email-signature.html` as the base. Replace **all** `[PLACEHOLDER]` values w
 | `[ICON_INSTAGRAM_URL]` | Hosted 24x24 Instagram icon |
 | `[ICON_X_URL]` | Hosted 24x24 X (Twitter) icon |
 | `[ICON_TIKTOK_URL]` | Hosted 24x24 TikTok icon |
+| `[ICON_PINTEREST_URL]` | Hosted 24x24 Pinterest icon |
 | `[ICON_SPOTIFY_URL]` | Hosted 24x24 Spotify icon |
 | `[ICON_APPLE_PODCASTS_URL]` | Hosted 24x24 Apple Podcasts icon |
 | `[SPOTIFY_URL]` | Technijian Spotify profile/show URL |
@@ -44,7 +45,7 @@ These sections can be removed for employees who don't need them:
 | Employee photo | Delete the `<!-- Photo column -->` `<td>` block |
 | Credentials | Remove the `<span>` tag after `[EMPLOYEE_NAME]` |
 | Cell phone | Delete the `C:` line (the `<br>` and everything between) |
-| Booking button | Delete the `<!-- Booking link -->` `<tr>` block |
+| Personal booking button | Delete the "Book a Meeting" `<a>` tag (keep the "Book time with Support" button) |
 
 ## Hosting Requirements
 
@@ -54,20 +55,21 @@ All images must be hosted at publicly accessible URLs. Email clients download im
 |---|---|---|
 | Employee photo | 120x120px square JPEG | `https://technijian.com/team/[name].jpg` |
 | Company logo | `logos/png/technijian-logo-full-color-600x125.png` | `https://technijian.com/assets/logo-email.png` |
-| Social icons | 24x24px PNGs (8 icons) | `https://technijian.com/assets/icons/[platform].png` |
+| Social icons | 24x24px PNGs (9 icons) | `https://technijian.com/assets/icons/[platform].png` |
 
 ## Social Media Links
 
-The signature includes 8 social platforms. The profile URLs are hardcoded in the template:
+The signature includes 9 social platforms. The profile URLs are hardcoded in the template:
 
 | Platform | URL in Template |
 |---|---|
 | LinkedIn | `https://www.linkedin.com/company/technijian` |
-| Facebook | `https://www.facebook.com/technijian` |
-| YouTube | `https://www.youtube.com/@technijian` |
-| Instagram | `https://www.instagram.com/technijian` |
-| X (Twitter) | `https://x.com/technijian` |
+| Facebook | `https://www.facebook.com/Technijian01/` |
+| YouTube | `https://www.youtube.com/@TechnijianIT` |
+| Instagram | `https://www.instagram.com/technijianinc/` |
+| X (Twitter) | `https://twitter.com/technijian_` |
 | TikTok | `https://www.tiktok.com/@technijian` |
+| Pinterest | `https://in.pinterest.com/technijian01/` |
 | Spotify | `[SPOTIFY_URL]` -- replace with actual URL |
 | Apple Podcasts | `[APPLE_PODCASTS_URL]` -- replace with actual URL |
 
@@ -112,9 +114,10 @@ The signature follows the Technijian Brand Guide 2026:
 - **Credentials** in Core Blue (`#006DB6`), 11px uppercase
 - **Title** in Core Blue, 13px semibold
 - **Contact labels** (T/C/S/E/W) in Core Blue bold
-- **"Book a Meeting" button** in Core Blue with white text, 4px rounded corners
-- **Address** in muted grey (`#ADB5BD`), 11px
+- **"Book a Meeting" button** in Core Blue (`#006DB6`) with white text, 4px rounded corners (per-employee, optional)
+- **"Book time with Support" button** in Brand Orange (`#F67D4B`) with white text, 4px rounded corners (company-wide)
+- **Dual office addresses** (USA + India) in muted grey (`#ADB5BD`), 11px, with Core Blue labels
 - **Blue divider line** (2px, `#006DB6`)
 - **Company logo** (160px wide)
-- **8 social media icons** (24x24px each)
+- **9 social media icons** (24x24px each)
 - **Confidentiality disclaimer** in 10px muted grey
