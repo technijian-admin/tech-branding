@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technijian Chat.AI — One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #2D2D2D;
+    background: #fff;
+    font-size: 9px;
+    line-height: 1.35;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1A1A2E, #0a1628, #0d2847);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+  }
+  .hero-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-left img {
+    height: 28px;
+    filter: brightness(10);
+  }
+  .hero-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .hero-title .orange { color: #F67D4B; }
+  .hero-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-size: 18px;
+    font-weight: 700;
+    color: #F67D4B;
+    display: block;
+    line-height: 1.1;
+  }
+  .hero-stat .lbl {
+    font-size: 8px;
+    color: rgba(255,255,255,0.5);
+    display: block;
+  }
+  .hero-stat + .hero-stat {
+    border-left: 1px solid rgba(255,255,255,0.15);
+    padding-left: 20px;
+  }
+
+  /* VALUE PROP */
+  .value-bar {
+    background: #006DB6;
+    text-align: center;
+    padding: 6px 20px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* BODY */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 12px 28px;
+  }
+
+  .section-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: #006DB6;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+    padding-bottom: 3px;
+    border-bottom: 2px solid #E9ECEF;
+  }
+
+  /* KEY CAPABILITIES */
+  .cap-group { margin-bottom: 6px; }
+  .cap-group-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #1A1A2E;
+    margin-bottom: 2px;
+  }
+  .cap-group ul {
+    list-style: none;
+    padding: 0;
+  }
+  .cap-group li {
+    font-size: 9px;
+    padding: 1px 0;
+    color: #2D2D2D;
+  }
+  .cap-group li::before {
+    content: "\2713";
+    color: #1EAAC8;
+    font-weight: 700;
+    margin-right: 5px;
+  }
+
+  /* HOW IT WORKS */
+  .steps { margin-top: 4px; }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .step-num {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 50%;
+    background: #F67D4B;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .step-text {
+    font-size: 9px;
+  }
+  .step-text strong { color: #1A1A2E; }
+
+  /* WHY CHAT.AI */
+  .diff-list { list-style: none; padding: 0; }
+  .diff-list li {
+    font-size: 9px;
+    padding: 2px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .diff-dot {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    border-radius: 50%;
+    margin-top: 2px;
+  }
+
+  /* PRICING */
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+    margin-top: 4px;
+  }
+  .pricing-table th {
+    background: #1A1A2E;
+    color: #fff;
+    padding: 4px 8px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .pricing-table td {
+    padding: 4px 8px;
+  }
+  .pricing-table tr:nth-child(even) td {
+    background: #F8F9FA;
+  }
+  .pricing-table tr.highlight td {
+    background: #e6f0fa;
+    font-weight: 600;
+  }
+
+  /* SECURITY BADGES */
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-top: 4px;
+  }
+  .badge {
+    font-size: 8px;
+    color: #59595B;
+  }
+  .badge span { color: #1EAAC8; }
+
+  /* SECTION SPACING */
+  .section { margin-bottom: 10px; }
+
+  /* CTA */
+  .cta-bar {
+    background: linear-gradient(135deg, #006DB6, #004d80);
+    text-align: center;
+    padding: 8px 20px;
+    color: #fff;
+    font-size: 10px;
+  }
+  .cta-bar strong { color: #fff; }
+
+  /* FOOTER */
+  .footer {
+    background: #2D2D2D;
+    text-align: center;
+    padding: 5px 20px;
+    color: rgba(255,255,255,0.38);
+    font-size: 7px;
+  }
+
+  /* PRINT */
+  @media print {
+    @page {
+      size: letter;
+      margin: 0.3in;
+    }
+    body {
+      height: 100vh;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .hero, .value-bar, .cta-bar, .footer,
+    .pricing-table th, .pricing-table tr.highlight td,
+    .pricing-table tr:nth-child(even) td,
+    .step-num, .diff-dot {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. HERO STRIP -->
+<div class="hero">
+  <div class="hero-left">
+    <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
+    <div class="hero-title">Technijian <span class="orange">Chat.AI</span></div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">4+</span><span class="lbl">AI Providers</span></div>
+    <div class="hero-stat"><span class="num">32+</span><span class="lbl">Endpoints</span></div>
+    <div class="hero-stat"><span class="num">&gt;60%</span><span class="lbl">Council Win Rate</span></div>
+    <div class="hero-stat"><span class="num">99.9%</span><span class="lbl">SLA</span></div>
+  </div>
+</div>
+
+<!-- 2. VALUE PROP BAR -->
+<div class="value-bar">
+  Secure, multi-model AI with collective intelligence, workflow automation, and enterprise governance.
+</div>
+
+<!-- 3. TWO-COLUMN BODY -->
+<div class="body-grid">
+
+  <!-- LEFT COLUMN -->
+  <div>
+    <div class="section">
+      <div class="section-header">Key Capabilities</div>
+      <div class="cap-group">
+        <div class="cap-group-title">Multi-Model AI</div>
+        <ul>
+          <li>GPT-4o, Claude, Gemini + more</li>
+          <li>Switch models mid-conversation</li>
+          <li>Streaming responses</li>
+        </ul>
+      </div>
+      <div class="cap-group">
+        <div class="cap-group-title">AI Council <span style="font-size:8px;color:#59595B;font-weight:400;">(Patent Pending)</span></div>
+        <ul>
+          <li>3-stage deliberation: Diverge &gt; Converge &gt; Synthesize</li>
+          <li>3+ models per query</li>
+          <li>&gt;30% hallucination reduction</li>
+        </ul>
+      </div>
+      <div class="cap-group">
+        <div class="cap-group-title">Workflow &amp; Knowledge</div>
+        <ul>
+          <li>N8N workflow automation from chat</li>
+          <li>RAG with Weaviate/Pinecone/Chroma</li>
+          <li>Custom assistants with connectors</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">How It Works</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Deploy</strong> — Set up your tenant with Azure AD SSO in minutes</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Configure</strong> — Choose AI models, set budgets, create assistants</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Scale</strong> — Add users, workflows, and integrations as you grow</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <div class="section">
+      <div class="section-header">Why Chat.AI</div>
+      <ul class="diff-list">
+        <li><div class="diff-dot" style="background:#006DB6;"></div><div>Multi-provider: No vendor lock-in — OpenAI, Anthropic, Google, Azure</div></li>
+        <li><div class="diff-dot" style="background:#F67D4B;"></div><div>Cost control: Token-level metering with prepaid budgets &amp; alerts</div></li>
+        <li><div class="diff-dot" style="background:#1EAAC8;"></div><div>Enterprise security: Row-level isolation, full audit trail, HIPAA/SOC 2 ready</div></li>
+        <li><div class="diff-dot" style="background:#1A1A2E;"></div><div>On-premise option: Deploy in your own infrastructure for data sovereignty</div></li>
+        <li><div class="diff-dot" style="background:#CBDB2D;"></div><div>Council consensus: Patent-pending multi-agent deliberation</div></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-header">Pricing At-a-Glance</div>
+      <table class="pricing-table">
+        <thead>
+          <tr><th>Plan</th><th>Price</th><th>Users</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Starter</td><td>$299/mo</td><td>10</td></tr>
+          <tr><td>Growth</td><td>$899/mo</td><td>50</td></tr>
+          <tr class="highlight"><td>Professional</td><td>$1,699/mo</td><td>100</td></tr>
+          <tr><td>Enterprise</td><td>Custom</td><td>250+</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-header">Security &amp; Compliance</div>
+      <div class="badges">
+        <div class="badge"><span>&#128272;</span> Azure AD SSO</div>
+        <div class="badge"><span>&#128737;</span> Row-Level Security</div>
+        <div class="badge"><span>&#128196;</span> Audit Trail</div>
+        <div class="badge"><span>&#128273;</span> Key Vault</div>
+        <div class="badge"><span>&#127973;</span> HIPAA Ready</div>
+        <div class="badge"><span>&#128736;</span> RBAC</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 4. CTA BAR -->
+<div class="cta-bar">
+  Ready to see Chat.AI in action? Schedule a demo: <strong>RJain@technijian.com</strong> | <strong>949.379.8500</strong>
+</div>
+
+<!-- 5. FOOTER -->
+<div class="footer">
+  &copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com
+</div>
+
+</body>
+</html>

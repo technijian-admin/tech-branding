@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technijian Chat.AI — Enterprise AI Platform Brochure</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #2D2D2D;
+  background: #fff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── BRAND VARS ── */
+:root {
+  --blue: #006DB6;
+  --orange: #F67D4B;
+  --teal: #1EAAC8;
+  --chartreuse: #CBDB2D;
+  --dark: #1A1A2E;
+  --near-black: #2D2D2D;
+  --brand-grey: #59595B;
+  --off-white: #F8F9FA;
+  --light-grey: #E9ECEF;
+}
+
+/* ── PAGE SECTIONS ── */
+.page-section {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── UTILITY ── */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+.section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 50px;
+}
+.section-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.section-title .accent { color: var(--orange); }
+.section-subtitle {
+  font-size: 14px;
+  color: var(--brand-grey);
+  margin-bottom: 36px;
+  max-width: 620px;
+}
+.orange-line {
+  width: 60px;
+  height: 3px;
+  background: var(--orange);
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 1: COVER
+   ══════════════════════════════════════════ */
+.cover {
+  background: linear-gradient(135deg, #1A1A2E 0%, #0a1628 55%, #0d2847 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -10%; right: -5%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -15%; left: -8%;
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, rgba(246,125,75,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover .glow-blue {
+  position: absolute;
+  left: -5%; top: 35%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,109,182,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-content { position: relative; z-index: 2; }
+.cover-logo { height: 48px; filter: brightness(10); margin-bottom: 32px; }
+.cover-badge {
+  display: inline-block;
+  background: rgba(30,170,200,0.15);
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 8px 24px;
+  border-radius: 50px;
+  border: 1px solid rgba(30,170,200,0.3);
+  margin-bottom: 28px;
+}
+.cover-title {
+  font-size: 56px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.cover-title .orange { color: var(--orange); }
+.cover-tagline {
+  font-size: 20px;
+  color: rgba(255,255,255,0.65);
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+.cover-divider {
+  width: 80px;
+  height: 2px;
+  background: var(--orange);
+  margin: 24px auto;
+}
+.cover-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 1px;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 2: THE CHALLENGE
+   ══════════════════════════════════════════ */
+.challenge {
+  background: var(--off-white);
+  display: flex;
+  align-items: center;
+}
+.challenge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.challenge-card {
+  background: #fff;
+  border: 1px solid var(--light-grey);
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.challenge-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.challenge-card.border-blue { border-left: 5px solid var(--blue); }
+.challenge-card.border-orange { border-left: 5px solid var(--orange); }
+.challenge-card.border-teal { border-left: 5px solid var(--teal); }
+.challenge-card.border-chartreuse { border-left: 5px solid var(--chartreuse); }
+.challenge-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.challenge-card h3.c-blue { color: var(--blue); }
+.challenge-card h3.c-orange { color: var(--orange); }
+.challenge-card h3.c-teal { color: var(--teal); }
+.challenge-card h3.c-chartreuse { color: var(--chartreuse); }
+.challenge-card .problem {
+  font-size: 13px;
+  color: var(--brand-grey);
+  margin-bottom: 16px;
+  line-height: 1.55;
+}
+.challenge-card .solution {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+}
+.solution-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #fff;
+  margin-top: 1px;
+}
+.solution-icon.bg-blue { background: var(--blue); }
+.solution-icon.bg-orange { background: var(--orange); }
+.solution-icon.bg-teal { background: var(--teal); }
+.solution-icon.bg-chartreuse { background: var(--chartreuse); }
+.solution strong { color: var(--dark); }
+
+/* ══════════════════════════════════════════
+   PAGE 3: PLATFORM CAPABILITIES
+   ══════════════════════════════════════════ */
+.capabilities {
+  background: #fff;
+  display: flex;
+  align-items: center;
+}
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.cap-card {
+  background: var(--off-white);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--light-grey);
+}
+.cap-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+}
+.cap-card .accent-bar {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+.accent-blue { background: var(--blue); }
+.accent-orange { background: var(--orange); }
+.accent-teal { background: var(--teal); }
+.accent-dark { background: var(--dark); }
+.accent-chartreuse { background: var(--chartreuse); }
+.accent-blue-teal { background: linear-gradient(90deg, var(--blue), var(--teal)); }
+.cap-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.cap-icon.grad-blue { background: linear-gradient(135deg, var(--blue), #0088dd); }
+.cap-icon.grad-orange { background: linear-gradient(135deg, var(--orange), #ff9a6c); }
+.cap-icon.grad-teal { background: linear-gradient(135deg, var(--teal), #3cc8e0); }
+.cap-icon.grad-dark { background: linear-gradient(135deg, var(--dark), #2a2a4a); }
+.cap-icon.grad-chartreuse { background: linear-gradient(135deg, #a0b800, var(--chartreuse)); }
+.cap-icon.grad-bt { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+.cap-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+.cap-card .desc {
+  font-size: 13px;
+  color: var(--brand-grey);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.cap-card ul {
+  list-style: none;
+  padding: 0;
+}
+.cap-card ul li {
+  font-size: 12px;
+  color: var(--near-black);
+  padding: 3px 0;
+  padding-left: 20px;
+  position: relative;
+}
+.cap-card ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 4: AI COUNCIL
+   ══════════════════════════════════════════ */
+.council {
+  background: linear-gradient(135deg, #0a1628, #1A1A2E, #0d2847);
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+.council-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.council-badge {
+  display: inline-block;
+  background: rgba(246,125,75,0.15);
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 50px;
+  border: 1px solid rgba(246,125,75,0.3);
+  margin-bottom: 20px;
+}
+.council-title {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.council-title .teal-text { color: var(--teal); }
+.council-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.68);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+.pipeline-stage {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.stage-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.stage-content h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.stage-content p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+}
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.metric-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 20px 16px;
+  text-align: center;
+}
+.metric-card .num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.metric-card .label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.35;
+}
+.model-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.model-pill {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 50px;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 5: USE CASES
+   ══════════════════════════════════════════ */
+.usecases {
+  background: var(--off-white);
+  display: flex;
+  align-items: center;
+}
+.usecase-card {
+  background: #fff;
+  border: 1px solid var(--light-grey);
+  border-radius: 14px;
+  padding: 32px 36px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  transition: transform 0.2s;
+}
+.usecase-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.07); }
+.usecase-card.bl-blue { border-left: 5px solid var(--blue); }
+.usecase-card.bl-orange { border-left: 5px solid var(--orange); }
+.usecase-card.bl-teal { border-left: 5px solid var(--teal); }
+.usecase-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.usecase-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--dark);
+}
+.persona-badge {
+  display: inline-block;
+  background: rgba(30,170,200,0.1);
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 50px;
+  border: 1px solid rgba(30,170,200,0.25);
+}
+.usecase-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 24px;
+  align-items: start;
+}
+.usecase-body .label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--brand-grey);
+  margin-bottom: 6px;
+}
+.usecase-body p {
+  font-size: 13px;
+  color: var(--near-black);
+  line-height: 1.55;
+}
+.result-metric {
+  text-align: center;
+  padding: 16px 24px;
+  background: var(--off-white);
+  border-radius: 10px;
+  min-width: 140px;
+}
+.result-metric .big-num {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1;
+}
+.result-metric .metric-desc {
+  font-size: 11px;
+  color: var(--brand-grey);
+  margin-top: 4px;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 6: PRICING
+   ══════════════════════════════════════════ */
+.pricing {
+  background: #fff;
+  display: flex;
+  align-items: center;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 32px;
+}
+.price-card {
+  background: var(--off-white);
+  border: 1px solid var(--light-grey);
+  border-radius: 14px;
+  padding: 28px 22px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.price-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.price-card.featured {
+  border: 2px solid var(--blue);
+  box-shadow: 0 8px 32px rgba(0,109,182,0.15);
+  transform: scale(1.02);
+  background: #fff;
+}
+.price-card.featured:hover { transform: scale(1.04); }
+.popular-tag {
+  position: absolute;
+  top: -1px; left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 18px;
+  border-radius: 0 0 8px 8px;
+}
+.price-card .tier {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+.price-card .price {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--dark);
+}
+.price-card .price span { font-size: 14px; font-weight: 400; color: var(--brand-grey); }
+.price-card .annual {
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.price-card .specs {
+  font-size: 12px;
+  color: var(--brand-grey);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  text-align: left;
+  padding: 0 4px;
+}
+.price-card .features {
+  list-style: none;
+  text-align: left;
+  padding: 0 4px;
+}
+.price-card .features li {
+  font-size: 12px;
+  color: var(--near-black);
+  padding: 3px 0 3px 18px;
+  position: relative;
+}
+.price-card .features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-weight: 700;
+}
+.addons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+.addon-pill {
+  background: var(--off-white);
+  border: 1px solid var(--light-grey);
+  color: var(--brand-grey);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 50px;
+}
+.deploy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.deploy-card {
+  background: var(--off-white);
+  border: 1px solid var(--light-grey);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+.deploy-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+.deploy-card .from {
+  font-size: 13px;
+  color: var(--teal);
+  font-weight: 700;
+}
+.deploy-card p {
+  font-size: 12px;
+  color: var(--brand-grey);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 7: COMPARISON + ROI
+   ══════════════════════════════════════════ */
+.comparison {
+  background: #fff;
+  padding-top: 60px;
+}
+.comparison .container { padding-top: 0; }
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.comp-table th, .comp-table td {
+  padding: 10px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--light-grey);
+}
+.comp-table th {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--dark);
+  background: var(--off-white);
+}
+.comp-table th:first-child, .comp-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+.comp-table th.highlight {
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  color: #fff;
+}
+.comp-table td.highlight {
+  background: rgba(0,109,182,0.04);
+  font-weight: 700;
+  color: var(--blue);
+}
+.comp-table .check { color: var(--teal); font-weight: 700; }
+.comp-table .cross { color: #ccc; }
+
+.roi-section {
+  background: linear-gradient(135deg, #0a1628, #1A1A2E);
+  padding: 56px 0;
+}
+.roi-section .section-title { color: #fff; }
+.roi-section .orange-line { margin-bottom: 32px; }
+.roi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.roi-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+}
+.roi-card .team {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 16px;
+}
+.roi-card .row-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 2px;
+}
+.roi-card .row-val {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 12px;
+}
+.roi-card .savings {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--chartreuse);
+  line-height: 1;
+  margin-top: 8px;
+}
+.roi-card .savings-label {
+  font-size: 11px;
+  color: var(--chartreuse);
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 8: SECURITY + ABOUT + CTA
+   ══════════════════════════════════════════ */
+.security {
+  background: #fff;
+  padding: 56px 0;
+}
+.security-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.sec-badge {
+  background: var(--off-white);
+  border: 1px solid var(--light-grey);
+  border-radius: 12px;
+  padding: 22px 16px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.sec-badge:hover { transform: translateY(-2px); }
+.sec-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #fff;
+  margin: 0 auto 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+.sec-badge h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.about {
+  background: var(--off-white);
+  padding: 48px 0;
+}
+.about-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.about h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.about p {
+  font-size: 13px;
+  color: var(--brand-grey);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.about-stats {
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+}
+.about-stat {
+  text-align: center;
+}
+.about-stat .num {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1;
+}
+.about-stat .label {
+  font-size: 11px;
+  color: var(--brand-grey);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.cta {
+  background: linear-gradient(135deg, var(--blue), #0088dd, var(--teal));
+  padding: 56px 0;
+  text-align: center;
+  color: #fff;
+}
+.cta h2 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.cta p {
+  font-size: 15px;
+  opacity: 0.85;
+  margin-bottom: 28px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+.btn-demo {
+  background: linear-gradient(135deg, var(--orange), #ff9a6c);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 36px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(246,125,75,0.4);
+  transition: transform 0.2s;
+}
+.btn-demo:hover { transform: translateY(-2px); }
+.btn-learn {
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 36px;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.5);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-learn:hover { background: rgba(255,255,255,0.1); }
+.cta-contact {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.footer {
+  background: var(--near-black);
+  padding: 16px 0;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ══════════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════════ */
+@media print {
+  .page-section { min-height: auto; page-break-after: always; }
+  .cover { min-height: 100vh; }
+  .comparison { page-break-after: avoid; }
+  .roi-section { page-break-before: avoid; }
+  .security { page-break-before: always; }
+  .challenge-card:hover,
+  .cap-card:hover,
+  .usecase-card:hover,
+  .price-card:hover,
+  .sec-badge:hover,
+  .btn-demo:hover,
+  .btn-learn:hover,
+  .price-card.featured:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  body { font-size: 11px; }
+}
+
+@media (max-width: 900px) {
+  .challenge-grid, .cap-grid, .pricing-grid, .roi-grid, .security-grid, .deploy-grid, .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .council-grid, .about-content, .usecase-body {
+    grid-template-columns: 1fr;
+  }
+  .cover-title { font-size: 36px; }
+  .council-title { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 1: COVER
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section cover">
+  <div class="glow-blue"></div>
+  <div class="cover-content">
+    <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian" class="cover-logo">
+    <div class="cover-badge">ENTERPRISE AI PLATFORM</div>
+    <div class="cover-title">Technijian <span class="orange">Chat.AI</span></div>
+    <div class="cover-tagline">Collective Intelligence for the Modern Enterprise</div>
+    <div class="cover-divider"></div>
+    <div class="cover-sub">Multi-Model AI &middot; Workflow Automation &middot; Enterprise Governance</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 2: THE CHALLENGE
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section challenge">
+  <div class="container">
+    <div class="orange-line"></div>
+    <div class="section-title">The Challenge with <span class="accent">Enterprise AI Today</span></div>
+    <div class="section-subtitle">Organizations face real barriers when adopting AI at scale &mdash; from vendor lock-in to security gaps that stall innovation and erode trust.</div>
+    <div class="challenge-grid">
+
+      <div class="challenge-card border-blue">
+        <h3 class="c-blue">Single-Vendor Lock-In</h3>
+        <p class="problem">Most enterprise AI tools tie you to a single model provider. When that provider changes pricing, degrades quality, or suffers downtime, your entire organization is impacted with no fallback.</p>
+        <div class="solution">
+          <div class="solution-icon bg-blue">&#10140;</div>
+          <div><strong>Multi-provider orchestration</strong> across OpenAI, Anthropic, Google, and Azure &mdash; switch models instantly without workflow disruption.</div>
+        </div>
+      </div>
+
+      <div class="challenge-card border-orange">
+        <h3 class="c-orange">No Cost Visibility</h3>
+        <p class="problem">AI spend is a black box. Finance teams can't attribute costs to departments, projects, or individuals. Budgets spiral without warning, and there's no way to optimize spend per use case.</p>
+        <div class="solution">
+          <div class="solution-icon bg-orange">&#10140;</div>
+          <div><strong>Per-call cost attribution</strong> with department-level budgets, real-time dashboards, and automatic spend alerts before limits are reached.</div>
+        </div>
+      </div>
+
+      <div class="challenge-card border-teal">
+        <h3 class="c-teal">Hallucinations &amp; Unreliable Output</h3>
+        <p class="problem">Single-model responses hallucinate facts, invent citations, and produce inconsistent answers. In regulated industries, one wrong answer can trigger compliance violations.</p>
+        <div class="solution">
+          <div class="solution-icon bg-teal">&#10140;</div>
+          <div><strong>AI Council consensus</strong> &mdash; multiple models deliberate anonymously, cross-check facts, and produce a synthesized answer with higher reliability.</div>
+        </div>
+      </div>
+
+      <div class="challenge-card border-chartreuse">
+        <h3 class="c-chartreuse">Security &amp; Compliance Gaps</h3>
+        <p class="problem">Consumer AI tools lack tenant isolation, audit trails, and role-based access. Sensitive data leaks between users. Meeting HIPAA, SOC 2, or GDPR requirements is impossible.</p>
+        <div class="solution">
+          <div class="solution-icon bg-chartreuse">&#10140;</div>
+          <div><strong>Row-level security + full audit trails</strong> with Azure AD SSO, RBAC roles, and data isolation that satisfies enterprise compliance frameworks.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 3: PLATFORM CAPABILITIES
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section capabilities">
+  <div class="container">
+    <div class="orange-line"></div>
+    <div class="section-title">Platform <span class="accent">Capabilities</span></div>
+    <div class="section-subtitle">A unified AI platform that gives your teams the models, tools, and governance they need &mdash; without the complexity.</div>
+    <div class="cap-grid">
+
+      <div class="cap-card">
+        <div class="accent-bar accent-blue"></div>
+        <div class="cap-icon grad-blue">&#128172;</div>
+        <h3>Multi-Model Chat</h3>
+        <p class="desc">Access every major AI model through a single interface. Switch providers mid-conversation without losing context.</p>
+        <ul>
+          <li>GPT-4o, Claude Opus, Gemini Pro</li>
+          <li>Model comparison side-by-side</li>
+          <li>Streaming responses &amp; markdown</li>
+          <li>Conversation branching &amp; history</li>
+        </ul>
+      </div>
+
+      <div class="cap-card">
+        <div class="accent-bar accent-orange"></div>
+        <div class="cap-icon grad-orange">&#129302;</div>
+        <h3>Custom AI Assistants</h3>
+        <p class="desc">Build purpose-built assistants with custom instructions, knowledge bases, and model preferences for every team and use case.</p>
+        <ul>
+          <li>System prompt engineering</li>
+          <li>Team-scoped or org-wide sharing</li>
+          <li>File &amp; knowledge base attachments</li>
+          <li>Temperature &amp; behavior controls</li>
+        </ul>
+      </div>
+
+      <div class="cap-card">
+        <div class="accent-bar accent-teal"></div>
+        <div class="cap-icon grad-teal">&#128194;</div>
+        <h3>Projects &amp; Workspaces</h3>
+        <p class="desc">Organize conversations, assistants, and knowledge into isolated workspaces with granular access controls.</p>
+        <ul>
+          <li>Project-level data isolation</li>
+          <li>Team membership management</li>
+          <li>Shared conversation threads</li>
+          <li>Cross-project search &amp; tagging</li>
+        </ul>
+      </div>
+
+      <div class="cap-card">
+        <div class="accent-bar accent-dark"></div>
+        <div class="cap-icon grad-dark">&#9881;</div>
+        <h3>Workflow Automation</h3>
+        <p class="desc">Chain AI steps into automated pipelines that process documents, generate reports, and trigger actions across your stack.</p>
+        <ul>
+          <li>Multi-step AI pipelines</li>
+          <li>Webhook &amp; API triggers</li>
+          <li>Scheduled recurring workflows</li>
+          <li>Conditional branching logic</li>
+        </ul>
+      </div>
+
+      <div class="cap-card">
+        <div class="accent-bar accent-chartreuse"></div>
+        <div class="cap-icon grad-chartreuse">&#128218;</div>
+        <h3>Knowledge &amp; Memory</h3>
+        <p class="desc">Upload documents, build vector stores, and give your AI persistent memory that improves over time with every interaction.</p>
+        <ul>
+          <li>Vector store RAG retrieval</li>
+          <li>PDF, DOCX, CSV ingestion</li>
+          <li>Conversation memory &amp; recall</li>
+          <li>Auto-summarization of threads</li>
+        </ul>
+      </div>
+
+      <div class="cap-card">
+        <div class="accent-bar accent-blue-teal"></div>
+        <div class="cap-icon grad-bt">&#128176;</div>
+        <h3>Billing &amp; Cost Controls</h3>
+        <p class="desc">Real-time cost tracking per user, team, and model. Set budgets, receive alerts, and optimize spend across your entire AI portfolio.</p>
+        <ul>
+          <li>Per-call cost attribution</li>
+          <li>Department budget caps</li>
+          <li>Usage analytics dashboard</li>
+          <li>Model cost optimization tips</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 4: AI COUNCIL DEEP DIVE
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section council">
+  <div class="container">
+    <div class="council-grid">
+
+      <div>
+        <div class="council-badge">PATENT PENDING</div>
+        <div class="council-title">AI Council &mdash;<br><span class="teal-text">Collective Intelligence</span></div>
+        <p class="council-desc">Instead of trusting a single AI model, the AI Council convenes multiple models to deliberate on every query. Each model responds independently, reviews peer answers anonymously, and a synthesis engine produces a final consensus answer &mdash; dramatically reducing hallucinations and improving accuracy.</p>
+
+        <div class="pipeline-stage">
+          <div class="stage-num">1</div>
+          <div class="stage-content">
+            <h4>Divergence</h4>
+            <p>Multiple models generate independent responses to the same prompt, each bringing unique strengths and reasoning approaches.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-stage">
+          <div class="stage-num">2</div>
+          <div class="stage-content">
+            <h4>Convergence</h4>
+            <p>Each model anonymously reviews and scores peer responses, identifying factual errors, gaps, and areas of agreement.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-stage">
+          <div class="stage-num">3</div>
+          <div class="stage-content">
+            <h4>Synthesis</h4>
+            <p>A final synthesis combines the strongest elements from all responses into a single, consensus-driven answer with confidence scoring.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="num">&gt;60%</div>
+            <div class="label">Win Rate vs.<br>Single Model</div>
+          </div>
+          <div class="metric-card">
+            <div class="num">&gt;30%</div>
+            <div class="label">Hallucination<br>Reduction</div>
+          </div>
+          <div class="metric-card">
+            <div class="num">3+</div>
+            <div class="label">Models Per<br>Deliberation</div>
+          </div>
+          <div class="metric-card">
+            <div class="num">100%</div>
+            <div class="label">Anonymized<br>Peer Review</div>
+          </div>
+        </div>
+
+        <div class="model-pills">
+          <span class="model-pill">GPT-4o</span>
+          <span class="model-pill">Claude Sonnet</span>
+          <span class="model-pill">Gemini Pro</span>
+          <span class="model-pill">GPT-4o mini</span>
+          <span class="model-pill">Claude Haiku</span>
+          <span class="model-pill">Gemini Flash</span>
+          <span class="model-pill">Claude Opus</span>
+          <span class="model-pill">Azure OpenAI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 5: USE CASES
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section usecases">
+  <div class="container">
+    <div class="orange-line"></div>
+    <div class="section-title">Who Uses <span class="accent">Chat.AI</span></div>
+    <div class="section-subtitle">From 25-person law firms to 500-seat financial institutions, Chat.AI adapts to the security, compliance, and workflow needs of every organization.</div>
+
+    <div class="usecase-card bl-blue">
+      <div class="usecase-header">
+        <h3>Contract Review &amp; Legal Research</h3>
+        <span class="persona-badge">Legal Firm &middot; 25 Users</span>
+      </div>
+      <div class="usecase-body">
+        <div>
+          <div class="label">Challenge</div>
+          <p>Attorneys needed multi-model AI for contract review and legal research, but required full audit trails to satisfy bar association compliance and client confidentiality obligations.</p>
+        </div>
+        <div>
+          <div class="label">Solution</div>
+          <p>AI Council consensus cross-checks contract clauses across three models, flags discrepancies, and produces annotated reviews with complete audit logging for every interaction.</p>
+        </div>
+        <div class="result-metric">
+          <div class="big-num">40%</div>
+          <div class="metric-desc">Reduction in<br>Review Errors</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="usecase-card bl-orange">
+      <div class="usecase-header">
+        <h3>Clinical Q&amp;A &amp; Medical Documentation</h3>
+        <span class="persona-badge">Healthcare Provider &middot; 100 Users</span>
+      </div>
+      <div class="usecase-body">
+        <div>
+          <div class="label">Challenge</div>
+          <p>A regional healthcare provider needed HIPAA-compliant AI for clinical Q&amp;A and medical documentation, with strict data isolation between departments and predictable monthly costs.</p>
+        </div>
+        <div>
+          <div class="label">Solution</div>
+          <p>On-premise deployment with row-level security ensures PHI never leaves the network. Department-level budget controls prevented cost overruns while enabling full AI access for clinical staff.</p>
+        </div>
+        <div class="result-metric">
+          <div class="big-num">100%</div>
+          <div class="metric-desc">HIPAA<br>Compliant</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="usecase-card bl-teal">
+      <div class="usecase-header">
+        <h3>AI Platform Consolidation</h3>
+        <span class="persona-badge">Financial Services &middot; 500 Users</span>
+      </div>
+      <div class="usecase-body">
+        <div>
+          <div class="label">Challenge</div>
+          <p>A financial services company was paying for five separate AI tools across departments &mdash; ChatGPT Team, Copilot, Jasper, custom GPT wrappers, and a Claude subscription &mdash; with no unified governance.</p>
+        </div>
+        <div>
+          <div class="label">Solution</div>
+          <p>Consolidated all AI usage onto Chat.AI with unified billing, access controls, and compliance. Teams kept access to every model they needed through a single, governed platform.</p>
+        </div>
+        <div class="result-metric">
+          <div class="big-num">$174K</div>
+          <div class="metric-desc">Annual<br>Savings</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 6: PRICING
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section pricing">
+  <div class="container">
+    <div class="orange-line"></div>
+    <div class="section-title">Simple, Transparent <span class="accent">Pricing</span></div>
+    <div class="section-subtitle">Every plan includes multi-model access, AI Council, and enterprise security. Scale as you grow.</div>
+
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="tier">Starter</div>
+        <div class="price">$299<span>/mo</span></div>
+        <div class="annual">$3,228/yr billed annually</div>
+        <div class="specs">
+          Up to 10 users<br>
+          500K tokens/month<br>
+          10 GB storage<br>
+          Business hours SLA
+        </div>
+        <ul class="features">
+          <li>Multi-model chat</li>
+          <li>AI Council (3 models)</li>
+          <li>Basic analytics</li>
+          <li>Azure AD SSO</li>
+          <li>Email support</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="tier">Growth</div>
+        <div class="price">$899<span>/mo</span></div>
+        <div class="annual">$9,708/yr billed annually</div>
+        <div class="specs">
+          Up to 50 users<br>
+          2M tokens/month<br>
+          50 GB storage<br>
+          8-hour response SLA
+        </div>
+        <ul class="features">
+          <li>Everything in Starter</li>
+          <li>Custom assistants</li>
+          <li>Workflow automation</li>
+          <li>Department budgets</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+
+      <div class="price-card featured">
+        <div class="popular-tag">MOST POPULAR</div>
+        <div class="tier">Professional</div>
+        <div class="price">$1,699<span>/mo</span></div>
+        <div class="annual">$18,349/yr billed annually</div>
+        <div class="specs">
+          Up to 150 users<br>
+          10M tokens/month<br>
+          200 GB storage<br>
+          4-hour response SLA
+        </div>
+        <ul class="features">
+          <li>Everything in Growth</li>
+          <li>Vector stores &amp; RAG</li>
+          <li>Advanced analytics</li>
+          <li>RBAC &amp; audit trails</li>
+          <li>Dedicated CSM</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="tier">Enterprise</div>
+        <div class="price">Custom</div>
+        <div class="annual">Contact sales</div>
+        <div class="specs">
+          Unlimited users<br>
+          Unlimited tokens<br>
+          Unlimited storage<br>
+          1-hour response SLA
+        </div>
+        <ul class="features">
+          <li>Everything in Professional</li>
+          <li>On-premise deployment</li>
+          <li>White-label branding</li>
+          <li>Custom integrations</li>
+          <li>24/7 phone support</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="addons-row">
+      <span class="addon-pill">Premium Models</span>
+      <span class="addon-pill">Extra Users</span>
+      <span class="addon-pill">Extra Storage</span>
+      <span class="addon-pill">White-Label</span>
+      <span class="addon-pill">Priority Support</span>
+      <span class="addon-pill">Custom Connectors</span>
+    </div>
+
+    <div class="deploy-grid">
+      <div class="deploy-card">
+        <h4>Cloud SaaS</h4>
+        <div class="from">Starting at $299/mo</div>
+        <p>Fully managed on Azure. Zero infrastructure to maintain. Automatic updates, backups, and scaling included.</p>
+      </div>
+      <div class="deploy-card">
+        <h4>On-Premise</h4>
+        <div class="from">Starting at $45,000/yr</div>
+        <p>Deploy inside your own network. Full data sovereignty, air-gapped option available. Ideal for regulated industries.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 7: COMPARISON + ROI
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section comparison" style="min-height:auto;">
+  <div class="container">
+    <div class="orange-line"></div>
+    <div class="section-title">How Chat.AI <span class="accent">Compares</span></div>
+    <div class="section-subtitle" style="margin-bottom:24px;">Feature-by-feature against the most popular enterprise AI platforms.</div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th>ChatGPT Team</th>
+          <th>MS Copilot</th>
+          <th>Gemini Business</th>
+          <th class="highlight">Chat.AI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Multi-Model Access</td>
+          <td class="cross">&#10005; OpenAI only</td>
+          <td class="cross">&#10005; GPT only</td>
+          <td class="cross">&#10005; Gemini only</td>
+          <td class="highlight check">&#10003; All providers</td>
+        </tr>
+        <tr>
+          <td>AI Council Consensus</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="highlight check">&#10003; Patent Pending</td>
+        </tr>
+        <tr>
+          <td>Per-Call Cost Attribution</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="highlight check">&#10003;</td>
+        </tr>
+        <tr>
+          <td>Workflow Automation</td>
+          <td class="cross">&#10005; Limited</td>
+          <td>Power Automate</td>
+          <td class="cross">&#10005;</td>
+          <td class="highlight check">&#10003; Built-in</td>
+        </tr>
+        <tr>
+          <td>Tenant Isolation</td>
+          <td>Workspace only</td>
+          <td>M365 boundary</td>
+          <td>Workspace only</td>
+          <td class="highlight check">&#10003; Row-level</td>
+        </tr>
+        <tr>
+          <td>Full Audit Trail</td>
+          <td class="cross">&#10005;</td>
+          <td>Partial</td>
+          <td class="cross">&#10005;</td>
+          <td class="highlight check">&#10003; Every call</td>
+        </tr>
+        <tr>
+          <td>Vector Stores / RAG</td>
+          <td>Basic</td>
+          <td>Copilot Studio</td>
+          <td>NotebookLM</td>
+          <td class="highlight check">&#10003; Enterprise RAG</td>
+        </tr>
+        <tr>
+          <td>On-Premise Option</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="highlight check">&#10003;</td>
+        </tr>
+        <tr>
+          <td>Budget Controls</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="cross">&#10005;</td>
+          <td class="highlight check">&#10003; Per-dept</td>
+        </tr>
+        <tr>
+          <td>Starting Price</td>
+          <td>$25/user/mo</td>
+          <td>$30/user/mo</td>
+          <td>$20/user/mo</td>
+          <td class="highlight" style="color:var(--teal);font-weight:800;">$29.90/user/mo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="roi-section">
+    <div class="container">
+      <div class="section-title" style="color:#fff;">What You <span class="accent">Save</span></div>
+      <div class="orange-line"></div>
+      <div class="roi-grid">
+
+        <div class="roi-card">
+          <div class="team">Small Team &mdash; 10 Users</div>
+          <div class="row-label">Current Multi-Tool Spend</div>
+          <div class="row-val">$389/mo</div>
+          <div class="row-label">Chat.AI Cost</div>
+          <div class="row-val">$299/mo</div>
+          <div class="savings">$1,080/yr</div>
+          <div class="savings-label">Annual Savings</div>
+        </div>
+
+        <div class="roi-card">
+          <div class="team">Mid-Market &mdash; 50 Users</div>
+          <div class="row-label">Current Multi-Tool Spend</div>
+          <div class="row-val">$2,500/mo</div>
+          <div class="row-label">Chat.AI Cost</div>
+          <div class="row-val">$899/mo</div>
+          <div class="savings">$19,212/yr</div>
+          <div class="savings-label">Annual Savings</div>
+        </div>
+
+        <div class="roi-card">
+          <div class="team">Enterprise &mdash; 250 Users</div>
+          <div class="row-label">Current Multi-Tool Spend</div>
+          <div class="row-val">$18,500/mo</div>
+          <div class="row-label">Chat.AI Cost</div>
+          <div class="row-val">$3,999/mo</div>
+          <div class="savings">$174,012/yr</div>
+          <div class="savings-label">Annual Savings</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAGE 8: SECURITY + ABOUT + CTA
+     ════════════════════════════════════════════════════════════════ -->
+<section class="page-section" style="min-height:auto;">
+
+  <!-- SECURITY -->
+  <div class="security">
+    <div class="container">
+      <div class="orange-line"></div>
+      <div class="section-title">Enterprise-Grade <span class="accent">Security</span></div>
+      <div class="section-subtitle" style="margin-bottom:28px;">Every layer of Chat.AI is built for regulated industries and enterprise compliance requirements.</div>
+      <div class="security-grid">
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,var(--blue),#0088dd);">&#128274;</div>
+          <h4>Azure AD SSO</h4>
+        </div>
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,var(--teal),#3cc8e0);">&#128737;</div>
+          <h4>Row-Level Security</h4>
+        </div>
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,var(--orange),#ff9a6c);">&#128203;</div>
+          <h4>Full Audit Trail</h4>
+        </div>
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,var(--dark),#2a2a4a);">&#128273;</div>
+          <h4>Azure Key Vault</h4>
+        </div>
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,#a0b800,var(--chartreuse));">&#128737;</div>
+          <h4>Prompt Injection Defense</h4>
+        </div>
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,var(--blue),var(--teal));">&#9989;</div>
+          <h4>HIPAA / SOC 2 Ready</h4>
+        </div>
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,var(--orange),var(--dark));">&#128101;</div>
+          <h4>RBAC Roles</h4>
+        </div>
+        <div class="sec-badge">
+          <div class="sec-icon" style="background:linear-gradient(135deg,var(--teal),var(--blue));">&#9201;</div>
+          <h4>Rate Limiting</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="about">
+    <div class="container">
+      <div class="about-content">
+        <div>
+          <h3>About <span style="color:var(--orange);">Technijian</span></h3>
+          <p>Founded in 2000 and headquartered in Irvine, California, Technijian has spent over 25 years helping organizations modernize their IT infrastructure, secure their operations, and adopt transformative technologies. With offices in the US and India, we deliver 24/7 global support through our unique Pod Model &mdash; a dedicated team of specialists assigned exclusively to your business.</p>
+          <p><strong>The Technijians Pod Model:</strong> Every client gets a dedicated cross-functional team &mdash; not a rotating help desk. Your pod knows your infrastructure, your people, and your goals. This is managed services the way it should be.</p>
+        </div>
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="num">25+</div>
+            <div class="label">Years</div>
+          </div>
+          <div class="about-stat">
+            <div class="num">24/7</div>
+            <div class="label">Global Support</div>
+          </div>
+          <div class="about-stat">
+            <div class="num">6</div>
+            <div class="label">Service Pillars</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="container">
+      <h2>Ready to Transform How Your Team Uses AI?</h2>
+      <p>Join the enterprises already using Chat.AI to reduce costs, improve accuracy, and govern AI usage across every department.</p>
+      <div class="cta-buttons">
+        <a href="mailto:RJain@technijian.com?subject=Chat.AI Demo Request" class="btn-demo">Schedule a Demo</a>
+        <a href="https://technijian.com" class="btn-learn">Learn More</a>
+      </div>
+      <div class="cta-contact">
+        Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; 949.379.8500 &middot; RJain@technijian.com
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    &copy; 2026 Technijian. All rights reserved. &middot; 18 Technology Dr. Ste 141, Irvine CA 92618
+  </div>
+
+</section>
+
+</body>
+</html>
