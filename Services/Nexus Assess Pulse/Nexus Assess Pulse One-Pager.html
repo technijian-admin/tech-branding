@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Nexus — Assess Pulse One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333; font-size: 13px; line-height: 1.45;
+    display: flex; flex-direction: column;
+    height: 100vh;
+    background: #fff;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628, #0d2847);
+    padding: 16px 28px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -50px; left: 15%; width: 140px; height: 140px; background: radial-gradient(circle, rgba(246,125,75,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .hero-left img { height: 30px; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-badges { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .hero-badge { font-size: 7.5px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; white-space: nowrap; }
+  .hero-sub { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .hero-stats { display: flex; gap: 16px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 22px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.5); display: block; margin-top: 1px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 16px; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  /* ── VALUE PROP ── */
+  .vp { background: var(--blue); text-align: center; padding: 8px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  /* ── MAIN BODY ── */
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 14px 26px; flex: 1; align-content: start; }
+
+  .sh { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 7px; border-bottom: 2px solid var(--light-grey); padding-bottom: 3px; }
+
+  /* Module label */
+  .mod-label { font-size: 7.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 1px 6px; border-radius: 3px; display: inline-block; margin-bottom: 2px; }
+  .mod-assess { background: rgba(0,109,182,0.12); color: var(--blue); }
+  .mod-pulse { background: rgba(246,125,75,0.12); color: var(--orange); }
+
+  /* Capabilities */
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 10.5px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .cg-bar { width: 4px; height: 13px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10px; padding: 1px 0; color: #444; line-height: 1.35; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 9px; }
+
+  /* Steps */
+  .steps-row { display: flex; gap: 12px; margin-bottom: 4px; }
+  .step-group { flex: 1; }
+  .step-group-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; padding: 2px 6px; border-radius: 3px; display: inline-block; }
+  .step { display: flex; gap: 6px; margin-bottom: 4px; align-items: flex-start; }
+  .sn { width: 18px; height: 18px; min-width: 18px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #e8643a); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(246,125,75,0.3); }
+  .st { font-size: 9.5px; line-height: 1.35; }
+  .st b { color: var(--dark); }
+
+  /* Comparison mini-table */
+  .cmp { width: 100%; border-collapse: collapse; font-size: 9px; margin-top: 5px; border-radius: 6px; overflow: hidden; }
+  .cmp th { background: var(--dark); color: #fff; padding: 4px 5px; text-align: left; font-size: 8px; font-weight: 600; }
+  .cmp th.hl { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+  .cmp td { padding: 3px 5px; border-bottom: 1px solid var(--light-grey); font-size: 8.5px; }
+  .cmp td.hl { background: rgba(0,109,182,0.06); font-weight: 600; color: var(--teal); }
+  .cmp td.x { color: #bbb; }
+  .cmp .ck { color: var(--teal); font-weight: 800; }
+
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 10px; padding: 3px 0; display: flex; gap: 7px; align-items: flex-start; line-height: 1.35; }
+  .dd { width: 8px; height: 8px; min-width: 8px; border-radius: 50%; margin-top: 3px; }
+  .diff li b { color: var(--dark); font-size: 10px; }
+
+  /* Pricing */
+  .pricing-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px; }
+  .pricing-block { }
+  .pricing-block-title { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; padding: 2px 6px; border-radius: 3px; display: inline-block; }
+  .pt { width: 100%; border-collapse: collapse; font-size: 9px; border-radius: 5px; overflow: hidden; }
+  .pt th { background: var(--dark); color: #fff; padding: 3px 5px; text-align: left; font-weight: 600; font-size: 8px; }
+  .pt td { padding: 3px 5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt tr.pop td { background: #e6f0fa; font-weight: 600; }
+  .pt tr.pop td:first-child { color: var(--blue); }
+  .pt-note { font-size: 8px; color: var(--teal); font-weight: 600; margin-top: 3px; }
+
+  /* Coverage badges */
+  .badges { display: flex; flex-wrap: wrap; gap: 3px 10px; margin-top: 5px; }
+  .badge { font-size: 9px; color: var(--grey); display: flex; align-items: center; gap: 3px; font-weight: 500; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 9px; }
+
+  /* ROI strip */
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 5px; }
+  .roi-card { background: var(--dark); border-radius: 5px; padding: 6px 8px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card .rc-top { width: 100%; height: 2px; position: absolute; top: 0; left: 0; }
+  .roi-card .rc-label { font-size: 7.5px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .roi-card .rc-cost { font-size: 7.5px; color: rgba(255,255,255,0.65); margin-top: 1px; }
+  .roi-card .rc-save { font-size: 13px; font-weight: 800; color: var(--chartreuse); margin-top: 1px; }
+
+  .sec { margin-bottom: 10px; }
+
+  /* Reports highlight */
+  .report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; margin-top: 4px; }
+  .report-item { font-size: 9px; color: #444; display: flex; align-items: center; gap: 4px; }
+  .report-item .ri-n { font-size: 14px; font-weight: 800; color: var(--orange); min-width: 28px; text-align: center; }
+  .report-item .ri-l { line-height: 1.2; }
+
+  /* ── CTA ── */
+  .cta { background: linear-gradient(135deg, var(--blue), #004d80); text-align: center; padding: 8px 24px; color: #fff; font-size: 10.5px; flex-shrink: 0; font-weight: 600; }
+  .cta b { color: #fff; }
+
+  /* ── FOOTER ── */
+  .foot { background: #2D2D2D; text-align: center; padding: 5px; color: rgba(255,255,255,0.4); font-size: 7.5px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    body { min-height: 100vh; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div>
+      <div class="hero-title">Nexus <span class="o">Assess</span> + <span class="o">Pulse</span></div>
+      <div class="hero-badges">
+        <span class="hero-badge">IT Risk &amp; Compliance + AI Pentest</span>
+        <span class="hero-sub">Vulnerability Intelligence Platform</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">100+</span><span class="l">Report Types</span></div>
+    <div class="hero-stat"><span class="n">20+</span><span class="l">Security Tools</span></div>
+    <div class="hero-stat"><span class="n">AI</span><span class="l">ML Classifier</span></div>
+    <div class="hero-stat"><span class="n">24/7</span><span class="l">Monitoring</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">Unified IT risk assessment, compliance reporting, and AI-enhanced penetration testing in one platform &mdash; from discovery to exploitation proof.</div>
+
+<div class="main">
+  <!-- ── LEFT COLUMN ── -->
+  <div>
+    <div class="sec">
+      <div class="sh">Assess Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Discovery &amp; Scanning</div>
+        <ul>
+          <li>Non-intrusive scans across Windows, macOS, and Linux</li>
+          <li>Remote data collectors &amp; lightweight discovery agents</li>
+          <li>Scheduled continuous monitoring with real-time analysis</li>
+          <li>SQL Server database security assessments</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Cloud &amp; Microsoft 365</div>
+        <ul>
+          <li>M365, Teams, SharePoint, OneDrive, Exchange audits</li>
+          <li>Azure AD &amp; Active Directory security assessments</li>
+          <li>AWS infrastructure evaluation &amp; misconfig detection</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Risk Intelligence &amp; Compliance</div>
+        <ul>
+          <li>Dual scoring: proprietary + CVSS + Microsoft Secure Score</li>
+          <li>Dark web monitoring &amp; credential exposure detection</li>
+          <li>100+ reports: executive infographics, risk plans, technical</li>
+          <li>HIPAA, SOC 2, PCI-DSS, CJIS, NIST CSF compliance mapping</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Pulse Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Reconnaissance &amp; Vulnerability Scanning</div>
+        <ul>
+          <li>Subdomain finder with DNS enumeration &amp; Nmap port scanning</li>
+          <li>Website scanner with AI-enhanced authentication handling</li>
+          <li>SQL injection, XSS, SSRF, OWASP Top 10 detection</li>
+          <li>CMS scanning: WordPress (WPScan), Drupal, Joomla</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> AI Automation &amp; Exploitation</div>
+        <ul>
+          <li>ML Classifier: auto-categorize HIT / MISS / PARTIAL / INCONCLUSIVE</li>
+          <li>Pentest Robots: reusable attack sequences mimicking adversaries</li>
+          <li>SQLMap auto-exploitation &amp; Sniper auto-exploiter for PoC</li>
+          <li>Screenshot &amp; payload logging for stakeholder evidence</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">How It Works</div>
+      <div class="steps-row">
+        <div class="step-group">
+          <div class="step-group-label mod-assess">Assess</div>
+          <div class="step"><div class="sn">1</div><div class="st"><b>Deploy</b> &mdash; Agents or agentless scans</div></div>
+          <div class="step"><div class="sn">2</div><div class="st"><b>Assess</b> &mdash; Auto security evaluation</div></div>
+          <div class="step"><div class="sn">3</div><div class="st"><b>Report</b> &mdash; Executive &amp; technical reports</div></div>
+        </div>
+        <div class="step-group">
+          <div class="step-group-label mod-pulse">Pulse</div>
+          <div class="step"><div class="sn">1</div><div class="st"><b>Scope</b> &mdash; Define targets &amp; surfaces</div></div>
+          <div class="step"><div class="sn">2</div><div class="st"><b>Scan</b> &mdash; Run Pentest Robots</div></div>
+          <div class="step"><div class="sn">3</div><div class="st"><b>Prove</b> &mdash; Safe PoC with evidence</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT COLUMN ── -->
+  <div>
+    <div class="sec">
+      <div class="sh">Why Nexus Assess + Pulse</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Complete visibility:</b> Network, cloud, endpoints, and Active Directory from a single unified platform</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>AI-powered accuracy:</b> ML classifier eliminates false positives &mdash; focus on real vulnerabilities</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Proof, not just findings:</b> Safe exploitation tools generate evidence for executive buy-in</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>100+ branded reports:</b> Executive infographics, risk plans, technical details, and compliance mapping</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Assess + pentest unified:</b> Risk assessment and penetration testing in one platform, one pane of glass</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Pricing At-a-Glance</div>
+      <div class="pricing-dual">
+        <div class="pricing-block">
+          <div class="pricing-block-title mod-assess">Assess</div>
+          <table class="pt">
+            <thead><tr><th>Plan</th><th>Monthly</th><th>Endpoints</th></tr></thead>
+            <tbody>
+              <tr><td>Essentials</td><td>$499</td><td>50</td></tr>
+              <tr class="pop"><td>Professional</td><td>$999</td><td>250</td></tr>
+              <tr><td>Enterprise</td><td>$1,999</td><td>Unlimited</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pricing-block">
+          <div class="pricing-block-title mod-pulse">Pulse</div>
+          <table class="pt">
+            <thead><tr><th>Plan</th><th>Monthly</th><th>Scans/mo</th></tr></thead>
+            <tbody>
+              <tr><td>Starter</td><td>$299</td><td>25</td></tr>
+              <tr class="pop"><td>Professional</td><td>$799</td><td>100</td></tr>
+              <tr><td>Enterprise</td><td>$1,499</td><td>Unlimited</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="pt-note">Annual plans save 17% &bull; Managed services available &bull; Bundle discounts for Assess + Pulse</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Compliance &amp; Attack Surface</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> HIPAA</div>
+        <div class="badge"><span class="bi">&#10003;</span> SOC 2</div>
+        <div class="badge"><span class="bi">&#10003;</span> PCI-DSS</div>
+        <div class="badge"><span class="bi">&#10003;</span> CJIS</div>
+        <div class="badge"><span class="bi">&#10003;</span> NIST CSF</div>
+        <div class="badge"><span class="bi">&#10003;</span> CIS Controls</div>
+        <div class="badge"><span class="bi">&#10003;</span> GDPR</div>
+        <div class="badge"><span class="bi">&#10003;</span> HPH CPGs</div>
+      </div>
+      <div class="badges" style="margin-top:5px;">
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> Web Apps</div>
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> APIs/REST</div>
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> Network</div>
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> Cloud/AWS</div>
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> CMS</div>
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> DNS</div>
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> SSL/TLS</div>
+        <div class="badge"><span class="bi" style="color:var(--orange)">&#9679;</span> OWASP</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Efficiency Gains</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-top" style="background:var(--blue)"></div><div class="rc-label">Manual pentest</div><div class="rc-cost">40 hrs &rarr; 4 hrs</div><div class="rc-save">90% faster</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--orange)"></div><div class="rc-label">False positives</div><div class="rc-cost">ML classifier</div><div class="rc-save">95% signal</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--teal)"></div><div class="rc-label">Tool consolidation</div><div class="rc-cost">5+ tools &rarr; 1</div><div class="rc-save">$15K saved</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Report Coverage</div>
+      <div class="report-grid">
+        <div class="report-item"><span class="ri-n">32</span><div class="ri-l">Network Assessment Reports</div></div>
+        <div class="report-item"><span class="ri-n">39</span><div class="ri-l">Security Assessment Reports</div></div>
+        <div class="report-item"><span class="ri-n">13</span><div class="ri-l">Microsoft Cloud Reports</div></div>
+        <div class="report-item"><span class="ri-n">7</span><div class="ri-l">AI-Powered Pulse Reports</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">See your risk posture in minutes &mdash; schedule a demo: <b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b> &nbsp;|&nbsp; <b>technijian.com</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

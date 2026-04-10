@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Nexus — Assess &gt; Pulse One-Pager</title>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333; font-size: 13px; line-height: 1.45;
+    display: flex; flex-direction: column;
+    height: 100vh;
+    background: #fff;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628, #0d2847);
+    padding: 18px 30px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -50px; right: -40px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -40px; left: 20%; width: 120px; height: 120px; background: radial-gradient(circle, rgba(246,125,75,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .hero-left img { height: 32px; }
+  .hero-title { font-size: 26px; font-weight: 800; color: #fff; }
+  .hero-title .o { color: var(--orange); }
+  .hero-badge { font-size: 8px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; white-space: nowrap; }
+  .hero-sub { font-size: 8px; color: rgba(255,255,255,0.4); margin-left: 8px; }
+  .hero-stats { display: flex; gap: 20px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 22px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 9px; color: rgba(255,255,255,0.5); display: block; margin-top: 2px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 20px; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  /* ── VALUE PROP ── */
+  .vp { background: var(--blue); text-align: center; padding: 10px 24px; color: #fff; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+
+  /* ── MAIN BODY ── */
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 16px 28px; flex: 1; align-content: start; }
+
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; border-bottom: 2px solid var(--light-grey); padding-bottom: 4px; }
+
+  /* Capabilities */
+  .cg { margin-bottom: 10px; }
+  .cg-t { font-size: 11.5px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .cg-bar { width: 4px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10px; padding: 1.5px 0; color: #444; line-height: 1.4; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 9px; }
+
+  /* Steps */
+  .step { display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start; }
+  .sn { width: 20px; height: 20px; min-width: 20px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #e8643a); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(246,125,75,0.3); }
+  .st { font-size: 10px; line-height: 1.4; }
+  .st b { color: var(--dark); }
+
+  /* Comparison mini-table */
+  .cmp { width: 100%; border-collapse: collapse; font-size: 9.5px; margin-top: 6px; border-radius: 6px; overflow: hidden; }
+  .cmp th { background: var(--dark); color: #fff; padding: 5px 7px; text-align: left; font-size: 8.5px; font-weight: 600; }
+  .cmp th.hl { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+  .cmp td { padding: 4px 7px; border-bottom: 1px solid var(--light-grey); }
+  .cmp td.hl { background: rgba(0,109,182,0.06); font-weight: 600; color: var(--teal); }
+  .cmp td.x { color: #bbb; }
+  .cmp .ck { color: var(--teal); font-weight: 800; }
+
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 10px; padding: 4px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.4; }
+  .dd { width: 9px; height: 9px; min-width: 9px; border-radius: 50%; margin-top: 3px; }
+  .diff li b { color: var(--dark); font-size: 10px; }
+
+  /* Pricing */
+  .pt { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 6px; border-radius: 6px; overflow: hidden; }
+  .pt th { background: var(--dark); color: #fff; padding: 5px 8px; text-align: left; font-weight: 600; font-size: 9px; }
+  .pt td { padding: 5px 8px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt tr.pop td { background: #e6f0fa; font-weight: 600; }
+  .pt tr.pop td:first-child { color: var(--blue); }
+  .pt-note { font-size: 8.5px; color: var(--teal); font-weight: 600; margin-top: 4px; }
+
+  /* Security */
+  .badges { display: flex; flex-wrap: wrap; gap: 5px 14px; margin-top: 6px; }
+  .badge { font-size: 9.5px; color: var(--grey); display: flex; align-items: center; gap: 4px; font-weight: 500; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 10px; }
+
+  /* ROI strip */
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 6px; }
+  .roi-card { background: var(--dark); border-radius: 6px; padding: 8px 10px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card .rc-top { width: 100%; height: 3px; position: absolute; top: 0; left: 0; }
+  .roi-card .rc-label { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .roi-card .rc-cost { font-size: 8px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+  .roi-card .rc-save { font-size: 14px; font-weight: 800; color: var(--chartreuse); margin-top: 2px; }
+
+  .sec { margin-bottom: 12px; }
+
+  /* ── CTA ── */
+  .cta { background: linear-gradient(135deg, var(--blue), #004d80); text-align: center; padding: 10px 24px; color: #fff; font-size: 11px; flex-shrink: 0; font-weight: 600; }
+  .cta b { color: #fff; }
+
+  /* ── FOOTER ── */
+  .foot { background: #2D2D2D; text-align: center; padding: 6px; color: rgba(255,255,255,0.4); font-size: 8px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    body { min-height: 100vh; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div>
+      <div class="hero-title">Nexus <span class="o">Pulse</span></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
+        <span class="hero-badge">Assess &rsaquo; Pulse</span>
+        <span class="hero-sub">Penetration Testing Platform</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">20+</span><span class="l">Security Tools</span></div>
+    <div class="hero-stat"><span class="n">AI</span><span class="l">ML Classifier</span></div>
+    <div class="hero-stat"><span class="n">5</span><span class="l">Export Formats</span></div>
+    <div class="hero-stat"><span class="n">Auto</span><span class="l">Pentest Robots</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">AI-enhanced penetration testing and vulnerability assessment with 20+ tools, automated attack workflows, and actionable reporting.</div>
+
+<div class="main">
+  <!-- ── LEFT ── -->
+  <div>
+    <div class="sec">
+      <div class="sh">Key Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Reconnaissance &amp; Discovery</div>
+        <ul>
+          <li>Subdomain finder with deep DNS enumeration</li>
+          <li>TCP/UDP port scanning powered by Nmap engine</li>
+          <li>URL fuzzer for hidden paths, directories, and endpoints</li>
+          <li>Technology fingerprinting and service identification</li>
+          <li>SSL/TLS certificate analysis and configuration audit</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Vulnerability Scanning</div>
+        <ul>
+          <li>Website scanner with AI-enhanced authentication handling</li>
+          <li>SQL injection, XSS, SSRF, and OWASP Top 10 detection</li>
+          <li>CMS scanning: WordPress (WPScan), Drupal, Joomla</li>
+          <li>Network vulnerability scanning via OpenVAS engine</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> AI &amp; Automation</div>
+        <ul>
+          <li>ML Classifier: auto-categorize as HIT / MISS / PARTIAL / INCONCLUSIVE</li>
+          <li>Pentest Robots: reusable attack sequences mimicking real adversaries</li>
+          <li>AI fallback for complex dynamic login page authentication</li>
+          <li>Smart noise filtering eliminates false positives automatically</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Exploitation &amp; Proof</div>
+        <ul>
+          <li>SQLMap automated exploitation for SQL injection proof-of-concept</li>
+          <li>Sniper auto-exploiter for validated risk demonstration</li>
+          <li>Safe, controlled exploitation with evidence capture for reports</li>
+          <li>Screenshot and payload logging for stakeholder buy-in</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">How It Works</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Scope</b> &mdash; Define targets: domains, IPs, CIDR ranges, or cloud assets to test</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>Scan</b> &mdash; Run automated Pentest Robots or individual tools against your attack surface</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Prove</b> &mdash; Validate exploitability with safe PoC and export aggregated multi-scan reports</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Vs. Competitors</div>
+      <table class="cmp">
+        <thead><tr><th>Capability</th><th>Burp Suite</th><th>Acunetix</th><th>Invicti</th><th class="hl">Nexus Pulse</th></tr></thead>
+        <tbody>
+          <tr><td>Cloud-native</td><td class="x">&mdash;</td><td class="ck">&#10003;</td><td class="ck">&#10003;</td><td class="hl ck">&#10003;</td></tr>
+          <tr><td>AI/ML classifier</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003;</td></tr>
+          <tr><td>Pentest Robots</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003;</td></tr>
+          <tr><td>Network + web</td><td>Web only</td><td>Web only</td><td>Web only</td><td class="hl ck">&#10003; Both</td></tr>
+          <tr><td>Auto exploit PoC</td><td>Manual</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003;</td></tr>
+          <tr><td>Multi-scan export</td><td class="x">&mdash;</td><td>Limited</td><td>Limited</td><td class="hl ck">&#10003; Full</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── RIGHT ── -->
+  <div>
+    <div class="sec">
+      <div class="sh">Why Nexus Pulse</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>20+ tools, one platform:</b> Recon, scanning, exploitation, and reporting without tool sprawl or license juggling</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>AI-powered accuracy:</b> ML classifier filters noise &mdash; focus on real vulnerabilities, not false positives</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Pentest Robots:</b> Chain tools into reusable attack sequences that mimic real-world adversary workflows</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Proof, not just findings:</b> Safe exploitation tools generate evidence for executive stakeholder buy-in</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Multi-format exports:</b> PDF, HTML, CSV, XLSX with aggregated multi-scan reports for compliance</div></li>
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Deep integrations:</b> AWS, Vanta, Jira, Microsoft Teams, Nucleus Security, and custom webhooks</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Pricing At-a-Glance</div>
+      <table class="pt">
+        <thead><tr><th>Plan</th><th>Monthly</th><th>Annual</th><th>Scans/mo</th></tr></thead>
+        <tbody>
+          <tr><td>Starter</td><td>$299</td><td>$2,990</td><td>25</td></tr>
+          <tr class="pop"><td>Professional</td><td>$799</td><td>$7,990</td><td>100</td></tr>
+          <tr><td>Enterprise</td><td>$1,499</td><td>$14,990</td><td>Unlimited</td></tr>
+          <tr><td>Managed Pentest</td><td>Custom</td><td>Custom</td><td>Full service</td></tr>
+        </tbody>
+      </table>
+      <div class="pt-note">Annual plans save 17% &bull; Professional includes Pentest Robots &bull; All plans include ML Classifier</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Attack Surface Coverage</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> Web Apps</div>
+        <div class="badge"><span class="bi">&#10003;</span> APIs / REST</div>
+        <div class="badge"><span class="bi">&#10003;</span> Network Infra</div>
+        <div class="badge"><span class="bi">&#10003;</span> Cloud / AWS</div>
+        <div class="badge"><span class="bi">&#10003;</span> CMS Platforms</div>
+        <div class="badge"><span class="bi">&#10003;</span> DNS / Subdomains</div>
+        <div class="badge"><span class="bi">&#10003;</span> SSL/TLS</div>
+        <div class="badge"><span class="bi">&#10003;</span> OWASP Top 10</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Efficiency Gains</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-top" style="background:var(--blue)"></div><div class="rc-label">Manual pentesting</div><div class="rc-cost">40 hrs &rarr; 4 hrs</div><div class="rc-save">90% faster</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--orange)"></div><div class="rc-label">False positives</div><div class="rc-cost">ML classifier accuracy</div><div class="rc-save">95% signal</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--teal)"></div><div class="rc-label">Tool consolidation</div><div class="rc-cost">5+ tools &rarr; 1 platform</div><div class="rc-save">$15K saved</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Launch your first Pulse scan in minutes &mdash; schedule a demo: <b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

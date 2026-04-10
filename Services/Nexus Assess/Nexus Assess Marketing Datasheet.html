@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Nexus Assess — Marketing Datasheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA; --near-black: #2D2D2D;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #333; font-size: 14px; line-height: 1.55; background: #fff;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1A1A2E 0%, #0a1628 60%, #0d2847 100%);
+    padding: 48px 52px 44px; position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(30,170,200,0.12) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -60px; left: 15%; width: 250px; height: 250px; background: radial-gradient(circle, rgba(246,125,75,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .hero-inner { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; }
+  .hero-left img { height: 36px; filter: brightness(10); margin-bottom: 16px; }
+  .hero-badge { font-size: 9px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 4px 16px; border-radius: 14px; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 600; display: inline-block; margin-bottom: 14px; }
+  .hero h1 { font-size: 40px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero h1 .o { color: var(--orange); }
+  .hero .sub { font-size: 16px; color: rgba(255,255,255,0.6); margin-top: 10px; font-weight: 300; max-width: 480px; }
+  .hero-stats { display: flex; gap: 28px; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 28px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 9px; color: rgba(255,255,255,0.45); display: block; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.12); padding-left: 28px; }
+  .accent-line { height: 4px; background: linear-gradient(90deg, var(--orange), var(--teal), var(--blue)); }
+
+  /* ── PROBLEM / SOLUTION ── */
+  .ps-section { padding: 44px 52px; background: var(--off-white); }
+  .ps-section h2 { font-size: 26px; font-weight: 800; color: var(--dark); margin-bottom: 28px; }
+  .ps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .ps-card { background: #fff; border-radius: 10px; padding: 24px 22px 24px 26px; border-left: 5px solid; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .ps-card:nth-child(1) { border-color: var(--blue); }
+  .ps-card:nth-child(2) { border-color: var(--orange); }
+  .ps-card:nth-child(3) { border-color: var(--teal); }
+  .ps-card h3 { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .ps-card p { font-size: 12.5px; color: var(--grey); line-height: 1.5; }
+
+  /* ── FEATURES ── */
+  .features { padding: 44px 52px; }
+  .features h2 { font-size: 26px; font-weight: 800; color: var(--dark); margin-bottom: 28px; }
+  .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .feat-card { background: var(--off-white); border-radius: 10px; padding: 24px; border-top: 3px solid; }
+  .feat-card:nth-child(1) { border-color: var(--blue); }
+  .feat-card:nth-child(2) { border-color: var(--orange); }
+  .feat-card:nth-child(3) { border-color: var(--teal); }
+  .feat-card:nth-child(4) { border-color: var(--chartreuse); }
+  .feat-card:nth-child(5) { border-color: var(--blue); }
+  .feat-card:nth-child(6) { border-color: var(--orange); }
+  .feat-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; margin-bottom: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.12); }
+  .fi-1 { background: linear-gradient(135deg, #006DB6, #3399DD); }
+  .fi-2 { background: linear-gradient(135deg, #F67D4B, #F9A07A); }
+  .fi-3 { background: linear-gradient(135deg, #1EAAC8, #4CC4DB); }
+  .fi-4 { background: linear-gradient(135deg, #CBDB2D, #D8E85C); }
+  .fi-5 { background: linear-gradient(135deg, #006DB6, #1EAAC8); }
+  .fi-6 { background: linear-gradient(135deg, #F67D4B, #CBDB2D); }
+  .feat-card h3 { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .feat-card p { font-size: 12.5px; color: var(--grey); line-height: 1.5; margin-bottom: 10px; }
+  .feat-card ul { list-style: none; }
+  .feat-card li { font-size: 12px; color: #555; padding: 2px 0; }
+  .feat-card li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 11px; }
+
+  /* ── DIFFERENTIATOR HIGHLIGHT ── */
+  .diff-strip {
+    padding: 40px 52px;
+    background: linear-gradient(135deg, #0a1628 0%, #1A1A2E 50%, #0d2847 100%);
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .diff-strip::before { content: ''; position: absolute; top: -50px; right: -30px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(30,170,200,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .diff-inner { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 40px; }
+  .diff-text h2 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+  .diff-text p { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 440px; }
+  .diff-metrics { display: flex; gap: 28px; }
+  .dm { text-align: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); border-radius: 10px; padding: 18px 24px; min-width: 110px; }
+  .dm .v { font-size: 28px; font-weight: 800; color: var(--teal); display: block; line-height: 1.1; }
+  .dm .d { font-size: 10px; color: rgba(255,255,255,0.45); display: block; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── PRICING ── */
+  .pricing { padding: 44px 52px; background: var(--off-white); }
+  .pricing h2 { font-size: 26px; font-weight: 800; color: var(--dark); margin-bottom: 28px; }
+  .tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+  .tier { background: #fff; border-radius: 10px; padding: 24px 18px; text-align: center; border: 1px solid var(--light-grey); box-shadow: 0 2px 6px rgba(0,0,0,0.05); position: relative; }
+  .tier.pop { border: 2px solid var(--blue); box-shadow: 0 4px 14px rgba(0,109,182,0.12); }
+  .tier.pop::before { content: 'MOST POPULAR'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--blue), var(--teal)); color: #fff; font-size: 8px; font-weight: 700; padding: 3px 12px; border-radius: 8px; letter-spacing: 1px; }
+  .tier-name { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .tier-price { font-size: 28px; font-weight: 800; color: var(--blue); line-height: 1.1; }
+  .tier-price .per { font-size: 12px; font-weight: 400; color: var(--grey); }
+  .tier-ann { font-size: 10px; color: var(--teal); font-weight: 600; margin: 4px 0 12px; }
+  .tier-ep { font-size: 12px; color: var(--grey); padding: 8px 0; border-top: 1px solid var(--light-grey); margin-bottom: 10px; font-weight: 600; }
+  .tier ul { list-style: none; text-align: left; }
+  .tier li { font-size: 11px; color: #555; padding: 2px 0; }
+  .tier li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 10px; }
+  .pricing-note { text-align: center; font-size: 12px; color: var(--teal); font-weight: 600; }
+
+  /* ── COMPARISON ── */
+  .comparison { padding: 44px 52px; }
+  .comparison h2 { font-size: 26px; font-weight: 800; color: var(--dark); margin-bottom: 24px; }
+  .cmp-table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.07); font-size: 13px; }
+  .cmp-table th { padding: 12px 14px; text-align: left; font-weight: 700; }
+  .cmp-table th.dk { background: var(--dark); color: #fff; font-size: 11px; }
+  .cmp-table th.hl { background: linear-gradient(135deg, var(--blue), var(--teal)); color: #fff; font-size: 11px; }
+  .cmp-table td { padding: 10px 14px; border-bottom: 1px solid var(--light-grey); }
+  .cmp-table td.hl { background: rgba(0,109,182,0.04); font-weight: 600; }
+  .ck { color: var(--teal); font-weight: 800; font-size: 15px; }
+  .xx { color: #ccc; }
+
+  /* ── ROI ── */
+  .roi-section {
+    padding: 44px 52px;
+    background: linear-gradient(135deg, #1A1A2E, #0a1628, #0d2847);
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .roi-section::before { content: ''; position: absolute; bottom: -60px; left: -40px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(246,125,75,0.06) 0%, transparent 70%); border-radius: 50%; }
+  .roi-section h2 { font-size: 26px; font-weight: 800; margin-bottom: 24px; position: relative; z-index: 1; }
+  .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; z-index: 1; }
+  .roi-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10); border-radius: 10px; padding: 24px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card .rt { width: 100%; height: 3px; position: absolute; top: 0; left: 0; }
+  .roi-card .rl { font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; margin-top: 4px; }
+  .roi-card .rv { font-size: 32px; font-weight: 800; color: var(--chartreuse); margin: 8px 0 4px; line-height: 1; }
+  .roi-card .rd { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  /* ── SECURITY BADGES ── */
+  .sec-section { padding: 36px 52px; background: var(--off-white); }
+  .sec-section h2 { font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 20px; }
+  .badge-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .badge-item { background: #fff; border: 1px solid var(--light-grey); border-radius: 8px; padding: 10px 18px; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--dark); box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .badge-item .bi { color: var(--teal); font-weight: 800; font-size: 14px; }
+
+  /* ── CTA ── */
+  .cta {
+    padding: 36px 52px; text-align: center;
+    background: linear-gradient(135deg, var(--blue) 0%, #004d80 100%);
+    color: #fff;
+  }
+  .cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .cta p { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 20px; }
+  .cta-btns { display: flex; gap: 12px; justify-content: center; margin-bottom: 16px; }
+  .btn-or { background: linear-gradient(135deg, var(--orange), #e8643a); color: #fff; border: none; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(246,125,75,0.3); text-decoration: none; }
+  .btn-wh { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4); padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .cta-info { font-size: 12px; color: rgba(255,255,255,0.55); }
+  .cta-info b { color: #fff; }
+
+  /* ── FOOTER ── */
+  .foot { background: var(--near-black); text-align: center; padding: 12px; color: rgba(255,255,255,0.38); font-size: 11px; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .hero, .ps-section, .features, .diff-strip, .pricing, .comparison, .roi-section, .sec-section, .cta { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
+      <div class="hero-badge">IT Risk & Compliance Platform</div>
+      <h1>Nexus <span class="o">Assess</span></h1>
+      <p class="sub">Automated IT environment scanning, risk scoring, and compliance reporting across your entire infrastructure.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="n">94+</span><span class="l">Report Types</span></div>
+      <div class="hero-stat"><span class="n">3</span><span class="l">OS Platforms</span></div>
+      <div class="hero-stat"><span class="n">24/7</span><span class="l">Monitoring</span></div>
+      <div class="hero-stat"><span class="n">10</span><span class="l">Frameworks</span></div>
+    </div>
+  </div>
+</div>
+<div class="accent-line"></div>
+
+<!-- PROBLEM / SOLUTION -->
+<div class="ps-section">
+  <h2>The Problem You're Facing</h2>
+  <div class="ps-grid">
+    <div class="ps-card">
+      <h3>Blind Spots in Hybrid Environments</h3>
+      <p>Your network spans on-premise, cloud, and remote endpoints &mdash; but no single tool sees it all. Shadow IT and misconfigured cloud permissions hide in the gaps.</p>
+    </div>
+    <div class="ps-card">
+      <h3>Manual Audits Drain Resources</h3>
+      <p>Security assessments take weeks across multiple tools. By the time reports compile, data is stale. Your team spends more time gathering data than acting on it.</p>
+    </div>
+    <div class="ps-card">
+      <h3>Compliance Complexity Multiplies</h3>
+      <p>HIPAA, SOC 2, PCI-DSS, NIST, CMMC &mdash; each framework demands unique evidence, control mapping, and documentation. Audit prep consumes hundreds of hours annually.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <h2>Core Capabilities</h2>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon fi-1">&#128421;</div>
+      <h3>Discovery & Scanning</h3>
+      <p>Comprehensive, non-intrusive scanning with flexible deployment.</p>
+      <ul>
+        <li>Windows, macOS, Linux endpoint discovery</li>
+        <li>Remote collectors & ISAA agents</li>
+        <li>Automated scheduling & continuous monitoring</li>
+        <li>SQL Server security assessments</li>
+      </ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-2">&#9729;</div>
+      <h3>Cloud & M365 Auditing</h3>
+      <p>Deep security analysis of your Microsoft and cloud environments.</p>
+      <ul>
+        <li>M365, Teams, SharePoint, OneDrive audits</li>
+        <li>Azure AD & Active Directory assessments</li>
+        <li>AWS infrastructure evaluation</li>
+        <li>Conditional Access Policy analysis</li>
+      </ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-3">&#128737;</div>
+      <h3>Risk Intelligence</h3>
+      <p>Multi-dimensional risk scoring with actionable context.</p>
+      <ul>
+        <li>Proprietary + CVSS + MS Secure Score</li>
+        <li>Severity-based prioritization</li>
+        <li>Dark web monitoring & credential exposure</li>
+        <li>CVE correlation with exploitability</li>
+      </ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-4">&#128196;</div>
+      <h3>94+ Report Types</h3>
+      <p>Industry's most comprehensive assessment report library.</p>
+      <ul>
+        <li>Network (32), Security (39), Cloud (13)</li>
+        <li>10 compliance framework reports</li>
+        <li>Executive infographics & QBR decks</li>
+        <li>Multi-format: DOCX, PDF, XLSX, PPTX, VSDX</li>
+      </ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-5">&#128170;</div>
+      <h3>AI Executive Summaries</h3>
+      <p>AI generates clear, actionable summaries from complex data.</p>
+      <ul>
+        <li>Automatic executive summary generation</li>
+        <li>AI-driven ticket creation from findings</li>
+        <li>Natural language risk explanations</li>
+        <li>Trend analysis and improvement tracking</li>
+      </ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon fi-6">&#128279;</div>
+      <h3>PSA & Doc Integration</h3>
+      <p>Seamless workflow integration for MSP operations.</p>
+      <ul>
+        <li>Automatic ticket creation from findings</li>
+        <li>ITGlue documentation sync</li>
+        <li>ConnectWise & Autotask integration</li>
+        <li>Custom webhooks and API access</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- DIFFERENTIATOR HIGHLIGHT -->
+<div class="diff-strip">
+  <div class="diff-inner">
+    <div class="diff-text">
+      <h2>94 Reports. Zero Manual Effort.</h2>
+      <p>From network diagrams to compliance gap analysis, Nexus Assess generates the industry's most comprehensive report library &mdash; all branded with your company logo and ready for executive review.</p>
+    </div>
+    <div class="diff-metrics">
+      <div class="dm"><span class="v">32</span><span class="d">Network Reports</span></div>
+      <div class="dm"><span class="v">39</span><span class="d">Security Reports</span></div>
+      <div class="dm"><span class="v">13</span><span class="d">Cloud Reports</span></div>
+      <div class="dm"><span class="v">10</span><span class="d">Compliance</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="pricing">
+  <h2>Plans & Pricing</h2>
+  <div class="tier-grid">
+    <div class="tier">
+      <div class="tier-name">Essentials</div>
+      <div class="tier-price">$499<span class="per">/mo</span></div>
+      <div class="tier-ann">$4,990/yr &mdash; save 17%</div>
+      <div class="tier-ep">Up to 50 endpoints</div>
+      <ul>
+        <li>Network & security assessments</li>
+        <li>Microsoft 365 auditing</li>
+        <li>50+ report types</li>
+        <li>CVSS risk scoring</li>
+        <li>Compliance mapping</li>
+      </ul>
+    </div>
+    <div class="tier pop">
+      <div class="tier-name">Professional</div>
+      <div class="tier-price">$999<span class="per">/mo</span></div>
+      <div class="tier-ann">$9,990/yr &mdash; save 17%</div>
+      <div class="tier-ep">Up to 250 endpoints</div>
+      <ul>
+        <li>Everything in Essentials</li>
+        <li>Dark web monitoring</li>
+        <li>94+ report types</li>
+        <li>AI executive summaries</li>
+        <li>PSA & ITGlue integration</li>
+        <li>Scheduled automated scans</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price">$1,999<span class="per">/mo</span></div>
+      <div class="tier-ann">$19,990/yr &mdash; save 17%</div>
+      <div class="tier-ep">Unlimited endpoints</div>
+      <ul>
+        <li>Everything in Professional</li>
+        <li>Multi-site consolidated reports</li>
+        <li>AWS infrastructure scanning</li>
+        <li>Custom compliance frameworks</li>
+        <li>API access & webhooks</li>
+        <li>Dedicated success manager</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-name">Managed</div>
+      <div class="tier-price">Custom</div>
+      <div class="tier-ann">Fully managed service</div>
+      <div class="tier-ep">Full service</div>
+      <ul>
+        <li>Everything in Enterprise</li>
+        <li>Technijian runs assessments</li>
+        <li>Monthly executive briefings</li>
+        <li>Remediation project mgmt</li>
+        <li>Compliance audit prep</li>
+        <li>White-glove onboarding</li>
+      </ul>
+    </div>
+  </div>
+  <p class="pricing-note">Annual plans save 17% &bull; Volume discounts for MSPs with 10+ clients &bull; 30-day free pilot available</p>
+</div>
+
+<!-- COMPARISON -->
+<div class="comparison">
+  <h2>Competitive Comparison</h2>
+  <table class="cmp-table">
+    <thead>
+      <tr><th class="dk">Capability</th><th class="dk">Qualys</th><th class="dk">Nessus</th><th class="dk">Auvik</th><th class="hl">Nexus Assess</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Agentless network scans</td><td><span class="ck">&#10003;</span></td><td><span class="ck">&#10003;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+      <tr><td>Microsoft 365 auditing</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+      <tr><td>94+ report types</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+      <tr><td>Dark web monitoring</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+      <tr><td>Built-in compliance GRC</td><td>Add-on</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span> Built-in</td></tr>
+      <tr><td>AI executive summaries</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+      <tr><td>PSA integration (full)</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td>Limited</td><td class="hl"><span class="ck">&#10003;</span> Full</td></tr>
+      <tr><td>Multi-format export (5 types)</td><td>PDF only</td><td>PDF/CSV</td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+      <tr><td>Branded client reports</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+      <tr><td>10 compliance frameworks</td><td>3</td><td><span class="xx">&mdash;</span></td><td><span class="xx">&mdash;</span></td><td class="hl"><span class="ck">&#10003;</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ROI -->
+<div class="roi-section">
+  <h2>Risk Reduction & ROI</h2>
+  <div class="roi-grid">
+    <div class="roi-card">
+      <div class="rt" style="background: var(--blue)"></div>
+      <div class="rl">50 Endpoints</div>
+      <div class="rv">85%</div>
+      <div class="rd">Faster than manual assessments</div>
+    </div>
+    <div class="roi-card">
+      <div class="rt" style="background: var(--orange)"></div>
+      <div class="rl">250 Endpoints</div>
+      <div class="rv">$4.45M</div>
+      <div class="rd">Average breach cost avoided</div>
+    </div>
+    <div class="roi-card">
+      <div class="rt" style="background: var(--teal)"></div>
+      <div class="rl">Compliance</div>
+      <div class="rv">70%</div>
+      <div class="rd">Less audit prep time</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY BADGES -->
+<div class="sec-section">
+  <h2>Security & Compliance Frameworks</h2>
+  <div class="badge-grid">
+    <div class="badge-item"><span class="bi">&#10003;</span> HIPAA</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> SOC 2</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> PCI-DSS</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> NIST CSF</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> CIS Controls</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> GDPR</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> CMMC</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> CJIS</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> FFIEC</div>
+    <div class="badge-item"><span class="bi">&#10003;</span> HPH CPGs</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>See Your Risk Posture in Minutes</h2>
+  <p>Schedule a personalized Nexus Assess demo and discover what 94+ automated reports reveal about your environment.</p>
+  <div class="cta-btns">
+    <a href="mailto:RJain@technijian.com?subject=Nexus%20Assess%20Demo" class="btn-or">Schedule a Demo</a>
+    <a href="tel:9493798500" class="btn-wh">Call 949.379.8500</a>
+  </div>
+  <p class="cta-info"><b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b> &nbsp;|&nbsp; 18 Technology Dr. Ste 141, Irvine CA 92618</p>
+</div>
+
+<!-- FOOTER -->
+<div class="foot">&copy; 2026 Technijian &middot; All rights reserved &middot; technijian.com</div>
+
+</body>
+</html>

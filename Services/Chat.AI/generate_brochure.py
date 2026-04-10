@@ -1,889 +1,649 @@
 """
-Chat.AI Brochure — ReportLab PDF generation.
-Full-bleed, 8-page premium marketing brochure.
-Vector graphics, precise positioning, gradients, tiny file size.
+Chat.AI Brochure — ReportLab direct PDF generation.
+Produces a multi-page US Letter brochure with full Technijian branding.
 """
 
 import os
-import requests
-from io import BytesIO
-from reportlab.lib.pagesizes import letter
-from reportlab.lib.units import inch
-from reportlab.lib.colors import HexColor, Color, white, black
-from reportlab.pdfgen import canvas
+import math
 from reportlab.lib.utils import ImageReader
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.colors import HexColor, Color
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+W, H = letter  # 612 x 792
+
+# Brand colors
+BLUE = HexColor('#006DB6')
+BLUE_DARK = HexColor('#004d80')
+ORANGE = HexColor('#F67D4B')
+TEAL = HexColor('#1EAAC8')
+CHARTREUSE = HexColor('#CBDB2D')
+DARK = HexColor('#1A1A2E')
+NEAR_BLACK = HexColor('#2D2D2D')
+GREY = HexColor('#59595B')
+LIGHT_GREY = HexColor('#E9ECEF')
+OFF_WHITE = HexColor('#F8F9FA')
+WHITE = HexColor('#FFFFFF')
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
-W, H = letter  # 612 x 792 pts
+PDF_PATH = os.path.join(OUT_DIR, 'Chat.AI Brochure.pdf')
+LOGO_PATH = os.path.normpath(os.path.join(OUT_DIR, '..', '..', 'assets', 'Technijian Logo - white text.png'))
+GRAPHICS_DIR = os.path.join(OUT_DIR, 'graphics')
+AI_COUNCIL_GRAPHIC = os.path.join(GRAPHICS_DIR, 'ai-council-pipeline.png')
+PLATFORM_OVERVIEW_GRAPHIC = os.path.join(GRAPHICS_DIR, 'platform-overview.png')
+ROI_GRAPHIC = os.path.join(GRAPHICS_DIR, 'roi-savings.png')
 
-# ── Brand Colors ──
-BLUE       = HexColor('#006DB6')
-BLUE_DARK  = HexColor('#004D80')
-ORANGE     = HexColor('#F67D4B')
-ORANGE_DK  = HexColor('#E5663A')
-TEAL       = HexColor('#1EAAC8')
-CHARTREUSE = HexColor('#CBDB2D')
-DARK       = HexColor('#1A1A2E')
-DARK2      = HexColor('#0A1628')
-DARK3      = HexColor('#0D2847')
-NEAR_BLACK = HexColor('#2D2D2D')
-GREY       = HexColor('#59595B')
-MED_GREY   = HexColor('#ADB5BD')
-LIGHT_GREY = HexColor('#E9ECEF')
-OFF_WHITE  = HexColor('#F8F9FA')
-WHITE_C    = HexColor('#FFFFFF')
-MUTED      = Color(0.63, 0.63, 0.67, 1)
-DIM        = Color(0.53, 0.53, 0.56, 1)
+FONT = 'Helvetica'
+FONT_BOLD = 'Helvetica-Bold'
+try:
+    font_dir = os.path.expanduser('~/AppData/Local/Microsoft/Windows/Fonts')
+    if os.path.exists(os.path.join(font_dir, 'OpenSans-Regular.ttf')):
+        pdfmetrics.registerFont(TTFont('OpenSans', os.path.join(font_dir, 'OpenSans-Regular.ttf')))
+        pdfmetrics.registerFont(TTFont('OpenSans-Bold', os.path.join(font_dir, 'OpenSans-Bold.ttf')))
+        FONT = 'OpenSans'
+        FONT_BOLD = 'OpenSans-Bold'
+except Exception:
+    pass
 
-# ── Content margins ──
-ML = 36   # left margin
-MR = 36   # right margin
-CW = W - ML - MR  # content width
 
-# ── Helpers ──
+def draw_rounded_rect(c, x, y, w, h, r, fill_color=None, stroke_color=None, stroke_width=0.5):
+    c.saveState()
+    if fill_color:
+        c.setFillColor(fill_color)
+    if stroke_color:
+        c.setStrokeColor(stroke_color)
+        c.setLineWidth(stroke_width)
+    p = c.beginPath()
+    p.roundRect(x, y, w, h, r)
+    c.drawPath(p, fill=1 if fill_color else 0, stroke=1 if stroke_color else 0)
+    c.restoreState()
 
-def draw_rect(c, x, y, w, h, color, radius=0):
-    c.setFillColor(color)
-    c.setStrokeColor(color)
-    if radius:
-        c.roundRect(x, y, w, h, radius, fill=1, stroke=0)
-    else:
-        c.rect(x, y, w, h, fill=1, stroke=0)
 
-def draw_card(c, x, y, w, h, radius=6, border_color=None, shadow=True):
-    if shadow:
-        c.setFillColor(Color(0, 0, 0, alpha=0.06))
-        c.roundRect(x + 1.5, y - 1.5, w, h, radius, fill=1, stroke=0)
-    c.setFillColor(WHITE_C)
-    c.setStrokeColor(LIGHT_GREY)
-    c.setLineWidth(0.5)
-    c.roundRect(x, y, w, h, radius, fill=1, stroke=1)
-    if border_color:
-        c.setFillColor(border_color)
-        c.rect(x, y + 2, 4, h - 4, fill=1, stroke=0)
-
-def text(c, x, y, txt, size=9, color=GREY, bold=False, font='Helvetica'):
-    fname = f'{font}-Bold' if bold else font
-    c.setFont(fname, size)
-    c.setFillColor(color)
-    c.drawString(x, y, txt)
-
-def text_center(c, x, y, txt, size=9, color=GREY, bold=False):
-    fname = 'Helvetica-Bold' if bold else 'Helvetica'
-    c.setFont(fname, size)
-    c.setFillColor(color)
-    c.drawCentredString(x, y, txt)
-
-def text_right(c, x, y, txt, size=9, color=GREY, bold=False):
-    fname = 'Helvetica-Bold' if bold else 'Helvetica'
-    c.setFont(fname, size)
-    c.setFillColor(color)
-    c.drawRightString(x, y, txt)
-
-def draw_circle(c, x, y, r, color):
-    c.setFillColor(color)
+def draw_circle(c, x, y, r, fill_color):
+    c.saveState()
+    c.setFillColor(fill_color)
     c.circle(x, y, r, fill=1, stroke=0)
+    c.restoreState()
 
-def draw_check(c, x, y, color=TEAL, size=9):
-    c.setFont('Helvetica-Bold', size)
-    c.setFillColor(color)
+
+def draw_check(c, x, y, size=10):
+    c.saveState()
+    c.setFillColor(TEAL)
+    c.setFont(FONT_BOLD, size)
     c.drawString(x, y, '\u2713')
+    c.restoreState()
 
-def draw_dot(c, x, y, color, r=3):
-    c.setFillColor(color)
-    c.circle(x, y, r, fill=1, stroke=0)
 
-def wrap_text(c, x, y, txt, max_width, size=8, color=GREY, leading=10, bold=False):
-    fname = 'Helvetica-Bold' if bold else 'Helvetica'
-    c.setFont(fname, size)
-    c.setFillColor(color)
-    words = txt.split()
+def dark_bg(c):
+    """Fill full page with dark gradient."""
+    c.setFillColor(DARK)
+    c.rect(0, 0, W, H, fill=1, stroke=0)
+    c.saveState()
+    c.setFillColor(Color(0.12, 0.67, 0.78, alpha=0.12))
+    c.circle(W + 30, H - 80, 200, fill=1, stroke=0)
+    c.restoreState()
+    c.saveState()
+    c.setFillColor(Color(0.96, 0.49, 0.29, alpha=0.08))
+    c.circle(-50, 120, 180, fill=1, stroke=0)
+    c.restoreState()
+    c.saveState()
+    c.setFillColor(Color(0, 0.43, 0.71, alpha=0.10))
+    c.circle(-60, H * 0.5, 160, fill=1, stroke=0)
+    c.restoreState()
+
+
+def wrap_text(c, text, font, size, max_width):
+    words = text.split()
     lines = []
-    current = ''
-    for w in words:
-        test = f'{current} {w}'.strip()
-        if c.stringWidth(test, fname, size) <= max_width:
-            current = test
-        else:
+    current = ""
+    for word in words:
+        test = current + (" " if current else "") + word
+        if c.stringWidth(test, font, size) > max_width:
             if current:
                 lines.append(current)
-            current = w
-    if current:
-        lines.append(current)
-    for line in lines:
-        c.drawString(x, y, line)
-        y -= leading
-    return y
-
-def wrap_text_center(c, x, y, txt, max_width, size=8, color=GREY, leading=10, bold=False):
-    fname = 'Helvetica-Bold' if bold else 'Helvetica'
-    c.setFont(fname, size)
-    c.setFillColor(color)
-    words = txt.split()
-    lines = []
-    current = ''
-    for w in words:
-        test = f'{current} {w}'.strip()
-        if c.stringWidth(test, fname, size) <= max_width:
-            current = test
+            current = word
         else:
-            if current:
-                lines.append(current)
-            current = w
+            current = test
     if current:
         lines.append(current)
-    for line in lines:
-        c.drawCentredString(x, y, line)
-        y -= leading
-    return y
+    return lines
 
-def orange_top_line(c):
-    draw_rect(c, 0, H - 2, W, 2, ORANGE)
 
-def accent_bar(c, color, thickness=6):
-    draw_rect(c, 0, H - thickness - 2, W, thickness, color)
+def draw_wrapped_lines(c, lines, x, y, line_height, centered=False):
+    """Draw pre-wrapped lines from a top baseline downward."""
+    for i, line in enumerate(lines):
+        if centered:
+            c.drawCentredString(x, y - i * line_height, line)
+        else:
+            c.drawString(x, y - i * line_height, line)
 
-def fetch_logo():
+
+def draw_brand_logo(c, center_x, top_y, width=190):
+    """Draw the approved reverse Technijian logo on dark backgrounds."""
+    if not os.path.exists(LOGO_PATH):
+        return 0
     try:
-        resp = requests.get("https://technijian.com/wp-content/uploads/2023/08/Logo.jpg", timeout=5)
-        if resp.status_code == 200:
-            return BytesIO(resp.content)
-    except:
-        pass
-    return None
+        logo = ImageReader(LOGO_PATH)
+        iw, ih = logo.getSize()
+        height = width * (ih / iw)
+        c.drawImage(logo, center_x - width / 2, top_y - height, width=width, height=height, mask='auto')
+        return height
+    except Exception:
+        return 0
+
+
+def draw_fitted_image(c, image_path, x, y, w, h, padding=0):
+    """Draw an image fitted proportionally into a bounding box."""
+    if not os.path.exists(image_path):
+        return False
+    try:
+        image = ImageReader(image_path)
+        iw, ih = image.getSize()
+        usable_w = max(1, w - 2 * padding)
+        usable_h = max(1, h - 2 * padding)
+        scale = min(usable_w / iw, usable_h / ih)
+        draw_w = iw * scale
+        draw_h = ih * scale
+        dx = x + (w - draw_w) / 2
+        dy = y + (h - draw_h) / 2
+        c.drawImage(image, dx, dy, width=draw_w, height=draw_h, mask='auto')
+        return True
+    except Exception:
+        return False
+
+
+def draw_arrow(c, x1, y1, x2, y2, color, width=1.6, head=7):
+    """Draw a straight arrow between two points."""
+    c.saveState()
+    c.setStrokeColor(color)
+    c.setFillColor(color)
+    c.setLineWidth(width)
+    c.line(x1, y1, x2, y2)
+    angle = math.atan2(y2 - y1, x2 - x1)
+    p = c.beginPath()
+    p.moveTo(x2, y2)
+    p.lineTo(x2 - head * math.cos(angle - math.pi / 6), y2 - head * math.sin(angle - math.pi / 6))
+    p.lineTo(x2 - head * math.cos(angle + math.pi / 6), y2 - head * math.sin(angle + math.pi / 6))
+    p.close()
+    c.drawPath(p, fill=1, stroke=0)
+    c.restoreState()
 
-
-# ════════════════════════════════════════════════════
-# PAGE BUILDERS
-# ════════════════════════════════════════════════════
-
-def page_cover(c):
-    """PAGE 1: COVER — full dark page with glows."""
-    # Dark gradient background layers
-    draw_rect(c, 0, 0, W, H, DARK)
-    draw_rect(c, 0, 0, W, H * 0.5, DARK2)
-    draw_rect(c, 0, H * 0.3, W * 0.5, H * 0.7, DARK3)
-    c.setFillColor(Color(0.05, 0.1, 0.18, alpha=0.4))
-    c.rect(0, H * 0.5, W, H * 0.5, fill=1, stroke=0)
-
-    # Decorative radial glows
-    c.setFillColor(Color(0.12, 0.67, 0.78, alpha=0.08))
-    c.circle(W - 80, H - 120, 180, fill=1, stroke=0)
-    c.setFillColor(Color(0.96, 0.49, 0.29, alpha=0.06))
-    c.circle(60, 120, 200, fill=1, stroke=0)
-    c.setFillColor(Color(0, 0.43, 0.71, alpha=0.05))
-    c.circle(-30, H * 0.5, 250, fill=1, stroke=0)
-
-    # Orange accent line at top
-    draw_rect(c, 0, H - 2, W, 2, ORANGE)
-
-    # Logo
-    logo_data = fetch_logo()
-    if logo_data:
-        logo = ImageReader(logo_data)
-        logo_size = 80  # 1:1 square logo — preserve aspect ratio
-        c.drawImage(logo, W / 2 - logo_size / 2, H - 310, width=logo_size, height=logo_size, mask='auto')
-
-    # Badge pill
-    badge_text = 'ENTERPRISE AI PLATFORM'
-    c.setFont('Helvetica-Bold', 8)
-    bw = c.stringWidth(badge_text, 'Helvetica-Bold', 8) + 24
-    bx = W / 2 - bw / 2
-    by = H - 340
-    c.setFillColor(Color(0.12, 0.67, 0.78, alpha=0.15))
-    c.roundRect(bx, by, bw, 20, 10, fill=1, stroke=0)
-    c.setStrokeColor(Color(0.12, 0.67, 0.78, alpha=0.4))
-    c.setLineWidth(0.5)
-    c.roundRect(bx, by, bw, 20, 10, fill=0, stroke=1)
-    text_center(c, W / 2, by + 6, badge_text, size=8, color=TEAL, bold=True)
-
-    # Title
-    cy = H - 380
-    title1 = 'Technijian '
-    title2 = 'Chat.AI'
-    tw1 = c.stringWidth(title1, 'Helvetica-Bold', 40)
-    tw2 = c.stringWidth(title2, 'Helvetica-Bold', 40)
-    total = tw1 + tw2
-    tx = W / 2 - total / 2
-    text(c, tx, cy, title1, size=40, color=WHITE_C, bold=True)
-    text(c, tx + tw1, cy, title2, size=40, color=ORANGE, bold=True)
-
-    # Tagline
-    text_center(c, W / 2, cy - 36, 'Collective Intelligence for the Modern Enterprise',
-                size=16, color=MUTED)
-
-    # Decorative orange line
-    line_w = 80
-    draw_rect(c, W / 2 - line_w / 2, cy - 60, line_w, 2, ORANGE)
-
-    # Sub-tagline
-    text_center(c, W / 2, cy - 80,
-                'Multi-Model AI  \u00b7  Workflow Automation  \u00b7  Enterprise Governance',
-                size=10, color=DIM)
-
-
-def page_challenge(c):
-    """PAGE 2: THE CHALLENGE."""
-    # White background
-    draw_rect(c, 0, 0, W, H, WHITE_C)
-    orange_top_line(c)
-    accent_bar(c, TEAL, 6)
-
-    # Title
-    y = H - 50
-    t1 = 'The Challenge with '
-    t2 = 'Enterprise AI Today'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 24)
-    text(c, ML, y, t1, size=24, color=DARK, bold=True)
-    text(c, ML + tw1, y, t2, size=24, color=ORANGE, bold=True)
-
-    # Subtitle
-    y -= 24
-    y = wrap_text(c, ML, y, 'Organizations face real barriers adopting AI at scale. '
-                  'These four challenges prevent teams from realizing the full potential '
-                  'of artificial intelligence.', CW, size=11, color=GREY, leading=14)
-    y -= 16
-
-    problems = [
-        ('Single-Vendor Lock-In', BLUE,
-         'Tying your organization to one AI provider means you inherit their outages, pricing changes, and model limitations.',
-         'Chat.AI orchestrates OpenAI, Anthropic, Google, and Azure simultaneously with automatic failover.'),
-        ('No Cost Visibility', ORANGE,
-         'ChatGPT Team and Copilot charge flat per-seat fees with no transparency into actual token consumption or model costs.',
-         'Per-call cost attribution, prepaid budgets, and overage alerts give you complete financial control.'),
-        ('Hallucinations & Unreliable Output', TEAL,
-         'Single-model responses have no checks or balances. Users can\'t tell when the AI is confidently wrong.',
-         'AI Council deliberation across 3+ models reduces hallucinations by over 30% with consensus validation.'),
-        ('Security & Compliance Gaps', CHARTREUSE,
-         'Consumer AI tools lack tenant isolation, audit trails, and the controls required for regulated industries.',
-         'Row-level security, stored-procedure-only data access, full audit logging, and HIPAA/SOC 2 architecture.'),
-    ]
-
-    card_h = 120
-    for title, color, problem, solution in problems:
-        draw_card(c, ML, y - card_h, CW, card_h, radius=6, border_color=color, shadow=True)
-        # Title
-        text(c, ML + 16, y - 18, title, size=13, color=color, bold=True)
-        # Problem text
-        py = wrap_text(c, ML + 16, y - 36, problem, CW - 32, size=9, color=GREY, leading=12)
-        # Arrow + solution
-        arrow_y = py - 4
-        text(c, ML + 16, arrow_y, '\u2192', size=11, color=ORANGE, bold=True)
-        wrap_text(c, ML + 30, arrow_y, solution, CW - 46, size=9, color=DARK, leading=12, bold=True)
-
-        y -= card_h + 12
-
-
-def page_capabilities(c):
-    """PAGE 3: PLATFORM CAPABILITIES."""
-    draw_rect(c, 0, 0, W, H, WHITE_C)
-    orange_top_line(c)
-    accent_bar(c, BLUE, 6)
-
-    y = H - 50
-    t1 = 'Platform '
-    t2 = 'Capabilities'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 24)
-    text(c, ML, y, t1, size=24, color=DARK, bold=True)
-    text(c, ML + tw1, y, t2, size=24, color=ORANGE, bold=True)
-
-    y -= 20
-    y = wrap_text(c, ML, y, 'Everything your organization needs to adopt AI securely and effectively.',
-                  CW, size=11, color=GREY, leading=14)
-    y -= 12
-
-    features = [
-        ('Multi-Model Chat', BLUE,
-         'Conversational AI powered by GPT-4o, Claude Sonnet, Gemini Pro, and more.',
-         ['Switch models mid-conversation or route automatically',
-          'Streaming responses with file attachments & analysis',
-          'Thread sharing with permissions, export & history']),
-        ('Custom AI Assistants', ORANGE,
-         'Create purpose-built AI assistants with custom system instructions.',
-         ['Per-assistant model selection and connector integrations',
-          'REST, GraphQL, and database connectors attachable',
-          'Shared or private assistants, MyGPTs for personal productivity']),
-        ('Projects & Workspaces', TEAL,
-         'Organize chats, files, and instructions into project containers.',
-         ['Project-level system prompts inherited across all chats',
-          'Shared files & organizational knowledge base',
-          'Granular view/edit permissions with cross-chat context']),
-        ('Workflow Automation', DARK,
-         'Trigger N8N workflows directly from chat context.',
-         ['Chat-initiated workflow triggers with parameter extraction',
-          'Multi-step business process execution from conversation',
-          'Run tracking, retry mechanisms, and cost attribution']),
-        ('Knowledge & Memory', CHARTREUSE,
-         'Upload documents and give AI persistent organizational memory.',
-         ['Weaviate, Pinecone, or Chroma vector stores per tenant',
-          'File vectorization, embedding, and semantic search',
-          'Retrieval-augmented generation (RAG) capabilities']),
-        ('Billing & Cost Controls', TEAL,
-         'Prepaid balance model with token-level metering.',
-         ['Per-call, per-user, and per-model cost attribution',
-          'Budget alerts at 75% and 100% thresholds',
-          'Invoice generation and billing period management',
-          'Transparent token overage pricing']),
-    ]
-
-    col_w = (CW - 16) / 2
-    row_h = 142
-
-    for idx, (title, color, desc, bullets) in enumerate(features):
-        col = idx % 2
-        row = idx // 2
-        fx = ML + col * (col_w + 16)
-        fy = y - row * (row_h + 10) - row_h
-
-        # Card background
-        draw_card(c, fx, fy, col_w, row_h, radius=5, shadow=True)
-
-        # Colored circle icon
-        draw_circle(c, fx + 16, fy + row_h - 18, 6, color)
-
-        # Title
-        text(c, fx + 28, fy + row_h - 22, title, size=11, color=DARK, bold=True)
-
-        # Description
-        ty = fy + row_h - 38
-        ty = wrap_text(c, fx + 12, ty, desc, col_w - 24, size=8, color=GREY, leading=10)
-        ty -= 4
-
-        # Bullets
-        for b in bullets:
-            draw_check(c, fx + 14, ty, TEAL, 7)
-            ty = wrap_text(c, fx + 24, ty, b, col_w - 38, size=7.5, color=GREY, leading=9)
-            ty -= 2
-
-
-def page_ai_council(c):
-    """PAGE 4: AI COUNCIL DEEP DIVE — full dark page."""
-    # Full dark background layers
-    draw_rect(c, 0, 0, W, H, DARK)
-    draw_rect(c, 0, 0, W, H * 0.4, DARK2)
-    c.setFillColor(Color(0.05, 0.1, 0.18, alpha=0.3))
-    c.rect(0, H * 0.4, W, H * 0.6, fill=1, stroke=0)
-    orange_top_line(c)
-
-    y = H - 40
-
-    # Badge
-    badge = 'PATENT PENDING'
-    c.setFont('Helvetica-Bold', 8)
-    bw = c.stringWidth(badge, 'Helvetica-Bold', 8) + 16
-    c.setFillColor(Color(0.96, 0.49, 0.29, alpha=0.15))
-    c.roundRect(ML, y - 2, bw, 18, 9, fill=1, stroke=0)
-    text(c, ML + 8, y + 2, badge, size=8, color=ORANGE, bold=True)
-
-    # Title
-    y -= 34
-    t1 = 'AI Council \u2014 '
-    t2 = 'Collective Intelligence'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 26)
-    text(c, ML, y, t1, size=26, color=WHITE_C, bold=True)
-    text(c, ML + tw1, y, t2, size=26, color=ORANGE, bold=True)
-
-    # Description
-    y -= 22
-    y = wrap_text(c, ML, y,
-                  'The industry\'s first multi-agent deliberation system. Instead of trusting a single AI model\'s '
-                  'opinion, Chat.AI convenes a council of 3+ diverse models through a structured 3-stage pipeline '
-                  '\u2014 delivering answers that are more accurate, more balanced, and dramatically less prone to hallucination.',
-                  CW, size=10.5, color=MUTED, leading=14)
-
-    # 3 pipeline stages
-    y -= 16
-    stages = [
-        ('1', 'Divergence',
-         'Your query is routed to 3+ AI models in parallel. Each model responds independently with no knowledge of the others.'),
-        ('2', 'Convergence',
-         'Responses are anonymized (model names stripped to prevent sycophancy) and peer-reviewed for semantic similarity, with mandatory dissent encouraged.'),
-        ('3', 'Synthesis',
-         'The highest-performing model (auto-selected chairman) synthesizes a consensus response using Bayesian weighting and correlation analysis.'),
-    ]
-
-    stage_w = (CW - 20) / 3
-    for i, (num, title, desc) in enumerate(stages):
-        sx = ML + i * (stage_w + 10)
-        sy = y - 130
-
-        # Dark card
-        c.setFillColor(Color(0.08, 0.08, 0.16, alpha=0.8))
-        c.roundRect(sx, sy, stage_w, 130, 6, fill=1, stroke=0)
-        c.setStrokeColor(Color(1, 1, 1, alpha=0.05))
-        c.setLineWidth(0.5)
-        c.roundRect(sx, sy, stage_w, 130, 6, fill=0, stroke=1)
-
-        # Orange numbered circle
-        draw_circle(c, sx + stage_w / 2, sy + 108, 14, ORANGE)
-        text_center(c, sx + stage_w / 2, sy + 103, num, size=14, color=WHITE_C, bold=True)
-
-        # Stage title
-        text_center(c, sx + stage_w / 2, sy + 84, title, size=11, color=WHITE_C, bold=True)
-
-        # Stage description
-        wrap_text_center(c, sx + stage_w / 2, sy + 70, desc, stage_w - 16,
-                         size=7.5, color=Color(0.69, 0.69, 0.72, 1), leading=10)
-
-    y = sy - 24
-
-    # 4 metrics in 2x2 grid
-    metrics = [
-        ('>60%', 'Win Rate vs Single Models'),
-        ('>30%', 'Hallucination Reduction'),
-        ('3+', 'Models Per Deliberation'),
-        ('100%', 'Anonymized Peer Review'),
-    ]
-    metric_w = (CW - 20) / 4
-    for i, (val, label) in enumerate(metrics):
-        mx = ML + i * (metric_w + 6.67)
-        my = y - 60
-
-        # Darker card
-        c.setFillColor(Color(0.06, 0.06, 0.12, alpha=0.9))
-        c.roundRect(mx, my, metric_w, 60, 5, fill=1, stroke=0)
-
-        text_center(c, mx + metric_w / 2, my + 34, val, size=20, color=TEAL, bold=True)
-        wrap_text_center(c, mx + metric_w / 2, my + 18, label, metric_w - 10,
-                         size=7, color=DIM, leading=9)
-
-    y = my - 18
-
-    # Supported models
-    text(c, ML, y, 'Supported:', size=9, color=DIM, bold=True)
-    sw = c.stringWidth('Supported:  ', 'Helvetica-Bold', 9)
-    text(c, ML + sw, y,
-         'GPT-4o  \u2022  Claude Sonnet  \u2022  Gemini Pro  \u2022  GPT-4o mini  \u2022  Claude Haiku  \u2022  Gemini Flash  \u2022  Claude Opus  \u2022  Azure OpenAI',
-         size=9, color=MUTED)
-
-
-def page_use_cases(c):
-    """PAGE 5: USE CASES."""
-    draw_rect(c, 0, 0, W, H, WHITE_C)
-    orange_top_line(c)
-    accent_bar(c, ORANGE, 6)
-
-    y = H - 50
-    t1 = 'Who Uses '
-    t2 = 'Chat.AI'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 24)
-    text(c, ML, y, t1, size=24, color=DARK, bold=True)
-    text(c, ML + tw1, y, t2, size=24, color=ORANGE, bold=True)
-
-    y -= 22
-    y = wrap_text(c, ML, y,
-                  'Organizations across industries trust Chat.AI for secure, intelligent AI adoption.',
-                  CW, size=11, color=GREY, leading=14)
-    y -= 20
-
-    use_cases = [
-        ('Legal Firm \u2022 25 Users', BLUE,
-         'Needed multi-model AI for contract review with strict audit compliance requirements.',
-         'AI Council consensus reduced review errors by 40%. Full audit trail satisfies compliance auditors. Multiple model perspectives catch contract risks a single model misses.',
-         '40%', 'Reduction in Review Errors'),
-        ('Healthcare Provider \u2022 100 Users', ORANGE,
-         'Required HIPAA-compliant AI for clinical Q&A without sending patient data to third-party clouds.',
-         'On-premise deployment with row-level security keeps data in-house. Cost controls prevented budget overruns. Clinical staff access AI without compliance risk.',
-         '$0', 'Compliance Violations'),
-        ('Financial Services \u2022 500 Users', TEAL,
-         'Was paying for 5 separate AI tools, workflow platforms, and vector databases with no unified cost visibility.',
-         'Consolidated to single platform with Chat.AI Enterprise. Token-level metering replaced guesswork. 50% fewer vendor contracts to manage.',
-         '$174K', 'Annual Savings'),
-    ]
-
-    card_h = 180
-    for persona, color, challenge, solution, metric, metric_label in use_cases:
-        draw_card(c, ML, y - card_h, CW, card_h, radius=6, border_color=color, shadow=True)
-
-        # Persona badge
-        c.setFont('Helvetica-Bold', 9)
-        pw = c.stringWidth(persona, 'Helvetica-Bold', 9) + 16
-        c.setFillColor(Color(color.red, color.green, color.blue, alpha=0.1))
-        c.roundRect(ML + 16, y - 22, pw, 18, 9, fill=1, stroke=0)
-        text(c, ML + 24, y - 18, persona, size=9, color=color, bold=True)
-
-        # Challenge
-        cy = y - 42
-        text(c, ML + 16, cy, 'Challenge:', size=9, color=DARK, bold=True)
-        cw_offset = c.stringWidth('Challenge:  ', 'Helvetica-Bold', 9)
-        cy = wrap_text(c, ML + 16 + cw_offset, cy, challenge, CW - 32 - cw_offset, size=9, color=GREY, leading=12)
-        cy -= 6
-
-        # Solution
-        text(c, ML + 16, cy, 'Solution:', size=9, color=DARK, bold=True)
-        sw_offset = c.stringWidth('Solution:  ', 'Helvetica-Bold', 9)
-        cy = wrap_text(c, ML + 16 + sw_offset, cy, solution, CW - 32 - sw_offset, size=9, color=GREY, leading=12)
-
-        # Result metric — bottom right of card
-        text_right(c, ML + CW - 20, y - card_h + 22, metric, size=24, color=TEAL, bold=True)
-        text_right(c, ML + CW - 20, y - card_h + 8, metric_label, size=9, color=GREY)
-
-        y -= card_h + 14
-
-
-def page_pricing(c):
-    """PAGE 6: PRICING."""
-    draw_rect(c, 0, 0, W, H, WHITE_C)
-    orange_top_line(c)
-    accent_bar(c, TEAL, 6)
-
-    y = H - 46
-    t1 = 'Simple, '
-    t2 = 'Transparent Pricing'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 24)
-    text(c, ML, y, t1, size=24, color=DARK, bold=True)
-    text(c, ML + tw1, y, t2, size=24, color=ORANGE, bold=True)
-
-    y -= 18
-    text(c, ML, y, 'No hidden fees. No per-seat surprises. Annual plans save 17%.', size=10, color=GREY)
-
-    y -= 20
-
-    # Pricing table
-    headers = ['', 'Starter', 'Growth', 'Professional \u2605', 'Enterprise']
-    rows = [
-        ['Monthly Price',      '$299',    '$899',     '$1,699',         'Custom'],
-        ['Annual Price',       '$2,990',  '$8,990',   '$16,990',        'Custom'],
-        ['Users',              '10',      '50',       '100',            '250 \u2013 1,000+'],
-        ['Tokens/month',       '10M',     '35M',      '75M',           '200M \u2013 750M+'],
-        ['Storage',            '10 GB',   '50 GB',    '150 GB',        '500 GB \u2013 2 TB'],
-        ['Custom Assistants',  '5',       '25',       'Unlimited',     'Unlimited'],
-        ['Workflows',          '10',      '50',       'Unlimited',     'Unlimited'],
-        ['AI Council',         '\u2014',  '\u2014',   '\u2713 Included', '\u2713 Included'],
-        ['Model Tier',         'Standard', 'Pro',     'Pro + Premium', 'All Premium'],
-        ['Uptime SLA',         '99.0%',   '99.5%',    '99.5%',        '99.9 \u2013 99.95%'],
-        ['Support Response',   '72 hours', '48 hours', '24 hours',    '4 \u2013 1 hour'],
-        ['Token Overage',      '$16/1M',  '$15/1M',   '$14.75/1M',    '$14.50/1M'],
-    ]
-
-    num_rows = 1 + len(rows)
-    row_h = 22
-    col_widths = [CW * 0.22, CW * 0.17, CW * 0.17, CW * 0.22, CW * 0.22]
-
-    for ri in range(num_rows):
-        ry = y - ri * row_h
-        cx = ML
-        for ci in range(5):
-            cw_col = col_widths[ci]
-            is_pro = (ci == 3)
-
-            if ri == 0:
-                # Header row
-                bg = BLUE if is_pro else DARK
-                draw_rect(c, cx, ry - row_h, cw_col, row_h, bg)
-                text_center(c, cx + cw_col / 2, ry - row_h + 7, headers[ci],
-                           size=8, color=WHITE_C, bold=True)
-            else:
-                # Data rows
-                if is_pro:
-                    draw_rect(c, cx, ry - row_h, cw_col, row_h, Color(0.91, 0.96, 0.99, 1))
-                elif ri % 2 == 0:
-                    draw_rect(c, cx, ry - row_h, cw_col, row_h, OFF_WHITE)
-
-                val = rows[ri - 1][ci]
-                is_label = (ci == 0)
-                text_center(c, cx + cw_col / 2, ry - row_h + 7, val,
-                           size=7.5, color=DARK if (is_pro or is_label) else GREY,
-                           bold=(is_pro or is_label))
-            cx += cw_col
-
-    y -= num_rows * row_h + 10
-
-    # Add-ons
-    text(c, ML, y, 'Add-ons: Additional token packs, premium model access, and dedicated support available.',
-         size=8, color=GREY)
-    y -= 22
-
-    # Deployment cards
-    deployments = [
-        ('\u2601  Cloud (SaaS)', 'Fully managed on Azure with automatic updates, monitoring, and 24/7 global support.',
-         'Starting at $299/mo', Color(0.91, 0.96, 0.99, 1)),
-        ('\U0001f3e0  On-Premise', 'Deploy inside your own infrastructure for maximum data sovereignty.',
-         'Starting at $45,000/yr', OFF_WHITE),
-    ]
-    dep_w = (CW - 12) / 2
-    dep_h = 80
-    for i, (title, desc, price, bg) in enumerate(deployments):
-        dx = ML + i * (dep_w + 12)
-        draw_rect(c, dx, y - dep_h, dep_w, dep_h, bg, radius=6)
-        text(c, dx + 14, y - 18, title, size=12, color=DARK, bold=True)
-        wrap_text(c, dx + 14, y - 36, desc, dep_w - 28, size=9, color=GREY, leading=11)
-        text(c, dx + 14, y - dep_h + 12, price, size=10, color=BLUE, bold=True)
-
-
-def page_comparison(c):
-    """PAGE 7: COMPARISON + ROI."""
-    draw_rect(c, 0, 0, W, H, WHITE_C)
-    orange_top_line(c)
-    accent_bar(c, BLUE, 6)
-
-    y = H - 46
-    t1 = 'How Chat.AI '
-    t2 = 'Compares'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 20)
-    text(c, ML, y, t1, size=20, color=DARK, bold=True)
-    text(c, ML + tw1, y, t2, size=20, color=ORANGE, bold=True)
-    y -= 18
-
-    # Comparison table
-    cmp_headers = ['Capability', 'ChatGPT Team', 'MS Copilot', 'Gemini Business', 'Chat.AI']
-    cmp_rows = [
-        ['Multi-model access',       'OpenAI only',    'OpenAI only',      'Google only',    '\u2713 4+ providers'],
-        ['AI Council (consensus)',    '\u2014',         '\u2014',           '\u2014',         '\u2713 Patent pending'],
-        ['Per-call cost attribution', '\u2014',         '\u2014',           '\u2014',         '\u2713 Token-level'],
-        ['Workflow automation',       'GPTs only',      'Power Automate ($)','\u2014',        '\u2713 N8N built-in'],
-        ['Multi-tenant isolation',    '\u2014',         'Basic',            'Basic',          '\u2713 Row-level security'],
-        ['Full audit logging',        '\u2014',         'Limited',          'Limited',        '\u2713 SP-enforced'],
-        ['Custom vector stores',      'OpenAI only',    '\u2014',           '\u2014',         '\u2713 Weaviate/Pinecone'],
-        ['On-premise deployment',     '\u2014',         '\u2014',           '\u2014',         '\u2713 Term license'],
-        ['Budget controls',           '\u2014',         '\u2014',           '\u2014',         '\u2713 75%/100% alerts'],
-        ['Price (25 users)',          '$625/mo',        '$750/mo',          '$500/mo',        '$899/mo (50 seats)'],
-    ]
-
-    num_rows = 1 + len(cmp_rows)
-    row_h = 20
-    col_widths = [CW * 0.22, CW * 0.18, CW * 0.18, CW * 0.20, CW * 0.22]
-
-    for ri in range(num_rows):
-        ry = y - ri * row_h
-        cx = ML
-        for ci in range(5):
-            cw_col = col_widths[ci]
-            is_chatai = (ci == 4)
-
-            if ri == 0:
-                bg = BLUE if is_chatai else DARK
-                draw_rect(c, cx, ry - row_h, cw_col, row_h, bg)
-                text_center(c, cx + cw_col / 2, ry - row_h + 6, cmp_headers[ci],
-                           size=7.5, color=WHITE_C, bold=True)
-            else:
-                if is_chatai:
-                    draw_rect(c, cx, ry - row_h, cw_col, row_h, Color(0.91, 0.96, 0.99, 1))
-                elif ri % 2 == 0:
-                    draw_rect(c, cx, ry - row_h, cw_col, row_h, OFF_WHITE)
-
-                val = cmp_rows[ri - 1][ci]
-                if is_chatai and val.startswith('\u2713'):
-                    # Teal check + text
-                    text_center(c, cx + cw_col / 2, ry - row_h + 6, val,
-                               size=7, color=TEAL, bold=True)
-                elif val == '\u2014':
-                    text_center(c, cx + cw_col / 2, ry - row_h + 6, val,
-                               size=7, color=MED_GREY)
-                else:
-                    text_center(c, cx + cw_col / 2, ry - row_h + 6, val,
-                               size=7, color=DARK if ci == 0 else GREY, bold=(ci == 0))
-            cx += cw_col
-
-    y -= num_rows * row_h + 16
-
-    # ── ROI Section (dark background) ──
-    roi_h = y  # fill remaining page
-    draw_rect(c, 0, 0, W, roi_h, DARK)
-    draw_rect(c, 0, 0, W, roi_h * 0.5, DARK2)
-
-    ry = roi_h - 24
-    t1 = 'What You '
-    t2 = 'Save'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 20)
-    text(c, ML, ry, t1, size=20, color=WHITE_C, bold=True)
-    text(c, ML + tw1, ry, t2, size=20, color=ORANGE, bold=True)
-
-    ry -= 16
-    text(c, ML, ry, 'Real cost comparisons for typical organizations switching to Chat.AI.',
-         size=10, color=DIM)
-    ry -= 20
-
-    # ROI table
-    roi_headers = ['Scenario', 'Current Cost', 'Chat.AI', 'Monthly Savings', 'Annual Savings']
-    roi_data = [
-        ['Small Team (10)', '$389/mo', '$299/mo', '$90/mo', '$1,080'],
-        ['Mid-Market (50)', '$2,500/mo', '$899/mo', '$1,601/mo', '$19,212'],
-        ['Enterprise (250)', '$18,500/mo', '$3,999/mo', '$14,501/mo', '$174,012'],
-    ]
-
-    roi_col_w = [CW * 0.22, CW * 0.20, CW * 0.18, CW * 0.20, CW * 0.20]
-    roi_row_h = 24
-
-    # Header
-    cx = ML
-    for ci in range(5):
-        cw_col = roi_col_w[ci]
-        c.setFillColor(Color(0.1, 0.1, 0.2, alpha=0.8))
-        c.rect(cx, ry - roi_row_h, cw_col, roi_row_h, fill=1, stroke=0)
-        text_center(c, cx + cw_col / 2, ry - roi_row_h + 8, roi_headers[ci],
-                   size=8, color=TEAL, bold=True)
-        cx += cw_col
-    ry -= roi_row_h
-
-    # Data rows
-    for ri, rd in enumerate(roi_data):
-        cx = ML
-        for ci in range(5):
-            cw_col = roi_col_w[ci]
-            val = rd[ci]
-            is_savings = (ci == 4)
-            if ci == 0:
-                clr = WHITE_C
-                b = True
-            elif is_savings:
-                clr = CHARTREUSE
-                b = True
-            else:
-                clr = Color(0.69, 0.69, 0.72, 1)
-                b = False
-            text_center(c, cx + cw_col / 2, ry - roi_row_h + 8, val, size=9, color=clr, bold=b)
-            cx += cw_col
-        ry -= roi_row_h
-
-
-def page_security_about_cta(c):
-    """PAGE 8: SECURITY + ABOUT + CTA."""
-    draw_rect(c, 0, 0, W, H, WHITE_C)
-    orange_top_line(c)
-    accent_bar(c, TEAL, 6)
-
-    y = H - 46
-
-    # Security title
-    t1 = 'Enterprise-Grade '
-    t2 = 'Security & Compliance'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 18)
-    text(c, ML, y, t1, size=18, color=DARK, bold=True)
-    text(c, ML + tw1, y, t2, size=18, color=ORANGE, bold=True)
-    y -= 20
-
-    sec_items = [
-        ('Azure AD SSO', BLUE, 'OAuth 2.0/OIDC with JWT bearer tokens'),
-        ('Row-Level Security', ORANGE, 'Database-enforced tenant isolation'),
-        ('Full Audit Trail', TEAL, 'Every mutation logged with user & timestamp'),
-        ('Azure Key Vault', DARK, 'All secrets encrypted at rest'),
-        ('Prompt Injection Defense', ORANGE, 'Salted sequence tags & delimiter separation'),
-        ('HIPAA / SOC 2 Ready', BLUE, 'Compliance-ready architecture'),
-        ('RBAC Roles', TEAL, 'Multi-level role hierarchies'),
-        ('Rate Limiting', DARK, 'Per-user, per-tenant throttling'),
-    ]
-
-    col_w = (CW - 16) / 2
-    for idx, (title, color, desc) in enumerate(sec_items):
-        col = idx % 2
-        row = idx // 2
-        sx = ML + col * (col_w + 16)
-        sy = y - row * 22
-
-        draw_dot(c, sx + 5, sy + 3, color, 4)
-        text(c, sx + 14, sy, title, size=9, color=DARK, bold=True)
-        tw = c.stringWidth(title + '  ', 'Helvetica-Bold', 9)
-        text(c, sx + 14 + tw, sy, '\u2014  ' + desc, size=8, color=GREY)
-
-    y -= (len(sec_items) // 2) * 22 + 14
-
-    # Orange thin divider
-    draw_rect(c, ML, y, CW, 2, ORANGE)
-    y -= 22
-
-    # About Technijian
-    t1 = 'About '
-    t2 = 'Technijian'
-    tw1 = c.stringWidth(t1, 'Helvetica-Bold', 18)
-    text(c, ML, y, t1, size=18, color=DARK, bold=True)
-    text(c, ML + tw1, y, t2, size=18, color=BLUE, bold=True)
-    y -= 16
-
-    about1 = ('Founded in 2000 by Ravi Jain, Technijian has grown from a single-consultant operation '
-              'into a full-spectrum IT services company with offices in Irvine, California and India. '
-              'For over 25 years, we\'ve served small and mid-sized businesses with managed IT, '
-              'cybersecurity, cloud, compliance, and AI-driven solutions.')
-    y = wrap_text(c, ML, y, about1, CW, size=9, color=GREY, leading=12)
-    y -= 4
-
-    about2 = ('Our Technijians Pod Model assigns a dedicated team to each client \u2014 so you get '
-              'people who truly know your infrastructure, not a rotating cast of strangers. '
-              'With 24/7 global support at no extra cost, we deliver enterprise-grade technology '
-              'with the responsiveness of a dedicated partner.')
-    y = wrap_text(c, ML, y, about2, CW, size=9, color=GREY, leading=12)
-    y -= 16
-
-    # 3 metric boxes
-    metrics = [('25+', 'Years in Business'), ('24/7', 'Global Support'), ('6', 'Service Pillars')]
-    box_w = (CW - 20) / 3
-    box_h = 50
-    for i, (val, label) in enumerate(metrics):
-        bx = ML + i * (box_w + 10)
-        draw_rect(c, bx, y - box_h, box_w, box_h, OFF_WHITE, radius=5)
-        text_center(c, bx + box_w / 2, y - 22, val, size=22, color=ORANGE, bold=True)
-        text_center(c, bx + box_w / 2, y - 40, label, size=8, color=GREY)
-
-    y -= box_h + 18
-
-    # Blue CTA banner
-    cta_h = 70
-    draw_rect(c, 0, y - cta_h, W, cta_h, BLUE)
-    c.setFillColor(Color(0, 0.2, 0.4, alpha=0.3))
-    c.rect(W * 0.65, y - cta_h, W * 0.35, cta_h, fill=1, stroke=0)
-
-    text_center(c, W / 2, y - 22, 'Ready to Transform How Your Team Uses AI?',
-                size=18, color=WHITE_C, bold=True)
-    text_center(c, W / 2, y - 38,
-                'Schedule a personalized demo and see how Chat.AI delivers better answers at a lower cost.',
-                size=9.5, color=Color(0.8, 0.87, 0.93, 1))
-    text_center(c, W / 2, y - 56,
-                'RJain@technijian.com   \u2022   949.379.8500',
-                size=13, color=WHITE_C, bold=True)
-
-    y -= cta_h + 2
-
-    # Dark footer
-    footer_h = max(y, 20)
-    draw_rect(c, 0, 0, W, footer_h, NEAR_BLACK)
-    text_center(c, W / 2, footer_h / 2 - 4,
-                '\u00a9 2026 Technijian  \u2022  18 Technology Dr. Ste 141, Irvine CA 92618  \u2022  technijian.com',
-                size=7, color=Color(1, 1, 1, alpha=0.4))
-
-
-# ════════════════════════════════════════════════════
-# MAIN BUILD
-# ════════════════════════════════════════════════════
 
 def build():
-    pdf_path = os.path.join(OUT_DIR, 'Chat.AI Brochure.pdf')
-    c = canvas.Canvas(pdf_path, pagesize=letter)
-    c.setTitle('Technijian Chat.AI \u2014 Brochure')
-    c.setAuthor('Technijian')
+    c = canvas.Canvas(PDF_PATH, pagesize=letter)
+    c.setTitle("Technijian Chat.AI \u2014 Enterprise AI Platform Brochure")
+    c.setAuthor("Technijian")
+    margin = 56
 
-    page_cover(c)
+    # ══ PAGE 1: COVER ══
+    dark_bg(c)
+    logo_h = draw_brand_logo(c, W / 2, H - 70, width=215)
+    bw = 170
+    bx = (W - bw) / 2
+    c.saveState()
+    c.setFillColor(Color(0.12, 0.67, 0.78, alpha=0.20))
+    c.setStrokeColor(Color(0.12, 0.67, 0.78, alpha=0.45))
+    c.setLineWidth(0.5)
+    pill_y = H * 0.62
+    if logo_h:
+        pill_y = min(pill_y, H - 120 - logo_h)
+    p = c.beginPath(); p.roundRect(bx, pill_y, bw, 22, 11); c.drawPath(p, fill=1, stroke=1)
+    c.setFillColor(TEAL); c.setFont(FONT_BOLD, 9)
+    c.drawCentredString(W / 2, pill_y + 7, "ENTERPRISE AI PLATFORM")
+    c.restoreState()
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 48); c.drawCentredString(W / 2, H * 0.52, "Technijian")
+    c.setFillColor(ORANGE); c.drawCentredString(W / 2, H * 0.52 - 52, "Chat.AI")
+    c.setFillColor(Color(1, 1, 1, alpha=0.56)); c.setFont(FONT_BOLD, 11)
+    c.drawCentredString(W / 2, H * 0.52 - 80, "ENTERPRISE AI PLATFORM BROCHURE")
+    c.setFillColor(Color(1, 1, 1, alpha=0.60)); c.setFont(FONT, 14)
+    c.drawCentredString(W / 2, H * 0.36, "Secure, multi-model AI with collective intelligence,")
+    c.drawCentredString(W / 2, H * 0.36 - 20, "workflow automation, and enterprise governance.")
+    c.setFillColor(ORANGE); c.rect(W / 2 - 30, H * 0.30, 60, 3, fill=1, stroke=0)
+    stats = [("4+", "AI Providers"), ("32+", "Endpoints"), (">60%", "Council Win Rate"), ("99.9%", "Uptime SLA")]
+    start_x = (W - len(stats) * 120) / 2
+    c.setStrokeColor(Color(1, 1, 1, alpha=0.10)); c.setLineWidth(0.5); c.line(margin, H * 0.25, W - margin, H * 0.25)
+    for i, (num, lbl) in enumerate(stats):
+        sx = start_x + i * 120 + 60
+        c.setFillColor(ORANGE); c.setFont(FONT_BOLD, 32); c.drawCentredString(sx, H * 0.17, num)
+        c.setFillColor(Color(1, 1, 1, alpha=0.45)); c.setFont(FONT, 9); c.drawCentredString(sx, H * 0.17 - 18, lbl.upper())
     c.showPage()
 
-    page_challenge(c)
+    # ══ PAGE 2: THE CHALLENGE ══
+    c.setFillColor(OFF_WHITE); c.rect(0, 0, W, H, fill=1, stroke=0)
+    y = H - margin
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 28); c.drawString(margin, y, "The")
+    tw = c.stringWidth("The ", FONT_BOLD, 28); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Challenge")
+    y -= 24; c.setFillColor(GREY); c.setFont(FONT, 12)
+    for line in wrap_text(c, "Enterprises adopting AI face critical obstacles that generic chatbot subscriptions cannot solve. Today's AI landscape forces painful trade-offs between capability, security, and cost.", FONT, 12, W - 2 * margin):
+        c.drawString(margin, y, line); y -= 18
+    y -= 20
+    challenges = [
+        (BLUE, "Vendor Lock-In", "Tied to a single AI provider with no failover, no model comparison, and no negotiating leverage.", "Chat.AI connects 4+ providers with automatic failover"),
+        (ORANGE, "Runaway AI Costs", "No visibility into which teams or users consume the most tokens. Monthly bills arrive as surprises.", "Token-level metering with per-user budgets & alerts"),
+        (TEAL, "Security Gaps", "Consumer AI tools lack audit trails, role-based access, and tenant isolation for compliance.", "Row-level isolation, full audit trail, HIPAA/SOC 2 ready"),
+        (CHARTREUSE, "Hallucinations", "Relying on one model means no cross-validation. Wrong answers go unchecked and unverified.", "AI Council cross-validates with 3+ models per query"),
+    ]
+    card_w = (W - 2 * margin - 16) / 2; card_h = 135
+    for i, (color, title, desc, solution) in enumerate(challenges):
+        col = i % 2; row = i // 2
+        cx = margin + col * (card_w + 16); cy = y - row * (card_h + 14)
+        draw_rounded_rect(c, cx, cy - card_h, card_w, card_h, 6, fill_color=WHITE, stroke_color=LIGHT_GREY)
+        c.setFillColor(color); c.rect(cx, cy - card_h + 6, 4, card_h - 12, fill=1, stroke=0)
+        c.setFillColor(color); c.setFont(FONT_BOLD, 14); c.drawString(cx + 16, cy - 22, title)
+        c.setFillColor(GREY); c.setFont(FONT, 10.5); dy = cy - 40
+        for line in wrap_text(c, desc, FONT, 10.5, card_w - 32): c.drawString(cx + 16, dy, line); dy -= 14
+        dy -= 6; draw_circle(c, cx + 24, dy + 4, 8, color)
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 10); c.drawCentredString(cx + 24, dy + 1, "\u2192")
+        c.setFillColor(DARK); c.setFont(FONT_BOLD, 10)
+        for line in wrap_text(c, solution, FONT_BOLD, 10, card_w - 50): c.drawString(cx + 38, dy, line); dy -= 13
+    panel_y = 82; panel_h = 132
+    draw_rounded_rect(c, margin, panel_y, W - 2 * margin, panel_h, 10, fill_color=WHITE, stroke_color=LIGHT_GREY)
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 16); c.drawString(margin + 18, panel_y + panel_h - 28, "What Enterprises Need Instead")
+    c.setFillColor(GREY); c.setFont(FONT, 10); c.drawString(margin + 18, panel_y + panel_h - 46, "Model choice, governance, and answer quality control in one platform.")
+    need_items = [
+        (BLUE, "4+ Providers", "Avoid lock-in and route prompts to the best-fit model."),
+        (ORANGE, "Budget Guardrails", "Track token spend by user, team, and model before invoices hit."),
+        (TEAL, "Consensus Review", "Use AI Council to reduce hallucinations on high-stakes work."),
+    ]
+    ni_w = (W - 2 * margin - 36) / 3
+    for i, (accent, title, body) in enumerate(need_items):
+        nx = margin + 18 + i * ni_w
+        if i:
+            c.setStrokeColor(LIGHT_GREY); c.setLineWidth(0.6)
+            c.line(nx - 6, panel_y + 18, nx - 6, panel_y + panel_h - 18)
+        c.setFillColor(accent); c.setFont(FONT_BOLD, 14); c.drawString(nx, panel_y + 56, title)
+        c.setFillColor(GREY); c.setFont(FONT, 8.8)
+        draw_wrapped_lines(c, wrap_text(c, body, FONT, 8.8, ni_w - 12), nx, panel_y + 38, 11)
     c.showPage()
 
-    page_capabilities(c)
+    # ══ PAGE 3: CORE CAPABILITIES ══
+    c.setFillColor(WHITE); c.rect(0, 0, W, H, fill=1, stroke=0)
+    y = H - margin
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 28); c.drawString(margin, y, "Core")
+    tw = c.stringWidth("Core ", FONT_BOLD, 28); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Capabilities")
+    y -= 22; c.setFillColor(GREY); c.setFont(FONT, 12)
+    c.drawString(margin, y, "Six integrated modules that transform AI into an enterprise intelligence platform."); y -= 30
+    features = [
+        (BLUE, "Multi-Model AI Engine", "Access GPT-4o, Claude Sonnet, Gemini Pro through a unified interface.", ["Switch models mid-conversation", "Auto-route queries by task type", "Streaming with file attachments", "Thread sharing & full history"]),
+        (ORANGE, "AI Council (Patent Pending)", "Multi-model collective intelligence that outperforms any single model.", [">60% win rate vs single models", ">30% hallucination reduction", "3-stage deliberation process", "Anonymized peer review"]),
+        (TEAL, "Knowledge & RAG", "Enterprise knowledge base with vector search across your documents.", ["Weaviate, Pinecone, Chroma", "Semantic search & vectorization", "SharePoint & Drive sync", "Persistent org memory"]),
+        (DARK, "Custom Assistants", "Build purpose-specific AI agents with system prompts and connectors.", ["Custom system prompts", "REST, GraphQL, DB connectors", "Project workspaces", "Template marketplace"]),
+        (CHARTREUSE, "Workflow Automation", "Trigger complex workflows from chat, powered by N8N integration.", ["N8N orchestration", "Connect to any API", "Scheduled & event-driven", "Chat-triggered automations"]),
+        (BLUE, "Enterprise Governance", "Complete visibility over AI usage, costs, and compliance.", ["Token-level cost tracking", "Per-user & per-model budgets", "Analytics dashboard", "75%/100% budget alerts"]),
+    ]
+    card_w = (W - 2 * margin - 32) / 3; card_h = 180
+    for i, (color, title, desc, bullets) in enumerate(features):
+        col = i % 3; row = i // 3
+        cx = margin + col * (card_w + 16); cy = y - row * (card_h + 14)
+        draw_rounded_rect(c, cx, cy - card_h, card_w, card_h, 8, fill_color=WHITE, stroke_color=LIGHT_GREY)
+        c.setFillColor(color); c.rect(cx, cy - 3, card_w, 3, fill=1, stroke=0)
+        draw_rounded_rect(c, cx + 12, cy - 48, 36, 36, 8, fill_color=color)
+        c.setFillColor(WHITE if color != CHARTREUSE else DARK); c.setFont(FONT_BOLD, 16); c.drawCentredString(cx + 30, cy - 40, "\u2605")
+        c.setFillColor(DARK); c.setFont(FONT_BOLD, 11); c.drawString(cx + 12, cy - 62, title)
+        c.setFillColor(GREY); c.setFont(FONT, 9); dy = cy - 76
+        for line in wrap_text(c, desc, FONT, 9, card_w - 24): c.drawString(cx + 12, dy, line); dy -= 12
+        dy -= 4
+        for bullet in bullets:
+            draw_check(c, cx + 12, dy, 8); c.setFillColor(GREY); c.setFont(FONT, 8.5); c.drawString(cx + 24, dy, bullet); dy -= 12
+    panel_y = 66; panel_h = 146
+    draw_rounded_rect(c, margin, panel_y, W - 2 * margin, panel_h, 10, fill_color=DARK)
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 16); c.drawString(margin + 18, panel_y + panel_h - 28, "One Platform, Shared Controls")
+    c.setFillColor(Color(1, 1, 1, alpha=0.60)); c.setFont(FONT, 10)
+    c.drawString(margin + 18, panel_y + panel_h - 46, "Every module runs on the same identity, knowledge, and governance foundation.")
+    diagram_y = panel_y + 12
+    c.setFillColor(Color(1, 1, 1, alpha=0.55)); c.setFont(FONT_BOLD, 8)
+    c.drawString(margin + 22, diagram_y + 66, "AI PROVIDERS")
+    c.drawString(W - margin - 112, diagram_y + 66, "GOVERNANCE")
+    chip_w = 82; chip_h = 18
+    provider_x = margin + 22
+    provider_y = [diagram_y + 48, diagram_y + 24, diagram_y]
+    providers = ["GPT-4o", "Claude", "Gemini"]
+    for py, label in zip(provider_y, providers):
+        draw_rounded_rect(c, provider_x, py, chip_w, chip_h, 9, fill_color=Color(1, 1, 1, alpha=0.10), stroke_color=Color(1, 1, 1, alpha=0.20))
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 8.2); c.drawCentredString(provider_x + chip_w / 2, py + 5, label)
+    center_w = 154; center_h = 44
+    center_x = W / 2 - center_w / 2
+    center_y = diagram_y + 22
+    draw_rounded_rect(c, center_x, center_y, center_w, center_h, 12, fill_color=WHITE)
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 14); c.drawCentredString(W / 2, center_y + 25, "Chat.AI Platform")
+    c.setFillColor(BLUE); c.setFont(FONT_BOLD, 7.4); c.drawCentredString(W / 2, center_y + 10, "ROUTING  •  COUNCIL  •  GOVERNANCE")
+    gov_x = W - margin - 104
+    gov_y = [diagram_y + 40, diagram_y + 14]
+    governance = [("SSO + RBAC", BLUE), ("Audit Trail", TEAL)]
+    for (label, accent), gy in zip(governance, gov_y):
+        draw_rounded_rect(c, gov_x, gy, 82, 18, 9, fill_color=Color(1, 1, 1, alpha=0.10), stroke_color=Color(1, 1, 1, alpha=0.20))
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 7.6); c.drawCentredString(gov_x + 41, gy + 5, label)
+    base_y = panel_y + 12
+    base_items = [("RAG", TEAL), ("Workflows", ORANGE), ("Analytics", CHARTREUSE)]
+    for i, (label, accent) in enumerate(base_items):
+        bx = margin + 174 + i * 96
+        draw_rounded_rect(c, bx, base_y, 80, 18, 9, fill_color=Color(1, 1, 1, alpha=0.10), stroke_color=Color(1, 1, 1, alpha=0.20))
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 7.8); c.drawCentredString(bx + 40, base_y + 5, label)
+        draw_arrow(c, bx + 40, base_y + 18, W / 2, center_y, accent, width=1.0, head=5)
+    for py, accent in zip([p + chip_h / 2 for p in provider_y], [BLUE, ORANGE, TEAL]):
+        draw_arrow(c, provider_x + chip_w, py, center_x, center_y + center_h / 2, accent, width=1.0, head=5)
+    for gy, accent in zip([g + 9 for g in gov_y], [BLUE, TEAL]):
+        draw_arrow(c, center_x + center_w, center_y + center_h / 2, gov_x, gy, accent, width=1.0, head=5)
     c.showPage()
 
-    page_ai_council(c)
+    # ══ PAGE 4: AI COUNCIL DEEP DIVE ══
+    dark_bg(c)
+    y = H - margin
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 28); c.drawString(margin, y, "The AI")
+    tw = c.stringWidth("The AI ", FONT_BOLD, 28); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Council")
+    tw2 = c.stringWidth("Council", FONT_BOLD, 28)
+    c.setFillColor(Color(1, 1, 1, alpha=0.55)); c.setFont(FONT, 14); c.drawString(margin + tw + tw2 + 10, y + 2, "\u2014 Patent Pending")
+    y -= 22; c.setFillColor(Color(1, 1, 1, alpha=0.55)); c.setFont(FONT, 12)
+    for line in wrap_text(c, "Our breakthrough multi-model deliberation system synthesizes collective intelligence from multiple AI providers, achieving consensus that outperforms any single model.", FONT, 12, W - 2 * margin):
+        c.drawString(margin, y, line); y -= 17
+    y -= 20
+    stages = [
+        ("1", "Diverge", "Each model independently generates its response. No model sees another's output, ensuring diversity of reasoning."),
+        ("2", "Converge", "Models anonymously review and critique each other's responses. Agreements strengthen; contradictions flagged."),
+        ("3", "Synthesize", "A synthesis engine combines the strongest elements into a higher-quality response with confidence scoring."),
+    ]
+    for num, title, desc in stages:
+        draw_circle(c, margin + 14, y - 4, 14, ORANGE)
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 14); c.drawCentredString(margin + 14, y - 9, num)
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 15); c.drawString(margin + 36, y - 2, title); y -= 18
+        c.setFillColor(Color(1, 1, 1, alpha=0.6)); c.setFont(FONT, 10.5)
+        for line in wrap_text(c, desc, FONT, 10.5, W / 2 - margin - 20): c.drawString(margin + 36, y, line); y -= 14
+        y -= 16
+    metrics = [(">60%", "Win Rate vs Single Models"), (">30%", "Hallucination Reduction"), ("3+", "Models per Query"), ("100%", "Anonymized Review")]
+    mx = W / 2 + 16; my = H - margin - 96; mc_w = (W / 2 - margin - 32) / 2; mc_h = 92
+    for i, (num, lbl) in enumerate(metrics):
+        col = i % 2; row = i // 2
+        mcx = mx + col * (mc_w + 10); mcy = my - row * (mc_h + 12)
+        draw_rounded_rect(c, mcx, mcy - mc_h, mc_w, mc_h, 8, fill_color=Color(1, 1, 1, alpha=0.06), stroke_color=Color(1, 1, 1, alpha=0.10))
+        c.setFillColor(TEAL); c.setFont(FONT_BOLD, 28); c.drawCentredString(mcx + mc_w / 2, mcy - 34, num)
+        metric_lines = wrap_text(c, lbl.upper(), FONT, 7.4, mc_w - 14)
+        c.setFillColor(Color(1, 1, 1, alpha=0.45)); c.setFont(FONT, 7.4)
+        label_top = mcy - mc_h + 22 + (len(metric_lines) - 1) * 4
+        draw_wrapped_lines(c, metric_lines, mcx + mc_w / 2, label_top, 9, centered=True)
+    band_y = 86; band_h = 148
+    draw_rounded_rect(c, margin, band_y, W - 2 * margin, band_h, 10, fill_color=WHITE, stroke_color=Color(1, 1, 1, alpha=0.16))
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 10)
+    c.drawString(margin + 22, band_y + band_h - 20, "COUNCIL FLOW")
+    c.setFillColor(BLUE); c.setFont(FONT_BOLD, 8.5)
+    c.drawString(margin + 108, band_y + band_h - 20, "DIVERGE")
+    c.setFillColor(TEAL); c.drawString(margin + 265, band_y + band_h - 20, "CONVERGE")
+    c.setFillColor(ORANGE); c.drawString(margin + 390, band_y + band_h - 20, "SYNTHESIZE")
+    query_x = margin + 18; query_y = band_y + 50
+    draw_rounded_rect(c, query_x, query_y, 62, 24, 8, fill_color=Color(0.96, 0.49, 0.29, alpha=0.14), stroke_color=ORANGE, stroke_width=1)
+    c.setFillColor(ORANGE); c.setFont(FONT_BOLD, 8.8); c.drawCentredString(query_x + 31, query_y + 8, "User Query")
+    model_x = query_x + 92; model_w = 68; model_h = 18
+    model_boxes = [(band_y + 84, "GPT-4o"), (band_y + 56, "Claude"), (band_y + 28, "Gemini")]
+    for idx, (my, label) in enumerate(model_boxes):
+        accent = [BLUE, TEAL, BLUE][idx]
+        draw_rounded_rect(c, model_x, my, model_w, model_h, 9, fill_color=Color(0, 0.43, 0.71, alpha=0.10), stroke_color=accent, stroke_width=1)
+        c.setFillColor(accent); c.setFont(FONT_BOLD, 7.8); c.drawCentredString(model_x + model_w / 2, my + 5, label)
+        draw_arrow(c, query_x + 62, query_y + 12, model_x, my + model_h / 2, ORANGE, width=1.2, head=5)
+    review_x = model_x + 98; review_y = band_y + 48
+    draw_rounded_rect(c, review_x, review_y, 84, 34, 10, fill_color=DARK)
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 9); c.drawCentredString(review_x + 42, review_y + 18, "Peer Review")
+    c.setFillColor(Color(1, 1, 1, alpha=0.55)); c.setFont(FONT, 6.8); c.drawCentredString(review_x + 42, review_y + 8, "Anonymous • blind")
+    for my in [band_y + 93, band_y + 65, band_y + 37]:
+        draw_arrow(c, model_x + model_w, my, review_x, review_y + 17, BLUE, width=1.2, head=5)
+    synth_x = review_x + 110; synth_y = band_y + 48
+    draw_rounded_rect(c, synth_x, synth_y, 78, 34, 10, fill_color=Color(0.12, 0.67, 0.78, alpha=0.10), stroke_color=TEAL, stroke_width=1)
+    c.setFillColor(TEAL); c.setFont(FONT_BOLD, 8.6); c.drawCentredString(synth_x + 39, synth_y + 18, "Synthesis")
+    c.setFillColor(GREY); c.setFont(FONT, 6.8); c.drawCentredString(synth_x + 39, synth_y + 8, "confidence-ranked")
+    draw_arrow(c, review_x + 84, review_y + 17, synth_x, synth_y + 17, TEAL, width=1.3, head=5)
+    answer_x = synth_x + 100; answer_y = band_y + 48
+    draw_rounded_rect(c, answer_x, answer_y, 72, 34, 10, fill_color=Color(0.96, 0.49, 0.29, alpha=0.10), stroke_color=ORANGE, stroke_width=1)
+    c.setFillColor(ORANGE); c.setFont(FONT_BOLD, 8.4); c.drawCentredString(answer_x + 36, answer_y + 18, "Consensus")
+    c.setFillColor(GREY); c.setFont(FONT, 6.8); c.drawCentredString(answer_x + 36, answer_y + 8, "final answer")
+    draw_arrow(c, synth_x + 78, synth_y + 17, answer_x, answer_y + 17, ORANGE, width=1.3, head=5)
     c.showPage()
 
-    page_use_cases(c)
+    # ══ PAGE 5: USE CASES ══
+    c.setFillColor(OFF_WHITE); c.rect(0, 0, W, H, fill=1, stroke=0)
+    y = H - margin
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 28); c.drawString(margin, y, "Real-World")
+    tw = c.stringWidth("Real-World ", FONT_BOLD, 28); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Use Cases")
+    y -= 22; c.setFillColor(GREY); c.setFont(FONT, 12)
+    c.drawString(margin, y, "How organizations leverage Chat.AI to transform their AI operations."); y -= 40
+    use_cases = [
+        (BLUE, "Financial Services", "Compliance-First AI", "200-person firm needed AI for research without data leaks or hallucinated advice.", ["Research without data leakage", "Audit-ready answers for reviewers"], "$19,212", "Annual Savings"),
+        (ORANGE, "Healthcare", "HIPAA-Compliant AI KB", "Clinical staff needed AI search across protocols with full HIPAA audit trails.", ["Clinical policy search in seconds", "Protected PHI boundaries by design"], "100%", "Audit Coverage"),
+        (TEAL, "Technology", "Multi-Model Dev Platform", "100+ developers needed multiple AI models without managing separate subscriptions.", ["One workspace across major models", "Shared prompts, assistants, and threads"], "$174K", "Annual Savings"),
+    ]
+    uc_w = (W - 2 * margin - 32) / 3; uc_h = 318
+    for i, (color, persona, title, desc, proof_points, metric, lbl) in enumerate(use_cases):
+        ux = margin + i * (uc_w + 16); uy = y
+        draw_rounded_rect(c, ux, uy - uc_h, uc_w, uc_h, 8, fill_color=WHITE, stroke_color=LIGHT_GREY)
+        c.setFillColor(color); c.rect(ux, uy - 3, uc_w, 3, fill=1, stroke=0)
+        draw_rounded_rect(c, ux + 12, uy - 36, uc_w - 24, 20, 10, fill_color=OFF_WHITE, stroke_color=LIGHT_GREY)
+        c.setFillColor(DARK); c.setFont(FONT_BOLD, 9); c.drawCentredString(ux + uc_w / 2, uy - 31, persona)
+        c.setFillColor(DARK); c.setFont(FONT_BOLD, 12); ty = uy - 56
+        for line in wrap_text(c, title, FONT_BOLD, 12, uc_w - 24): c.drawString(ux + 12, ty, line); ty -= 16
+        c.setFillColor(GREY); c.setFont(FONT, 10); ty -= 4
+        for line in wrap_text(c, desc, FONT, 10, uc_w - 24): c.drawString(ux + 12, ty, line); ty -= 14
+        ty -= 6
+        for proof in proof_points:
+            proof_lines = wrap_text(c, proof, FONT, 8.5, uc_w - 36)
+            draw_check(c, ux + 12, ty, 8)
+            c.setFillColor(GREY); c.setFont(FONT, 8.5)
+            draw_wrapped_lines(c, proof_lines, ux + 24, ty, 10)
+            ty -= max(12, len(proof_lines) * 10 + 2)
+        res_h = 52; res_y = uy - uc_h + 12
+        draw_rounded_rect(c, ux + 12, res_y, uc_w - 24, res_h, 6, fill_color=DARK)
+        c.setFillColor(TEAL); c.setFont(FONT_BOLD, 22); c.drawCentredString(ux + uc_w / 2, res_y + 26, metric)
+        c.setFillColor(Color(1, 1, 1, alpha=0.50)); c.setFont(FONT, 8); c.drawCentredString(ux + uc_w / 2, res_y + 10, lbl.upper())
+    panel_y = 86; panel_h = 128
+    draw_rounded_rect(c, margin, panel_y, W - 2 * margin, panel_h, 10, fill_color=WHITE, stroke_color=LIGHT_GREY)
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 16); c.drawString(margin + 18, panel_y + panel_h - 28, "What Winning Deployments Have In Common")
+    c.setFillColor(GREY); c.setFont(FONT, 10)
+    c.drawString(margin + 18, panel_y + panel_h - 46, "Teams standardize on Chat.AI when they need security, model choice, and cost control at the same time.")
+    win_items = [
+        (BLUE, "Governed Access", "SSO, RBAC, and audit trails make adoption safe for regulated teams."),
+        (ORANGE, "Reusable Knowledge", "Assistants and RAG content spread successful patterns faster."),
+        (TEAL, "Transparent Spend", "Leaders can finally see where AI budget is going and optimize it."),
+    ]
+    wi_w = (W - 2 * margin - 36) / 3
+    for i, (accent, title, body) in enumerate(win_items):
+        wx = margin + 18 + i * wi_w
+        if i:
+            c.setStrokeColor(LIGHT_GREY); c.setLineWidth(0.6)
+            c.line(wx - 6, panel_y + 18, wx - 6, panel_y + panel_h - 18)
+        c.setFillColor(accent); c.setFont(FONT_BOLD, 13); c.drawString(wx, panel_y + 54, title)
+        c.setFillColor(GREY); c.setFont(FONT, 8.8)
+        draw_wrapped_lines(c, wrap_text(c, body, FONT, 8.8, wi_w - 12), wx, panel_y + 36, 11)
     c.showPage()
 
-    page_pricing(c)
+    # ══ PAGE 6: PRICING ══
+    c.setFillColor(WHITE); c.rect(0, 0, W, H, fill=1, stroke=0)
+    y = H - margin
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 28); c.drawString(margin, y, "Plans &")
+    tw = c.stringWidth("Plans & ", FONT_BOLD, 28); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Pricing")
+    y -= 22; c.setFillColor(GREY); c.setFont(FONT, 12)
+    c.drawString(margin, y, "Simple, transparent pricing. Annual plans save 17%. No per-seat charges."); y -= 40
+    tiers = [
+        ("Starter", "$299", "$2,990/yr", False, "Pilot teams and secure AI evaluation", ["Up to 10 users", "10M tokens/month", "Multi-model access", "Azure AD SSO", "Basic audit trail", "Email support"]),
+        ("Growth", "$899", "$8,990/yr", False, "Department rollouts with shared knowledge", ["Up to 50 users", "35M tokens/month", "Custom assistants", "RAG knowledge base", "Full audit trail", "Priority support"]),
+        ("Professional", "$1,699", "$16,990/yr", True, "Organization-wide AI operations", ["Up to 100 users", "75M tokens/month", "AI Council included", "N8N automation", "Advanced analytics", "Dedicated CSM"]),
+        ("Enterprise", "Custom", "Contact us", False, "Regulated or isolated deployments", ["250+ users", "200M+ tokens", "On-premise ($45K/yr)", "Custom integrations", "SLA guarantees", "24/7 phone support"]),
+    ]
+    tier_w = (W - 2 * margin - 48) / 4; tier_h = 360
+    for i, (name, price, annual, popular, best_for, feats) in enumerate(tiers):
+        tx = margin + i * (tier_w + 16); ty = y
+        stroke = BLUE if popular else LIGHT_GREY
+        draw_rounded_rect(c, tx, ty - tier_h, tier_w, tier_h, 8, fill_color=WHITE, stroke_color=stroke, stroke_width=1.5 if popular else 0.5)
+        c.setFillColor(BLUE if popular else LIGHT_GREY); c.rect(tx, ty - 3, tier_w, 3, fill=1, stroke=0)
+        iy = ty - 20
+        if popular:
+            draw_rounded_rect(c, tx + (tier_w - 70) / 2, iy - 2, 70, 16, 8, fill_color=BLUE)
+            c.setFillColor(WHITE); c.setFont(FONT_BOLD, 7); c.drawCentredString(tx + tier_w / 2, iy + 2, "MOST POPULAR"); iy -= 22
+        c.setFillColor(DARK); c.setFont(FONT_BOLD, 14); c.drawCentredString(tx + tier_w / 2, iy - 6, name); iy -= 26
+        c.setFillColor(BLUE); c.setFont(FONT_BOLD, 26); c.drawCentredString(tx + tier_w / 2, iy - 4, price); iy -= 20
+        c.setFillColor(HexColor('#ADB5BD')); c.setFont(FONT, 9); c.drawCentredString(tx + tier_w / 2, iy, annual); iy -= 24
+        for feat in feats:
+            draw_check(c, tx + 10, iy, 9); c.setFillColor(GREY); c.setFont(FONT, 9); c.drawString(tx + 24, iy, feat); iy -= 16
+        footer_h = 54; footer_y = ty - tier_h + 14
+        footer_fill = Color(0, 0.43, 0.71, alpha=0.05) if popular else OFF_WHITE
+        draw_rounded_rect(c, tx + 8, footer_y, tier_w - 16, footer_h, 6, fill_color=footer_fill, stroke_color=stroke if popular else LIGHT_GREY, stroke_width=0.6)
+        c.setFillColor(BLUE if popular else GREY); c.setFont(FONT_BOLD, 7.5); c.drawCentredString(tx + tier_w / 2, footer_y + footer_h - 14, "BEST FOR")
+        c.setFillColor(DARK); c.setFont(FONT_BOLD, 8.2)
+        draw_wrapped_lines(c, wrap_text(c, best_for, FONT_BOLD, 8.2, tier_w - 30), tx + tier_w / 2, footer_y + footer_h - 28, 9, centered=True)
+    panel_y = 82; panel_h = 120
+    draw_rounded_rect(c, margin, panel_y, W - 2 * margin, panel_h, 10, fill_color=OFF_WHITE, stroke_color=LIGHT_GREY)
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 16); c.drawString(margin + 18, panel_y + panel_h - 28, "All Plans Include The Essentials")
+    pricing_notes = [
+        (BLUE, "No Seat Tax", "Pricing scales by token capacity, not by every additional employee."),
+        (ORANGE, "Annual Savings", "Yearly billing reduces cost by roughly 17% for committed teams."),
+        (TEAL, "Deployment Flexibility", "Cloud plans scale fast, with on-premise available for isolated environments."),
+    ]
+    pn_w = (W - 2 * margin - 36) / 3
+    for i, (accent, title, body) in enumerate(pricing_notes):
+        px = margin + 18 + i * pn_w
+        if i:
+            c.setStrokeColor(LIGHT_GREY); c.setLineWidth(0.6)
+            c.line(px - 6, panel_y + 18, px - 6, panel_y + panel_h - 18)
+        c.setFillColor(accent); c.setFont(FONT_BOLD, 13); c.drawString(px, panel_y + 50, title)
+        c.setFillColor(GREY); c.setFont(FONT, 8.8)
+        draw_wrapped_lines(c, wrap_text(c, body, FONT, 8.8, pn_w - 12), px, panel_y + 34, 11)
     c.showPage()
 
-    page_comparison(c)
+    # ══ PAGE 7: COMPARISON + ROI ══
+    c.setFillColor(OFF_WHITE); c.rect(0, 0, W, H, fill=1, stroke=0)
+    y = H - margin
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 28); c.drawString(margin, y, "Competitive")
+    tw = c.stringWidth("Competitive ", FONT_BOLD, 28); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Comparison")
+    y -= 22; c.setFillColor(GREY); c.setFont(FONT, 11)
+    c.drawString(margin, y, "Chat.AI combines enterprise controls with lower total cost than separate AI subscriptions."); y -= 24
+    col_widths = [130, 85, 100, 85, 100]; headers = ["Capability", "ChatGPT", "Copilot", "Gemini", "Chat.AI"]
+    rows = [
+        ["Multi-Model", "\u2014", "\u2014", "\u2014", "\u2713 4+ Providers"], ["AI Council", "\u2014", "\u2014", "\u2014", "\u2713 Patent Pending"],
+        ["Cost Tracking", "\u2014", "\u2014", "\u2014", "\u2713 Token-Level"], ["On-Premise", "\u2014", "\u2014", "\u2014", "\u2713 Full Stack"],
+        ["Audit Trail", "\u2014", "Limited", "Limited", "\u2713 Full"], ["Automation", "\u2014", "\u2014", "\u2014", "\u2713 N8N"],
+        ["RAG/KB", "\u2014", "Basic", "\u2014", "\u2713 Vector Search"], ["Assistants", "GPTs", "\u2014", "Gems", "\u2713 Full Platform"],
+        ["50 Users/mo", "$1,250", "$1,500", "$1,000", "$899"],
+    ]
+    row_h = 23
+    tx = margin
+    for i, (hdr, cw) in enumerate(zip(headers, col_widths)):
+        c.setFillColor(BLUE if i == len(headers) - 1 else DARK); c.rect(tx, y - row_h, cw, row_h, fill=1, stroke=0)
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 9); c.drawString(tx + 6, y - row_h + 7, hdr); tx += cw
+    y -= row_h
+    for ri, row in enumerate(rows):
+        tx = margin
+        for ci, (cell, cw) in enumerate(zip(row, col_widths)):
+            bg = OFF_WHITE if ri % 2 == 0 else WHITE
+            if ci == len(row) - 1: bg = Color(0, 0.43, 0.71, alpha=0.05) if ri % 2 == 0 else Color(0, 0.43, 0.71, alpha=0.03)
+            c.setFillColor(bg); c.rect(tx, y - row_h, cw, row_h, fill=1, stroke=0)
+            if ci == len(row) - 1 and '\u2713' in cell: c.setFillColor(TEAL); c.setFont(FONT_BOLD, 9.5)
+            elif cell == "\u2014": c.setFillColor(HexColor('#BBBBBB')); c.setFont(FONT, 9.5)
+            elif ci == len(row) - 1: c.setFillColor(BLUE); c.setFont(FONT_BOLD, 9.5)
+            else: c.setFillColor(GREY); c.setFont(FONT, 9.5)
+            c.drawString(tx + 6, y - row_h + 7, cell); tx += cw
+        y -= row_h
+    y -= 30
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 22); c.drawString(margin, y, "Return on")
+    tw = c.stringWidth("Return on ", FONT_BOLD, 22); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Investment"); y -= 24
+    roi_data = [("Small Team \u2022 10 Users", "$389 \u2192 $299/mo", "$1,080/yr", BLUE), ("Mid-Market \u2022 50 Users", "$2,500 \u2192 $899/mo", "$19,212/yr", ORANGE), ("Enterprise \u2022 250 Users", "$18.5K \u2192 $3,999/mo", "$174,012/yr", TEAL)]
+    rc_w = (W - 2 * margin - 32) / 3; rc_h = 100
+    for i, (label, cost, save, color) in enumerate(roi_data):
+        rx = margin + i * (rc_w + 16); ry = y - 10
+        draw_rounded_rect(c, rx, ry - rc_h, rc_w, rc_h, 8, fill_color=DARK)
+        c.setFillColor(color); c.rect(rx, ry - 3, rc_w, 3, fill=1, stroke=0)
+        c.setFillColor(Color(1, 1, 1, alpha=0.50)); c.setFont(FONT, 9); c.drawCentredString(rx + rc_w / 2, ry - 22, label)
+        c.setFillColor(Color(1, 1, 1, alpha=0.60)); c.setFont(FONT, 9); c.drawCentredString(rx + rc_w / 2, ry - 38, cost)
+        c.setFillColor(CHARTREUSE); c.setFont(FONT_BOLD, 24); c.drawCentredString(rx + rc_w / 2, ry - 74, save)
+    panel_y = 78; panel_h = 124
+    draw_rounded_rect(c, margin, panel_y, W - 2 * margin, panel_h, 10, fill_color=WHITE, stroke_color=LIGHT_GREY)
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 12); c.drawString(margin + 18, panel_y + panel_h - 22, "BEFORE VS. AFTER AI SPEND")
+    roi_columns = [
+        ("Small Team", "$389/mo", "$299/mo", "$1,080/yr", BLUE),
+        ("Mid-Market", "$2,500/mo", "$899/mo", "$19,212/yr", ORANGE),
+        ("Enterprise", "$18.5K/mo", "$3,999/mo", "$174,012/yr", TEAL),
+    ]
+    col_w = (W - 2 * margin - 44) / 3
+    for i, (label, before_cost, after_cost, savings, accent) in enumerate(roi_columns):
+        cx = margin + 16 + i * (col_w + 6)
+        if i:
+            c.setStrokeColor(LIGHT_GREY); c.setLineWidth(0.6)
+            c.line(cx - 6, panel_y + 18, cx - 6, panel_y + panel_h - 18)
+        c.setFillColor(accent); c.setFont(FONT_BOLD, 10.5); c.drawString(cx, panel_y + 84, label)
+        c.setFillColor(GREY); c.setFont(FONT_BOLD, 7.2); c.drawString(cx, panel_y + 68, "BEFORE")
+        draw_rounded_rect(c, cx, panel_y + 48, col_w - 18, 14, 7, fill_color=Color(0.89, 0.16, 0.16, alpha=0.12), stroke_color=HexColor('#E63946'), stroke_width=0.8)
+        c.setFillColor(HexColor('#E63946')); c.setFont(FONT_BOLD, 8.6); c.drawRightString(cx + col_w - 26, panel_y + 52, before_cost)
+        c.setFillColor(GREY); c.setFont(FONT_BOLD, 7.2); c.drawString(cx, panel_y + 34, "AFTER")
+        after_width = (col_w - 18) * [299 / 389, 899 / 2500, 3999 / 18500][i]
+        draw_rounded_rect(c, cx, panel_y + 14, after_width, 14, 7, fill_color=Color(0.12, 0.67, 0.78, alpha=0.16), stroke_color=TEAL, stroke_width=0.8)
+        c.setFillColor(TEAL); c.setFont(FONT_BOLD, 8.6); c.drawString(cx + 8, panel_y + 18, after_cost)
+        save_w = col_w - 48
+        draw_rounded_rect(c, cx, panel_y + 1, save_w, 16, 8, fill_color=Color(0.80, 0.86, 0.18, alpha=0.16), stroke_color=HexColor('#91AA1E'), stroke_width=0.8)
+        c.setFillColor(CHARTREUSE); c.setFont(FONT_BOLD, 8.4); c.drawCentredString(cx + save_w / 2, panel_y + 5, f"SAVE {savings}")
     c.showPage()
 
-    page_security_about_cta(c)
+    # ══ PAGE 8: SECURITY + CTA ══
+    c.setFillColor(WHITE); c.rect(0, 0, W, H, fill=1, stroke=0)
+    y = H - margin
+    c.setFillColor(DARK); c.setFont(FONT_BOLD, 24); c.drawString(margin, y, "Security &")
+    tw = c.stringWidth("Security & ", FONT_BOLD, 24); c.setFillColor(ORANGE); c.drawString(margin + tw, y, "Compliance"); y -= 22
+    c.setFillColor(GREY); c.setFont(FONT, 11)
+    c.drawString(margin, y, "Built for organizations that need control, traceability, and deployment flexibility."); y -= 28
+    sec_items = [
+        (BLUE, "Azure AD SSO", "Microsoft identity SSO"), (ORANGE, "Row-Level Security", "Complete tenant isolation"),
+        (TEAL, "Full Audit Trail", "Every interaction logged"), (DARK, "Azure Key Vault", "Secrets with auto-rotation"),
+        (BLUE, "Prompt Injection Defense", "Multi-layer validation"), (ORANGE, "HIPAA / SOC 2 Ready", "Healthcare & financial ready"),
+        (TEAL, "RBAC Roles", "Granular access control"), (DARK, "Rate Limiting", "Per-user endpoint controls"),
+    ]
+    sb_w = (W - 2 * margin - 18) / 2; sb_h = 72
+    for i, (color, title, desc) in enumerate(sec_items):
+        col = i % 2; row = i // 2
+        sx = margin + col * (sb_w + 18); sy = y - row * (sb_h + 10)
+        draw_rounded_rect(c, sx, sy - sb_h, sb_w, sb_h, 6, fill_color=WHITE, stroke_color=LIGHT_GREY)
+        draw_rounded_rect(c, sx + 12, sy - 40, 28, 28, 8, fill_color=color)
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 14); c.drawCentredString(sx + 26, sy - 36, "\u2713")
+        title_lines = wrap_text(c, title, FONT_BOLD, 10.3, sb_w - 64)
+        desc_lines = wrap_text(c, desc, FONT, 8.7, sb_w - 64)
+        c.setFillColor(DARK); c.setFont(FONT_BOLD, 10.3)
+        draw_wrapped_lines(c, title_lines, sx + 50, sy - 22, 12)
+        c.setFillColor(GREY); c.setFont(FONT, 8.7)
+        desc_top = sy - 24 - len(title_lines) * 12 - 2
+        draw_wrapped_lines(c, desc_lines, sx + 50, desc_top, 10)
+    # Bottom CTA
+    cta_top = 312
+    c.setFillColor(BLUE); c.rect(0, 0, W, cta_top, fill=1, stroke=0)
+    c.setFillColor(Color(0, 0.2, 0.4, alpha=0.35)); c.rect(W * 0.5, 0, W * 0.5, cta_top, fill=1, stroke=0)
+    cy = cta_top - 64
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 25); c.drawCentredString(W / 2, cy, "Ready to Transform Your AI Strategy?"); cy -= 26
+    c.setFillColor(Color(1, 1, 1, alpha=0.72)); c.setFont(FONT, 12); c.drawCentredString(W / 2, cy, "Schedule a demo and see how Chat.AI saves your organization thousands."); cy -= 34
+    trust_items = ["SSO + RBAC", "Full Audit Trail", "On-Premise Available"]
+    pill_w = 124; pill_h = 22; pill_gap = 10
+    pill_start = W / 2 - (len(trust_items) * pill_w + (len(trust_items) - 1) * pill_gap) / 2
+    for i, item in enumerate(trust_items):
+        px = pill_start + i * (pill_w + pill_gap)
+        draw_rounded_rect(c, px, cy - pill_h + 6, pill_w, pill_h, 11, stroke_color=Color(1, 1, 1, alpha=0.28), stroke_width=1)
+        c.setFillColor(WHITE); c.setFont(FONT_BOLD, 8); c.drawCentredString(px + pill_w / 2, cy - 9, item)
+    cy -= 42
+    draw_rounded_rect(c, W / 2 - 170, cy - 36, 160, 36, 6, fill_color=ORANGE)
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 12); c.drawCentredString(W / 2 - 90, cy - 24, "Schedule a Demo")
+    draw_rounded_rect(c, W / 2 + 10, cy - 36, 160, 36, 6, stroke_color=Color(1, 1, 1, alpha=0.35), stroke_width=1.5)
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 12); c.drawCentredString(W / 2 + 90, cy - 24, "Call 949.379.8500")
+    cy -= 60
+    c.setFillColor(Color(1, 1, 1, alpha=0.60)); c.setFont(FONT, 11)
+    c.drawCentredString(W / 2, cy, "Ravi Jain  \u2014  RJain@technijian.com  \u2022  949.379.8500"); cy -= 16
+    c.drawCentredString(W / 2, cy, "18 Technology Dr. Ste 141, Irvine CA 92618")
+    c.showPage()
+
+    # ══ BACK COVER ══
+    dark_bg(c)
+    draw_brand_logo(c, W / 2, H / 2 + 120, width=220)
+    c.setFillColor(WHITE); c.setFont(FONT_BOLD, 28); c.drawCentredString(W / 2, H / 2 + 20, "Chat.AI")
+    c.setFillColor(Color(1, 1, 1, alpha=0.58)); c.setFont(FONT_BOLD, 15); c.drawCentredString(W / 2, H / 2 - 8, "Technijian Enterprise AI Platform")
+    c.setFillColor(Color(1, 1, 1, alpha=0.50)); c.setFont(FONT, 15); c.drawCentredString(W / 2, H / 2 - 38, "Enterprise AI, Reimagined.")
+    c.setFillColor(TEAL); c.setFont(FONT_BOLD, 14); c.drawCentredString(W / 2, H / 2 - 74, "technijian.com/chat-ai")
+    c.setFillColor(Color(1, 1, 1, alpha=0.50)); c.setFont(FONT, 11); c.drawCentredString(W / 2, H / 2 - 106, "Schedule a demo: RJain@technijian.com  •  949.379.8500")
+    c.setFillColor(Color(1, 1, 1, alpha=0.30)); c.setFont(FONT, 8); c.drawCentredString(W / 2, 30, "\u00a9 2026 Technijian  \u2022  18 Technology Dr. Ste 141, Irvine CA 92618")
 
     c.save()
-    print(f"  PDF: {pdf_path}")
-    return pdf_path
-
-
-def main():
-    print("Building Chat.AI Brochure (ReportLab)...")
-    build()
-    print("Done!")
+    size_kb = os.path.getsize(PDF_PATH) / 1024
+    print(f"PDF generated: {PDF_PATH} ({size_kb:.0f} KB)")
 
 
 if __name__ == '__main__':
-    main()
+    build()

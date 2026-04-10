@@ -2,373 +2,272 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technijian Chat.AI — One-Pager</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --blue: #006DB6; --blue-dark: #004d80; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --near-black: #2D2D2D;
+    --grey: #59595B; --light-grey: #E9ECEF; --off-white: #F8F9FA; --white: #FFFFFF;
+  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { width: 8.5in; min-height: 11in; }
   body {
-    font-family: 'Open Sans', sans-serif;
-    color: #2D2D2D;
-    background: #fff;
-    font-size: 9px;
-    line-height: 1.35;
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #333; line-height: 1.5;
+    display: flex; flex-direction: column;
+    width: 8.5in; min-height: 11in; height: 11in;
+    margin: 0 auto; overflow: hidden; background: var(--off-white);
+    position: relative;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
 
-  /* HERO */
+  /* ── HERO STRIP ── */
   .hero {
-    background: linear-gradient(135deg, #1A1A2E, #0a1628, #0d2847);
-    padding: 12px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 80px;
+    background: linear-gradient(135deg, var(--dark) 0%, #0a1628 60%, #0d2847 100%);
+    padding: 18px 32px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
   }
-  .hero-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-left img {
-    height: 28px;
-    filter: brightness(10);
-  }
-  .hero-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-  }
-  .hero-title .orange { color: #F67D4B; }
-  .hero-stats {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-  .hero-stat {
-    text-align: center;
-  }
-  .hero-stat .num {
-    font-size: 18px;
-    font-weight: 700;
-    color: #F67D4B;
-    display: block;
-    line-height: 1.1;
-  }
-  .hero-stat .lbl {
-    font-size: 8px;
-    color: rgba(255,255,255,0.5);
-    display: block;
-  }
-  .hero-stat + .hero-stat {
-    border-left: 1px solid rgba(255,255,255,0.15);
-    padding-left: 20px;
-  }
+  .hero::before { content: ''; position: absolute; top: -50px; right: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -40px; left: 15%; width: 120px; height: 120px; background: radial-gradient(circle, rgba(246,125,75,0.10) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .hero-left img { height: 32px; display: block; }
+  .hero-text { display: flex; flex-direction: column; }
+  .hero-badge { display: inline-block; background: rgba(30,170,200,0.20); border: 1px solid rgba(30,170,200,0.45); color: var(--teal); font-size: 7px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 10px; border-radius: 10px; margin-bottom: 4px; width: fit-content; }
+  .hero-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-stats { display: flex; gap: 18px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 22px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.55); display: block; letter-spacing: 0.3px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.12); padding-left: 18px; }
 
-  /* VALUE PROP */
-  .value-bar {
-    background: #006DB6;
-    text-align: center;
-    padding: 6px 20px;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
-  }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+  .vp { background: var(--blue); text-align: center; padding: 9px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
 
-  /* BODY */
-  .body-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 12px 28px;
-  }
+  /* ── MAIN TWO-COLUMN BODY — flex:1 fills remaining space ── */
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 12px 28px 54px; flex: 1; }
 
-  .section-header {
-    font-size: 12px;
-    font-weight: 700;
-    color: #006DB6;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 6px;
-    padding-bottom: 3px;
-    border-bottom: 2px solid #E9ECEF;
-  }
+  .sh { font-size: 13px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; border-bottom: 2px solid var(--light-grey); padding-bottom: 4px; }
 
-  /* KEY CAPABILITIES */
-  .cap-group { margin-bottom: 6px; }
-  .cap-group-title {
-    font-size: 10px;
-    font-weight: 700;
-    color: #1A1A2E;
-    margin-bottom: 2px;
-  }
-  .cap-group ul {
-    list-style: none;
-    padding: 0;
-  }
-  .cap-group li {
-    font-size: 9px;
-    padding: 1px 0;
-    color: #2D2D2D;
-  }
-  .cap-group li::before {
-    content: "\2713";
-    color: #1EAAC8;
-    font-weight: 700;
-    margin-right: 5px;
-  }
+  /* Capabilities */
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 12px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .cg-bar { width: 4px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+  .cg-pp { font-size: 8px; color: #999; font-weight: 400; font-style: italic; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10.75px; padding: 1px 0; color: #444; line-height: 1.34; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 6px; font-size: 10px; }
 
-  /* HOW IT WORKS */
-  .steps { margin-top: 4px; }
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 4px;
-  }
-  .step-num {
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
-    border-radius: 50%;
-    background: #F67D4B;
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
-  .step-text {
-    font-size: 9px;
-  }
-  .step-text strong { color: #1A1A2E; }
+  /* How It Works */
+  .step { display: flex; gap: 10px; margin-bottom: 6px; align-items: flex-start; }
+  .sn { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #f99a72); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(246,125,75,0.3); }
+  .st { font-size: 11px; line-height: 1.45; }
+  .st b { color: var(--dark); }
 
-  /* WHY CHAT.AI */
-  .diff-list { list-style: none; padding: 0; }
-  .diff-list li {
-    font-size: 9px;
-    padding: 2px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-  }
-  .diff-dot {
-    width: 8px;
-    height: 8px;
-    min-width: 8px;
-    border-radius: 50%;
-    margin-top: 2px;
-  }
+  /* Comparison table */
+  .cmp-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-top: 6px; }
+  .cmp { width: 100%; border-collapse: collapse; }
+  .cmp th { background: var(--dark); color: #fff; padding: 5px 7px; text-align: left; font-size: 9px; font-weight: 600; }
+  .cmp th.hl { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+  .cmp td { padding: 4.5px 7px; border-bottom: 0.5px solid var(--light-grey); font-size: 10px; }
+  .cmp td.hl { background: rgba(0,109,182,0.04); font-weight: 600; color: var(--dark); }
+  .cmp td.x { color: #bbb; }
+  .cmp .ck { color: var(--teal); font-weight: 800; }
 
-  /* PRICING */
-  .pricing-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 9px;
-    margin-top: 4px;
-  }
-  .pricing-table th {
-    background: #1A1A2E;
-    color: #fff;
-    padding: 4px 8px;
-    text-align: left;
-    font-weight: 600;
-  }
-  .pricing-table td {
-    padding: 4px 8px;
-  }
-  .pricing-table tr:nth-child(even) td {
-    background: #F8F9FA;
-  }
-  .pricing-table tr.highlight td {
-    background: #e6f0fa;
-    font-weight: 600;
-  }
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 10.75px; padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.32; }
+  .dd { width: 10px; height: 10px; min-width: 10px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .diff li b { color: var(--dark); }
 
-  /* SECURITY BADGES */
-  .badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 10px;
-    margin-top: 4px;
-  }
-  .badge {
-    font-size: 8px;
-    color: #59595B;
-  }
-  .badge span { color: #1EAAC8; }
+  /* Pricing */
+  .pt-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-top: 6px; }
+  .pt { width: 100%; border-collapse: collapse; }
+  .pt th { background: var(--dark); color: #fff; padding: 5px 8px; text-align: left; font-weight: 600; font-size: 9px; }
+  .pt td { padding: 5px 8px; font-size: 10.5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt tr.pop td { background: #e6f0fa; font-weight: 600; }
+  .pt tr.pop td:first-child { color: var(--blue); }
+  .pt-note { font-size: 9px; color: var(--teal); font-weight: 600; margin-top: 4px; }
 
-  /* SECTION SPACING */
-  .section { margin-bottom: 10px; }
+  /* Security */
+  .badges { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; }
+  .badge { font-size: 10px; color: var(--grey); display: flex; align-items: center; gap: 4px; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 10px; }
 
-  /* CTA */
-  .cta-bar {
-    background: linear-gradient(135deg, #006DB6, #004d80);
-    text-align: center;
-    padding: 8px 20px;
-    color: #fff;
-    font-size: 10px;
-  }
-  .cta-bar strong { color: #fff; }
+  /* ROI */
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+  .roi-card { background: var(--dark); border-radius: 8px; padding: 10px 10px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .roi-card:nth-child(1)::before { background: var(--blue); }
+  .roi-card:nth-child(2)::before { background: var(--orange); }
+  .roi-card:nth-child(3)::before { background: var(--teal); }
+  .roi-card .rc-label { font-size: 9px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
+  .roi-card .rc-cost { font-size: 9px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+  .roi-card .rc-save { font-size: 16px; font-weight: 800; color: var(--chartreuse); margin-top: 3px; }
 
-  /* FOOTER */
-  .footer {
-    background: #2D2D2D;
-    text-align: center;
-    padding: 5px 20px;
-    color: rgba(255,255,255,0.38);
-    font-size: 7px;
-  }
+  .sec { margin-bottom: 10px; }
 
-  /* PRINT */
+  .cta { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); text-align: center; padding: 9px 20px; color: #fff; font-size: 10.5px; position: absolute; left: 0; right: 0; bottom: 20px; }
+  .cta b { color: #fff; }
+  .cta a { color: var(--orange); text-decoration: none; font-weight: 700; }
+  .foot { background: var(--near-black); text-align: center; height: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.38); font-size: 7px; position: absolute; left: 0; right: 0; bottom: 0; }
+
   @media print {
-    @page {
-      size: letter;
-      margin: 0.3in;
-    }
-    body {
-      height: 100vh;
-      overflow: hidden;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .hero, .value-bar, .cta-bar, .footer,
-    .pricing-table th, .pricing-table tr.highlight td,
-    .pricing-table tr:nth-child(even) td,
-    .step-num, .diff-dot {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    * { transition: none !important; }
+    @page { size: letter; margin: 0; }
+    html, body { width: 8.5in; min-height: 11in; }
+    body { min-height: 11in; height: 11in; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   }
 </style>
 </head>
 <body>
 
-<!-- 1. HERO STRIP -->
 <div class="hero">
   <div class="hero-left">
-    <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
-    <div class="hero-title">Technijian <span class="orange">Chat.AI</span></div>
+    <img src="../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div class="hero-text">
+      <div class="hero-badge">Enterprise AI Platform</div>
+      <div class="hero-title">Technijian <span class="o">Chat.AI</span></div>
+    </div>
   </div>
   <div class="hero-stats">
-    <div class="hero-stat"><span class="num">4+</span><span class="lbl">AI Providers</span></div>
-    <div class="hero-stat"><span class="num">32+</span><span class="lbl">Endpoints</span></div>
-    <div class="hero-stat"><span class="num">&gt;60%</span><span class="lbl">Council Win Rate</span></div>
-    <div class="hero-stat"><span class="num">99.9%</span><span class="lbl">SLA</span></div>
+    <div class="hero-stat"><span class="n">4+</span><span class="l">AI Providers</span></div>
+    <div class="hero-stat"><span class="n">32+</span><span class="l">Endpoints</span></div>
+    <div class="hero-stat"><span class="n">&gt;60%</span><span class="l">Council Win Rate</span></div>
+    <div class="hero-stat"><span class="n">99.9%</span><span class="l">Uptime SLA</span></div>
   </div>
 </div>
+<div class="orange-line"></div>
+<div class="vp">Secure, multi-model AI with collective intelligence, workflow automation, and enterprise governance — all in one platform.</div>
 
-<!-- 2. VALUE PROP BAR -->
-<div class="value-bar">
-  Secure, multi-model AI with collective intelligence, workflow automation, and enterprise governance.
-</div>
-
-<!-- 3. TWO-COLUMN BODY -->
-<div class="body-grid">
-
-  <!-- LEFT COLUMN -->
+<div class="main">
   <div>
-    <div class="section">
-      <div class="section-header">Key Capabilities</div>
-      <div class="cap-group">
-        <div class="cap-group-title">Multi-Model AI</div>
+    <div class="sec">
+      <div class="sh">Key Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Multi-Model AI</div>
         <ul>
-          <li>GPT-4o, Claude, Gemini + more</li>
-          <li>Switch models mid-conversation</li>
-          <li>Streaming responses</li>
+          <li>GPT-4o, Claude Sonnet, Gemini Pro, Llama, and more</li>
+          <li>Switch models mid-conversation or auto-route by task</li>
+          <li>Streaming responses with file attachments &amp; code analysis</li>
+          <li>Thread sharing with permissions, export &amp; full history</li>
         </ul>
       </div>
-      <div class="cap-group">
-        <div class="cap-group-title">AI Council <span style="font-size:8px;color:#59595B;font-weight:400;">(Patent Pending)</span></div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> AI Council <span class="cg-pp">(Patent Pending)</span></div>
         <ul>
-          <li>3-stage deliberation: Diverge &gt; Converge &gt; Synthesize</li>
-          <li>3+ models per query</li>
-          <li>&gt;30% hallucination reduction</li>
+          <li>3-stage deliberation: Diverge &rarr; Converge &rarr; Synthesize</li>
+          <li>3+ models per query with anonymized peer review</li>
+          <li>&gt;60% win rate vs single models across benchmarks</li>
+          <li>&gt;30% hallucination reduction through cross-validation</li>
         </ul>
       </div>
-      <div class="cap-group">
-        <div class="cap-group-title">Workflow &amp; Knowledge</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Custom Assistants &amp; Projects</div>
         <ul>
-          <li>N8N workflow automation from chat</li>
-          <li>RAG with Weaviate/Pinecone/Chroma</li>
-          <li>Custom assistants with connectors</li>
+          <li>Purpose-built AI assistants with custom system prompts</li>
+          <li>REST, GraphQL, and direct database connector integrations</li>
+          <li>Project workspaces with inherited context &amp; team sharing</li>
+          <li>Template marketplace for rapid assistant deployment</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Workflow &amp; Knowledge</div>
+        <ul>
+          <li>N8N workflow automation triggered from chat context</li>
+          <li>RAG with Weaviate, Pinecone, or Chroma vector stores</li>
+          <li>File vectorization, semantic search &amp; persistent org memory</li>
+          <li>Knowledge base auto-sync with SharePoint &amp; Google Drive</li>
         </ul>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-header">How It Works</div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-text"><strong>Deploy</strong> — Set up your tenant with Azure AD SSO in minutes</div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-text"><strong>Configure</strong> — Choose AI models, set budgets, create assistants</div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-text"><strong>Scale</strong> — Add users, workflows, and integrations as you grow</div>
-        </div>
+    <div class="sec">
+      <div class="sh">How It Works</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Deploy</b> &mdash; Provision your tenant with Azure AD SSO in under 15 minutes</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>Configure</b> &mdash; Choose AI models, set per-user token budgets, create custom assistants</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Scale</b> &mdash; Add users, workflows, knowledge bases &amp; integrations as you grow</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Vs. Competitors</div>
+      <div class="cmp-wrap">
+      <table class="cmp">
+        <thead><tr><th>Capability</th><th>ChatGPT</th><th>Copilot</th><th>Gemini</th><th class="hl">Chat.AI</th></tr></thead>
+        <tbody>
+          <tr><td>Multi-Model Access</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; 4+ Providers</td></tr>
+          <tr><td>AI Council Consensus</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Patent Pending</td></tr>
+          <tr><td>Per-User Cost Tracking</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Token-Level</td></tr>
+          <tr><td>On-Premise Deployment</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Full Stack</td></tr>
+          <tr><td>Complete Audit Trail</td><td class="x">&mdash;</td><td>Limited</td><td>Limited</td><td class="hl ck">&#10003; Full</td></tr>
+          <tr><td>Workflow Automation</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; N8N</td></tr>
+          <tr><td>Price per 50 users</td><td>$1,250</td><td>$1,500</td><td>$1,000</td><td class="hl" style="color:var(--blue);font-weight:700;">$899</td></tr>
+        </tbody>
+      </table>
       </div>
     </div>
   </div>
 
-  <!-- RIGHT COLUMN -->
   <div>
-    <div class="section">
-      <div class="section-header">Why Chat.AI</div>
-      <ul class="diff-list">
-        <li><div class="diff-dot" style="background:#006DB6;"></div><div>Multi-provider: No vendor lock-in — OpenAI, Anthropic, Google, Azure</div></li>
-        <li><div class="diff-dot" style="background:#F67D4B;"></div><div>Cost control: Token-level metering with prepaid budgets &amp; alerts</div></li>
-        <li><div class="diff-dot" style="background:#1EAAC8;"></div><div>Enterprise security: Row-level isolation, full audit trail, HIPAA/SOC 2 ready</div></li>
-        <li><div class="diff-dot" style="background:#1A1A2E;"></div><div>On-premise option: Deploy in your own infrastructure for data sovereignty</div></li>
-        <li><div class="diff-dot" style="background:#CBDB2D;"></div><div>Council consensus: Patent-pending multi-agent deliberation</div></li>
+    <div class="sec">
+      <div class="sh">Why Chat.AI</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Multi-Provider Freedom:</b> No vendor lock-in &mdash; OpenAI, Anthropic, Google, Azure, and open-source with automatic failover</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Granular Cost Control:</b> Token-level metering per model, prepaid budgets with 75%/100% alerts, full billing attribution</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Enterprise Security:</b> Row-level tenant isolation, full audit trail, prompt injection defense, HIPAA/SOC 2 ready</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>On-Premise Option:</b> Deploy the full stack in your infrastructure for complete data sovereignty ($45K/yr)</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Council Consensus:</b> Patent-pending multi-agent deliberation achieves &gt;60% win rate &amp; &gt;30% fewer hallucinations</div></li>
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Workflow Automation:</b> Trigger N8N workflows from chat, connect to any API, and build custom AI-powered pipelines</div></li>
       </ul>
     </div>
 
-    <div class="section">
-      <div class="section-header">Pricing At-a-Glance</div>
-      <table class="pricing-table">
-        <thead>
-          <tr><th>Plan</th><th>Price</th><th>Users</th></tr>
-        </thead>
+    <div class="sec">
+      <div class="sh">Pricing At-a-Glance</div>
+      <div class="pt-wrap">
+      <table class="pt">
+        <thead><tr><th>Plan</th><th>Monthly</th><th>Annual</th><th>Users</th><th>Tokens</th></tr></thead>
         <tbody>
-          <tr><td>Starter</td><td>$299/mo</td><td>10</td></tr>
-          <tr><td>Growth</td><td>$899/mo</td><td>50</td></tr>
-          <tr class="highlight"><td>Professional</td><td>$1,699/mo</td><td>100</td></tr>
-          <tr><td>Enterprise</td><td>Custom</td><td>250+</td></tr>
+          <tr><td>Starter</td><td>$299</td><td>$2,990</td><td>10</td><td>10M</td></tr>
+          <tr><td>Growth</td><td>$899</td><td>$8,990</td><td>50</td><td>35M</td></tr>
+          <tr class="pop"><td>Professional</td><td>$1,699</td><td>$16,990</td><td>100</td><td>75M</td></tr>
+          <tr><td>Enterprise</td><td>Custom</td><td>Custom</td><td>250+</td><td>200M+</td></tr>
         </tbody>
       </table>
+      </div>
+      <div class="pt-note">Annual plans save 17% &bull; No per-seat pricing &bull; Professional includes AI Council</div>
     </div>
 
-    <div class="section">
-      <div class="section-header">Security &amp; Compliance</div>
+    <div class="sec">
+      <div class="sh">Security &amp; Compliance</div>
       <div class="badges">
-        <div class="badge"><span>&#128272;</span> Azure AD SSO</div>
-        <div class="badge"><span>&#128737;</span> Row-Level Security</div>
-        <div class="badge"><span>&#128196;</span> Audit Trail</div>
-        <div class="badge"><span>&#128273;</span> Key Vault</div>
-        <div class="badge"><span>&#127973;</span> HIPAA Ready</div>
-        <div class="badge"><span>&#128736;</span> RBAC</div>
+        <div class="badge"><span class="bi">&#10003;</span> Azure AD SSO</div>
+        <div class="badge"><span class="bi">&#10003;</span> Row-Level Security</div>
+        <div class="badge"><span class="bi">&#10003;</span> Full Audit Trail</div>
+        <div class="badge"><span class="bi">&#10003;</span> Azure Key Vault</div>
+        <div class="badge"><span class="bi">&#10003;</span> Prompt Injection Defense</div>
+        <div class="badge"><span class="bi">&#10003;</span> HIPAA / SOC 2 Ready</div>
+        <div class="badge"><span class="bi">&#10003;</span> RBAC Role Management</div>
+        <div class="badge"><span class="bi">&#10003;</span> Rate Limiting &amp; Throttling</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Savings Snapshot</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-label">10 Users</div><div class="rc-cost">$389 &rarr; $299/mo</div><div class="rc-save">$1,080/yr</div></div>
+        <div class="roi-card"><div class="rc-label">50 Users</div><div class="rc-cost">$2,500 &rarr; $899/mo</div><div class="rc-save">$19,212/yr</div></div>
+        <div class="roi-card"><div class="rc-label">250 Users</div><div class="rc-cost">$18.5K &rarr; $3,999/mo</div><div class="rc-save">$174,012/yr</div></div>
       </div>
     </div>
   </div>
-
 </div>
 
-<!-- 4. CTA BAR -->
-<div class="cta-bar">
-  Ready to see Chat.AI in action? Schedule a demo: <strong>RJain@technijian.com</strong> | <strong>949.379.8500</strong>
-</div>
-
-<!-- 5. FOOTER -->
-<div class="footer">
-  &copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com
-</div>
+<div class="cta">Ready to see Chat.AI in action? &nbsp; <a href="mailto:RJain@technijian.com">Schedule a Demo</a> &nbsp;|&nbsp; <b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
 
 </body>
 </html>
