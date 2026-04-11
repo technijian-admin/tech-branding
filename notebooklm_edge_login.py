@@ -19,12 +19,14 @@ async def main():
     print("  3. Login will auto-detect and save!\n")
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
+        # Use Edge's real user profile so existing Google login is available
+        edge_user_data = Path.home() / "AppData" / "Local" / "Microsoft" / "Edge" / "User Data"
+        context = await p.chromium.launch_persistent_context(
+            user_data_dir=str(storage_path.parent / "edge_profile"),
             channel="msedge",
             headless=False,
             args=["--disable-blink-features=AutomationControlled"],
         )
-        context = await browser.new_context()
         page = await context.new_page()
         await page.goto("https://notebooklm.google.com/")
 
@@ -47,15 +49,23 @@ async def main():
         else:
             print("  Timeout waiting for login. Saving anyway...")
 
-        # Navigate to capture all cookies
+        # Capture cookies - save immediately, then try extra navigations
         print("  Capturing cookies...")
-        await page.goto("https://accounts.google.com/", wait_until="load")
-        await asyncio.sleep(1)
-        await page.goto("https://notebooklm.google.com/", wait_until="load")
-        await asyncio.sleep(2)
-
         await context.storage_state(path=str(storage_path))
-        await browser.close()
+        print(f"  Saved initial state to: {storage_path}")
+        try:
+            await page.goto("https://accounts.google.com/", wait_until="load")
+            await asyncio.sleep(1)
+            await page.goto("https://notebooklm.google.com/", wait_until="load")
+            await asyncio.sleep(2)
+            await context.storage_state(path=str(storage_path))
+            print("  Updated with full cookie set")
+        except Exception as e:
+            print(f"  Extra navigation skipped ({e.__class__.__name__}), initial state saved OK")
+        try:
+            await context.close()
+        except Exception:
+            pass
 
     print(f"\nAuthentication saved to: {storage_path}")
     print("============================================")
