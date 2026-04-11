@@ -35,8 +35,8 @@
   .cover::before { content:''; position:absolute; top:-200px; right:-150px; width:600px; height:600px; background:radial-gradient(circle,rgba(30,170,200,0.15) 0%,transparent 65%); border-radius:50%; }
   .cover::after { content:''; position:absolute; bottom:-180px; left:15%; width:500px; height:500px; background:radial-gradient(circle,rgba(246,125,75,0.10) 0%,transparent 65%); border-radius:50%; }
   .cover .glow-3 { position:absolute; top:40%; left:-100px; width:350px; height:350px; background:radial-gradient(circle,rgba(0,109,182,0.12) 0%,transparent 65%); border-radius:50%; }
-  .cover-inner { position:relative; z-index:1; max-width:720px; }
-  .cover-logo { height:44px; margin-bottom:40px; }
+  .cover-inner { position:relative; z-index:1; max-width:720px; display:flex; flex-direction:column; align-items:center; }
+  .cover-logo { height:64px; margin-bottom:40px; display:block; }
   .cover-badge { display:inline-block; background:rgba(30,170,200,0.20); border:1px solid rgba(30,170,200,0.45); color:var(--teal); font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; padding:6px 20px; border-radius:24px; margin-bottom:24px; }
   .cover h1 { font-size:52px; font-weight:800; line-height:1.08; margin-bottom:16px; }
   .cover h1 .accent { color:var(--orange); }
@@ -211,7 +211,7 @@
 <div class="cover">
   <div class="glow-3"></div>
   <div class="cover-inner">
-    <img class="cover-logo" src="../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <img class="cover-logo" src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
     <div class="cover-badge">Enterprise AI Platform</div>
     <h1>Technijian <span class="accent">Chat.AI</span></h1>
     <p class="tagline">Secure, multi-model AI with collective intelligence, workflow automation, and enterprise governance — purpose-built for organizations that demand more from AI.</p>
@@ -363,7 +363,7 @@
 
 <!-- BACK COVER -->
 <div class="back-cover">
-  <img class="bc-logo" src="../../assets/Technijian Logo - white text.png" alt="Technijian">
+  <img class="bc-logo" src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
   <div class="bc-tagline">Enterprise AI, Reimagined.</div>
   <div class="bc-url">technijian.com</div>
   <div class="bc-contact">Schedule a demo: RJain@technijian.com &bull; 949.379.8500</div>

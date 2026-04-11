@@ -44,8 +44,8 @@
   .cover::before { content: ''; position: absolute; top: -120px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(30,170,200,0.12) 0%, transparent 70%); border-radius: 50%; }
   .cover::after { content: ''; position: absolute; bottom: -100px; left: 10%; width: 350px; height: 350px; background: radial-gradient(circle, rgba(246,125,75,0.08) 0%, transparent 70%); border-radius: 50%; }
   .cover-glow { position: absolute; top: 30%; left: -60px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(0,109,182,0.1) 0%, transparent 70%); border-radius: 50%; }
-  .cover-inner { position: relative; z-index: 1; }
-  .cover img { height: 48px; margin-bottom: 32px; }
+  .cover-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+  .cover img { height: 64px; margin-bottom: 32px; display: block; }
   .cover-badge { font-size: 11px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 6px 20px; border-radius: 16px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; display: inline-block; margin-bottom: 24px; }
   .cover h1 { font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
   .cover h1 .o { color: var(--orange); }
@@ -311,7 +311,7 @@
 <div class="page cover">
   <div class="cover-glow"></div>
   <div class="cover-inner">
-    <img src="../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
     <div class="cover-badge">Nexus Platform &mdash; Security &amp; Compliance</div>
     <h1>Nexus <span class="o">Assess</span> + <span class="o">Pulse</span></h1>
     <div class="cover-tagline">Unified IT risk assessment, compliance reporting, and AI-enhanced penetration testing &mdash; from discovery to exploitation proof, in one platform.</div>
@@ -754,7 +754,7 @@
 <div class="page back-cover">
   <div class="cover-glow"></div>
   <div class="cover-inner" style="position:relative;z-index:1;">
-    <img src="../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
     <div class="tagline">Vulnerability Intelligence &amp; Automated Penetration Testing</div>
     <div class="url">technijian.com</div>
   </div>

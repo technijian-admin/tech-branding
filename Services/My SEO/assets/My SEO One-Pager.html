@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian My SEO &mdash; SEO &amp; Digital Marketing Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333; font-size: 13px; line-height: 1.45;
+    display: flex; flex-direction: column;
+    height: 100vh; background: #fff;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628, #0d2847);
+    padding: 16px 28px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -50px; left: 15%; width: 140px; height: 140px; background: radial-gradient(circle, rgba(246,125,75,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .hero-left img { height: 30px; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-badges { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .hero-badge { font-size: 7.5px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+  .hero-sub { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .hero-stats { display: flex; gap: 16px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 22px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.5); display: block; margin-top: 1px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 16px; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+  .vp { background: var(--blue); text-align: center; padding: 8px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 14px 26px; flex: 1; align-content: start; }
+  .sh { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 7px; border-bottom: 2px solid var(--light-grey); padding-bottom: 3px; }
+  .sec { margin-bottom: 10px; }
+
+  /* Pricing tiers - stacking visualization */
+  .tier-stack { margin-top: 5px; }
+  .tier {
+    border: 1px solid var(--light-grey); border-radius: 6px;
+    margin-bottom: 4px; overflow: hidden;
+    position: relative;
+  }
+  .tier-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 10px; color: #fff; font-size: 9.5px; font-weight: 700;
+  }
+  .tier-header .price { font-size: 12px; font-weight: 800; }
+  .tier-body { padding: 4px 10px 5px; font-size: 8.5px; color: #444; line-height: 1.4; }
+  .tier-body .includes-prev {
+    font-size: 7.5px; color: var(--teal); font-weight: 600;
+    margin-bottom: 2px; display: flex; align-items: center; gap: 4px;
+  }
+  .tier-body .includes-prev::before { content: "↑"; font-size: 10px; }
+  .tier-new { font-size: 7.5px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .tier-items { list-style: none; }
+  .tier-items li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 4px; font-size: 8px; }
+  .tier-items li { font-size: 8.5px; color: #444; line-height: 1.4; }
+  .t1 .tier-header { background: var(--blue); }
+  .t2 .tier-header { background: var(--teal); }
+  .t3 .tier-header { background: var(--orange); }
+  .t4 .tier-header { background: linear-gradient(135deg, var(--orange), #e8643a); }
+  .t5 .tier-header { background: linear-gradient(135deg, var(--dark), #2a2a4a); }
+
+  /* Add-ons */
+  .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 5px; }
+  .addon {
+    background: var(--off-white); border-radius: 4px; padding: 5px 8px;
+    border-left: 3px solid;
+  }
+  .addon h4 { font-size: 9px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+  .addon .addon-price { font-size: 8px; font-weight: 700; color: var(--blue); }
+  .addon .addon-desc { font-size: 7.5px; color: var(--grey); line-height: 1.3; }
+  .addon:nth-child(1) { border-left-color: var(--blue); }
+  .addon:nth-child(2) { border-left-color: var(--orange); }
+  .addon:nth-child(3) { border-left-color: var(--teal); }
+  .addon:nth-child(4) { border-left-color: var(--dark); }
+
+  /* Right column */
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 10.5px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .cg-bar { width: 4px; height: 13px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10px; padding: 1px 0; color: #444; line-height: 1.35; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 9px; }
+
+  .diff { list-style: none; }
+  .diff li { font-size: 10px; padding: 3px 0; display: flex; gap: 7px; align-items: flex-start; line-height: 1.35; }
+  .dd { width: 8px; height: 8px; min-width: 8px; border-radius: 50%; margin-top: 3px; }
+  .diff li b { color: var(--dark); font-size: 10px; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 3px 10px; margin-top: 5px; }
+  .badge { font-size: 9px; color: var(--grey); display: flex; align-items: center; gap: 3px; font-weight: 500; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 9px; }
+
+  /* DMA mini-table */
+  .dma-table { width: 100%; border-collapse: collapse; font-size: 8.5px; margin-top: 5px; border-radius: 5px; overflow: hidden; }
+  .dma-table th { background: var(--dark); color: #fff; padding: 3px 6px; text-align: left; font-size: 7.5px; font-weight: 600; }
+  .dma-table td { padding: 3px 6px; border-bottom: 1px solid var(--light-grey); }
+  .dma-table tr:nth-child(even) td { background: var(--off-white); }
+  .dma-table .rec td { background: #e6f0fa; font-weight: 600; }
+  .dma-table .rec td:first-child { color: var(--blue); }
+
+  .cta { background: linear-gradient(135deg, var(--blue), #004d80); text-align: center; padding: 8px 24px; color: #fff; font-size: 10.5px; flex-shrink: 0; font-weight: 600; }
+  .foot { background: #2D2D2D; text-align: center; padding: 5px; color: rgba(255,255,255,0.4); font-size: 7.5px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    body { min-height: 100vh; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div>
+      <div class="hero-title">My <span class="o">SEO</span></div>
+      <div class="hero-badges">
+        <span class="hero-badge">SEO &amp; Digital Marketing</span>
+        <span class="hero-sub">Comprehensive Search &amp; Content Services</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">250+</span><span class="l">Syndication Sites</span></div>
+    <div class="hero-stat"><span class="n">300+</span><span class="l">PR Placements</span></div>
+    <div class="hero-stat"><span class="n">AI</span><span class="l">Search Optimized</span></div>
+    <div class="hero-stat"><span class="n">12mo</span><span class="l">Commitment</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">SEO, content, video, AI search optimization, and digital marketing management &mdash; all in one service with unlimited monthly hours.</div>
+
+<div class="main">
+  <!-- LEFT: PRICING -->
+  <div>
+    <div class="sec">
+      <div class="sh">SEO Service Tiers &mdash; Each Tier Includes All Below</div>
+      <div class="tier-stack">
+        <div class="tier t1">
+          <div class="tier-header"><span>Tier 1: Website Design &amp; Hosting</span><span class="price">$500/mo</span></div>
+          <div class="tier-body">
+            <div class="tier-new">Foundation &mdash; starts here</div>
+            <ul class="tier-items">
+              <li>Custom responsive website design (SEO-optimized)</li>
+              <li>2 WordPress sites (dev + production) with 100GB storage</li>
+              <li>Daily backups, ongoing maintenance &amp; updates</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier t2">
+          <div class="tier-header"><span>Tier 2: SEO Optimization</span><span class="price">$750/mo</span></div>
+          <div class="tier-body">
+            <div class="includes-prev">Includes everything in Tier 1 (Website Design &amp; Hosting)</div>
+            <div class="tier-new">Adds:</div>
+            <ul class="tier-items">
+              <li>Keyword research, on-page &amp; off-page SEO</li>
+              <li>High-quality backlink building &amp; competitive analysis</li>
+              <li>Analytics, reporting &amp; strategy adjustments</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier t3">
+          <div class="tier-header"><span>Tier 3: Blogs for 5 Keywords</span><span class="price">$1,000/mo</span></div>
+          <div class="tier-body">
+            <div class="includes-prev">Includes everything in Tiers 1&ndash;2</div>
+            <div class="tier-new">Adds:</div>
+            <ul class="tier-items">
+              <li>5 keyword-targeted blog posts per month</li>
+              <li>Audience engagement &amp; content calendar</li>
+              <li>Internal linking strategy &amp; content optimization</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier t4">
+          <div class="tier-header"><span>Tier 4: Videos for Blogs</span><span class="price">$1,250/mo</span></div>
+          <div class="tier-body">
+            <div class="includes-prev">Includes everything in Tiers 1&ndash;3</div>
+            <div class="tier-new">Adds:</div>
+            <ul class="tier-items">
+              <li>Professional video production for each blog post</li>
+              <li>Multi-platform distribution &amp; SEO boost</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier t5">
+          <div class="tier-header"><span>Tier 5: Topical Viral Videos</span><span class="price">$1,500/mo</span></div>
+          <div class="tier-body">
+            <div class="includes-prev">Includes everything in Tiers 1&ndash;4</div>
+            <div class="tier-new">Adds:</div>
+            <ul class="tier-items">
+              <li>Trend-based viral video creation &amp; social sharing</li>
+              <li>Creative concepts for maximum shareability</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Add-On Services</div>
+      <div class="addon-grid">
+        <div class="addon">
+          <h4>Content Syndication</h4>
+          <div class="addon-price">$200/mo</div>
+          <div class="addon-desc">250+ websites, media outlets, canonical links, detailed reports</div>
+        </div>
+        <div class="addon">
+          <h4>PR Releases</h4>
+          <div class="addon-price">$150/mo (quarterly)</div>
+          <div class="addon-desc">300+ placements, FOX/ABC/NBC affiliates, 500+ word release</div>
+        </div>
+        <div class="addon">
+          <h4>AI Search Optimization</h4>
+          <div class="addon-price">$200/mo</div>
+          <div class="addon-desc">AI snippet targeting, schema markup, entity optimization</div>
+        </div>
+        <div class="addon">
+          <h4>DMA Setup</h4>
+          <div class="addon-price">$100 one-time</div>
+          <div class="addon-desc">Google Ads + Meta Ads setup, tracking, brand-safety lists</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Digital Marketing Management</div>
+      <table class="dma-table">
+        <thead><tr><th>Tier</th><th>Monthly</th><th>Best For</th><th>Includes</th></tr></thead>
+        <tbody>
+          <tr><td>Essential</td><td>$100</td><td>Small budgets</td><td>1&ndash;2 campaigns, weekly optimization</td></tr>
+          <tr class="rec"><td>Standard</td><td>$200</td><td>Full-funnel</td><td>Google + Meta, bi-weekly experiments</td></tr>
+          <tr><td>Aggressive</td><td>$300</td><td>Growth/peak</td><td>Multi-campaign, weekly creative testing</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RIGHT: SERVICES & VALUE -->
+  <div>
+    <div class="sec">
+      <div class="sh">Why My SEO</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Cumulative tiers:</b> Each level includes everything below &mdash; no hidden gaps or missing features</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Unlimited hours:</b> No hour caps &mdash; consistent support throughout your 12-month engagement</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>AI-ready SEO:</b> Optimize for both traditional search and AI search engines (ChatGPT, Perplexity)</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Full-stack digital:</b> Website, SEO, content, video, syndication, PR, and paid ads in one partner</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Scalable pricing:</b> Start at $500/mo and add capabilities as you grow &mdash; no wasted spend</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">AI Search Optimization</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Next-Gen SEO for AI Engines</div>
+        <ul>
+          <li>Structure content for AI search recommendations</li>
+          <li>Featured snippet &amp; zero-click answer targeting</li>
+          <li>Semantic SEO &amp; topic authority clusters</li>
+          <li>Technical SEO for AI readability (schema, speed)</li>
+          <li>Brand mention &amp; entity optimization</li>
+          <li>AI-driven keyword &amp; topic research</li>
+          <li>Competitor gap analysis for AI search</li>
+          <li>Content refreshes for AI indexing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">How It Works</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Your Growth Path</div>
+        <ul>
+          <li><b>Pick your tier:</b> Choose the service level that matches your goals</li>
+          <li><b>Add what you need:</b> Syndication, PR, AI SEO, or paid ads</li>
+          <li><b>We execute:</b> Unlimited hours, 12-month commitment, consistent results</li>
+          <li><b>Scale up anytime:</b> Upgrade tiers or add services as you grow</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Content &amp; PR Distribution</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> FOX Affiliates</div>
+        <div class="badge"><span class="bi">&#10003;</span> ABC Affiliates</div>
+        <div class="badge"><span class="bi">&#10003;</span> NBC Affiliates</div>
+        <div class="badge"><span class="bi">&#10003;</span> Digital Journal</div>
+        <div class="badge"><span class="bi">&#10003;</span> 250+ Websites</div>
+        <div class="badge"><span class="bi">&#10003;</span> 300+ Placements</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Start growing your online presence &mdash; Schedule a consultation: <b>rjain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b> &nbsp;|&nbsp; <b>technijian.com</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 160" width="900" height="160">
+  <title>Technijian Logo - Color Icon + White Text (for dark backgrounds)</title>
+
+  <!-- DOT GRID ICON - full brand colors -->
+  <g transform="translate(0, 0)">
+    <!-- Row 1 -->
+    <rect x="2" y="2" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <rect x="42" y="2" width="34" height="34" rx="6" ry="6" fill="#006DB6"/>
+    <rect x="82" y="2" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <rect x="122" y="2" width="34" height="34" rx="6" ry="6" fill="#F67D4B"/>
+    <!-- Row 2 -->
+    <rect x="2" y="42" width="34" height="34" rx="6" ry="6" fill="#006DB6"/>
+    <rect x="42" y="42" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <rect x="82" y="42" width="34" height="34" rx="6" ry="6" fill="#F67D4B"/>
+    <rect x="122" y="42" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <!-- Row 3 -->
+    <rect x="2" y="82" width="34" height="34" rx="6" ry="6" fill="#006DB6"/>
+    <rect x="42" y="82" width="34" height="34" rx="6" ry="6" fill="#1EAAC8"/>
+    <rect x="82" y="82" width="34" height="34" rx="6" ry="6" fill="#F67D4B"/>
+    <rect x="122" y="82" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+    <!-- Row 4 -->
+    <rect x="2" y="122" width="34" height="34" rx="6" ry="6" fill="#CBDB2D"/>
+    <rect x="42" y="122" width="34" height="34" rx="6" ry="6" fill="#1EAAC8"/>
+    <rect x="82" y="122" width="34" height="34" rx="6" ry="6" fill="#1EAAC8"/>
+    <rect x="122" y="122" width="34" height="34" rx="6" ry="6" fill="#59595B"/>
+  </g>
+
+  <!-- WORDMARK - white text, no tagline -->
+  <text x="185" y="115" font-family="'Open Sans', 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="400" font-size="130" fill="#FFFFFF" letter-spacing="2">
+    <tspan font-size="140" font-weight="600">T</tspan><tspan font-size="105" letter-spacing="6">ECHNIJIAN</tspan>
+  </text>
+</svg>
