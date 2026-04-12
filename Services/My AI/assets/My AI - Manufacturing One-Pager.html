@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian My AI for Precision Manufacturing &mdash; AI Consulting Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333; font-size: 13px; line-height: 1.45;
+    display: flex; flex-direction: column;
+    height: 100vh;
+    background: #fff;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628, #0d2847);
+    padding: 16px 28px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -50px; left: 15%; width: 140px; height: 140px; background: radial-gradient(circle, rgba(246,125,75,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .hero-left img { height: 30px; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-badges { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .hero-badge { font-size: 7.5px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; white-space: nowrap; }
+  .hero-sub { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .hero-stats { display: flex; gap: 16px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 22px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.5); display: block; margin-top: 1px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 16px; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  /* ── VALUE PROP ── */
+  .vp { background: var(--blue); text-align: center; padding: 8px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  /* ── MAIN BODY ── */
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 14px 26px; flex: 1; align-content: start; }
+
+  .sh { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 7px; border-bottom: 2px solid var(--light-grey); padding-bottom: 3px; }
+
+  /* Capabilities */
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 10.5px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .cg-bar { width: 4px; height: 13px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10px; padding: 1px 0; color: #444; line-height: 1.35; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 9px; }
+
+  /* Steps */
+  .step { display: flex; gap: 6px; margin-bottom: 4px; align-items: flex-start; }
+  .sn { width: 18px; height: 18px; min-width: 18px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #e8643a); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(246,125,75,0.3); }
+  .st { font-size: 9.5px; line-height: 1.35; }
+  .st b { color: var(--dark); }
+
+  /* Projects table */
+  .pt { width: 100%; border-collapse: collapse; font-size: 9px; border-radius: 6px; overflow: hidden; margin-top: 5px; }
+  .pt th { background: var(--dark); color: #fff; padding: 4px 5px; text-align: left; font-size: 8px; font-weight: 600; }
+  .pt th:last-child { text-align: right; }
+  .pt td { padding: 3px 5px; border-bottom: 1px solid var(--light-grey); font-size: 8.5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt .pn { font-weight: 700; color: var(--dark); }
+  .pt .pd { color: var(--grey); }
+  .pt .pr { text-align: right; font-weight: 700; color: var(--teal); }
+
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 10px; padding: 3px 0; display: flex; gap: 7px; align-items: flex-start; line-height: 1.35; }
+  .dd { width: 8px; height: 8px; min-width: 8px; border-radius: 50%; margin-top: 3px; }
+  .diff li b { color: var(--dark); font-size: 10px; }
+
+  /* Engagement cards */
+  .eng-cards { display: flex; flex-direction: column; gap: 4px; margin-top: 5px; }
+  .eng-card { padding: 4px 10px; border-radius: 4px; color: #fff; display: flex; align-items: center; gap: 6px; }
+  .eng-title { font-size: 9px; font-weight: 700; white-space: nowrap; }
+  .eng-desc { font-size: 8px; opacity: 0.7; }
+
+  /* Industries */
+  .badges { display: flex; flex-wrap: wrap; gap: 3px 10px; margin-top: 5px; }
+  .badge { font-size: 9px; color: var(--grey); display: flex; align-items: center; gap: 3px; font-weight: 500; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 9px; }
+
+  /* Tech stack */
+  .tech-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 3px; font-size: 9px; }
+  .tech-bar { width: 4px; height: 11px; border-radius: 2px; flex-shrink: 0; position: relative; top: 1px; }
+  .tech-label { font-weight: 700; color: var(--dark); }
+  .tech-value { color: #444; }
+
+  /* ROI strip */
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 5px; }
+  .roi-card { background: var(--dark); border-radius: 5px; padding: 6px 8px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card .rc-top { width: 100%; height: 2px; position: absolute; top: 0; left: 0; }
+  .roi-card .rc-label { font-size: 7.5px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .roi-card .rc-save { font-size: 13px; font-weight: 800; color: var(--chartreuse); margin-top: 1px; }
+  .roi-card .rc-desc { font-size: 7px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+
+  .sec { margin-bottom: 10px; }
+
+  /* ── CTA ── */
+  .cta { background: linear-gradient(135deg, var(--blue), #004d80); text-align: center; padding: 8px 24px; color: #fff; font-size: 10.5px; flex-shrink: 0; font-weight: 600; }
+
+  /* ── FOOTER ── */
+  .foot { background: #2D2D2D; text-align: center; padding: 5px; color: rgba(255,255,255,0.4); font-size: 7.5px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    body { min-height: 100vh; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div>
+      <div class="hero-title">My <span class="o">AI</span> &mdash; Manufacturing Edition</div>
+      <div class="hero-badges">
+        <span class="hero-badge">Precision Manufacturing AI</span>
+        <span class="hero-sub">Aerospace &bull; Defense &bull; ITAR &bull; AS9100 &bull; ISO 9001</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">25+</span><span class="l">Years Exp</span></div>
+    <div class="hero-stat"><span class="n">ITAR</span><span class="l">Aware</span></div>
+    <div class="hero-stat"><span class="n">~70%</span><span class="l">Faster Quotes</span></div>
+    <div class="hero-stat"><span class="n">100%</span><span class="l">Hands-On</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">AI purpose-built for precision manufacturing &mdash; intelligent estimating, smart fabrication, quality AI, and compliance documentation.</div>
+
+<div class="main">
+  <!-- ── LEFT COLUMN ── -->
+  <div>
+    <div class="sec">
+      <div class="sh">Manufacturing AI Services</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Estimating &amp; Quoting Intelligence</div>
+        <ul>
+          <li>Drawing intake &amp; GD&amp;T feature extraction</li>
+          <li>Automated BOM generation &amp; material calcs</li>
+          <li>Historical quote benchmarking &amp; win-rate analysis</li>
+          <li>Complexity scoring &amp; margin modeling</li>
+          <li>Quote turnaround: days &rarr; hours</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Smart Fabrication &amp; Production</div>
+        <ul>
+          <li>Production scheduling optimization</li>
+          <li>Machine utilization &amp; OEE intelligence</li>
+          <li>Work-in-progress tracking &amp; delay prediction</li>
+          <li>Setup time reduction via AI sequencing</li>
+          <li>Shop-floor data harmonization</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Engineering &amp; Quality AI</div>
+        <ul>
+          <li>Drawing/spec review with AI-assisted markup</li>
+          <li>Quality escape pattern detection &amp; root cause</li>
+          <li>NCR summarization &amp; trend analysis</li>
+          <li>Supplier quality scoring &amp; risk ranking</li>
+          <li>Engineering knowledge preservation (retirees)</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Compliance &amp; Documentation</div>
+        <ul>
+          <li>AS9100, ISO 9001, ITAR-compliant architectures</li>
+          <li>PPAP, FAI, CoC automated package generation</li>
+          <li>Air-gapped &amp; US-only deployment options</li>
+          <li>Controlled document retrieval with RBAC</li>
+          <li>CUI / NIST SP 800-171 alignment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">How We Engage</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Discover</b> &mdash; Map workflows, pain points &amp; AI opportunities</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>Design</b> &mdash; Architect solutions for goals &amp; compliance</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Implement</b> &mdash; Build, test &amp; deploy with hands-on engineering</div></div>
+      <div class="step"><div class="sn">4</div><div class="st"><b>Operate</b> &mdash; Operationalize with training, governance &amp; support</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Manufacturing Clients &amp; Use Cases</div>
+      <table class="pt">
+        <thead><tr><th>Client / Case</th><th>Focus Area</th><th>Scale</th></tr></thead>
+        <tbody>
+          <tr><td class="pn">Mason West</td><td class="pd">Estimating AI, engineering knowledge, ITAR/AS9100 docs</td><td class="pr">50+ yrs, 4 sites</td></tr>
+          <tr><td class="pn">Talsco (JVR Sheetmetal)</td><td class="pd">Intelligent quoting, production scheduling, AS9100 docs</td><td class="pr">55+ yrs, AS9100</td></tr>
+          <tr><td class="pn">Drawing &amp; Spec AI</td><td class="pd">Extract GD&amp;T, generate BOMs, calculate material</td><td class="pr">Days&rarr;Hrs</td></tr>
+          <tr><td class="pn">Compliance Doc AI</td><td class="pd">PPAP / FAI / CoC auto-generation, audit-ready</td><td class="pr">50%+ less effort</td></tr>
+          <tr><td class="pn">Knowledge Preservation</td><td class="pd">Capture senior estimator/engineer expertise in AI</td><td class="pr">Tribal&rarr;RAG</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── RIGHT COLUMN ── -->
+  <div>
+    <div class="sec">
+      <div class="sh">Why Technijian</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Manufacturing domain depth:</b> Drawings, GD&amp;T, BOMs, PPAP, FAI &mdash; not generic enterprise AI</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>ITAR &amp; AS9100 aware:</b> Air-gapped and US-only architectures, RBAC, audit trails built in</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Proven with precision shops:</b> Mason West, Talsco &mdash; aerospace, precision machining, sheet metal</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Strategy + Implementation:</b> Architect AND deploy through to shop-floor production, not decks</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>ERP/MES integration:</b> Works with Epicor, Global Shop, E2, ProShop &mdash; enhances, doesn&rsquo;t replace</div></li>
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Knowledge preservation:</b> Capture senior estimator/engineer expertise before retirement</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>25+ years operating:</b> Real business operator mindset for a documentation-heavy industry</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Models</div>
+      <div class="eng-cards">
+        <div class="eng-card" style="background:var(--dark)"><span class="eng-title">Fixed-Scope Projects</span><span class="eng-desc">&mdash; Defined deliverables, timeline &amp; outcomes</span></div>
+        <div class="eng-card" style="background:var(--blue)"><span class="eng-title">Flexible Consulting</span><span class="eng-desc">&mdash; On-demand strategic &amp; implementation support</span></div>
+        <div class="eng-card" style="background:var(--teal)"><span class="eng-title">Fractional AI Advisor</span><span class="eng-desc">&mdash; Retained monthly AI leadership &amp; oversight</span></div>
+        <div class="eng-card" style="background:var(--orange)"><span class="eng-title">AI Strategy Workshops</span><span class="eng-desc">&mdash; Half-day or full-day executive AI briefings</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Manufacturing Segments Served</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> Aerospace &amp; Defense</div>
+        <div class="badge"><span class="bi">&#10003;</span> Precision Machining</div>
+        <div class="badge"><span class="bi">&#10003;</span> Sheet Metal Fabrication</div>
+        <div class="badge"><span class="bi">&#10003;</span> ITAR / CUI Contractors</div>
+        <div class="badge"><span class="bi">&#10003;</span> Industrial Equipment</div>
+        <div class="badge"><span class="bi">&#10003;</span> Electronics &amp; PCB</div>
+        <div class="badge"><span class="bi">&#10003;</span> Automotive Tier 1/2</div>
+        <div class="badge"><span class="bi">&#10003;</span> Medical Device Mfg</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">AI Technology Stack</div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--blue)"></div><span class="tech-label">LLMs:</span><span class="tech-value">Claude (Sonnet/Opus), GPT-4o, Gemini, Whisper</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--orange)"></div><span class="tech-label">Orchestration:</span><span class="tech-value">MCP Protocol, Claude Code, Multi-agent systems</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--teal)"></div><span class="tech-label">RAG/Vector:</span><span class="tech-value">Weaviate, Chroma, Pinecone, Obsidian.md</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--dark)"></div><span class="tech-label">Platforms:</span><span class="tech-value">.NET 8, React, API-first, Multi-tenant SaaS</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--chartreuse)"></div><span class="tech-label">Cloud:</span><span class="tech-value">AWS, Azure, Microsoft 365, Private DC</span></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Client Impact</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-top" style="background:var(--blue)"></div><div class="rc-label">Quote Turnaround</div><div class="rc-save">Days&rarr;Hrs</div><div class="rc-desc">Per job</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--orange)"></div><div class="rc-label">Compliance Docs</div><div class="rc-save">50%+</div><div class="rc-desc">Less overhead</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--teal)"></div><div class="rc-label">ITAR Architecture</div><div class="rc-save">Air-Gap</div><div class="rc-desc">US-only ready</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Ready to put AI to work? &mdash; Schedule a consultation: <b>rjain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b> &nbsp;|&nbsp; <b>technijian.com</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

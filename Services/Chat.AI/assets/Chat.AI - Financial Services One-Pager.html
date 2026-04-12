@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Chat.AI for Financial Services &amp; FINRA — One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --blue-dark: #004d80; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --near-black: #2D2D2D;
+    --grey: #59595B; --light-grey: #E9ECEF; --off-white: #F8F9FA; --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { width: 8.5in; min-height: 11in; }
+  body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #333; line-height: 1.5;
+    display: flex; flex-direction: column;
+    width: 8.5in; min-height: 11in; height: 11in;
+    margin: 0 auto; overflow: hidden; background: var(--off-white);
+    position: relative;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* ── HERO STRIP ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #0a1628 60%, #0d2847 100%);
+    padding: 18px 32px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -50px; right: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -40px; left: 15%; width: 120px; height: 120px; background: radial-gradient(circle, rgba(246,125,75,0.10) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .hero-left img { height: 32px; display: block; }
+  .hero-text { display: flex; flex-direction: column; }
+  .hero-badge { display: inline-block; background: rgba(30,170,200,0.20); border: 1px solid rgba(30,170,200,0.45); color: var(--teal); font-size: 7px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 10px; border-radius: 10px; margin-bottom: 4px; width: fit-content; }
+  .hero-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-stats { display: flex; gap: 18px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 22px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.55); display: block; letter-spacing: 0.3px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.12); padding-left: 18px; }
+
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+  .vp { background: var(--blue); text-align: center; padding: 9px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  /* ── MAIN TWO-COLUMN BODY — flex:1 fills remaining space ── */
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 12px 28px 54px; flex: 1; }
+
+  .sh { font-size: 13px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; border-bottom: 2px solid var(--light-grey); padding-bottom: 4px; }
+
+  /* Capabilities */
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 12px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .cg-bar { width: 4px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+  .cg-pp { font-size: 8px; color: #999; font-weight: 400; font-style: italic; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10.75px; padding: 1px 0; color: #444; line-height: 1.34; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 6px; font-size: 10px; }
+
+  /* How It Works */
+  .step { display: flex; gap: 10px; margin-bottom: 6px; align-items: flex-start; }
+  .sn { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #f99a72); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(246,125,75,0.3); }
+  .st { font-size: 11px; line-height: 1.45; }
+  .st b { color: var(--dark); }
+
+  /* Comparison table */
+  .cmp-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-top: 6px; }
+  .cmp { width: 100%; border-collapse: collapse; }
+  .cmp th { background: var(--dark); color: #fff; padding: 5px 7px; text-align: left; font-size: 9px; font-weight: 600; }
+  .cmp th.hl { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+  .cmp td { padding: 4.5px 7px; border-bottom: 0.5px solid var(--light-grey); font-size: 10px; }
+  .cmp td.hl { background: rgba(0,109,182,0.04); font-weight: 600; color: var(--dark); }
+  .cmp td.x { color: #bbb; }
+  .cmp .ck { color: var(--teal); font-weight: 800; }
+
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 10.75px; padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.32; }
+  .dd { width: 10px; height: 10px; min-width: 10px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .diff li b { color: var(--dark); }
+
+  /* Pricing */
+  .pt-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-top: 6px; }
+  .pt { width: 100%; border-collapse: collapse; }
+  .pt th { background: var(--dark); color: #fff; padding: 5px 8px; text-align: left; font-weight: 600; font-size: 9px; }
+  .pt td { padding: 5px 8px; font-size: 10.5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt tr.pop td { background: #e6f0fa; font-weight: 600; }
+  .pt tr.pop td:first-child { color: var(--blue); }
+  .pt-note { font-size: 9px; color: var(--teal); font-weight: 600; margin-top: 4px; }
+
+  /* Security */
+  .badges { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; }
+  .badge { font-size: 10px; color: var(--grey); display: flex; align-items: center; gap: 4px; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 10px; }
+
+  /* ROI */
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+  .roi-card { background: var(--dark); border-radius: 8px; padding: 10px 10px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .roi-card:nth-child(1)::before { background: var(--blue); }
+  .roi-card:nth-child(2)::before { background: var(--orange); }
+  .roi-card:nth-child(3)::before { background: var(--teal); }
+  .roi-card .rc-label { font-size: 9px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
+  .roi-card .rc-cost { font-size: 9px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+  .roi-card .rc-save { font-size: 16px; font-weight: 800; color: var(--chartreuse); margin-top: 3px; }
+
+  .sec { margin-bottom: 10px; }
+
+  .cta { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); text-align: center; padding: 9px 20px; color: #fff; font-size: 10.5px; position: absolute; left: 0; right: 0; bottom: 20px; }
+  .cta b { color: #fff; }
+  .cta a { color: var(--orange); text-decoration: none; font-weight: 700; }
+  .foot { background: var(--near-black); text-align: center; height: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.38); font-size: 7px; position: absolute; left: 0; right: 0; bottom: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    html, body { width: 8.5in; min-height: 11in; }
+    body { min-height: 11in; height: 11in; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div class="hero-text">
+      <div class="hero-badge">Financial Services AI &bull; FINRA &amp; SEC Ready</div>
+      <div class="hero-title">Technijian <span class="o">Chat.AI</span> &mdash; Financial Services</div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">FINRA</span><span class="l">Aware</span></div>
+    <div class="hero-stat"><span class="n">WORM</span><span class="l">17a-4 Retention</span></div>
+    <div class="hero-stat"><span class="n">100%</span><span class="l">Audit Trail</span></div>
+    <div class="hero-stat"><span class="n">Days&rarr;Min</span><span class="l">RFP / DDQ</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">Multi-model AI for broker-dealers, RIAs, and wealth managers &mdash; FINRA/SEC-aware governance, WORM-compliant retention, and audit trails for every AI interaction.</div>
+
+<div class="main">
+  <div>
+    <div class="sec">
+      <div class="sh">Financial Services AI Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> FINRA / SEC-Aware Architecture</div>
+        <ul>
+          <li>SEC 17a-4 WORM-compliant retention for chat logs</li>
+          <li>FINRA 3110 supervisory review workflows</li>
+          <li>Reg BI &amp; fiduciary duty guardrails on client-facing output</li>
+          <li>Communications archive integration (Global Relay, Smarsh)</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Advisor &amp; Research Intelligence</div>
+        <ul>
+          <li>Ingest firm research, prospectuses, marketing materials</li>
+          <li>Cited, traceable answers with source attribution</li>
+          <li>Policy &amp; procedure retrieval for reps &amp; advisors</li>
+          <li>Training &amp; CE material semantic search</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Document Automation</div>
+        <ul>
+          <li>Auto-populate vendor due diligence questionnaires (DDQ)</li>
+          <li>RFP response drafting from firm document library</li>
+          <li>Compliance questionnaire &amp; audit prep automation</li>
+          <li>Days-to-minutes turnaround for institutional RFPs</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Governance &amp; Supervision</div>
+        <ul>
+          <li>Every prompt + response logged with user, timestamp, model</li>
+          <li>Configurable supervisory keyword &amp; sentiment alerts</li>
+          <li>Role-based access: advisor, principal, compliance, ops</li>
+          <li>PII/PCI redaction, SOC 2 Type II, on-premise option</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Financial Services Use Cases</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Vendor DDQ &amp; RFPs</b> &mdash; Auto-populate institutional questionnaires from firm library (proven: days &rarr; minutes)</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>Advisor Research Assistant</b> &mdash; Cited answers from firm research, prospectuses, product policies</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Compliance Q&amp;A</b> &mdash; Reps query the WSP, code of ethics, and policy manual in plain language</div></div>
+      <div class="step"><div class="sn">4</div><div class="st"><b>Marketing Review Prep</b> &mdash; AI flags Reg BI / fiduciary concerns before FINRA 2210 review</div></div>
+      <div class="step"><div class="sn">5</div><div class="st"><b>Client Communication Drafting</b> &mdash; Draft client letters, summaries with supervisory review hooks</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">FINRA / SEC Safeguards Built In</div>
+      <div class="cmp-wrap">
+      <table class="cmp">
+        <thead><tr><th>Regulatory Requirement</th><th>ChatGPT</th><th>Copilot</th><th class="hl">Chat.AI FinServ</th></tr></thead>
+        <tbody>
+          <tr><td>SEC 17a-4 WORM retention</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Immutable</td></tr>
+          <tr><td>FINRA 3110 supervisory review</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Workflow built in</td></tr>
+          <tr><td>Global Relay / Smarsh archive</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Integration</td></tr>
+          <tr><td>Reg BI / fiduciary guardrails</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Policy-aware</td></tr>
+          <tr><td>Full audit trail (6+ yr)</td><td class="x">&mdash;</td><td>Limited</td><td class="hl ck">&#10003; Configurable</td></tr>
+          <tr><td>On-premise / data residency</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Full stack</td></tr>
+          <tr><td>PII/PCI auto-redaction</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Default on</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec">
+      <div class="sh">Why Chat.AI for Financial Services</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>FINRA-Aware by Design:</b> SEC 17a-4 retention, FINRA 3110 supervisory workflows, Reg BI guardrails &mdash; not bolted on</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Proven DDQ / RFP Automation:</b> Technijian has deployed this for FINRA-registered broker-dealers &mdash; days to minutes turnaround</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Archive Integrations:</b> Global Relay, Smarsh, Proofpoint &mdash; all AI conversations captured in your existing archive</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Supervisory Review:</b> Principals review AI-drafted output before it reaches clients &mdash; with AI flagging concerns upfront</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Cited Answers for Advisors:</b> Research &amp; policy retrieval with citations so advisors can verify source</div></li>
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Data Sovereignty:</b> On-premise for RIAs concerned about data leaving the firm; SOC 2 Type II in cloud</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Financial Services Pricing</div>
+      <div class="pt-wrap">
+      <table class="pt">
+        <thead><tr><th>Plan</th><th>Monthly</th><th>Users</th><th>Retention</th><th>Supervisory</th></tr></thead>
+        <tbody>
+          <tr><td>RIA / Small BD</td><td>$699</td><td>25</td><td>6 yr</td><td>Basic</td></tr>
+          <tr class="pop"><td>Mid BD / Firm</td><td>$1,799</td><td>100</td><td>7+ yr WORM</td><td>+ FINRA 3110</td></tr>
+          <tr><td>Large BD / Enterprise</td><td>$3,499</td><td>250+</td><td>WORM + archive</td><td>+ Reg BI</td></tr>
+          <tr><td>On-Premise</td><td>Custom</td><td>Unltd</td><td>Self-hosted</td><td>Full stack</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="pt-note">All plans include WORM retention &bull; Global Relay / Smarsh integration &bull; AI Council standard on Mid BD+</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Regulatory &amp; Supervisory Safeguards</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> SEC 17a-4 WORM</div>
+        <div class="badge"><span class="bi">&#10003;</span> FINRA 3110 Review</div>
+        <div class="badge"><span class="bi">&#10003;</span> Reg BI Guardrails</div>
+        <div class="badge"><span class="bi">&#10003;</span> Global Relay / Smarsh</div>
+        <div class="badge"><span class="bi">&#10003;</span> PII / PCI Redaction</div>
+        <div class="badge"><span class="bi">&#10003;</span> SOC 2 Type II</div>
+        <div class="badge"><span class="bi">&#10003;</span> Supervisor Alerts</div>
+        <div class="badge"><span class="bi">&#10003;</span> AI Council Validation</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Proven Financial Services Impact</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-label">Vendor DDQs</div><div class="rc-cost">AI auto-populate</div><div class="rc-save">Days&rarr;Min</div></div>
+        <div class="roi-card"><div class="rc-label">Manual Review</div><div class="rc-cost">Document cutover</div><div class="rc-save">60-80% less</div></div>
+        <div class="roi-card"><div class="rc-label">RFP Turnaround</div><div class="rc-cost">Institutional RFPs</div><div class="rc-save">Hrs saved</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Ready to see Chat.AI in action? &nbsp; <a href="mailto:RJain@technijian.com">Schedule a Demo</a> &nbsp;|&nbsp; <b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

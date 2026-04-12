@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Chat.AI for Healthcare &amp; HIPAA — One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --blue-dark: #004d80; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --near-black: #2D2D2D;
+    --grey: #59595B; --light-grey: #E9ECEF; --off-white: #F8F9FA; --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { width: 8.5in; min-height: 11in; }
+  body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #333; line-height: 1.5;
+    display: flex; flex-direction: column;
+    width: 8.5in; min-height: 11in; height: 11in;
+    margin: 0 auto; overflow: hidden; background: var(--off-white);
+    position: relative;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* ── HERO STRIP ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #0a1628 60%, #0d2847 100%);
+    padding: 18px 32px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -50px; right: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -40px; left: 15%; width: 120px; height: 120px; background: radial-gradient(circle, rgba(246,125,75,0.10) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .hero-left img { height: 32px; display: block; }
+  .hero-text { display: flex; flex-direction: column; }
+  .hero-badge { display: inline-block; background: rgba(30,170,200,0.20); border: 1px solid rgba(30,170,200,0.45); color: var(--teal); font-size: 7px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 10px; border-radius: 10px; margin-bottom: 4px; width: fit-content; }
+  .hero-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-stats { display: flex; gap: 18px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 22px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.55); display: block; letter-spacing: 0.3px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.12); padding-left: 18px; }
+
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+  .vp { background: var(--blue); text-align: center; padding: 9px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  /* ── MAIN TWO-COLUMN BODY — flex:1 fills remaining space ── */
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 12px 28px 54px; flex: 1; }
+
+  .sh { font-size: 13px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; border-bottom: 2px solid var(--light-grey); padding-bottom: 4px; }
+
+  /* Capabilities */
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 12px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .cg-bar { width: 4px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+  .cg-pp { font-size: 8px; color: #999; font-weight: 400; font-style: italic; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10.75px; padding: 1px 0; color: #444; line-height: 1.34; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 6px; font-size: 10px; }
+
+  /* How It Works */
+  .step { display: flex; gap: 10px; margin-bottom: 6px; align-items: flex-start; }
+  .sn { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #f99a72); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(246,125,75,0.3); }
+  .st { font-size: 11px; line-height: 1.45; }
+  .st b { color: var(--dark); }
+
+  /* Comparison table */
+  .cmp-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-top: 6px; }
+  .cmp { width: 100%; border-collapse: collapse; }
+  .cmp th { background: var(--dark); color: #fff; padding: 5px 7px; text-align: left; font-size: 9px; font-weight: 600; }
+  .cmp th.hl { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+  .cmp td { padding: 4.5px 7px; border-bottom: 0.5px solid var(--light-grey); font-size: 10px; }
+  .cmp td.hl { background: rgba(0,109,182,0.04); font-weight: 600; color: var(--dark); }
+  .cmp td.x { color: #bbb; }
+  .cmp .ck { color: var(--teal); font-weight: 800; }
+
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 10.75px; padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.32; }
+  .dd { width: 10px; height: 10px; min-width: 10px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .diff li b { color: var(--dark); }
+
+  /* Pricing */
+  .pt-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-top: 6px; }
+  .pt { width: 100%; border-collapse: collapse; }
+  .pt th { background: var(--dark); color: #fff; padding: 5px 8px; text-align: left; font-weight: 600; font-size: 9px; }
+  .pt td { padding: 5px 8px; font-size: 10.5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt tr.pop td { background: #e6f0fa; font-weight: 600; }
+  .pt tr.pop td:first-child { color: var(--blue); }
+  .pt-note { font-size: 9px; color: var(--teal); font-weight: 600; margin-top: 4px; }
+
+  /* Security */
+  .badges { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; }
+  .badge { font-size: 10px; color: var(--grey); display: flex; align-items: center; gap: 4px; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 10px; }
+
+  /* ROI */
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+  .roi-card { background: var(--dark); border-radius: 8px; padding: 10px 10px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .roi-card:nth-child(1)::before { background: var(--blue); }
+  .roi-card:nth-child(2)::before { background: var(--orange); }
+  .roi-card:nth-child(3)::before { background: var(--teal); }
+  .roi-card .rc-label { font-size: 9px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
+  .roi-card .rc-cost { font-size: 9px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+  .roi-card .rc-save { font-size: 16px; font-weight: 800; color: var(--chartreuse); margin-top: 3px; }
+
+  .sec { margin-bottom: 10px; }
+
+  .cta { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); text-align: center; padding: 9px 20px; color: #fff; font-size: 10.5px; position: absolute; left: 0; right: 0; bottom: 20px; }
+  .cta b { color: #fff; }
+  .cta a { color: var(--orange); text-decoration: none; font-weight: 700; }
+  .foot { background: var(--near-black); text-align: center; height: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.38); font-size: 7px; position: absolute; left: 0; right: 0; bottom: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    html, body { width: 8.5in; min-height: 11in; }
+    body { min-height: 11in; height: 11in; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div class="hero-text">
+      <div class="hero-badge">Healthcare AI Platform &bull; HIPAA Ready</div>
+      <div class="hero-title">Technijian <span class="o">Chat.AI</span> &mdash; Healthcare</div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">HIPAA</span><span class="l">Ready &amp; BAA</span></div>
+    <div class="hero-stat"><span class="n">PHI</span><span class="l">Isolated</span></div>
+    <div class="hero-stat"><span class="n">&gt;30%</span><span class="l">Hallucination Cut</span></div>
+    <div class="hero-stat"><span class="n">100%</span><span class="l">Audit Trail</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">Multi-model AI for healthcare &mdash; HIPAA-compliant architecture, PHI protection, clinical knowledge retrieval, and full audit trails from day one.</div>
+
+<div class="main">
+  <div>
+    <div class="sec">
+      <div class="sh">Healthcare AI Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> HIPAA-Ready Architecture</div>
+        <ul>
+          <li>BAA (Business Associate Agreement) signed with Technijian</li>
+          <li>Row-level tenant isolation &mdash; no PHI cross-contamination</li>
+          <li>Azure/AWS HIPAA-eligible services only, encrypted at rest/transit</li>
+          <li>Automatic PHI redaction in prompts &amp; logs</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Clinical Knowledge Retrieval (RAG)</div>
+        <ul>
+          <li>Ingest protocols, clinical guidelines, formularies, policies</li>
+          <li>Semantic search across clinical documentation</li>
+          <li>Cited, traceable answers with source attribution</li>
+          <li>Role-based access (MDs, nurses, admin, billing)</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> AI Council for Clinical Accuracy</div>
+        <ul>
+          <li>3+ models cross-validate clinical responses</li>
+          <li>&gt;30% reduction in hallucinations vs single model</li>
+          <li>Critical for any decision-support use case</li>
+          <li>Confidence scoring surfaces uncertain answers for human review</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Governance &amp; Audit</div>
+        <ul>
+          <li>Every query logged with user, timestamp, model, response</li>
+          <li>Configurable PHI detection &amp; auto-alerting</li>
+          <li>On-premise deployment option for data sovereignty</li>
+          <li>SOC 2 Type II, HITRUST roadmap, SSO via Azure AD</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Healthcare Use Cases</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Clinical Decision Support</b> &mdash; Cited answers from your protocols, guidelines &amp; formularies</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>Prior Authorization</b> &mdash; AI-assisted PA form completion &amp; payer policy lookup</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Medical Documentation</b> &mdash; Draft notes, discharge summaries, letters with PHI protection</div></div>
+      <div class="step"><div class="sn">4</div><div class="st"><b>Admin &amp; Revenue Cycle</b> &mdash; Denial analysis, appeal drafting, eligibility workflows</div></div>
+      <div class="step"><div class="sn">5</div><div class="st"><b>Staff Training &amp; Policy Q&amp;A</b> &mdash; Instant answers from employee handbooks, compliance policies</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">HIPAA Safeguards Built In</div>
+      <div class="cmp-wrap">
+      <table class="cmp">
+        <thead><tr><th>HIPAA Requirement</th><th>ChatGPT</th><th>Copilot</th><th class="hl">Chat.AI Healthcare</th></tr></thead>
+        <tbody>
+          <tr><td>BAA with provider</td><td>Enterprise only</td><td>Enterprise only</td><td class="hl ck">&#10003; Standard</td></tr>
+          <tr><td>PHI auto-redaction</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; In prompts &amp; logs</td></tr>
+          <tr><td>Row-level tenant isolation</td><td class="x">&mdash;</td><td>Partial</td><td class="hl ck">&#10003; Full isolation</td></tr>
+          <tr><td>Audit log retention (6+ yr)</td><td class="x">&mdash;</td><td>Limited</td><td class="hl ck">&#10003; Configurable</td></tr>
+          <tr><td>On-premise / data residency</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; Full stack</td></tr>
+          <tr><td>AI Council for accuracy</td><td class="x">&mdash;</td><td class="x">&mdash;</td><td class="hl ck">&#10003; 3+ model validation</td></tr>
+          <tr><td>RBAC for clinical roles</td><td class="x">&mdash;</td><td>Limited</td><td class="hl ck">&#10003; Granular</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec">
+      <div class="sh">Why Chat.AI for Healthcare</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>BAA Signed:</b> Technijian signs a BAA with your organization &mdash; HIPAA compliance is table stakes, not an upgrade</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>PHI Protection by Default:</b> Auto-redaction of 18 HIPAA identifiers in prompts &amp; logs before AI providers see data</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Clinical Accuracy:</b> AI Council cross-validates with 3+ models &mdash; critical when answers influence care decisions</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Data Sovereignty:</b> On-premise or HIPAA-eligible cloud (Azure/AWS). Your data never leaves your control</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Cited Answers:</b> RAG with your protocols &amp; guidelines returns citations so clinicians can verify source</div></li>
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Role-Based Access:</b> MD, nurse, billing, admin, researcher roles &mdash; see only what their role permits</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Healthcare Pricing</div>
+      <div class="pt-wrap">
+      <table class="pt">
+        <thead><tr><th>Plan</th><th>Monthly</th><th>Users</th><th>BAA</th><th>PHI</th></tr></thead>
+        <tbody>
+          <tr><td>Clinic Starter</td><td>$499</td><td>25</td><td>&#10003;</td><td>Auto-redact</td></tr>
+          <tr class="pop"><td>Practice</td><td>$1,299</td><td>100</td><td>&#10003;</td><td>+ Audit retention</td></tr>
+          <tr><td>Hospital</td><td>$2,499</td><td>250+</td><td>&#10003;</td><td>+ SOC 2</td></tr>
+          <tr><td>On-Premise</td><td>Custom</td><td>Unltd</td><td>&#10003;</td><td>Full stack</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="pt-note">All plans include BAA &bull; HIPAA-eligible Azure/AWS &bull; AI Council standard on Practice+</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">HIPAA &amp; Clinical Safeguards</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> BAA Agreement</div>
+        <div class="badge"><span class="bi">&#10003;</span> 18 HIPAA Identifiers</div>
+        <div class="badge"><span class="bi">&#10003;</span> PHI Auto-Redaction</div>
+        <div class="badge"><span class="bi">&#10003;</span> 6+ Year Audit Retention</div>
+        <div class="badge"><span class="bi">&#10003;</span> Row-Level Tenant Isolation</div>
+        <div class="badge"><span class="bi">&#10003;</span> Clinical RBAC</div>
+        <div class="badge"><span class="bi">&#10003;</span> HITRUST Roadmap</div>
+        <div class="badge"><span class="bi">&#10003;</span> AI Council Validation</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Healthcare Impact</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-label">Documentation</div><div class="rc-cost">AI-drafted notes</div><div class="rc-save">40%+ faster</div></div>
+        <div class="roi-card"><div class="rc-label">Prior Auth</div><div class="rc-cost">Form automation</div><div class="rc-save">Hrs&rarr;Min</div></div>
+        <div class="roi-card"><div class="rc-label">Clinical Q&amp;A</div><div class="rc-cost">Cited retrieval</div><div class="rc-save">&gt;30% accuracy</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Ready to see Chat.AI in action? &nbsp; <a href="mailto:RJain@technijian.com">Schedule a Demo</a> &nbsp;|&nbsp; <b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>
