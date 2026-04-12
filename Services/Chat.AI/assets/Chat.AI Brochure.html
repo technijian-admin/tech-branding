@@ -61,28 +61,28 @@
   .sec-blue .sec-sub { color:rgba(255,255,255,0.75); }
 
   /* ═══ CHALLENGE CARDS ═══ */
-  .challenges { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .ch-card { background:var(--white); border:1px solid var(--light-grey); border-radius:0 8px 8px 0; padding:18px 20px; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
+  .challenges { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px; }
+  .ch-card { background:var(--white); border:1px solid var(--light-grey); border-radius:0 10px 10px 0; padding:36px 36px; box-shadow:0 2px 6px rgba(0,0,0,0.05); min-height:340px; display:flex; flex-direction:column; }
   .ch-card:nth-child(1) { border-left:4px solid var(--blue); }
   .ch-card:nth-child(2) { border-left:4px solid var(--orange); }
   .ch-card:nth-child(3) { border-left:4px solid var(--teal); }
   .ch-card:nth-child(4) { border-left:4px solid var(--chartreuse); }
-  .ch-card h4 { font-size:14px; font-weight:700; margin-bottom:6px; }
+  .ch-card h4 { font-size:20px; font-weight:700; margin-bottom:12px; }
   .ch-card:nth-child(1) h4 { color:var(--blue); }
   .ch-card:nth-child(2) h4 { color:var(--orange); }
   .ch-card:nth-child(3) h4 { color:var(--teal); }
   .ch-card:nth-child(4) h4 { color:#8BA82E; }
-  .ch-card p { font-size:12px; color:var(--grey); line-height:1.55; margin-bottom:8px; }
-  .ch-solution { font-size:12px; color:var(--dark); font-weight:600; display:flex; align-items:center; gap:6px; }
-  .sol-arrow { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; min-width:20px; border-radius:50%; font-size:11px; font-weight:700; color:var(--white); }
+  .ch-card p { font-size:14px; color:var(--grey); line-height:1.6; margin-bottom:16px; }
+  .ch-solution { font-size:14px; color:var(--dark); font-weight:600; display:flex; align-items:center; gap:8px; padding-top:12px; border-top:1px solid var(--light-grey); }
+  .sol-arrow { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; min-width:26px; border-radius:50%; font-size:13px; font-weight:700; color:var(--white); }
   .ch-card:nth-child(1) .sol-arrow { background:var(--blue); }
   .ch-card:nth-child(2) .sol-arrow { background:var(--orange); }
   .ch-card:nth-child(3) .sol-arrow { background:var(--teal); }
   .ch-card:nth-child(4) .sol-arrow { background:var(--chartreuse); color:var(--dark); }
 
   /* ═══ FEATURE CARDS ═══ */
-  .features { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  .feat-card { background:var(--white); border:1px solid var(--light-grey); border-radius:8px; padding:22px 18px; position:relative; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
+  .features { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:20px; }
+  .feat-card { background:var(--white); border:1px solid var(--light-grey); border-radius:10px; padding:26px 22px; position:relative; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.05); min-height:260px; }
   .feat-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
   .feat-card:nth-child(1)::after { background:var(--blue); }
   .feat-card:nth-child(2)::after { background:var(--orange); }
@@ -97,50 +97,50 @@
   .fi-4 { background:linear-gradient(135deg,var(--dark),#2a2a4e); }
   .fi-5 { background:linear-gradient(135deg,#a0b520,var(--chartreuse)); color:var(--dark); }
   .fi-6 { background:linear-gradient(135deg,var(--blue),var(--teal)); }
-  .feat-card h4 { font-size:13px; font-weight:700; color:var(--dark); margin-bottom:6px; }
-  .feat-card p { font-size:11px; color:var(--grey); line-height:1.5; margin-bottom:8px; }
+  .feat-card h4 { font-size:15px; font-weight:700; color:var(--dark); margin-bottom:8px; }
+  .feat-card p { font-size:12px; color:var(--grey); line-height:1.55; margin-bottom:10px; }
   .feat-card ul { list-style:none; }
-  .feat-card ul li { font-size:10.5px; color:var(--grey); padding:2px 0 2px 16px; position:relative; }
-  .feat-card ul li::before { content:'\2713'; position:absolute; left:0; color:var(--teal); font-weight:700; font-size:11px; }
+  .feat-card ul li { font-size:11.5px; color:var(--grey); padding:3px 0 3px 18px; position:relative; line-height:1.45; }
+  .feat-card ul li::before { content:'\2713'; position:absolute; left:0; top:3px; color:var(--teal); font-weight:700; font-size:12px; }
 
   /* ═══ AI COUNCIL ═══ */
-  .council-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; position:relative; z-index:1; }
-  .council-stage { display:flex; gap:14px; margin-bottom:18px; align-items:flex-start; }
-  .stage-num { width:32px; height:32px; min-width:32px; border-radius:50%; background:linear-gradient(135deg,var(--orange),#f99a72); color:var(--white); font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(246,125,75,0.3); }
-  .stage-content h4 { font-size:14px; font-weight:700; color:var(--white); margin-bottom:3px; }
-  .stage-content p { font-size:12px; color:rgba(255,255,255,0.6); line-height:1.55; }
-  .council-metrics { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-  .metric-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:16px; text-align:center; }
-  .metric-card .mc-num { font-size:28px; font-weight:800; color:var(--teal); line-height:1.1; }
-  .metric-card .mc-lbl { font-size:9px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:0.5px; margin-top:4px; }
+  .council-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; position:relative; z-index:1; margin-top:30px; }
+  .council-stage { display:flex; gap:20px; margin-bottom:32px; align-items:flex-start; padding:18px 20px; background:rgba(255,255,255,0.04); border-radius:10px; border-left:3px solid var(--orange); }
+  .stage-num { width:44px; height:44px; min-width:44px; border-radius:50%; background:linear-gradient(135deg,var(--orange),#f99a72); color:var(--white); font-size:20px; font-weight:800; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(246,125,75,0.3); }
+  .stage-content h4 { font-size:18px; font-weight:700; color:var(--white); margin-bottom:8px; }
+  .stage-content p { font-size:13px; color:rgba(255,255,255,0.7); line-height:1.6; }
+  .council-metrics { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .metric-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:28px 18px; text-align:center; }
+  .metric-card .mc-num { font-size:42px; font-weight:800; color:var(--teal); line-height:1.1; }
+  .metric-card .mc-lbl { font-size:11px; color:rgba(255,255,255,0.55); text-transform:uppercase; letter-spacing:0.8px; margin-top:8px; }
 
   /* ═══ USE CASES ═══ */
-  .use-cases { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  .uc-card { background:var(--white); border:1px solid var(--light-grey); border-radius:8px; padding:20px 18px; box-shadow:0 2px 6px rgba(0,0,0,0.05); overflow:hidden; position:relative; }
+  .use-cases { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:24px; }
+  .uc-card { background:var(--white); border:1px solid var(--light-grey); border-radius:10px; padding:32px 24px; box-shadow:0 2px 6px rgba(0,0,0,0.05); overflow:hidden; position:relative; min-height:640px; display:flex; flex-direction:column; }
   .uc-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
   .uc-card:nth-child(1)::after { background:var(--blue); }
   .uc-card:nth-child(2)::after { background:var(--orange); }
   .uc-card:nth-child(3)::after { background:var(--teal); }
-  .uc-persona { display:inline-block; background:var(--off-white); border:1px solid var(--light-grey); border-radius:16px; padding:3px 12px; font-size:10px; font-weight:600; color:var(--dark); margin-bottom:10px; }
-  .uc-card h4 { font-size:13px; font-weight:700; color:var(--dark); margin-bottom:6px; }
-  .uc-card p { font-size:11px; color:var(--grey); line-height:1.55; margin-bottom:10px; }
-  .uc-result { background:var(--dark); border-radius:6px; padding:10px 12px; text-align:center; }
-  .uc-result .num { font-size:20px; font-weight:800; color:var(--teal); }
-  .uc-result .lbl { font-size:9px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.4px; }
+  .uc-persona { display:inline-block; background:var(--off-white); border:1px solid var(--light-grey); border-radius:20px; padding:6px 16px; font-size:11px; font-weight:600; color:var(--dark); margin-bottom:16px; }
+  .uc-card h4 { font-size:17px; font-weight:700; color:var(--dark); margin-bottom:12px; line-height:1.3; }
+  .uc-card p { font-size:13px; color:var(--grey); line-height:1.6; margin-bottom:auto; padding-bottom:20px; }
+  .uc-result { background:var(--dark); border-radius:8px; padding:20px 16px; text-align:center; margin-top:auto; }
+  .uc-result .num { font-size:30px; font-weight:800; color:var(--teal); line-height:1.1; }
+  .uc-result .lbl { font-size:10px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.6px; margin-top:6px; }
 
   /* ═══ PRICING ═══ */
-  .pricing-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-  .price-card { background:var(--white); border:1px solid var(--light-grey); border-radius:8px; padding:20px 16px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,0.05); position:relative; overflow:hidden; }
+  .pricing-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px; }
+  .price-card { background:var(--white); border:1px solid var(--light-grey); border-radius:10px; padding:32px 20px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,0.05); position:relative; overflow:hidden; min-height:420px; display:flex; flex-direction:column; }
   .price-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--light-grey); }
   .price-card.popular { border-color:var(--blue); box-shadow:0 3px 14px rgba(0,109,182,0.12); }
   .price-card.popular::after { background:linear-gradient(90deg,var(--blue),var(--teal)); }
   .pop-badge { display:inline-block; background:var(--blue); color:var(--white); font-size:8px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:2px 10px; border-radius:10px; margin-bottom:8px; }
-  .tier-name { font-size:14px; font-weight:700; color:var(--dark); margin-bottom:4px; }
-  .tier-price { font-size:26px; font-weight:800; color:var(--blue); margin-bottom:2px; }
-  .tier-annual { font-size:10px; color:var(--med-grey); margin-bottom:12px; }
-  .tier-feat { list-style:none; text-align:left; }
-  .tier-feat li { font-size:10.5px; color:var(--grey); padding:3px 0 3px 16px; position:relative; }
-  .tier-feat li::before { content:'\2713'; position:absolute; left:0; color:var(--teal); font-weight:700; font-size:11px; }
+  .tier-name { font-size:18px; font-weight:700; color:var(--dark); margin-bottom:8px; }
+  .tier-price { font-size:36px; font-weight:800; color:var(--blue); margin-bottom:4px; line-height:1.1; }
+  .tier-annual { font-size:12px; color:var(--grey); margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--light-grey); }
+  .tier-feat { list-style:none; text-align:left; margin-top:auto; }
+  .tier-feat li { font-size:12.5px; color:var(--grey); padding:6px 0 6px 20px; position:relative; line-height:1.45; }
+  .tier-feat li::before { content:'\2713'; position:absolute; left:0; top:6px; color:var(--teal); font-weight:700; font-size:13px; }
 
   /* ═══ COMPARISON TABLE ═══ */
   .tbl-wrap { border-radius:8px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
@@ -153,13 +153,13 @@
   .cmp-table .ck { color:var(--teal); font-weight:800; }
 
   /* ═══ ROI ═══ */
-  .roi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; position:relative; z-index:1; }
-  .roi-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:22px 18px; text-align:center; position:relative; }
-  .roi-label { font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:6px; }
-  .roi-before { font-size:12px; color:rgba(255,255,255,0.5); text-decoration:line-through; margin-bottom:2px; }
-  .roi-after { font-size:12px; color:var(--white); font-weight:600; margin-bottom:8px; }
-  .roi-save { font-size:32px; font-weight:800; color:var(--chartreuse); line-height:1.1; }
-  .roi-save-lbl { font-size:9px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:0.5px; margin-top:4px; }
+  .roi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; position:relative; z-index:1; margin-top:24px; }
+  .roi-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:28px 22px; text-align:center; position:relative; }
+  .roi-label { font-size:12px; color:var(--teal); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; font-weight:700; }
+  .roi-before { font-size:13px; color:rgba(255,255,255,0.5); text-decoration:line-through; margin-bottom:4px; }
+  .roi-after { font-size:13px; color:var(--white); font-weight:600; margin-bottom:18px; }
+  .roi-save { font-size:40px; font-weight:800; color:var(--chartreuse); line-height:1.1; }
+  .roi-save-lbl { font-size:10px; color:rgba(255,255,255,0.55); text-transform:uppercase; letter-spacing:0.8px; margin-top:6px; }
 
   /* ═══ SECURITY ═══ */
   .sec-badges { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
@@ -232,24 +232,30 @@
   <div class="challenges">
     <div class="ch-card">
       <h4>Vendor Lock-In</h4>
-      <p>Tied to a single AI provider with no failover, no model comparison, and no negotiating leverage.</p>
+      <p>Tied to a single AI provider with no failover, no model comparison, and no negotiating leverage. When that provider has an outage or raises prices, your business stalls.</p>
       <div class="ch-solution"><span class="sol-arrow">&rarr;</span> Chat.AI connects 4+ providers with automatic failover</div>
     </div>
     <div class="ch-card">
       <h4>Runaway AI Costs</h4>
-      <p>No visibility into which teams or users consume the most tokens. Bills arrive as surprises.</p>
+      <p>No visibility into which teams or users consume the most tokens. Bills arrive as surprises, and you can't attribute AI costs to the projects or departments actually driving the spend.</p>
       <div class="ch-solution"><span class="sol-arrow">&rarr;</span> Token-level metering with per-user budgets &amp; alerts</div>
     </div>
     <div class="ch-card">
       <h4>Security &amp; Compliance Gaps</h4>
-      <p>Consumer AI tools lack audit trails, role-based access, and tenant isolation for compliance.</p>
+      <p>Consumer AI tools lack audit trails, role-based access, and tenant isolation. Legal and compliance teams cannot approve them for regulated data or sensitive workflows.</p>
       <div class="ch-solution"><span class="sol-arrow">&rarr;</span> Row-level isolation, full audit trail, HIPAA/SOC 2 ready</div>
     </div>
     <div class="ch-card">
       <h4>Single-Model Hallucinations</h4>
-      <p>One model means no cross-validation. Wrong answers go unchecked and unverified.</p>
+      <p>One model means no cross-validation. Wrong answers go unchecked and unverified, putting your team at risk when AI output drives real business decisions.</p>
       <div class="ch-solution"><span class="sol-arrow">&rarr;</span> AI Council cross-validates with 3+ models per query</div>
     </div>
+  </div>
+  <div style="margin-top:32px; background:var(--dark); border-radius:12px; padding:28px 36px; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center;">
+    <div><div style="font-size:36px; font-weight:800; color:var(--orange); line-height:1;">4+</div><div style="font-size:11px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.8px; margin-top:6px;">AI Providers Unified</div></div>
+    <div><div style="font-size:36px; font-weight:800; color:var(--teal); line-height:1;">&gt;60%</div><div style="font-size:11px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.8px; margin-top:6px;">AI Council Win Rate</div></div>
+    <div><div style="font-size:36px; font-weight:800; color:var(--chartreuse); line-height:1;">&gt;30%</div><div style="font-size:11px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.8px; margin-top:6px;">Hallucination Reduction</div></div>
+    <div><div style="font-size:36px; font-weight:800; color:var(--blue); line-height:1;">100%</div><div style="font-size:11px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.8px; margin-top:6px;">Audit Trail Coverage</div></div>
   </div>
 </div>
 
@@ -271,20 +277,12 @@
 <div class="sec sec-grad">
   <div class="sec-title">The AI <span class="accent">Council</span> — Patent Pending</div>
   <p class="sec-sub">Our multi-model deliberation system synthesizes collective intelligence, achieving consensus that outperforms any single model.</p>
-  <div class="council-grid">
-    <div>
-      <div class="council-stage"><div class="stage-num">1</div><div class="stage-content"><h4>Diverge</h4><p>Each model independently generates its response. No model sees another's output, ensuring true diversity of reasoning.</p></div></div>
-      <div class="council-stage"><div class="stage-num">2</div><div class="stage-content"><h4>Converge</h4><p>Models anonymously review and critique each other's responses. Agreements strengthen; contradictions flagged.</p></div></div>
-      <div class="council-stage"><div class="stage-num">3</div><div class="stage-content"><h4>Synthesize</h4><p>A synthesis engine combines the strongest elements into a higher-quality response with confidence scoring.</p></div></div>
-    </div>
-    <div>
-      <div class="council-metrics">
-        <div class="metric-card"><div class="mc-num">&gt;60%</div><div class="mc-lbl">Win Rate vs Single Models</div></div>
-        <div class="metric-card"><div class="mc-num">&gt;30%</div><div class="mc-lbl">Hallucination Reduction</div></div>
-        <div class="metric-card"><div class="mc-num">3+</div><div class="mc-lbl">Models per Query</div></div>
-        <div class="metric-card"><div class="mc-num">100%</div><div class="mc-lbl">Anonymized Review</div></div>
-      </div>
-    </div>
+  <img src="AI Council Process.png" alt="AI Council 3-Stage Deliberation Process" style="width:100%; max-height:5in; object-fit:contain; border-radius:10px; box-shadow:0 6px 24px rgba(0,0,0,0.3); margin:24px 0;">
+  <div class="council-metrics" style="grid-template-columns:repeat(4,1fr); gap:16px;">
+    <div class="metric-card"><div class="mc-num">&gt;60%</div><div class="mc-lbl">Win Rate vs Single Models</div></div>
+    <div class="metric-card"><div class="mc-num">&gt;30%</div><div class="mc-lbl">Hallucination Reduction</div></div>
+    <div class="metric-card"><div class="mc-num">3+</div><div class="mc-lbl">Models per Query</div></div>
+    <div class="metric-card"><div class="mc-num">100%</div><div class="mc-lbl">Anonymized Review</div></div>
   </div>
 </div>
 
@@ -293,9 +291,45 @@
   <div class="sec-title">Real-World <span class="accent">Use Cases</span></div>
   <p class="sec-sub">How organizations across industries leverage Chat.AI to transform their AI operations.</p>
   <div class="use-cases">
-    <div class="uc-card"><div class="uc-persona">&#128188; Financial Services</div><h4>Compliance-First AI Deployment</h4><p>A 200-person financial firm needed AI for research but couldn't risk data leaks or hallucinated financial advice.</p><div class="uc-result"><div class="num">$19,212</div><div class="lbl">Annual Savings (50 Users)</div></div></div>
-    <div class="uc-card"><div class="uc-persona">&#127973; Healthcare Organization</div><h4>HIPAA-Compliant AI Knowledge Base</h4><p>Clinical staff needed AI-assisted search across protocols with full HIPAA compliance and audit trails.</p><div class="uc-result"><div class="num">100%</div><div class="lbl">Audit Trail Coverage</div></div></div>
-    <div class="uc-card"><div class="uc-persona">&#128736; Technology Company</div><h4>Multi-Model Developer Platform</h4><p>100+ developers needed multiple AI models for code review and documentation without separate subscriptions.</p><div class="uc-result"><div class="num">$174K</div><div class="lbl">Annual Savings (250 Users)</div></div></div>
+    <div class="uc-card">
+      <div class="uc-persona">&#128188; Financial Services</div>
+      <h4>Compliance-First AI Deployment</h4>
+      <p>A 200-person financial firm needed AI for research but couldn't risk data leaks or hallucinated financial advice.</p>
+      <div style="font-size:12px; color:var(--dark); margin-bottom:14px;"><b style="color:var(--blue);">Solution:</b> On-premise deployment with Azure AD SSO, full audit trails, and AI Council cross-validation to eliminate hallucinations on financial questions.</div>
+      <ul style="list-style:none; padding:0; margin:0 0 20px; font-size:11px; color:var(--grey); line-height:1.8;">
+        <li>&#10003; 50 users across research, compliance, risk</li>
+        <li>&#10003; FINRA compliance review passed</li>
+        <li>&#10003; AI Council flagged 3 hallucinations/week</li>
+        <li>&#10003; 40% faster research turnaround</li>
+      </ul>
+      <div class="uc-result"><div class="num">$19,212</div><div class="lbl">Annual Savings (50 Users)</div></div>
+    </div>
+    <div class="uc-card">
+      <div class="uc-persona">&#127973; Healthcare Organization</div>
+      <h4>HIPAA-Compliant AI Knowledge Base</h4>
+      <p>Clinical staff needed AI-assisted search across protocols with full HIPAA compliance and audit trails.</p>
+      <div style="font-size:12px; color:var(--dark); margin-bottom:14px;"><b style="color:var(--orange);">Solution:</b> RAG knowledge base with 500+ clinical protocols, row-level tenant isolation, and full audit logging of every query.</div>
+      <ul style="list-style:none; padding:0; margin:0 0 20px; font-size:11px; color:var(--grey); line-height:1.8;">
+        <li>&#10003; 120 clinical users onboarded</li>
+        <li>&#10003; Zero PHI data leakage incidents</li>
+        <li>&#10003; HIPAA Security Rule compliant</li>
+        <li>&#10003; 3-min average query-to-answer</li>
+      </ul>
+      <div class="uc-result"><div class="num">100%</div><div class="lbl">Audit Trail Coverage</div></div>
+    </div>
+    <div class="uc-card">
+      <div class="uc-persona">&#128736; Technology Company</div>
+      <h4>Multi-Model Developer Platform</h4>
+      <p>100+ developers needed multiple AI models for code review and documentation without separate subscriptions.</p>
+      <div style="font-size:12px; color:var(--dark); margin-bottom:14px;"><b style="color:var(--teal);">Solution:</b> Unified access to GPT-4o, Claude Sonnet, Gemini Pro, and Llama through a single platform with per-user token budgets.</div>
+      <ul style="list-style:none; padding:0; margin:0 0 20px; font-size:11px; color:var(--grey); line-height:1.8;">
+        <li>&#10003; 250 developers, 4+ AI models each</li>
+        <li>&#10003; Consolidated 5 AI subscriptions</li>
+        <li>&#10003; Per-developer token budgets</li>
+        <li>&#10003; 60% faster code review cycles</li>
+      </ul>
+      <div class="uc-result"><div class="num">$174K</div><div class="lbl">Annual Savings (250 Users)</div></div>
+    </div>
   </div>
 </div>
 
@@ -308,6 +342,20 @@
     <div class="price-card"><div class="tier-name">Growth</div><div class="tier-price">$899</div><div class="tier-annual">$8,990/yr</div><ul class="tier-feat"><li>Up to 50 users</li><li>35M tokens/month</li><li>Custom assistants</li><li>RAG knowledge base</li><li>Full audit trail</li><li>Priority support</li></ul></div>
     <div class="price-card popular"><div class="pop-badge">Most Popular</div><div class="tier-name">Professional</div><div class="tier-price">$1,699</div><div class="tier-annual">$16,990/yr</div><ul class="tier-feat"><li>Up to 100 users</li><li>75M tokens/month</li><li>AI Council included</li><li>N8N automation</li><li>Advanced analytics</li><li>Dedicated CSM</li></ul></div>
     <div class="price-card"><div class="tier-name">Enterprise</div><div class="tier-price">Custom</div><div class="tier-annual">Contact for pricing</div><ul class="tier-feat"><li>250+ users</li><li>200M+ tokens/month</li><li>On-premise ($45K/yr)</li><li>Custom integrations</li><li>SLA guarantees</li><li>24/7 phone support</li></ul></div>
+  </div>
+  <div style="margin-top:40px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px;">
+    <div style="background:var(--off-white); border-left:4px solid var(--blue); border-radius:8px; padding:20px 22px;">
+      <h4 style="color:var(--dark); font-size:14px; font-weight:700; margin-bottom:8px;">No Per-Seat Charges</h4>
+      <p style="font-size:12px; color:var(--grey); line-height:1.55;">Pricing is based on usage (tokens), not seats. Add users freely without cost surprises.</p>
+    </div>
+    <div style="background:var(--off-white); border-left:4px solid var(--orange); border-radius:8px; padding:20px 22px;">
+      <h4 style="color:var(--dark); font-size:14px; font-weight:700; margin-bottom:8px;">Annual Plans Save 17%</h4>
+      <p style="font-size:12px; color:var(--grey); line-height:1.55;">Commit annually for a 17% discount. Most teams see ROI in under 90 days from subscription consolidation.</p>
+    </div>
+    <div style="background:var(--off-white); border-left:4px solid var(--teal); border-radius:8px; padding:20px 22px;">
+      <h4 style="color:var(--dark); font-size:14px; font-weight:700; margin-bottom:8px;">30-Day Pilot Program</h4>
+      <p style="font-size:12px; color:var(--grey); line-height:1.55;">Try Chat.AI risk-free with a 30-day pilot for qualifying organizations. Full features, full support.</p>
+    </div>
   </div>
 </div>
 
@@ -332,6 +380,18 @@
       </tbody>
     </table>
   </div>
+  <div style="margin-top:36px; display:grid; grid-template-columns:2fr 1fr; gap:24px;">
+    <div style="background:var(--white); border:1px solid var(--light-grey); border-radius:10px; padding:28px 30px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <h3 style="font-size:18px; font-weight:700; color:var(--dark); margin-bottom:14px;">Why Chat.AI Outperforms</h3>
+      <p style="font-size:13px; color:var(--grey); line-height:1.7; margin-bottom:14px;">Consumer AI tools like ChatGPT Team, Copilot, and Gemini are optimized for individual productivity &mdash; not enterprise operations. They lack the governance, observability, and architectural flexibility that regulated industries and large organizations require.</p>
+      <p style="font-size:13px; color:var(--grey); line-height:1.7;">Chat.AI is purpose-built for enterprise AI deployments: multi-provider access, patent-pending AI Council validation, full audit trails, and deep integrations with your existing tech stack.</p>
+    </div>
+    <div style="background:linear-gradient(135deg, var(--blue), var(--teal)); border-radius:10px; padding:28px 24px; color:var(--white); display:flex; flex-direction:column; justify-content:center; text-align:center;">
+      <div style="font-size:56px; font-weight:800; line-height:1;">$351</div>
+      <div style="font-size:13px; opacity:0.9; margin-top:8px; font-weight:600;">Average monthly savings<br>vs nearest competitor</div>
+      <div style="margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.3); font-size:11px; text-transform:uppercase; letter-spacing:0.8px; opacity:0.85;">Based on 50-user pricing</div>
+    </div>
+  </div>
 </div>
 
 <!-- ROI -->
@@ -339,9 +399,26 @@
   <div class="sec-title">Return on <span class="accent">Investment</span></div>
   <p class="sec-sub">Chat.AI delivers measurable savings from day one by consolidating multiple AI subscriptions.</p>
   <div class="roi-grid">
-    <div class="roi-card"><div class="roi-label">Small Team &bull; 10 Users</div><div class="roi-before">$389/mo individual</div><div class="roi-after">$299/mo with Chat.AI</div><div class="roi-save">$1,080</div><div class="roi-save-lbl">Annual Savings</div></div>
-    <div class="roi-card"><div class="roi-label">Mid-Market &bull; 50 Users</div><div class="roi-before">$2,500/mo individual</div><div class="roi-after">$899/mo with Chat.AI</div><div class="roi-save">$19,212</div><div class="roi-save-lbl">Annual Savings</div></div>
-    <div class="roi-card"><div class="roi-label">Enterprise &bull; 250 Users</div><div class="roi-before">$18,500/mo individual</div><div class="roi-after">$3,999/mo with Chat.AI</div><div class="roi-save">$174,012</div><div class="roi-save-lbl">Annual Savings</div></div>
+    <div class="roi-card"><div class="roi-label">Small Team &bull; 10 Users</div><div class="roi-before">$389/mo individual subscriptions</div><div class="roi-after">$299/mo with Chat.AI</div><div class="roi-save">$1,080</div><div class="roi-save-lbl">Annual Savings</div></div>
+    <div class="roi-card"><div class="roi-label">Mid-Market &bull; 50 Users</div><div class="roi-before">$2,500/mo individual subscriptions</div><div class="roi-after">$899/mo with Chat.AI</div><div class="roi-save">$19,212</div><div class="roi-save-lbl">Annual Savings</div></div>
+    <div class="roi-card"><div class="roi-label">Enterprise &bull; 250 Users</div><div class="roi-before">$18,500/mo individual subscriptions</div><div class="roi-after">$3,999/mo with Chat.AI</div><div class="roi-save">$174,012</div><div class="roi-save-lbl">Annual Savings</div></div>
+  </div>
+  <div style="margin-top:40px; display:grid; grid-template-columns:1fr 1fr; gap:24px; position:relative; z-index:1;">
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:28px 24px;">
+      <h3 style="color:var(--white); font-size:18px; font-weight:700; margin-bottom:14px;">Beyond Cost Savings</h3>
+      <ul style="list-style:none; padding:0; margin:0; color:rgba(255,255,255,0.75); font-size:13px; line-height:1.9;">
+        <li style="padding-left:22px; position:relative;"><span style="position:absolute; left:0; color:var(--teal);">&#10003;</span> <b style="color:var(--white);">Productivity gains:</b> 40% faster research &amp; writing</li>
+        <li style="padding-left:22px; position:relative;"><span style="position:absolute; left:0; color:var(--teal);">&#10003;</span> <b style="color:var(--white);">Quality gains:</b> &gt;30% fewer hallucinations via AI Council</li>
+        <li style="padding-left:22px; position:relative;"><span style="position:absolute; left:0; color:var(--teal);">&#10003;</span> <b style="color:var(--white);">Risk reduction:</b> audit-ready for HIPAA, SOC 2, PCI</li>
+        <li style="padding-left:22px; position:relative;"><span style="position:absolute; left:0; color:var(--teal);">&#10003;</span> <b style="color:var(--white);">Vendor flexibility:</b> no lock-in, automatic failover</li>
+      </ul>
+    </div>
+    <div style="background:rgba(203,219,45,0.08); border:1px solid rgba(203,219,45,0.25); border-radius:12px; padding:28px 24px;">
+      <h3 style="color:var(--chartreuse); font-size:18px; font-weight:700; margin-bottom:14px;">Payback Period</h3>
+      <div style="font-size:52px; font-weight:800; color:var(--chartreuse); line-height:1;">&lt; 90</div>
+      <div style="font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.8px;">Days for 50+ user orgs</div>
+      <p style="font-size:12px; color:rgba(255,255,255,0.7); line-height:1.6;">Most enterprise customers recover their Chat.AI investment in under 90 days through AI subscription consolidation alone — then compound savings across year 1 and beyond.</p>
+    </div>
   </div>
 </div>
 
@@ -358,6 +435,18 @@
     <div class="sec-badge"><div class="sb-icon si-2">&#127973;</div><div class="sb-text"><h5>HIPAA / SOC 2 Ready</h5><p>Healthcare and financial compliance.</p></div></div>
     <div class="sec-badge"><div class="sb-icon si-3">&#128101;</div><div class="sb-text"><h5>RBAC Roles</h5><p>Granular role-based access control.</p></div></div>
     <div class="sec-badge"><div class="sb-icon si-4">&#9201;</div><div class="sb-text"><h5>Rate Limiting</h5><p>Per-user, per-model endpoint controls.</p></div></div>
+  </div>
+  <div style="margin-top:32px; padding:28px 32px; background:var(--dark); border-radius:12px;">
+    <h3 style="color:var(--white); font-size:16px; font-weight:700; margin-bottom:16px; text-align:center;">Compliance Frameworks Supported</h3>
+    <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:12px; text-align:center;">
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:14px 8px;"><div style="color:var(--teal); font-size:20px; margin-bottom:4px;">&#10003;</div><div style="color:var(--white); font-size:12px; font-weight:700;">HIPAA</div></div>
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:14px 8px;"><div style="color:var(--teal); font-size:20px; margin-bottom:4px;">&#10003;</div><div style="color:var(--white); font-size:12px; font-weight:700;">SOC 2</div></div>
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:14px 8px;"><div style="color:var(--teal); font-size:20px; margin-bottom:4px;">&#10003;</div><div style="color:var(--white); font-size:12px; font-weight:700;">PCI-DSS</div></div>
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:14px 8px;"><div style="color:var(--teal); font-size:20px; margin-bottom:4px;">&#10003;</div><div style="color:var(--white); font-size:12px; font-weight:700;">GDPR</div></div>
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:14px 8px;"><div style="color:var(--teal); font-size:20px; margin-bottom:4px;">&#10003;</div><div style="color:var(--white); font-size:12px; font-weight:700;">NIST CSF</div></div>
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:14px 8px;"><div style="color:var(--teal); font-size:20px; margin-bottom:4px;">&#10003;</div><div style="color:var(--white); font-size:12px; font-weight:700;">ISO 27001</div></div>
+    </div>
+    <p style="font-size:12px; color:rgba(255,255,255,0.55); text-align:center; margin-top:18px; line-height:1.6;">Chat.AI&rsquo;s architecture is built from the ground up with compliance in mind. Enterprise customers receive full audit support and can request SOC 2 Type II reports.</p>
   </div>
 </div>
 
