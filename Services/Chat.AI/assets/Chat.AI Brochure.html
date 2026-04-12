@@ -26,7 +26,7 @@
 
   /* ═══ COVER ═══ */
   .cover {
-    min-height: 11in; display: flex; flex-direction: column;
+    height: 11in; overflow: hidden; display: flex; flex-direction: column;
     justify-content: center; align-items: center; text-align: center;
     background: linear-gradient(135deg, var(--dark) 0%, #0a1628 55%, #0d2847 100%);
     color: var(--white); padding: 60px 50px; position: relative; overflow: hidden;
@@ -47,7 +47,7 @@
   .cover-stat .lbl { font-size:10px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
 
   /* ═══ SECTIONS — tight padding, no forced page breaks ═══ */
-  .sec { padding: 36px 48px; page-break-inside: auto; break-inside: auto; }
+  .sec { padding: 36px 48px; width: 8.5in; height: 11in; overflow: hidden; position: relative; page-break-after: always; break-after: page; }
   .sec-alt { background: var(--off-white); }
   .sec-dark { background: var(--dark); color: var(--white); }
   .sec-grad { background: linear-gradient(135deg, #0a1628 0%, var(--dark) 50%, #0d2847 100%); color: var(--white); position: relative; overflow: hidden; }
@@ -184,7 +184,7 @@
 
   /* ═══ BACK COVER ═══ */
   .back-cover {
-    min-height:calc(11in - 34px); display:flex; flex-direction:column;
+    height: 11in; overflow: hidden; display:flex; flex-direction:column;
     justify-content:center; align-items:center; text-align:center;
     background:linear-gradient(135deg,var(--dark) 0%,#0a1628 55%,#0d2847 100%);
     color:var(--white); position:relative; overflow:hidden; padding:60px;
@@ -362,11 +362,10 @@
 </div>
 
 <!-- INFOGRAPHIC -->
-<div class="page" style="background:var(--off-white); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px;">
+<div class="sec sec-alt" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
   <div style="font-size:22px; font-weight:800; color:var(--dark); margin-bottom:6px; text-align:center;">Chat.AI <span style="color:var(--orange);">Intelligence Layer</span></div>
-  <div style="font-size:12px; color:var(--grey); margin-bottom:20px; text-align:center;">Enterprise multi-model AI architecture &mdash; how the AI Council delivers superior results</div>
-  <img src="Chat.AI Infographic.png" alt="Chat.AI Enterprise AI Infographic" style="max-height:85%; max-width:90%; object-fit:contain; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.12);">
-  <div class="footer">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+  <div style="font-size:12px; color:var(--grey); margin-bottom:16px; text-align:center;">Enterprise multi-model AI architecture &mdash; how the AI Council delivers superior results</div>
+  <img src="Chat.AI Infographic.png" alt="Chat.AI Enterprise AI Infographic" style="max-height:9in; max-width:7in; object-fit:contain; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.12);">
 </div>
 
 <!-- BACK COVER -->
