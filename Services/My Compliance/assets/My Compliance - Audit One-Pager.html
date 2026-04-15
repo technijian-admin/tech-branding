@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian My Compliance — Audit — Evidence Binders on Demand</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#006DB6; --blue-dark:#004d80; --orange:#F67D4B; --teal:#1EAAC8;
+  --chartreuse:#CBDB2D; --dark:#1A1A2E; --near-black:#2D2D2D;
+  --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --white:#FFFFFF;
+}
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+@page { size: letter; margin:0; }
+html, body { width:8.5in; min-height:11in; }
+body {
+  font-family:'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color:#333; line-height:1.5;
+  display:flex; flex-direction:column;
+  width:8.5in; min-height:11in; height:11in;
+  margin:0 auto; overflow:hidden; background:var(--off-white);
+  position:relative;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--dark) 0%, #0a1628 60%, #0d2847 100%);
+  padding:18px 32px; display:flex; align-items:center;
+  justify-content:space-between; flex-shrink:0;
+  position:relative; overflow:hidden;
+}
+.hero::before { content:''; position:absolute; top:-50px; right:-40px; width:160px; height:160px; background:radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius:50%; }
+.hero::after  { content:''; position:absolute; bottom:-40px; left:15%; width:120px; height:120px; background:radial-gradient(circle, rgba(246,125,75,0.10) 0%, transparent 70%); border-radius:50%; }
+.hero-left { display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
+.hero-left img { height:32px; display:block; }
+.hero-text { display:flex; flex-direction:column; }
+.hero-badge { display:inline-block; background:rgba(30,170,200,0.20); border:1px solid rgba(30,170,200,0.45); color:var(--teal); font-size:7px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:2px 10px; border-radius:10px; margin-bottom:4px; width:fit-content; }
+.hero-title { font-size:22px; font-weight:800; color:#fff; line-height:1.1; }
+.hero-title .o { color:var(--orange); }
+.hero-stats { display:flex; gap:18px; position:relative; z-index:1; }
+.hero-stat { text-align:center; }
+.hero-stat .n { font-size:15px; font-weight:800; color:var(--orange); display:block; line-height:1.1; }
+.hero-stat .l { font-size:7.5px; color:rgba(255,255,255,0.55); display:block; letter-spacing:0.3px; text-transform:uppercase; margin-top:2px; }
+.hero-stat + .hero-stat { border-left:1px solid rgba(255,255,255,0.12); padding-left:18px; }
+
+.orange-line { height:3px; background:linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink:0; }
+.vp { background:var(--blue); text-align:center; padding:8px 20px; color:#fff; font-size:11.5px; font-weight:600; flex-shrink:0; }
+
+.main { display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:11px 28px 54px; flex:1; }
+
+.sh { font-size:12.5px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:1.1px; margin-bottom:7px; border-bottom:2px solid var(--light-grey); padding-bottom:3px; }
+
+.sec { margin-bottom:9px; }
+
+/* Capabilities */
+.cg { margin-bottom:7px; }
+.cg-t { font-size:11.5px; font-weight:700; color:var(--dark); display:flex; align-items:center; gap:6px; margin-bottom:2px; }
+.cg-bar { width:4px; height:13px; border-radius:2px; flex-shrink:0; }
+.cg p { font-size:10.25px; color:#444; line-height:1.36; padding-left:10px; }
+
+/* Today/Future cards */
+.tf { display:grid; grid-template-columns:1fr; gap:7px; }
+.tf-card { background:#fff; border-left:3px solid var(--orange); padding:7px 10px; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+.tf-card.future { border-left-color:var(--teal); }
+.tf-label { font-size:8.5px; font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:2px; }
+.tf-card.future .tf-label { color:var(--teal); }
+.tf-body { font-size:10.25px; color:#333; line-height:1.4; }
+.tf-body b { color:var(--dark); }
+
+/* Why list */
+.diff { list-style:none; }
+.diff li { font-size:10.5px; padding:3px 0; display:flex; gap:8px; align-items:flex-start; line-height:1.34; }
+.dd { width:10px; height:10px; min-width:10px; border-radius:50%; margin-top:3px; flex-shrink:0; }
+.diff li b { color:var(--dark); }
+
+/* Engagement table */
+.pt-wrap { border-radius:6px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.08); margin-top:4px; }
+.pt { width:100%; border-collapse:collapse; }
+.pt th { background:var(--dark); color:#fff; padding:5px 8px; text-align:left; font-weight:600; font-size:9px; }
+.pt td { padding:5px 8px; font-size:10px; vertical-align:top; }
+.pt tr:nth-child(even) td { background:var(--off-white); }
+.pt td:first-child { color:var(--blue); font-weight:600; width:42%; }
+
+/* Frameworks badges */
+.badges { display:flex; flex-wrap:wrap; gap:5px 10px; margin-top:4px; }
+.badge { font-size:9.5px; color:var(--grey); display:flex; align-items:center; gap:4px; }
+.badge .bi { color:var(--teal); font-weight:800; font-size:10px; }
+
+.cta { background:linear-gradient(135deg, var(--blue), var(--blue-dark)); text-align:center; padding:9px 20px; color:#fff; font-size:10.5px; position:absolute; left:0; right:0; bottom:20px; }
+.cta b { color:#fff; }
+.cta a { color:var(--orange); text-decoration:none; font-weight:700; }
+.foot { background:var(--near-black); text-align:center; height:20px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.38); font-size:7px; position:absolute; left:0; right:0; bottom:0; }
+
+@media print {
+  @page { size: letter; margin:0; }
+  html, body { width:8.5in; min-height:11in; }
+  body { min-height:11in; height:11in; margin:0; }
+  * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div class="hero-text">
+      <div class="hero-badge">Compliance Module · Evidence & Audit</div>
+      <div class="hero-title">My <span class="o">Compliance</span> &mdash; Audit</div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">Tamper</span><span class="l">Evident Logs</span></div>
+    <div class="hero-stat"><span class="n">Aligned</span><span class="l">8+ Frameworks</span></div>
+    <div class="hero-stat"><span class="n">1-Click</span><span class="l">Audit Pack</span></div>
+    <div class="hero-stat"><span class="n">6+ Yr</span><span class="l">Retention</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">Evidence Binders on Demand. Tamper-evident audit logging, linked evidence, and one-click audit pack export aligned to your frameworks.</div>
+
+<div class="main">
+  <div>
+    <div class="sec">
+      <div class="sh">Audit Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Centralized Audit Logging</div>
+        <p>Append-only audit events with correlation IDs across systems, privileged-action logging, and full user · action · object · timestamp capture for every compliance-relevant operation.</p>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Evidence Repository</div>
+        <p>Linked evidence per control: policy attestations, test results, screenshots, ticket records, and approval signatures — all versioned and ready for assessor review.</p>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Audit Pack Builder</div>
+        <p>Pick a framework + time window; the builder auto-collects linked evidence, generates an indexed manifest, and exports an auditor-ready PDF or ZIP package.</p>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Retention & Archive</div>
+        <p>Configurable retention per framework (HIPAA 6-yr, SOC 2, PCI, etc.), tamper-evident WORM storage, and immutable export support for legal hold.</p>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Today &rarr; Nexus</div>
+      <div class="tf">
+        <div class="tf-card">
+          <div class="tf-label">Today &mdash; Technijian Delivery</div>
+          <div class="tf-body">Technijian consulting — evidence binders are assembled manually from tool exports, spreadsheets, and emailed attachments. Time-intensive but tailored to each assessor and framework.</div>
+        </div>
+        <div class="tf-card future">
+          <div class="tf-label">Future &mdash; Nexus Platform</div>
+          <div class="tf-body"><b>Nexus Audit</b> module — auto-generated audit packs with framework-aligned evidence, real-time gap detection, and one-click auditor package generation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec">
+      <div class="sh">Why Audit</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Evidence Is the Audit:</b> Every framework's audit hinges on evidence. Without systematic collection, you scramble the week before.</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Linked, Not Loose:</b> Evidence is attached to controls — assessors see traceability, not a folder of PDFs.</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Audit Season → Non-Event:</b> Pre-built packs mean auditors get what they need on day one, not week three.</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Tamper-Evident Trail:</b> Append-only logs and immutable exports prove integrity to assessors and regulators.</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Multi-Framework Reuse:</b> One evidence repository serves HIPAA, SOC 2, PCI, ISO, CMMC, GDPR, NIST, and HITRUST.</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Models</div>
+      <div class="pt-wrap">
+      <table class="pt">
+        <thead><tr><th>Model</th><th>Scope</th></tr></thead>
+        <tbody>
+          <tr><td>Audit Readiness Prep</td><td>Fixed-fee, framework-specific gap close + evidence collection prior to certification audit</td></tr>
+          <tr><td>Managed Evidence Collection</td><td>Ongoing monthly capture, organization, and refresh of evidence linked to each control</td></tr>
+          <tr><td>Audit Sherpa</td><td>Hands-on guidance through certification — assessor liaison, evidence presentation, finding response</td></tr>
+          <tr><td>Evidence Binder Remediation</td><td>Cleanup of legacy binders, control mapping, and gap closure to make existing evidence audit-ready</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Compliance Frameworks Served</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> HIPAA</div>
+        <div class="badge"><span class="bi">&#10003;</span> SOC 2</div>
+        <div class="badge"><span class="bi">&#10003;</span> PCI-DSS</div>
+        <div class="badge"><span class="bi">&#10003;</span> CMMC</div>
+        <div class="badge"><span class="bi">&#10003;</span> ISO 27001</div>
+        <div class="badge"><span class="bi">&#10003;</span> GDPR</div>
+        <div class="badge"><span class="bi">&#10003;</span> NIST 800-171</div>
+        <div class="badge"><span class="bi">&#10003;</span> HITRUST</div>
+        <div class="badge"><span class="bi">&#10003;</span> CCPA</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Ready to turn audit season into a non-event? &nbsp; <a href="mailto:RJain@technijian.com">Schedule a Demo</a> &nbsp;|&nbsp; <b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

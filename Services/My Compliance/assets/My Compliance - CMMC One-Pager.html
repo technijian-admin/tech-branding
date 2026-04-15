@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian My Compliance &mdash; CMMC Edition One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333; font-size: 13px; line-height: 1.45;
+    display: flex; flex-direction: column;
+    height: 100vh;
+    background: #fff;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628, #0d2847);
+    padding: 14px 26px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -50px; left: 15%; width: 140px; height: 140px; background: radial-gradient(circle, rgba(246,125,75,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .hero-left img { height: 28px; }
+  .hero-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-badges { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .hero-badge { font-size: 7.5px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; white-space: nowrap; }
+  .hero-sub { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .hero-stats { display: flex; gap: 14px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 15px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 7.5px; color: rgba(255,255,255,0.5); display: block; margin-top: 1px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 14px; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  /* VALUE PROP */
+  .vp { background: var(--blue); text-align: center; padding: 7px 20px; color: #fff; font-size: 11.5px; font-weight: 600; flex-shrink: 0; }
+
+  /* MAIN BODY */
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 12px 24px; flex: 1; align-content: start; }
+
+  .sh { font-size: 10.5px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 6px; border-bottom: 2px solid var(--light-grey); padding-bottom: 3px; }
+
+  /* Capabilities */
+  .cg { margin-bottom: 7px; }
+  .cg-t { font-size: 10px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .cg-bar { width: 4px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 9.5px; padding: 1px 0; color: #444; line-height: 1.35; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 9px; }
+
+  /* Levels mini */
+  .lvl-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 5px; }
+  .lvl-num {
+    min-width: 36px; height: 36px; border-radius: 6px;
+    color: #fff; font-size: 7.5px; font-weight: 700;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0;
+  }
+  .lvl-num b { font-size: 15px; font-weight: 800; line-height: 1; }
+  .lvl-row:nth-child(1) .lvl-num { background: linear-gradient(135deg, var(--teal), #15a0b8); }
+  .lvl-row:nth-child(2) .lvl-num { background: linear-gradient(135deg, var(--blue), #0058a0); }
+  .lvl-row:nth-child(3) .lvl-num { background: linear-gradient(135deg, var(--dark), #2a2a4a); }
+  .lvl-body { flex: 1; font-size: 9.5px; line-height: 1.4; }
+  .lvl-body b { color: var(--dark); font-size: 10px; }
+  .lvl-body .lvl-meta { color: var(--grey); }
+
+  /* Modules table */
+  .pt { width: 100%; border-collapse: collapse; font-size: 9px; border-radius: 6px; overflow: hidden; margin-top: 5px; }
+  .pt th { background: var(--dark); color: #fff; padding: 4px 5px; text-align: left; font-size: 8px; font-weight: 600; }
+  .pt th:last-child { text-align: right; }
+  .pt td { padding: 3px 5px; border-bottom: 1px solid var(--light-grey); font-size: 8.5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt .pn { font-weight: 700; color: var(--dark); }
+  .pt .pd { color: var(--grey); }
+  .pt .pr { text-align: right; font-weight: 700; color: var(--teal); }
+
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 9.5px; padding: 2px 0; display: flex; gap: 6px; align-items: flex-start; line-height: 1.35; }
+  .dd { width: 8px; height: 8px; min-width: 8px; border-radius: 50%; margin-top: 3px; }
+  .diff li b { color: var(--dark); font-size: 9.5px; }
+
+  /* Engagement cards */
+  .eng-cards { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
+  .eng-card { padding: 4px 10px; border-radius: 4px; color: #fff; display: flex; align-items: center; gap: 6px; }
+  .eng-title { font-size: 9px; font-weight: 700; white-space: nowrap; }
+  .eng-desc { font-size: 8px; opacity: 0.75; }
+
+  /* Segments */
+  .badges { display: flex; flex-wrap: wrap; gap: 3px 9px; margin-top: 4px; }
+  .badge { font-size: 9px; color: var(--grey); display: flex; align-items: center; gap: 3px; font-weight: 500; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 9px; }
+
+  /* Tech stack */
+  .tech-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 3px; font-size: 9px; }
+  .tech-bar { width: 4px; height: 11px; border-radius: 2px; flex-shrink: 0; position: relative; top: 1px; }
+  .tech-label { font-weight: 700; color: var(--dark); }
+  .tech-value { color: #444; }
+
+  /* Impact strip */
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 5px; }
+  .roi-card { background: var(--dark); border-radius: 5px; padding: 6px 6px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card .rc-top { width: 100%; height: 2px; position: absolute; top: 0; left: 0; }
+  .roi-card .rc-label { font-size: 7.5px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .roi-card .rc-save { font-size: 12px; font-weight: 800; color: var(--chartreuse); margin-top: 1px; line-height: 1.1; }
+  .roi-card .rc-desc { font-size: 7px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+
+  .sec { margin-bottom: 9px; }
+
+  /* CTA */
+  .cta { background: linear-gradient(135deg, var(--blue), #004d80); text-align: center; padding: 8px 24px; color: #fff; font-size: 10.5px; flex-shrink: 0; font-weight: 600; }
+
+  /* FOOTER */
+  .foot { background: #2D2D2D; text-align: center; padding: 5px; color: rgba(255,255,255,0.4); font-size: 7.5px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    body { min-height: 100vh; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div>
+      <div class="hero-title">My <span class="o">Compliance</span> &mdash; CMMC Edition</div>
+      <div class="hero-badges">
+        <span class="hero-badge">CMMC for the Defense Industrial Base</span>
+        <span class="hero-sub">DFARS 7012 &bull; NIST 800-171 &bull; ITAR-Aware &bull; GCC High</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">L1/L2/L3</span><span class="l">CMMC Levels</span></div>
+    <div class="hero-stat"><span class="n">800-171</span><span class="l">NIST Aligned</span></div>
+    <div class="hero-stat"><span class="n">DFARS</span><span class="l">7012 Ready</span></div>
+    <div class="hero-stat"><span class="n">ITAR</span><span class="l">Aware</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">CMMC 2.0 compliance for DoD primes and subs &mdash; CUI scoping, NIST 800-171 implementation, DFARS 7012 reporting, and C3PAO assessment prep.</div>
+
+<div class="main">
+  <!-- LEFT COLUMN -->
+  <div>
+    <div class="sec">
+      <div class="sh">CMMC Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> CUI Scoping &amp; Data Mapping</div>
+        <ul>
+          <li>FCI / CUI identification across email, SharePoint, CAD, ERP</li>
+          <li>Data flow mapping &amp; enclave boundary design</li>
+          <li>Subcontractor &amp; ESP inventory</li>
+          <li>CUI marking and handling procedures</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> NIST 800-171 Implementation</div>
+        <ul>
+          <li>All 110 controls across 14 families</li>
+          <li>Access control, audit &amp; accountability, MFA</li>
+          <li>Config mgmt, incident response, media protection</li>
+          <li>System &amp; comms protection, system &amp; info integrity</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> DFARS 7012 Compliance</div>
+        <ul>
+          <li>DC3 / DIBNet incident reporting (72-hour)</li>
+          <li>DFARS 7012 / 7019 / 7020 / 7021 clause coverage</li>
+          <li>SPRS self-assessment submission &amp; maintenance</li>
+          <li>Subcontractor flowdown governance</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Assessment Prep &amp; Sherpa</div>
+        <ul>
+          <li>System Security Plan (SSP) authoring</li>
+          <li>POA&amp;M tracking &amp; closure</li>
+          <li>Evidence binder &amp; artifact curation</li>
+          <li>C3PAO pre-assessment dry runs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">CMMC Levels at a Glance</div>
+      <div class="lvl-row">
+        <div class="lvl-num"><b>1</b>Found</div>
+        <div class="lvl-body"><b>Foundational &mdash; FCI Only</b> &mdash; 17 FAR 52.204-21 practices, annual self-assessment in SPRS. <span class="lvl-meta">No CUI permitted.</span></div>
+      </div>
+      <div class="lvl-row">
+        <div class="lvl-num"><b>2</b>Adv</div>
+        <div class="lvl-body"><b>Advanced &mdash; Required for CUI</b> &mdash; 110 NIST 800-171 practices, triennial C3PAO assessment. <span class="lvl-meta">Most DoD contractors land here.</span></div>
+      </div>
+      <div class="lvl-row">
+        <div class="lvl-num"><b>3</b>Expert</div>
+        <div class="lvl-body"><b>Expert &mdash; Highest-Priority Programs</b> &mdash; NIST 800-172 enhanced practices, triennial government assessment. <span class="lvl-meta">APT-focused.</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Modules Involved in CMMC</div>
+      <table class="pt">
+        <thead><tr><th>Module</th><th>Role in CMMC</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td class="pn">Atlas</td><td class="pd">SSP &amp; POA&amp;M document management</td><td class="pr">Core</td></tr>
+          <tr><td class="pn">Govern</td><td class="pd">Policies mapped to 800-171 families</td><td class="pr">Core</td></tr>
+          <tr><td class="pn">Assess</td><td class="pd">Annual Level 1 self-assessment</td><td class="pr">Core</td></tr>
+          <tr><td class="pn">Audit</td><td class="pd">DFARS evidence &amp; artifact trails</td><td class="pr">Core</td></tr>
+          <tr><td class="pn">Vault</td><td class="pd">Privileged credentials for CUI systems</td><td class="pr">Critical</td></tr>
+          <tr><td class="pn">Shield + Guardian</td><td class="pd">CUI endpoint &amp; network protection</td><td class="pr">Critical</td></tr>
+          <tr><td class="pn">Signal</td><td class="pd">Audit logging per 800-171 AU family</td><td class="pr">Critical</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <div class="sec">
+      <div class="sh">Why CMMC Now</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Rule finalized:</b> CMMC 2.0 is in the DFARS; DoD enforcement ramping 2025-2026 at contract award</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Flowdown is real:</b> Primes are pushing DFARS 7012/7019/7020/7021 to every sub in the supply chain</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>GCC High accessible:</b> Microsoft GCC High now viable for mid-market contractors handling CUI + ITAR</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>DIBCAC accelerating:</b> Government assessments are increasing and SPRS scores are checked at award</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Contract-killer risk:</b> No CMMC = no renewal &mdash; compliance is now a revenue issue, not a cost issue</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Models</div>
+      <div class="eng-cards">
+        <div class="eng-card" style="background:var(--dark)"><span class="eng-title">CUI Scoping &amp; Gap Assessment</span><span class="eng-desc">&mdash; Fixed-scope, fixed-fee</span></div>
+        <div class="eng-card" style="background:var(--blue)"><span class="eng-title">Level 2 Implementation</span><span class="eng-desc">&mdash; 6-12 month fixed program</span></div>
+        <div class="eng-card" style="background:var(--teal)"><span class="eng-title">CMMC Managed Program</span><span class="eng-desc">&mdash; Monthly retained, always-ready</span></div>
+        <div class="eng-card" style="background:var(--orange)"><span class="eng-title">vCISO for Defense Industrial Base</span><span class="eng-desc">&mdash; Retained program leadership</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Defense Industrial Base Segments</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> Prime DoD Contractors</div>
+        <div class="badge"><span class="bi">&#10003;</span> Sub-contractors</div>
+        <div class="badge"><span class="bi">&#10003;</span> Aerospace Manufacturing</div>
+        <div class="badge"><span class="bi">&#10003;</span> Precision Machining</div>
+        <div class="badge"><span class="bi">&#10003;</span> Defense Electronics</div>
+        <div class="badge"><span class="bi">&#10003;</span> Defense Software</div>
+        <div class="badge"><span class="bi">&#10003;</span> Research Labs</div>
+        <div class="badge"><span class="bi">&#10003;</span> Federally Funded Research</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">DoD-Grade Tool Stack</div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--blue)"></div><span class="tech-label">Secrets:</span><span class="tech-value">N-able Passportal &mdash; privileged credential vault</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--orange)"></div><span class="tech-label">Assess:</span><span class="tech-value">Network Detective &mdash; NIST 800-171 assessment module</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--teal)"></div><span class="tech-label">PenTest:</span><span class="tech-value">Pentest-Tools.com &mdash; external vulnerability testing</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--dark)"></div><span class="tech-label">Insider:</span><span class="tech-value">Teramind &mdash; user activity monitoring for CUI</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--chartreuse)"></div><span class="tech-label">Cloud:</span><span class="tech-value">Microsoft GCC High + Veeam DFARS-compliant backup</span></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Program Impact</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-top" style="background:var(--blue)"></div><div class="rc-label">CMMC</div><div class="rc-save">L2</div><div class="rc-desc">Assessment ready</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--orange)"></div><div class="rc-label">NIST 800-171</div><div class="rc-save">110/110</div><div class="rc-desc">Controls live</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--teal)"></div><div class="rc-label">SPRS Score</div><div class="rc-save">+110</div><div class="rc-desc">Target max</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Ready for CMMC Level 2? &mdash; CUI Scoping Assessment: <b>rjain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b> &nbsp;|&nbsp; <b>technijian.com</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

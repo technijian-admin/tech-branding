@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian My Continuity &mdash; Backup, DR &amp; Business Continuity</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333; font-size: 13px; line-height: 1.45;
+    display: flex; flex-direction: column;
+    height: 11in; max-height: 11in; overflow: hidden;
+    background: #fff;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628, #0d2847);
+    padding: 14px 28px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -50px; left: 15%; width: 140px; height: 140px; background: radial-gradient(circle, rgba(246,125,75,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .hero-left img { height: 30px; }
+  .hero-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-badges { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .hero-badge { font-size: 7.5px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; white-space: nowrap; }
+  .hero-sub { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .hero-stats { display: flex; gap: 12px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 17px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 7.5px; color: rgba(255,255,255,0.5); display: block; margin-top: 1px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 12px; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .vp { background: var(--blue); text-align: center; padding: 7px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 12px 26px; flex: 1; align-content: start; overflow: hidden; }
+
+  .sh { font-size: 10.5px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 5px; border-bottom: 2px solid var(--light-grey); padding-bottom: 3px; }
+
+  .cg { margin-bottom: 6px; }
+  .cg-t { font-size: 10px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .cg-bar { width: 4px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 9.5px; padding: 1px 0; color: #444; line-height: 1.3; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 9px; }
+
+  .step { display: flex; gap: 6px; margin-bottom: 3px; align-items: flex-start; }
+  .sn { width: 17px; height: 17px; min-width: 17px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #e8643a); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .st { font-size: 9.5px; line-height: 1.3; }
+  .st b { color: var(--dark); }
+
+  .pt { width: 100%; border-collapse: collapse; font-size: 8.5px; border-radius: 6px; overflow: hidden; margin-top: 4px; }
+  .pt th { background: var(--dark); color: #fff; padding: 4px 5px; text-align: left; font-size: 8px; font-weight: 600; }
+  .pt th:last-child { text-align: right; }
+  .pt td { padding: 3px 5px; border-bottom: 1px solid var(--light-grey); font-size: 8.5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt .pn { font-weight: 700; color: var(--dark); }
+  .pt .pd { color: var(--grey); }
+  .pt .pr { text-align: right; font-weight: 700; color: var(--teal); }
+
+  .diff { list-style: none; }
+  .diff li { font-size: 9.5px; padding: 2px 0; display: flex; gap: 7px; align-items: flex-start; line-height: 1.3; }
+  .dd { width: 8px; height: 8px; min-width: 8px; border-radius: 50%; margin-top: 3px; }
+  .diff li b { color: var(--dark); font-size: 9.5px; }
+
+  .eng-cards { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
+  .eng-card { padding: 4px 10px; border-radius: 4px; color: #fff; display: flex; align-items: center; gap: 6px; }
+  .eng-title { font-size: 9px; font-weight: 700; white-space: nowrap; }
+  .eng-desc { font-size: 8px; opacity: 0.75; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 3px 10px; margin-top: 4px; }
+  .badge { font-size: 9px; color: var(--grey); display: flex; align-items: center; gap: 3px; font-weight: 500; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 9px; }
+
+  .tech-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 2px; font-size: 9px; }
+  .tech-bar { width: 4px; height: 10px; border-radius: 2px; flex-shrink: 0; position: relative; top: 1px; }
+  .tech-label { font-weight: 700; color: var(--dark); }
+  .tech-value { color: #444; font-size: 8.5px; }
+
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 4px; }
+  .roi-card { background: var(--dark); border-radius: 5px; padding: 5px 6px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card .rc-top { width: 100%; height: 2px; position: absolute; top: 0; left: 0; }
+  .roi-card .rc-label { font-size: 7.5px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .roi-card .rc-save { font-size: 12px; font-weight: 800; color: var(--chartreuse); margin-top: 1px; }
+  .roi-card .rc-desc { font-size: 7px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+
+  .sec { margin-bottom: 8px; }
+
+  .cta { background: linear-gradient(135deg, var(--blue), #004d80); text-align: center; padding: 7px 24px; color: #fff; font-size: 10.5px; flex-shrink: 0; font-weight: 600; }
+  .foot { background: #2D2D2D; text-align: center; padding: 5px; color: rgba(255,255,255,0.4); font-size: 7.5px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    body { min-height: 100vh; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div>
+      <div class="hero-title">My <span class="o">Continuity</span></div>
+      <div class="hero-badges">
+        <span class="hero-badge">Backup &middot; DR &middot; BCP &middot; Veeam-Powered</span>
+        <span class="hero-sub">Business Continuity &amp; Disaster Recovery by Technijian</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">15-Min</span><span class="l">RTO Target</span></div>
+    <div class="hero-stat"><span class="n">99.99%</span><span class="l">Backup Success</span></div>
+    <div class="hero-stat"><span class="n">Immutable</span><span class="l">Storage</span></div>
+    <div class="hero-stat"><span class="n">24/7</span><span class="l">Recovery</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">Backup. Recovery. Resilience. &mdash; Veeam-powered protection against ransomware, outages, and audit findings.</div>
+
+<div class="main">
+  <!-- LEFT COLUMN -->
+  <div>
+    <div class="sec">
+      <div class="sh">Continuity Services</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Backup (Veeam)</div>
+        <ul>
+          <li>Veeam Backup &amp; Replication &mdash; Windows, Linux, VM, physical</li>
+          <li>Microsoft 365: mailbox, OneDrive, SharePoint, Teams</li>
+          <li>Immutable, air-gapped copies (3-2-1-1-0 rule)</li>
+          <li>Encrypted at rest &amp; in transit, instant VM recovery</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Disaster Recovery</div>
+        <ul>
+          <li>DR targets in My Private Cloud, AWS, or Azure</li>
+          <li>RTO/RPO-tied architecture &amp; workload tiering</li>
+          <li>Orchestrated failover with runbook automation</li>
+          <li>Cross-cloud replication &amp; failback procedures</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Business Continuity Planning</div>
+        <ul>
+          <li>BCP document development &amp; maintenance</li>
+          <li>Tabletop exercises &amp; business impact analysis</li>
+          <li>Alternate worksite &amp; remote-work playbooks</li>
+          <li>Vendor dependency maps &amp; crisis comms plans</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Recovery Testing &amp; Evidence</div>
+        <ul>
+          <li>Quarterly or annual full-workload restore tests</li>
+          <li>Documented reports &amp; sign-off records</li>
+          <li>Evidence binders for SOC 2, HIPAA, PCI auditors</li>
+          <li>Cyber-insurance documentation packages</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">How We Engage</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Assess</b> &mdash; Current state, RPO/RTO gap vs. business need</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>Design</b> &mdash; Target state &amp; Veeam architecture blueprint</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Implement</b> &mdash; Backups, DR targets &amp; BCP documentation</div></div>
+      <div class="step"><div class="sn">4</div><div class="st"><b>Test &amp; Operate</b> &mdash; Restore drills &amp; audit-ready evidence</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Use Cases</div>
+      <table class="pt">
+        <thead><tr><th>Scenario</th><th>Description</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td class="pn">Ransomware Resilience</td><td class="pd">Immutable Veeam backups, air-gapped copies</td><td class="pr">3-2-1-1-0</td></tr>
+          <tr><td class="pn">Cross-Cloud DR</td><td class="pd">Prod in AWS, DR in Azure, orchestrated failover</td><td class="pr">15-Min RTO</td></tr>
+          <tr><td class="pn">HIPAA Backup Evidence</td><td class="pd">Audit-ready backup reports &amp; restore logs</td><td class="pr">Audit-ready</td></tr>
+          <tr><td class="pn">Ransomware Recovery</td><td class="pd">Clean-copy restore + hardening redesign</td><td class="pr">Full restore</td></tr>
+          <tr><td class="pn">Microsoft 365 Backup</td><td class="pd">Mailbox, OneDrive, SharePoint retention</td><td class="pr">Granular</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <div class="sec">
+      <div class="sh">Why Technijian</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Veeam-native expertise:</b> Industry-standard backup, deployed &amp; managed daily</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Backup since 2000:</b> 25+ years of BCDR across regulated verticals</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>SOC 2 datacenter:</b> DR targets in our own My Private Cloud, no third-party handoffs</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Compliance depth:</b> HIPAA, PCI, SOC 2, GDPR evidence in every engagement</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Ransomware-first design:</b> Immutable storage &amp; air-gapped copies by default</div></li>
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Tested recovery:</b> Quarterly restore drills &mdash; not just software licenses</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Models</div>
+      <div class="eng-cards">
+        <div class="eng-card" style="background:var(--dark)"><span class="eng-title">BCDR Readiness Assessment</span><span class="eng-desc">&mdash; Fixed-fee gap analysis &amp; roadmap</span></div>
+        <div class="eng-card" style="background:var(--blue)"><span class="eng-title">Backup/DR Implementation</span><span class="eng-desc">&mdash; Fixed-scope design &amp; deployment</span></div>
+        <div class="eng-card" style="background:var(--teal)"><span class="eng-title">Managed Backup</span><span class="eng-desc">&mdash; Monthly operated Veeam service</span></div>
+        <div class="eng-card" style="background:var(--orange)"><span class="eng-title">Restore-Testing-as-a-Service</span><span class="eng-desc">&mdash; Annual drills &amp; evidence binders</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Industries Served</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> Healthcare &amp; HIPAA</div>
+        <div class="badge"><span class="bi">&#10003;</span> Financial Services</div>
+        <div class="badge"><span class="bi">&#10003;</span> Legal &amp; Professional</div>
+        <div class="badge"><span class="bi">&#10003;</span> Manufacturing</div>
+        <div class="badge"><span class="bi">&#10003;</span> Technology &amp; SaaS</div>
+        <div class="badge"><span class="bi">&#10003;</span> Real Estate</div>
+        <div class="badge"><span class="bi">&#10003;</span> Non-Profit</div>
+        <div class="badge"><span class="bi">&#10003;</span> Retail &amp; eCommerce</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Technology Stack</div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--blue)"></div><span class="tech-label">Backup:</span><span class="tech-value">Veeam Backup &amp; Replication, Veeam for M365</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--orange)"></div><span class="tech-label">Immutable:</span><span class="tech-value">Veeam hardened repos, S3 Object Lock, Azure Blob</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--teal)"></div><span class="tech-label">DR Targets:</span><span class="tech-value">My Private Cloud (SOC 2), AWS, Azure</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--dark)"></div><span class="tech-label">Workloads:</span><span class="tech-value">Windows, Linux, VMware, Hyper-V, physical, M365</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--chartreuse)"></div><span class="tech-label">Compliance:</span><span class="tech-value">HIPAA, PCI, SOC 2, GDPR, cyber-insurance</span></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Resilience Impact</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-top" style="background:var(--blue)"></div><div class="rc-label">RTO Target</div><div class="rc-save">15-Min</div><div class="rc-desc">Tier-1 workloads</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--orange)"></div><div class="rc-label">Backup Success</div><div class="rc-save">99.99%</div><div class="rc-desc">Monitored daily</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--teal)"></div><div class="rc-label">Restore Tests</div><div class="rc-save">Quarterly</div><div class="rc-desc">Audit evidence</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Would you survive ransomware? &mdash; Schedule a BCDR Assessment: <b>rjain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b> &nbsp;|&nbsp; <b>technijian.com</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

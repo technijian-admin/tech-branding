@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian My Compliance &mdash; vCCO / vCISO One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --blue-dark: #004d80; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --near-black: #2D2D2D;
+    --grey: #59595B; --light-grey: #E9ECEF; --off-white: #F8F9FA; --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { width: 8.5in; min-height: 11in; }
+  body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #333; line-height: 1.5;
+    display: flex; flex-direction: column;
+    width: 8.5in; min-height: 11in; height: 11in;
+    margin: 0 auto; overflow: hidden; background: var(--off-white);
+    position: relative;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #0a1628 60%, #0d2847 100%);
+    padding: 18px 32px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -50px; right: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -40px; left: 15%; width: 120px; height: 120px; background: radial-gradient(circle, rgba(246,125,75,0.10) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .hero-left img { height: 32px; display: block; }
+  .hero-text { display: flex; flex-direction: column; }
+  .hero-badge { display: inline-block; background: rgba(30,170,200,0.20); border: 1px solid rgba(30,170,200,0.45); color: var(--teal); font-size: 7px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 10px; border-radius: 10px; margin-bottom: 4px; width: fit-content; }
+  .hero-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-stats { display: flex; gap: 16px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 18px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.55); display: block; letter-spacing: 0.3px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.12); padding-left: 16px; }
+
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+  .vp { background: var(--blue); text-align: center; padding: 9px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 12px 28px 54px; flex: 1; }
+
+  .sh { font-size: 13px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; border-bottom: 2px solid var(--light-grey); padding-bottom: 4px; }
+
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 12px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .cg-bar { width: 4px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10.5px; padding: 1px 0; color: #444; line-height: 1.32; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 6px; font-size: 10px; }
+
+  .step { display: flex; gap: 10px; margin-bottom: 5px; align-items: flex-start; }
+  .sn { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #f99a72); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(246,125,75,0.3); }
+  .st { font-size: 10.75px; line-height: 1.4; }
+  .st b { color: var(--dark); }
+
+  .diff { list-style: none; }
+  .diff li { font-size: 10.5px; padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.3; }
+  .dd { width: 10px; height: 10px; min-width: 10px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .diff li b { color: var(--dark); }
+
+  .em-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
+  .em-card { background: #fff; border: 1px solid var(--light-grey); border-left: 3px solid var(--blue); border-radius: 4px; padding: 6px 8px; }
+  .em-card:nth-child(2) { border-left-color: var(--orange); }
+  .em-card:nth-child(3) { border-left-color: var(--teal); }
+  .em-card:nth-child(4) { border-left-color: var(--chartreuse); }
+  .em-t { font-size: 10px; font-weight: 700; color: var(--dark); }
+  .em-d { font-size: 9px; color: #666; line-height: 1.3; margin-top: 2px; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 5px 8px; margin-top: 6px; }
+  .fw-badge { font-size: 9.5px; color: var(--dark); background: #fff; border: 1px solid var(--light-grey); padding: 3px 7px; border-radius: 10px; font-weight: 600; }
+
+  .seg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px 10px; margin-top: 4px; }
+  .seg { font-size: 10px; color: var(--grey); display: flex; align-items: center; gap: 5px; }
+  .seg::before { content: "\25CF"; color: var(--teal); font-size: 8px; }
+
+  .sec { margin-bottom: 10px; }
+
+  .cta { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); text-align: center; padding: 9px 20px; color: #fff; font-size: 10.5px; position: absolute; left: 0; right: 0; bottom: 20px; }
+  .cta b { color: #fff; }
+  .cta a { color: var(--orange); text-decoration: none; font-weight: 700; }
+  .foot { background: var(--near-black); text-align: center; height: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.38); font-size: 7px; position: absolute; left: 0; right: 0; bottom: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    html, body { width: 8.5in; min-height: 11in; }
+    body { min-height: 11in; height: 11in; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div class="hero-text">
+      <div class="hero-badge">My Compliance &bull; Fractional Leadership</div>
+      <div class="hero-title">My <span class="o">Compliance</span> &mdash; vCCO / vCISO</div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">25+</span><span class="l">Years Experience</span></div>
+    <div class="hero-stat"><span class="n">Multi</span><span class="l">Framework</span></div>
+    <div class="hero-stat"><span class="n">8-16</span><span class="l">Hrs / Month</span></div>
+    <div class="hero-stat"><span class="n">CISO+CCO</span><span class="l">Combined</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">Fractional Compliance Leadership &mdash; senior CCO / CISO expertise without the $200K-300K full-time hire.</div>
+
+<div class="main">
+  <div>
+    <div class="sec">
+      <div class="sh">Fractional Leadership Capabilities</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Compliance Program Leadership</div>
+        <ul>
+          <li>Framework strategy &amp; multi-year roadmap</li>
+          <li>Annual roadmap with quarterly milestones</li>
+          <li>Compliance committee participation &amp; chairing</li>
+          <li>Executive &amp; board-level reporting</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Risk Management</div>
+        <ul>
+          <li>Annual enterprise risk assessments</li>
+          <li>Vendor &amp; third-party risk management</li>
+          <li>Risk register ownership &amp; remediation tracking</li>
+          <li>Board-level risk reporting &amp; appetite reviews</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Audit &amp; Assessment Oversight</div>
+        <ul>
+          <li>Audit prep, planning &amp; readiness validation</li>
+          <li>Auditor relationship &amp; firm management</li>
+          <li>Gap remediation oversight with owner accountability</li>
+          <li>Evidence collection governance &amp; QA</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Incident &amp; Crisis Leadership</div>
+        <ul>
+          <li>Incident response command &amp; war-room leadership</li>
+          <li>Breach notification decisions &amp; legal coordination</li>
+          <li>Regulator communications (OCR, state AGs, DoD)</li>
+          <li>Tabletop exercise design &amp; facilitation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">When You Need a vCCO / vCISO</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Cost-Constrained Leadership</b> &mdash; Need senior compliance leadership but can't afford a $200K-300K full-time hire</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>First-Time Audit</b> &mdash; Pursuing your first SOC 2, HIPAA, or CMMC audit and need an experienced captain</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Post-Breach Stabilization</b> &mdash; Need rapid expertise to stabilize, remediate, and restore trust</div></div>
+      <div class="step"><div class="sn">4</div><div class="st"><b>Program Reset</b> &mdash; Compliance program has drifted and needs strategic re-alignment</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec">
+      <div class="sh">What's Included (Monthly Retainer)</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Direct Senior Engagement:</b> 8-16 hrs/month of Ravi Jain (Founder &amp; CEO) or designated senior compliance lead</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Full Tool Stack Access:</b> Passportal, Network Detective, Pentest-Tools, Teramind, Veeam included</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Policy Library + Templates:</b> Multi-framework policy library &amp; control templates ready to deploy</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Executive Reporting:</b> Quarterly executive reports + board briefing support &amp; deck preparation</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>Incident Response On-Call:</b> 24/7 escalation for active incidents during retainer period</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Models</div>
+      <div class="em-grid">
+        <div class="em-card"><div class="em-t">vCCO</div><div class="em-d">Compliance Officer focus &mdash; framework, policy, audit ownership</div></div>
+        <div class="em-card"><div class="em-t">vCISO</div><div class="em-d">Security Officer focus &mdash; controls, risk, incident leadership</div></div>
+        <div class="em-card"><div class="em-t">Combined vCCO + vCISO</div><div class="em-d">Single leader covering both compliance and security domains</div></div>
+        <div class="em-card"><div class="em-t">Interim Full-Time</div><div class="em-d">Transition support during executive hiring or post-departure</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Frameworks Covered</div>
+      <div class="badges">
+        <div class="fw-badge">HIPAA</div>
+        <div class="fw-badge">SOC 2</div>
+        <div class="fw-badge">PCI-DSS</div>
+        <div class="fw-badge">CMMC</div>
+        <div class="fw-badge">GDPR</div>
+        <div class="fw-badge">NIST CSF</div>
+        <div class="fw-badge">CIS Controls</div>
+        <div class="fw-badge">ISO 27001</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Segments Served</div>
+      <div class="seg-grid">
+        <div class="seg">Healthcare</div>
+        <div class="seg">Financial Services</div>
+        <div class="seg">Legal</div>
+        <div class="seg">Defense Contractors</div>
+        <div class="seg">Technology &amp; SaaS</div>
+        <div class="seg">Manufacturing</div>
+        <div class="seg">Professional Services</div>
+        <div class="seg">Non-Profit</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Why Technijian vCCO / vCISO</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>25+ Years Experience:</b> IT operations + compliance expertise across regulated industries</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Multi-Framework Veteran:</b> Not single-framework specialists &mdash; we navigate them all</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Tools Included:</b> Full toolstack access, not just advisory hours</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Nexus Migration Path:</b> Future Nexus platform migration included when it launches</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>U.S.-Based:</b> Orange County-headquartered, U.S. team, no offshore handoffs</div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Need a compliance leader without the full-time hire? &nbsp; <a href="mailto:RJain@technijian.com">Schedule a vCCO Consult</a> &nbsp;|&nbsp; <b>RJain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian My Office &mdash; Microsoft 365 Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333; font-size: 13px; line-height: 1.45;
+    display: flex; flex-direction: column;
+    width: 8.5in; height: 11in;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628, #0d2847);
+    padding: 16px 28px; display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(30,170,200,0.15) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -50px; left: 15%; width: 140px; height: 140px; background: radial-gradient(circle, rgba(246,125,75,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .hero-left img { height: 30px; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-badges { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .hero-badge { font-size: 7.5px; color: var(--teal); border: 1px solid rgba(30,170,200,0.4); background: rgba(30,170,200,0.15); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; white-space: nowrap; }
+  .hero-sub { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .hero-stats { display: flex; gap: 14px; position: relative; z-index: 1; }
+  .hero-stat { text-align: center; }
+  .hero-stat .n { font-size: 18px; font-weight: 800; color: var(--orange); display: block; line-height: 1.1; }
+  .hero-stat .l { font-size: 8px; color: rgba(255,255,255,0.5); display: block; margin-top: 1px; }
+  .hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 14px; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .vp { background: var(--blue); text-align: center; padding: 8px 20px; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 14px 26px; flex: 1; align-content: start; }
+
+  .sh { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 7px; border-bottom: 2px solid var(--light-grey); padding-bottom: 3px; }
+
+  /* Capabilities */
+  .cg { margin-bottom: 8px; }
+  .cg-t { font-size: 10.5px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .cg-bar { width: 4px; height: 13px; border-radius: 2px; flex-shrink: 0; }
+  .cg ul { list-style: none; }
+  .cg li { font-size: 10px; padding: 1px 0; color: #444; line-height: 1.35; }
+  .cg li::before { content: "\2713"; color: var(--teal); font-weight: 700; margin-right: 5px; font-size: 9px; }
+
+  /* Steps */
+  .step { display: flex; gap: 6px; margin-bottom: 4px; align-items: flex-start; }
+  .sn { width: 18px; height: 18px; min-width: 18px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #e8643a); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(246,125,75,0.3); }
+  .st { font-size: 9.5px; line-height: 1.35; }
+  .st b { color: var(--dark); }
+
+  /* Use cases table */
+  .pt { width: 100%; border-collapse: collapse; font-size: 9px; border-radius: 6px; overflow: hidden; margin-top: 5px; }
+  .pt th { background: var(--dark); color: #fff; padding: 4px 5px; text-align: left; font-size: 8px; font-weight: 600; }
+  .pt th:last-child { text-align: right; }
+  .pt td { padding: 3px 5px; border-bottom: 1px solid var(--light-grey); font-size: 8.5px; }
+  .pt tr:nth-child(even) td { background: var(--off-white); }
+  .pt .pn { font-weight: 700; color: var(--dark); }
+  .pt .pd { color: var(--grey); }
+  .pt .pr { text-align: right; font-weight: 700; color: var(--teal); }
+
+  /* Right column */
+  .diff { list-style: none; }
+  .diff li { font-size: 10px; padding: 3px 0; display: flex; gap: 7px; align-items: flex-start; line-height: 1.35; }
+  .dd { width: 8px; height: 8px; min-width: 8px; border-radius: 50%; margin-top: 3px; }
+  .diff li b { color: var(--dark); font-size: 10px; }
+
+  .eng-cards { display: flex; flex-direction: column; gap: 4px; margin-top: 5px; }
+  .eng-card { padding: 4px 10px; border-radius: 4px; color: #fff; display: flex; align-items: center; gap: 6px; }
+  .eng-title { font-size: 9px; font-weight: 700; white-space: nowrap; }
+  .eng-desc { font-size: 8px; opacity: 0.75; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 3px 10px; margin-top: 5px; }
+  .badge { font-size: 9px; color: var(--grey); display: flex; align-items: center; gap: 3px; font-weight: 500; }
+  .badge .bi { color: var(--teal); font-weight: 800; font-size: 9px; }
+
+  .tech-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 3px; font-size: 9px; }
+  .tech-bar { width: 4px; height: 11px; border-radius: 2px; flex-shrink: 0; position: relative; top: 1px; }
+  .tech-label { font-weight: 700; color: var(--dark); }
+  .tech-value { color: #444; }
+
+  .roi-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 5px; }
+  .roi-card { background: var(--dark); border-radius: 5px; padding: 6px 8px; text-align: center; position: relative; overflow: hidden; }
+  .roi-card .rc-top { width: 100%; height: 2px; position: absolute; top: 0; left: 0; }
+  .roi-card .rc-label { font-size: 7.5px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .roi-card .rc-save { font-size: 13px; font-weight: 800; color: var(--chartreuse); margin-top: 1px; }
+  .roi-card .rc-desc { font-size: 7px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+
+  .sec { margin-bottom: 10px; }
+
+  .cta { background: linear-gradient(135deg, var(--blue), #004d80); text-align: center; padding: 8px 24px; color: #fff; font-size: 10.5px; flex-shrink: 0; font-weight: 600; }
+
+  .foot { background: #2D2D2D; text-align: center; padding: 5px; color: rgba(255,255,255,0.4); font-size: 7.5px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+    <div>
+      <div class="hero-title">My <span class="o">Office</span></div>
+      <div class="hero-badges">
+        <span class="hero-badge">Microsoft 365, Productized</span>
+        <span class="hero-sub">Microsoft 365 Ecosystem Management by Technijian</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="n">25+</span><span class="l">Migrations</span></div>
+    <div class="hero-stat"><span class="n">Copilot</span><span class="l">Ready</span></div>
+    <div class="hero-stat"><span class="n">100%</span><span class="l">U.S. Support</span></div>
+    <div class="hero-stat"><span class="n">24/7</span><span class="l">Help Desk</span></div>
+  </div>
+</div>
+<div class="orange-line"></div>
+<div class="vp">Microsoft 365 delivered as a service &mdash; migration, SharePoint, Teams, security, and Copilot under one managed roof.</div>
+
+<div class="main">
+  <!-- LEFT COLUMN -->
+  <div>
+    <div class="sec">
+      <div class="sh">M365 Service Pillars</div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--blue)"></div> Migration &amp; Deployment</div>
+        <ul>
+          <li>Exchange / Gmail / legacy mail &rarr; M365</li>
+          <li>OneDrive rollout &amp; file-server retirement</li>
+          <li>Teams adoption &amp; channel architecture</li>
+          <li>Tenant provisioning &amp; hardening</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--orange)"></div> Intranet &amp; SharePoint</div>
+        <ul>
+          <li>Modern SharePoint intranet sites</li>
+          <li>Document management &amp; metadata</li>
+          <li>Power Automate workflows &amp; approvals</li>
+          <li>Enterprise search &amp; governance templates</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--teal)"></div> Security &amp; Compliance</div>
+        <ul>
+          <li>MFA &amp; Conditional Access rollout</li>
+          <li>DLP, sensitivity labels, retention</li>
+          <li>Defender for M365, eDiscovery, Purview</li>
+          <li>Audit log &amp; insurance-ready baseline</li>
+        </ul>
+      </div>
+      <div class="cg">
+        <div class="cg-t"><div class="cg-bar" style="background:var(--dark)"></div> Microsoft Copilot (My Copilot)</div>
+        <ul>
+          <li>Readiness assessment &amp; license design</li>
+          <li>Permission cleanup &amp; exposure audit</li>
+          <li>Pilot design, training &amp; champions</li>
+          <li>Governance &amp; policy guardrails</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">How We Engage</div>
+      <div class="step"><div class="sn">1</div><div class="st"><b>Assess</b> &mdash; Tenant, licensing &amp; security baseline review</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><b>Design</b> &mdash; Target architecture, policies &amp; rollout plan</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><b>Migrate / Deploy</b> &mdash; Execute cutover &amp; secure the tenant</div></div>
+      <div class="step"><div class="sn">4</div><div class="st"><b>Operate &amp; Train</b> &mdash; Manage, enable users &amp; roll out Copilot</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">M365 Use Cases</div>
+      <table class="pt">
+        <thead><tr><th>Scenario</th><th>What We Deliver</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td class="pn">Legacy Email Migration</td><td class="pd">On-prem Exchange / Google Workspace &rarr; M365</td><td class="pr">Zero downtime</td></tr>
+          <tr><td class="pn">Intranet Modernization</td><td class="pd">SharePoint with search, portals &amp; governance</td><td class="pr">Modern SP</td></tr>
+          <tr><td class="pn">Copilot Pilot</td><td class="pd">50-user pilot, licensing, training, governance</td><td class="pr">90-day</td></tr>
+          <tr><td class="pn">Tenant Hardening</td><td class="pd">MFA, CA, DLP, sensitivity labels, Defender</td><td class="pr">Zero Trust</td></tr>
+          <tr><td class="pn">Teams Voice</td><td class="pd">Teams Phone with Direct Routing &amp; SBC</td><td class="pr">PBX retired</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <div class="sec">
+      <div class="sh">Why Technijian</div>
+      <ul class="diff">
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Microsoft-certified since 2000:</b> 25+ years running Exchange, SharePoint, Teams &amp; Entra</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>Full M365 stack:</b> One team for migration, security, intranet, Teams &amp; Copilot</div></li>
+        <li><div class="dd" style="background:var(--teal)"></div><div><b>Copilot-ready:</b> Data &amp; permission prep, license design, pilot playbooks</div></li>
+        <li><div class="dd" style="background:var(--dark)"></div><div><b>Security-first:</b> MFA, Conditional Access, DLP &amp; Defender built into every tenant</div></li>
+        <li><div class="dd" style="background:var(--chartreuse)"></div><div><b>100% U.S.-based:</b> Orange County HQ, 24/7 help desk with U.S. technicians</div></li>
+        <li><div class="dd" style="background:var(--blue)"></div><div><b>Regulated industries:</b> Healthcare, financial, legal &amp; manufacturing clients</div></li>
+        <li><div class="dd" style="background:var(--orange)"></div><div><b>License optimization:</b> Commonly 20-30% savings on annual M365 spend</div></li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Models</div>
+      <div class="eng-cards">
+        <div class="eng-card" style="background:var(--dark)"><span class="eng-title">M365 Readiness Assessment</span><span class="eng-desc">&mdash; Fixed-fee tenant &amp; Copilot scorecard</span></div>
+        <div class="eng-card" style="background:var(--blue)"><span class="eng-title">Migration Project</span><span class="eng-desc">&mdash; Fixed-scope email / intranet cutover</span></div>
+        <div class="eng-card" style="background:var(--teal)"><span class="eng-title">Managed M365 (Monthly)</span><span class="eng-desc">&mdash; Admin, help desk &amp; security posture</span></div>
+        <div class="eng-card" style="background:var(--orange)"><span class="eng-title">Copilot Pilot (90-Day)</span><span class="eng-desc">&mdash; Packaged Copilot rollout with metrics</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Industries Served</div>
+      <div class="badges">
+        <div class="badge"><span class="bi">&#10003;</span> Healthcare &amp; HIPAA</div>
+        <div class="badge"><span class="bi">&#10003;</span> Financial Services</div>
+        <div class="badge"><span class="bi">&#10003;</span> Legal &amp; Professional</div>
+        <div class="badge"><span class="bi">&#10003;</span> Manufacturing</div>
+        <div class="badge"><span class="bi">&#10003;</span> Technology &amp; SaaS</div>
+        <div class="badge"><span class="bi">&#10003;</span> Real Estate</div>
+        <div class="badge"><span class="bi">&#10003;</span> Non-Profit</div>
+        <div class="badge"><span class="bi">&#10003;</span> Retail</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Microsoft Stack &amp; Tooling</div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--blue)"></div><span class="tech-label">Licensing:</span><span class="tech-value">Microsoft 365 E3/E5, Business Premium, Copilot</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--orange)"></div><span class="tech-label">Security:</span><span class="tech-value">Entra ID, Defender for M365, Conditional Access</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--teal)"></div><span class="tech-label">Compliance:</span><span class="tech-value">Purview, DLP, sensitivity labels, retention, eDiscovery</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--dark)"></div><span class="tech-label">Collaboration:</span><span class="tech-value">SharePoint, Teams, OneDrive, Exchange Online</span></div>
+      <div class="tech-row"><div class="tech-bar" style="background:var(--chartreuse)"></div><span class="tech-label">Migration:</span><span class="tech-value">AvePoint, ShareGate, Exchange native cutover tools</span></div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Typical Client Impact</div>
+      <div class="roi-strip">
+        <div class="roi-card"><div class="rc-top" style="background:var(--blue)"></div><div class="rc-label">License Spend</div><div class="rc-save">20-30%</div><div class="rc-desc">Savings</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--orange)"></div><div class="rc-label">MFA Coverage</div><div class="rc-save">100%</div><div class="rc-desc">Day 1</div></div>
+        <div class="roi-card"><div class="rc-top" style="background:var(--teal)"></div><div class="rc-label">Copilot Pilot</div><div class="rc-save">90d</div><div class="rc-desc">To readout</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">Ready to get more from Microsoft 365? &mdash; <b>rjain@technijian.com</b> &nbsp;|&nbsp; <b>949.379.8500</b> &nbsp;|&nbsp; <b>technijian.com</b></div>
+<div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com</div>
+
+</body>
+</html>

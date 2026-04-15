@@ -1,0 +1,102 @@
+# Technijian My Compliance — IT Compliance Services
+
+## Overview
+My Compliance is Technijian's comprehensive IT compliance service suite that helps organizations achieve and maintain compliance with major frameworks including HIPAA, SOC 2, PCI-DSS, GDPR, NIST CSF, CIS Controls, CMMC, ISO 27001, and more.
+
+Today we deliver these services using best-in-class commercial tools combined with 25+ years of compliance expertise. We're building Technijian Nexus — our own purpose-built multi-tenant compliance automation platform — to unify everything into one integrated system with AI-native workflows.
+
+## Service Modules (Modular / À la carte)
+
+### Available Today via Commercial Tools + Technijian Expertise
+1. **My Compliance — Vault** (credential & secrets management)
+   - Today: N-able Passportal
+   - Password rotation, privileged access, secure storage, audit logging
+   - Future (Nexus): Nexus Vault module with JIT leases, integrated workflows
+
+2. **My Compliance — Assess** (vulnerability & security assessments)
+   - Today: Network Detective by RapidFire Tools (internal network + AD) + Pentest-Tools.com (external pentest + attack surface)
+   - Internal vulnerability assessments, AD audits, external scans, cloud posture, BCDR reviews
+   - Future (Nexus): Nexus Assess module (already productized as Nexus Assess + Pulse)
+
+3. **My Compliance — Shield** (endpoint DLP + user activity monitoring)
+   - Today: Teramind
+   - Data loss prevention, insider threat detection, activity recording, OCR search
+   - Future (Nexus): Nexus Shield module with integrated DLP
+
+### Available Today via Technijian Consulting (Manual Delivery)
+4. **My Compliance — Atlas** (documentation & SOPs)
+   - Today: Manual docs in Word, Confluence, Passportal Documentation
+   - Configurations, SOPs, runbooks, diagrams, relationship maps
+   - Future (Nexus): Automated knowledge base with AI Q&A
+
+5. **My Compliance — Discover** (IT inventory & asset discovery)
+   - Today: RMM extracts + Network Detective reports + manual tracking
+   - Endpoint/network/identity/cloud inventory with drift tracking
+   - Future (Nexus): Continuous automated discovery
+
+6. **My Compliance — Govern** (policy & procedure lifecycle)
+   - Today: Policies built manually from framework templates; approvals via email
+   - Policy lifecycle, approvals, recertification, exceptions, evidence linkage
+   - Future (Nexus): Full policy lifecycle automation
+
+7. **My Compliance — Audit** (audit logging & evidence)
+   - Today: Evidence binders built manually from tool exports + spreadsheets
+   - Tamper-evident audit logs, evidence repository, audit pack builder
+   - Future (Nexus): Auto-generated audit packs framework-aligned
+
+8. **My Compliance — Signal** (SIEM & detection engineering)
+   - Today: 3rd-party SIEM + manual tuning + manual triage
+   - Log ingestion, normalization, detection engineering, UEBA, SOAR, case management
+   - Future (Nexus): Built-in SIEM + UEBA + SOAR with AI triage
+
+9. **My Compliance — Guardian** (file protection & FIM)
+   - Today: File share audits via manual scripts + Teramind rules
+   - Sensitive file discovery, classification, FIM, ransomware response
+   - Future (Nexus): Automated file classification + FIM
+
+## Framework Programs (Delivery Wrappers)
+
+### Available Today
+- **My Compliance — HIPAA** (healthcare, 18 identifiers, BAA support)
+- **My Compliance — SOC 2** (Type I & II, Trust Services Criteria)
+- **My Compliance — PCI-DSS** (payment card processing)
+- **My Compliance — CMMC / DFARS** (DoD contractors, CUI protection, Level 1/2/3)
+- **My Compliance — GDPR / CCPA** (privacy regulations)
+- **My Compliance — NIST CSF** (cybersecurity framework)
+- **My Compliance — CIS Controls** (18 critical security controls)
+- **My Compliance — ISO 27001** (information security management)
+
+## Supporting Services
+- **My Compliance — vCCO / vCISO** (fractional compliance leadership)
+- **My Compliance — Risk Assessments** (annual, vendor, third-party)
+- **My Compliance — Audit Prep** (audit sherpa through certification)
+- **My Compliance — Tabletop Exercises** (IR, BCDR drills)
+- **My Compliance — Security Awareness Training**
+- **My Compliance — Continuous Compliance Monitoring**
+
+## Engagement Models
+1. **Fixed-Scope Projects**: Framework readiness assessments, gap analysis, audit prep
+2. **Flexible Consulting**: On-demand compliance expertise, policy updates, control testing
+3. **Fractional vCCO/vCISO**: Retained monthly compliance leadership
+4. **Managed Compliance Program**: Ongoing full-service compliance management with Nexus migration path
+
+## Commercial Tools We Use Today
+- **N-able Passportal** — credential management, secure documentation
+- **Network Detective by RapidFire Tools** — network scans, AD audits, security assessments
+- **Pentest-Tools.com** — external vulnerability scanning, pentest, attack surface
+- **Teramind** — endpoint DLP, user activity monitoring, insider threat detection
+
+## Why Technijian My Compliance
+1. **Framework breadth**: HIPAA, SOC 2, PCI-DSS, CMMC, GDPR, NIST, CIS, ISO 27001
+2. **Best-in-class tools today**: N-able Passportal, Network Detective, Pentest-Tools.com, Teramind
+3. **Nexus migration path tomorrow**: unified automation, lower cost, AI-native workflows
+4. **Deep domain expertise**: 25+ years of compliance + IT operations
+5. **Modular delivery**: buy à la carte or full managed program
+6. **Industry depth**: Healthcare, Financial Services, Defense, Technology, Real Estate, Manufacturing
+
+## Stats
+- 8 framework programs supported
+- 9 module services (Vault, Atlas, Discover, Govern, Assess, Signal, Pulse, Shield, Guardian)
+- 4 commercial tool platforms integrated
+- 25+ years of compliance expertise
+- Seamless Nexus migration when platform launches
