@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; Healthcare Windows 11 Fleet Upgrade</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 92%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  .phases { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .phase { padding: 12px 14px; border-radius: 6px; background: var(--off-white); border-left: 4px solid var(--teal); }
+  .phase:nth-child(2) { border-left-color: var(--orange); }
+  .phase .pn { font-size: 9px; color: var(--grey); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+  .phase .pt { font-size: 13px; font-weight: 700; color: var(--dark); margin: 2px 0 6px; }
+  .phase .pd { font-size: 10.5px; color: var(--grey); line-height: 1.45; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Healthcare &middot; OS Upgrade</span>
+    </div>
+    <div class="hero-title">Healthcare Practice<br><span class="o">Windows 10 &rarr; Windows 11 Fleet Upgrade</span></div>
+    <div class="hero-sub">How Technijian rolled 18 eligible clinical-office computers from Windows 10 to Windows 11 over a single weekend &mdash; with a structured post-upgrade phase for devices that didn&rsquo;t take the in-place upgrade on the first pass.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Industry</div><div class="v">Healthcare / Medical Practice</div></div>
+    <div class="cell"><div class="k">Fleet Size</div><div class="v">18 eligible endpoints</div></div>
+    <div class="cell"><div class="k">Services Engaged</div><div class="v">Fleet Upgrade, MyRemote, Support</div></div>
+    <div class="cell"><div class="k">Engagement Scope</div><div class="v">44 hrs across 2 phases</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>A healthcare practice had <b>18 Windows 10 workstations</b> serving front-office and clinical staff. With Windows 10 approaching end-of-support and <b>cyber-insurance carriers tightening language</b> around unsupported operating systems, the practice needed to move to Windows 11 &mdash; without disrupting patient scheduling, charting, or billing during business hours.</p>
+          <p>The practice wanted a <b>weekend cutover</b> that would upgrade the majority of devices in a single window, with a structured plan for the ~50% of machines that traditionally fail in-place upgrades and need individual attention.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>18 endpoints</b> to move from Windows 10 to Windows 11</li>
+            <li><b>Cyber-insurance exposure</b> from unsupported OS baseline</li>
+            <li><b>Business-hours sensitivity</b> &mdash; no disruption to patient workflow</li>
+            <li><b>Realistic failure rate</b> &mdash; in-place upgrades fail ~25-50% on first pass</li>
+            <li><b>Need for documented success</b> for compliance and insurance reviews</li>
+            <li><b>Need weekend coverage</b> with U.S.-based techs available to troubleshoot</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian delivered the upgrade as a <b>two-phase program</b>: a weekend Phase 1 mass in-place upgrade via MyRemote (ScreenConnect), followed by a <b>targeted Phase 2</b> that addressed every machine that failed the first pass &mdash; including swapping in preconfigured spare laptops from Technijian HQ where remediation wasn&rsquo;t practical.</p>
+      <div class="phases">
+        <div class="phase">
+          <div class="pn">Phase 1 &mdash; Weekend Mass Upgrade</div>
+          <div class="pt">In-Place via MyRemote</div>
+          <div class="pd">18 eligible machines upgraded after hours via MyRemote / ScreenConnect. Upgrade success monitored in real time; detailed report generated post-upgrade. Target: 75% of devices upgraded by end of weekend. Users informed of schedule in advance.</div>
+        </div>
+        <div class="phase">
+          <div class="pn">Phase 2 &mdash; Targeted Remediation</div>
+          <div class="pt">Per-Device Fix or Swap</div>
+          <div class="pd">Every machine that failed Phase 1 assessed individually. Root cause identified (TPM, driver, storage, hardware eligibility). Fix applied where possible; otherwise, spare laptop upgraded at Technijian HQ and swapped in for the user. Daily progress updates during this phase.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Technical &amp; Operational Highlights</div>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Off-peak window</b> &mdash; weekend rollout minimized clinical disruption</li>
+            <li><b>MyRemote automation</b> &mdash; remote in-place upgrade at scale</li>
+            <li><b>Pre-upgrade backup</b> on every device before attempting the upgrade</li>
+            <li><b>Spare-laptop swap path</b> &mdash; preconfigured Windows 11 loaners at HQ</li>
+            <li><b>Real-time monitoring</b> + daily progress reports through Phase 2 tail</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">Tools &amp; platforms</div>
+          <div class="chips">
+            <span class="chip">Windows 10 / Windows 11</span>
+            <span class="chip">MyRemote (ScreenConnect)</span>
+            <span class="chip">ManageEngine</span>
+            <span class="chip">TPM / Secure Boot checks</span>
+            <span class="chip">Spare laptop inventory</span>
+            <span class="chip">User-comms checklist</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:10px 0 5px;">Why this pattern works</div>
+          <div class="chips">
+            <span class="chip">Weekend cutover</span>
+            <span class="chip">Realistic failure plan</span>
+            <span class="chip">Compliance evidence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">18</div><div class="l">Endpoints Upgraded</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">2</div><div class="l">Phase Delivery</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">44</div><div class="l">Hours Total</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">1</div><div class="l">Weekend Window</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Windows 10 EOL is not a surprise. Don&rsquo;t let it turn into one.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; Fleet OS upgrades since 2000</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Healthcare &mdash; Windows 11 Fleet Upgrade</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>The practice came out of the weekend with <b>the majority of endpoints already on Windows 11</b> and a structured Phase 2 tail for the remainder. Every device was accounted for in the upgrade report. Cyber-insurance and compliance reviews could point to a dated, documented, and reconciled upgrade event rather than a loose "we got most of them done."</p>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Weekend coverage</td><td class="result">18 eligible Windows 10 endpoints brought through the in-place upgrade in a single weekend window, with real-time monitoring of success/failure.</td></tr>
+          <tr><td class="metric">Phase 2 remediation</td><td class="result">Every device that didn&rsquo;t complete Phase 1 worked individually: root cause identified, fix applied, or spare laptop swapped in from Technijian HQ inventory.</td></tr>
+          <tr><td class="metric">Business continuity</td><td class="result">Upgrade executed entirely off-hours &mdash; no disruption to patient scheduling, charting, or billing during the business week.</td></tr>
+          <tr><td class="metric">OS baseline</td><td class="result">Practice moved off end-of-support Windows 10 onto Windows 11 &mdash; closing the unsupported-OS exposure cyber-insurance carriers increasingly flag.</td></tr>
+          <tr><td class="metric">User disruption</td><td class="result">Where spare-laptop swaps were required, users received a preconfigured Windows 11 device instead of waiting on complex remediation of their original hardware.</td></tr>
+          <tr><td class="metric">Evidence trail</td><td class="result">Detailed upgrade report with per-device status (succeeded / failed / swapped) produced for compliance, insurance, and practice-leadership review.</td></tr>
+          <tr><td class="metric">Delivery discipline</td><td class="result">Phase 1 monitored in real time; Phase 2 tracked with daily progress updates until every endpoint in scope was accounted for.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Work</div>
+      <div class="work">
+        <div class="item"><b>Pre-weekend staging</b> &mdash; Inventory confirmed eligible endpoints; backups verified; user-comms checklist distributed; spare laptops pre-imaged and staged at Technijian HQ for swap-path scenarios.</div>
+        <div class="item"><b>Phase 1 weekend rollout</b> &mdash; Connected to each PC after hours via MyRemote (ScreenConnect), kicked off in-place Windows 10 &rarr; Windows 11 upgrade, monitored progress, captured outcome per device.</div>
+        <div class="item"><b>Real-time dashboarding</b> &mdash; Upgrade success monitored in real time via MyRemote; technicians on hand to troubleshoot devices mid-upgrade; post-upgrade reports generated for review.</div>
+        <div class="item"><b>Phase 2 assessment</b> &mdash; Every Phase-1 failure reviewed individually to determine whether it was a remediable issue (driver, TPM, storage) or a hardware-eligibility problem.</div>
+        <div class="item"><b>Spare-laptop swaps</b> &mdash; Preconfigured spare laptops upgraded to Windows 11 at Technijian HQ, then swapped with users' Windows 10 devices where the original hardware couldn&rsquo;t cleanly upgrade.</div>
+        <div class="item"><b>Final reconciliation</b> &mdash; Complete upgrade report produced: per-device status, resolution path, and final Windows 11 baseline confirmed across the fleet.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;A healthcare practice moved 18 Windows 10 endpoints to Windows 11 in a single weekend window, with a structured Phase 2 tail that reconciled every device that didn&rsquo;t take the first pass &mdash; leaving the practice on a supported OS baseline with a complete per-device upgrade report.&rdquo;</div>
+          <div class="attr">&mdash; Anonymized engagement summary &middot; based on 44-hour Windows 11 upgrade project proposal</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Windows 11 rollouts done in weekends, not quarters.</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: Windows 11 upgrade proposal (44 hrs)</div>
+</div>
+
+</body>
+</html>

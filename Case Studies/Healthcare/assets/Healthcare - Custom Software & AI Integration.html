@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; Healthcare Software Modernization + AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 92%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  /* Phase diagram */
+  .phases { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .phase { padding: 10px; border-radius: 6px; background: var(--off-white); border-left: 4px solid var(--teal); }
+  .phase:nth-child(2) { border-left-color: var(--orange); }
+  .phase:nth-child(3) { border-left-color: var(--blue); }
+  .phase .pn { font-size: 9px; color: var(--grey); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+  .phase .pt { font-size: 12.5px; font-weight: 700; color: var(--dark); margin: 2px 0 6px; }
+  .phase .pd { font-size: 10.5px; color: var(--grey); line-height: 1.45; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Healthcare &middot; Software + AI</span>
+    </div>
+    <div class="hero-title">Healthcare Software Modernization<br><span class="o">with AI-Assisted Authorization Workflow</span></div>
+    <div class="hero-sub">How Technijian modernized a healthcare practice&rsquo;s live web application, stood up an MCP-compatible data service, and integrated an OpenAI Assistant to auto-generate authorization checklists &mdash; all inside a HIPAA-aware development cycle.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Industry</div><div class="v">Healthcare / Medical Practice</div></div>
+    <div class="cell"><div class="k">Environment</div><div class="v">Live web app + DB + AI</div></div>
+    <div class="cell"><div class="k">Services Engaged</div><div class="v">Custom Dev, MCP, AI Integration</div></div>
+    <div class="cell"><div class="k">Engagement Scope</div><div class="v">70+ hrs development</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>A medical practice ran a live web application supporting day-to-day clinical and authorization workflows. The <b>user interface was aging</b>, the <b>database schema needed to evolve</b> to support new data requirements, and clinical staff were spending too much time manually assembling <b>authorization checklists</b> &mdash; a task that was repetitive, error-prone, and a drag on patient throughput.</p>
+          <p>The practice also wanted to explore <b>AI assistance</b> for the checklist task, but without risking data-privacy violations or shipping something untested into a clinical workflow. They needed a partner who could do the software modernization <i>and</i> the AI integration inside a single engagement with HIPAA-aware controls.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>Aging UI</b> on a live healthcare web application</li>
+            <li><b>Database schema limits</b> blocking new data-capture requirements</li>
+            <li><b>Manual authorization checklists</b> &mdash; repetitive, error-prone, slow</li>
+            <li><b>No programmatic data service</b> between UI and downstream systems</li>
+            <li><b>AI aspiration without AI governance</b> &mdash; interest in OpenAI, zero tooling in place</li>
+            <li><b>HIPAA posture</b> must be preserved through every change</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian delivered the work in a <b>three-track development engagement</b>: UI + database modernization of the live web application, an MCP-compatible data service stood up to feed the UI, and an OpenAI Assistant integrated to auto-generate authorization checklists formatted to UI specifications.</p>
+      <div class="phases">
+        <div class="phase">
+          <div class="pn">Track 1</div>
+          <div class="pt">UI &amp; Database Update</div>
+          <div class="pd">Iterative UI redesign for accessibility with user feedback loops; database schema updates to support new data requirements; weekly stakeholder check-ins and change logs.</div>
+        </div>
+        <div class="phase">
+          <div class="pn">Track 2</div>
+          <div class="pt">MCP Data Service</div>
+          <div class="pd">Stood up an MCP-compatible server to facilitate clean data access between UI and database, with monitoring for uptime and performance metrics.</div>
+        </div>
+        <div class="phase">
+          <div class="pn">Track 3</div>
+          <div class="pt">OpenAI Assistant</div>
+          <div class="pd">Integrated an OpenAI Assistant to generate authorization checklists formatted to UI specifications, with defined input data formats and data-privacy compliance.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Technical &amp; Process Highlights</div>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Iterative delivery</b> with user feedback every cycle &mdash; not a waterfall reveal</li>
+            <li><b>Weekly check-ins</b> with change logs for every UI and DB change</li>
+            <li><b>MCP-compatible architecture</b> &mdash; future-proof for AI agent access patterns</li>
+            <li><b>Server monitoring</b> for MCP uptime and performance from day one</li>
+            <li><b>Defined input formats</b> + data-privacy compliance at the AI boundary</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">Technology stack</div>
+          <div class="chips">
+            <span class="chip">Web App (UI modernization)</span>
+            <span class="chip">SQL / relational DB</span>
+            <span class="chip">MCP Server</span>
+            <span class="chip">OpenAI Assistants API</span>
+            <span class="chip">Monitoring &amp; uptime</span>
+            <span class="chip">HIPAA-aware dev cycle</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:10px 0 5px;">Why it matters</div>
+          <div class="chips">
+            <span class="chip">Faster authorization workflow</span>
+            <span class="chip">Fewer manual errors</span>
+            <span class="chip">Governed AI, not rogue AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">3</div><div class="l">Parallel Tracks</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">70+</div><div class="l">Dev Hours</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">1</div><div class="l">MCP Service Launched</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">AI</div><div class="l">Assistant Integrated</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Modernize the app, add AI, keep HIPAA posture. One partner.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; Custom software + AI for healthcare</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Healthcare &mdash; Custom Software + AI Integration</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>The practice came out of the engagement with a <b>modernized UI</b>, a <b>schema that fits new data requirements</b>, an <b>MCP-compatible data service</b> the team can build on, and an <b>OpenAI Assistant that generates authorization checklists</b> in the exact format the UI expects &mdash; removing a repetitive clinical-admin task from the human queue.</p>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">UI modernization</td><td class="result">Live web application UI updated for better accessibility; iterative delivery with user feedback incorporated every cycle &mdash; not a waterfall reveal.</td></tr>
+          <tr><td class="metric">Database schema</td><td class="result">Schemas updated to incorporate new data requirements that the previous model couldn&rsquo;t represent &mdash; unblocking downstream features.</td></tr>
+          <tr><td class="metric">MCP data service</td><td class="result">New MCP-compatible server stood up to facilitate clean data access between UI and database; monitoring in place for uptime and performance metrics.</td></tr>
+          <tr><td class="metric">OpenAI Assistant integration</td><td class="result">AI assistant generating authorization checklists formatted to UI specifications, with defined input data formats and governed data flow.</td></tr>
+          <tr><td class="metric">Authorization throughput</td><td class="result">Repetitive manual checklist assembly shifted from human time to AI-assisted generation with human review &mdash; freeing clinical-admin capacity.</td></tr>
+          <tr><td class="metric">AI governance</td><td class="result">Compliance-with-data-privacy maintained as a design constraint, not an afterthought &mdash; defined input formats, monitored performance, human-in-the-loop validation.</td></tr>
+          <tr><td class="metric">Delivery model</td><td class="result">Iterative agile cycles with weekly stakeholder check-ins and formal change logs &mdash; every UI, DB, and AI change traceable.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Deliverables</div>
+      <div class="work">
+        <div class="item"><b>UI redesign</b> &mdash; Modernized the live web application&rsquo;s user interface for better accessibility; iterative approach with user feedback shaping each cycle.</div>
+        <div class="item"><b>Database schema update</b> &mdash; Updated schemas to support the practice&rsquo;s new data requirements, unblocking UI and reporting features the old model couldn&rsquo;t express.</div>
+        <div class="item"><b>MCP-compatible server</b> &mdash; Stood up the MCP data service to facilitate data access for the updated application, with monitoring for uptime and performance.</div>
+        <div class="item"><b>OpenAI Assistant</b> &mdash; Built the assistant to generate authorization checklists formatted to UI specs, with defined input schemas and governed data flow.</div>
+        <div class="item"><b>Weekly change logs</b> &mdash; Maintained written change logs for every UI, DB, and integration change &mdash; ready for compliance review and knowledge transfer.</div>
+        <div class="item"><b>Monitoring &amp; uptime tooling</b> &mdash; Established server monitoring for the MCP data service, not left as a post-launch "we&rsquo;ll get to it" item.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;A healthcare practice modernized its live web application, stood up a future-proof MCP data service, and integrated an OpenAI Assistant to automate authorization checklists &mdash; delivered as one engagement, under iterative agile cycles, with HIPAA-aware controls preserved through every change.&rdquo;</div>
+          <div class="attr">&mdash; Anonymized engagement summary &middot; based on 70-hour custom software development proposal</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Ready to bring AI into the workflow &mdash; governed, not duct-taped?</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: custom-software-6819 engagement scope (70 hrs)</div>
+</div>
+
+</body>
+</html>

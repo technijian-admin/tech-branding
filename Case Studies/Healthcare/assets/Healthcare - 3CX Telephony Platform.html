@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; Multi-Practice Healthcare Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page {
+    width: 8.5in; height: 11in; max-height: 11in; overflow: hidden;
+    display: flex; flex-direction: column;
+    page-break-after: always; position: relative; background: #fff;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* HERO / COVER BAND */
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847);
+    padding: 22px 40px 18px; position: relative; overflow: hidden; flex-shrink: 0;
+  }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 88%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  /* PROFILE STRIP */
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  /* BODY */
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  /* CHALLENGE / SOLUTION two-col */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  /* SOLUTION CHIPS */
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  /* METRICS STRIP */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  /* RESULTS TABLE */
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  /* PULL STATEMENT (no fake quotes) */
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  /* REPRESENTATIVE WORK */
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  /* CTA */
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  /* PAGE 2 HEADER */
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print {
+    @page { size: letter; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Healthcare</span>
+    </div>
+    <div class="hero-title">Multi-Practice Healthcare Group<br><span class="o">Telephony &amp; Server Platform Operations</span></div>
+    <div class="hero-sub">How Technijian delivered 12 months of continuous 3CX VoIP, server patching, and endpoint operations across a multi-site medical practice network &mdash; with zero reported patient-facing downtime.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Industry</div><div class="v">Healthcare / Medical Practice</div></div>
+    <div class="cell"><div class="k">Environment</div><div class="v">Multi-site, HIPAA-regulated</div></div>
+    <div class="cell"><div class="k">Services Engaged</div><div class="v">VoIP, Servers, Endpoints, M365</div></div>
+    <div class="cell"><div class="k">Engagement Window</div><div class="v">12 months &middot; 184 hrs</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>A multi-practice medical group ran front-desk and clinical operations on an aging <b>3CX VoIP platform</b> sitting alongside a dozen+ Windows Server VMs &mdash; domain controllers, SQL servers, file servers, IIS hosts, SFTP, terminal servers &mdash; all critical to day-to-day patient scheduling, charting, and billing.</p>
+          <p>Patching was inconsistent, voicemail reliability issues were surfacing on desk phones, and no one owned end-to-end operational health. Clinical staff couldn't afford call drops or EHR outages, and the compliance team needed evidence that patch cycles were actually being applied.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>Unreliable voicemail</b> on 3CX desk phones affecting front-desk workflow</li>
+            <li><b>Patch drift</b> across 10+ production servers with CVE exposure piling up</li>
+            <li><b>No centralized evidence</b> of patching for HIPAA technical safeguards</li>
+            <li><b>After-hours patching windows</b> competing with 24/7 on-call clinical access</li>
+            <li><b>No single accountable partner</b> &mdash; fragmented break-fix, slow response</li>
+            <li><b>Risk of EHR &amp; phone outage</b> during business hours if patches failed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian took over the practice&rsquo;s <b>VoIP and server platform operations</b> under a managed-operations model: scheduled patch cycles tied to a documented maintenance window, proactive monitoring via ManageEngine and a central RMM, and 3CX admin support with direct end-user troubleshooting when issues surfaced.</p>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Monthly patch discipline</b> across DC, AD, SQL, IIS, FS, SFTP, TS, and 3CX servers with documented reboot verification</li>
+            <li><b>3CX platform ownership</b> &mdash; user reprovisioning, desk-phone troubleshooting, voicemail fixes, and application patching with snapshot rollback</li>
+            <li><b>VMware tools upgrades</b> on every VM to eliminate hypervisor drift as a failure mode</li>
+            <li><b>CrowdStrike sensor currency</b> across healthcare endpoints, verified in portal after every update</li>
+            <li><b>Ticket-based accountability</b> with time-tracked work notes suitable as HIPAA compliance evidence</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">Platforms under management</div>
+          <div class="chips">
+            <span class="chip">3CX</span>
+            <span class="chip">Windows Server</span>
+            <span class="chip">Active Directory</span>
+            <span class="chip">SQL Server</span>
+            <span class="chip">IIS</span>
+            <span class="chip">SFTP</span>
+            <span class="chip">Terminal Server</span>
+            <span class="chip">VMware vSphere</span>
+            <span class="chip">ManageEngine</span>
+            <span class="chip">CrowdStrike Falcon</span>
+            <span class="chip">Microsoft 365</span>
+            <span class="chip">Veeam Backup</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:12px 0 5px;">Work categories (12&nbsp;mo)</div>
+          <div class="chips">
+            <span class="chip">VoIP ops &middot; 137 tkts</span>
+            <span class="chip">Endpoint mgmt &middot; 121 tkts</span>
+            <span class="chip">M365 admin &middot; 87 tkts</span>
+            <span class="chip">Backup/Recovery &middot; 42 tkts</span>
+            <span class="chip">Server admin &middot; 27 tkts</span>
+            <span class="chip">Network &middot; 47 tkts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">12</div><div class="l">Months Managed</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">475+</div><div class="l">Tickets Resolved</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">520+</div><div class="l">Hours Delivered</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">10+</div><div class="l">Servers Patched</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Running a multi-site practice? Your phones and EHR deserve the same discipline.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; HIPAA-aware managed IT since 2000</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Healthcare &mdash; Telephony &amp; Server Platform Ops</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>Over a rolling 12-month window, Technijian delivered continuous platform operations with <b>no reported patient-facing downtime</b> traced to patching or 3CX maintenance. Front-desk voicemail reliability issues were resolved on first escalation. HIPAA compliance review had a ticket-based audit trail covering every patch cycle.</p>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Server patch cadence</td><td class="result">Monthly cycle maintained across 10+ production VMs (DC, AD, SQL, IIS, FS, SFTP, TS, 3CX) with verified reboot &amp; service checks.</td></tr>
+          <tr><td class="metric">3CX voicemail incidents</td><td class="result">Front-desk voicemail and provisioning issues resolved on first escalation &mdash; reprovisioning + phone config fix, no platform migration required.</td></tr>
+          <tr><td class="metric">CrowdStrike sensor currency</td><td class="result">Sensor version drift eliminated across healthcare endpoints through scheduled cleanup &amp; reinstall cycles, verified in Falcon portal.</td></tr>
+          <tr><td class="metric">VMware hypervisor drift</td><td class="result">VMware tools brought current across every production VM, eliminating an entire class of failure modes from the support queue.</td></tr>
+          <tr><td class="metric">Compliance evidence</td><td class="result">Every patch, reboot, and remediation logged with technician, time, and verified outcome &mdash; ready to hand to HIPAA auditors.</td></tr>
+          <tr><td class="metric">Accountability model</td><td class="result">Single partner, single ticket queue, single escalation path &mdash; replacing fragmented break-fix support.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Work (12 months)</div>
+      <div class="work">
+        <div class="item"><b>VoIP rescue</b> &mdash; Restored voicemail and desk-phone access for affected users by reprovisioning accounts in the 3CX admin portal and verifying provisioning template delivery to endpoints.</div>
+        <div class="item"><b>Monthly patch cycle</b> &mdash; Applied cumulative updates, .NET framework rollups, and third-party patches (Chrome, Edge, VMware Tools, Notepad++) across the full server fleet, with snapshot safety and post-patch verification.</div>
+        <div class="item"><b>3CX application patching</b> &mdash; Snapshotted the 3CX server in vCenter, applied Windows + 3CX application updates, verified services and ran test calls before releasing to production.</div>
+        <div class="item"><b>Server health sweeps</b> &mdash; Logged into ManageEngine to identify unreboot servers across the fleet, pushed missing patches, and performed controlled reboots with service validation.</div>
+        <div class="item"><b>Endpoint security posture</b> &mdash; Uninstalled outdated CrowdStrike sensors on drift-detected machines, reinstalled the latest Falcon sensor version, and verified sensor health in the portal.</div>
+        <div class="item"><b>CVE response</b> &mdash; Tracked and applied monthly CVE-addressing cumulative updates (e.g., KB5068787, KB5071547) across the production server fleet on coordinated maintenance windows.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;A multi-practice medical group moved from fragmented break-fix support to a single managed-operations partner &mdash; one ticket queue, one escalation path, and a documented patch and maintenance record spanning every production server and endpoint.&rdquo;</div>
+          <div class="attr">&mdash; Anonymized engagement summary &middot; based on 12 months of Technijian ticket &amp; time-entry activity</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">See how we can do this for your practice.</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: 12-month ticket &amp; time-entry activity</div>
+</div>
+
+</body>
+</html>

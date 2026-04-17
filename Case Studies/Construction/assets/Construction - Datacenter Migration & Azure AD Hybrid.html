@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; Construction Datacenter Migration &amp; Azure AD Hybrid</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 25px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 92%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  /* Phases */
+  .phases { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .phase { padding: 10px 12px; border-radius: 6px; background: var(--off-white); border-top: 3px solid var(--teal); }
+  .phase:nth-child(2) { border-top-color: var(--orange); }
+  .phase:nth-child(3) { border-top-color: var(--blue); }
+  .phase .pn { font-size: 9px; color: var(--grey); text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; }
+  .phase .pt { font-size: 12px; font-weight: 700; color: var(--dark); margin: 2px 0 4px; }
+  .phase .pd { font-size: 10px; color: var(--grey); line-height: 1.4; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Construction &middot; Infra Modernization</span>
+    </div>
+    <div class="hero-title">Regional Construction Contractor<br><span class="o">Datacenter Migration &amp; Azure AD Hybrid Identity</span></div>
+    <div class="hero-sub">How Technijian moved a construction contractor&rsquo;s on-premise domain controller into the Technijian hosted datacenter, synchronized identity to Azure AD, and decommissioned legacy on-site servers &mdash; without disrupting the jobsite workday.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Industry</div><div class="v">Construction / Contractor</div></div>
+    <div class="cell"><div class="k">Environment</div><div class="v">HQ + jobsite, hybrid identity</div></div>
+    <div class="cell"><div class="k">Services Engaged</div><div class="v">Hosted DC, Azure AD, Decomm</div></div>
+    <div class="cell"><div class="k">Engagement Scope</div><div class="v">89 hrs across 3 phases</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>A regional construction contractor ran its core identity on an <b>aging on-premise domain controller</b> with several legacy supporting servers (DC03, DC04, FS01, TCM01). Hardware was past its useful life, the on-prem hosting model was increasingly expensive to maintain, and workstations needed <b>Azure AD integration</b> to align with how the company wanted to handle mobile / jobsite authentication going forward.</p>
+          <p>The contractor wanted to <b>retire the aging on-prem stack</b>, keep authentication running continuously during the move, and end up with a <b>hybrid-identity model</b> that worked equally well for HQ staff, field superintendents, and remote PMs.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>Aging on-prem domain controller</b> past useful hardware life</li>
+            <li><b>Legacy servers</b> (DC03, DC04, FS01, TCM01) slated for decommission</li>
+            <li><b>Workstations need Azure AD</b> login for mobile / jobsite use</li>
+            <li><b>Zero tolerance for auth outage</b> during business hours</li>
+            <li><b>Hybrid identity</b> required to bridge HQ, field, and remote</li>
+            <li><b>No internal team capacity</b> to run a datacenter migration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian delivered the modernization in <b>three phases</b>: stand up Azure AD Connect sync from the existing on-prem DC, migrate the on-prem domain controller into the <b>Technijian hosted datacenter</b>, then decommission the obsolete on-site servers.</p>
+      <div class="phases">
+        <div class="phase">
+          <div class="pn">Phase 1</div>
+          <div class="pt">Azure AD Sync</div>
+          <div class="pd">Install Azure AD Connect on the on-prem DC, configure sync rules, resolve conflicts, and establish continuous identity synchronization with Azure AD &mdash; workstations gain cloud identity without downtime.</div>
+        </div>
+        <div class="phase">
+          <div class="pn">Phase 2</div>
+          <div class="pt">DC &rarr; Technijian DC</div>
+          <div class="pd">Back up existing DC, transfer to the Technijian datacenter, configure and validate new hosted DC. Migration progress updates every few hours; post-migration performance monitoring.</div>
+        </div>
+        <div class="phase">
+          <div class="pn">Phase 3</div>
+          <div class="pt">Legacy Decommission</div>
+          <div class="pd">Verify all services migrated off legacy servers (DC03, DC04, FS01, TCM01). Decommission each server safely, document the process, dispose of hardware following best practices.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Platforms &amp; Operational Highlights</div>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Azure AD Connect</b> install, config, and ongoing sync monitoring</li>
+            <li><b>Hosted domain controller</b> in Technijian datacenter &mdash; managed, reliable</li>
+            <li><b>Service continuity</b> via staged migration &mdash; not a weekend big-bang</li>
+            <li><b>Formal decommission documentation</b> for each retired legacy server</li>
+            <li><b>Ongoing operations</b> &mdash; 65+ hrs across 59 tickets post-migration (12 mo)</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">Platforms under management</div>
+          <div class="chips">
+            <span class="chip">Active Directory</span>
+            <span class="chip">Azure AD Connect</span>
+            <span class="chip">Microsoft Entra ID</span>
+            <span class="chip">Windows Server</span>
+            <span class="chip">Technijian Datacenter</span>
+            <span class="chip">VMware ESXi / vCenter</span>
+            <span class="chip">Veeam Backup</span>
+            <span class="chip">Microsoft 365</span>
+            <span class="chip">ManageEngine RMM</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:12px 0 5px;">Work categories (post-migration, 12&nbsp;mo)</div>
+          <div class="chips">
+            <span class="chip">General support &middot; 46 tkts</span>
+            <span class="chip">Server admin &middot; 7 tkts</span>
+            <span class="chip">M365 admin &middot; 3 tkts</span>
+            <span class="chip">Backup/Recovery &middot; 2 tkts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">3</div><div class="l">Migration Phases</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">89</div><div class="l">Hours (Migration)</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">4</div><div class="l">Legacy Servers Retired</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">65</div><div class="l">Post-Mig Hrs (12mo)</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Retire the server closet. Keep the business running.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; Hosted datacenter &amp; hybrid identity since 2000</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Construction &mdash; Datacenter &amp; Azure AD Hybrid</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>Core identity now runs from the <b>Technijian hosted datacenter</b> with live <b>Azure AD synchronization</b> powering cloud sign-in for HQ, field, and remote users. Four legacy servers have been formally decommissioned. The contractor is out of the on-site hardware-refresh cycle and running a hybrid-identity model that matches how the business actually operates.</p>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Identity synchronization</td><td class="result">Azure AD Connect deployed on the on-prem DC, sync rules configured, conflicts resolved &mdash; continuous user-identity sync to Azure AD confirmed operational.</td></tr>
+          <tr><td class="metric">Domain controller relocation</td><td class="result">On-prem domain controller backed up, transferred, and stood up in the Technijian hosted datacenter; migration progress reported every few hours; post-migration performance monitored.</td></tr>
+          <tr><td class="metric">Workstation Azure AD login</td><td class="result">Workstations updated for Azure AD login &mdash; matching how field and remote users actually sign in and work.</td></tr>
+          <tr><td class="metric">Legacy server decommission</td><td class="result">DC03, DC04, FS01, and TCM01 verified out of service after migration, safely decommissioned, and disposed of per best practices with formal documentation.</td></tr>
+          <tr><td class="metric">Operational continuity</td><td class="result">Authentication available throughout the migration &mdash; staged cutover approach preserved business-hours service availability.</td></tr>
+          <tr><td class="metric">Post-migration operations</td><td class="result">65+ hours of ticket work across 59 tickets over the following 12 months &mdash; snapshot consolidation, VMware tool upgrades, QNAP/Veeam backup cleanups, and patch cycles.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Work</div>
+      <div class="work">
+        <div class="item"><b>Azure AD Connect deployment</b> &mdash; Installed and configured Azure AD Connect on the on-prem domain controller, tuned sync rules and schedules, resolved identity conflicts, and validated continuous synchronization.</div>
+        <div class="item"><b>Hosted DC migration</b> &mdash; Backed up the existing domain controller, transferred the VM to the Technijian datacenter, configured and tested the new hosted DC environment, then validated service health.</div>
+        <div class="item"><b>Legacy decommission</b> &mdash; Confirmed all services had migrated off DC03, DC04, FS01, and TCM01; performed controlled shutdowns; documented decommission and hardware disposal for each server.</div>
+        <div class="item"><b>Snapshot consolidation</b> &mdash; Post-migration vCenter hygiene: identified VMs stuck on disk consolidation, initiated and completed consolidation jobs, verified services healthy.</div>
+        <div class="item"><b>VMware Tools upgrades</b> &mdash; Brought production VMs (AD, SQL, TS/VDI) current on VMware Tools &mdash; eliminating a recurring class of failures from the incident queue.</div>
+        <div class="item"><b>Backup storage care</b> &mdash; QNAP backup storage health monitored via Veeam; space reclaimed through snapshot and old-data cleanup; LUN warnings cleared and verified.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;A regional construction contractor moved core identity out of the on-site server closet into the Technijian hosted datacenter, stood up live Azure AD synchronization for hybrid HQ / field / remote users, and decommissioned four legacy servers &mdash; with continuous authentication throughout the migration.&rdquo;</div>
+          <div class="attr">&mdash; Anonymized engagement summary &middot; based on 89 hr IT Infrastructure Modernization proposal + 12 mo ticket activity</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Hybrid identity. Hosted DC. One accountable partner.</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: 89 hr IT modernization proposal + 12 mo ticket activity</div>
+</div>
+
+</body>
+</html>

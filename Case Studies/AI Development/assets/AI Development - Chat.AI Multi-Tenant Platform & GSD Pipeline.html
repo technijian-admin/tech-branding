@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; Chat.AI Multi-Tenant Platform &amp; GSD Pipeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 92%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 5px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  /* 14-agent grid */
+  .agents { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 4px; }
+  .agent { padding: 6px 8px; border-radius: 4px; background: var(--off-white); border-left: 3px solid var(--teal); font-size: 9.5px; }
+  .agent:nth-child(7n+1) { border-left-color: var(--blue); }
+  .agent:nth-child(7n+2) { border-left-color: var(--orange); }
+  .agent:nth-child(7n+3) { border-left-color: var(--teal); }
+  .agent:nth-child(7n+4) { border-left-color: var(--chartreuse); }
+  .agent:nth-child(7n+5) { border-left-color: var(--blue); }
+  .agent:nth-child(7n+6) { border-left-color: var(--orange); }
+  .agent:nth-child(7n+7) { border-left-color: var(--teal); }
+  .agent .an { font-size: 7.5px; letter-spacing: 1px; font-weight: 700; color: var(--grey); text-transform: uppercase; }
+  .agent .at { font-weight: 700; color: var(--dark); margin-top: 1px; font-size: 10px; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; AI Development &middot; Flagship Capability</span>
+    </div>
+    <div class="hero-title">Chat.AI &mdash; Enterprise Multi-Tenant AI SaaS Platform<br><span class="o">Built on the GSD 14-Agent Autonomous Development Pipeline</span></div>
+    <div class="hero-sub">Chat.AI is Technijian&rsquo;s upcoming multi-tenant AI SaaS product &mdash; and the reference implementation for every enterprise AI build Technijian delivers. Built end-to-end with GSD, the 14-agent autonomous pipeline that drives .NET + React + SQL Server from project description to alpha deployment.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Capability</div><div class="v">AI Dev &middot; Full-Stack &middot; Platform</div></div>
+    <div class="cell"><div class="k">Status</div><div class="v">Alpha live &middot; GA in 4 weeks</div></div>
+    <div class="cell"><div class="k">Scale</div><div class="v">~29,800 files, monorepo</div></div>
+    <div class="cell"><div class="k">Pipeline</div><div class="v">14-agent GSD autonomous</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">What Technijian Built</div>
+      <p>A <b>production-grade multi-tenant AI SaaS platform</b> &mdash; not a prototype. Chat.AI is Technijian&rsquo;s own upcoming product launch, which doubles as the <b>reference implementation</b> for the custom AI work Technijian offers to enterprise clients. Same stack, same pipeline, same quality bar on your project.</p>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Chat</b> &mdash; multi-LLM conversational UI with threaded history and per-thread model selection</li>
+            <li><b>Council</b> &mdash; same prompt across multiple LLMs concurrently, results compared, transcripts retained</li>
+            <li><b>Projects</b> &mdash; long-running workstreams with per-project memory, assistants, files, connectors</li>
+            <li><b>Assistants</b> &mdash; custom system-prompted agents, CRUD-managed, tenant-shareable</li>
+            <li><b>Connectors &amp; Workflows</b> &mdash; outbound integrations (n8n, Microsoft Graph) and visual workflow builder with undo history</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">LLM breadth (no lock-in)</div>
+          <div class="chips">
+            <span class="chip">OpenAI</span>
+            <span class="chip">Anthropic</span>
+            <span class="chip">Google Vertex</span>
+            <span class="chip">Azure OpenAI</span>
+            <span class="chip">Cohere</span>
+            <span class="chip">Mistral</span>
+            <span class="chip">Groq</span>
+            <span class="chip">Z.ai</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:10px 0 5px;">Compliance from day one</div>
+          <div class="chips">
+            <span class="chip">HIPAA audit trail</span>
+            <span class="chip">Tenant isolation (SESSION_CONTEXT)</span>
+            <span class="chip">GDPR data-subject rights</span>
+            <span class="chip">Rate limiting (user + tenant)</span>
+            <span class="chip">Redis security monitoring</span>
+            <span class="chip">Azure AD / MSAL + JWT</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:10px 0 5px;">Stack</div>
+          <div class="chips">
+            <span class="chip">React 18 + TS + Vite</span>
+            <span class="chip">TailwindCSS + Zustand</span>
+            <span class="chip">ASP.NET Core 8</span>
+            <span class="chip">Dapper + SQL Server</span>
+            <span class="chip">SP-only data access</span>
+            <span class="chip">Figma design contract</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The 14-Agent GSD Pipeline</div>
+      <p>The interesting part isn&rsquo;t that Technijian built Chat.AI &mdash; it&rsquo;s <b>how fast, at what quality</b>. The same 14-agent autonomous pipeline is what Technijian runs on enterprise client projects.</p>
+      <div class="agents">
+        <div class="agent"><div class="an">Phase A-E</div><div class="at">RequirementsAgent</div></div>
+        <div class="agent"><div class="an">Phase A-E</div><div class="at">ArchitectureAgent</div></div>
+        <div class="agent"><div class="an">Phase A-E</div><div class="at">FigmaIntegrationAgent</div></div>
+        <div class="agent"><div class="an">Phase A-E</div><div class="at">PhaseReconcileAgent</div></div>
+        <div class="agent"><div class="an">Phase A-E</div><div class="at">BlueprintFreezeAgent</div></div>
+        <div class="agent"><div class="an">Phase A-E</div><div class="at">ContractFreezeAgent</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">Orchestrator</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">BlueprintAnalysisAgent</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">CodeReviewAgent</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">RemediationAgent</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">QualityGateAgent</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">E2EValidationAgent</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">DeployAgent</div></div>
+        <div class="agent"><div class="an">Phase F-G</div><div class="at">PostDeployValidationAgent</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Build Outcomes (ChatAI v8)</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">450</div><div class="l">Requirements Reviewed</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">521 &rarr; 0</div><div class="l">Critical Issues</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">3x3</div><div class="l">Model Review Rounds</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">4wk</div><div class="l">Launch Target</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Same pipeline we shipped Chat.AI with. Now running on your AI build.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; GSD autonomous development since 2024</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>AI Development &mdash; Chat.AI Platform &amp; GSD Pipeline</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">Why the Pipeline Works in Production</div>
+      <p>Most autonomous dev systems don&rsquo;t survive first contact with a real codebase. GSD does, because four specific decisions are baked in from day one:</p>
+      <ul class="bullet">
+        <li><b>Vault-backed memory.</b> Every agent&rsquo;s system prompt, every architecture contract, every orchestrator decision lives in an Obsidian vault indexed by the agents themselves. Humans edit prompts in the vault, not in code &mdash; runtime picks up the change on next run.</li>
+        <li><b>Dual-auth routing for $0 marginal cost.</b> Primary path uses CLI OAuth subscriptions (Claude Code, OpenAI Codex, Gemini). API keys are a backup path that only triggers on rate limit. Steady-state cost stays at the fixed subscription price.</li>
+        <li><b>Impact-analysis gates.</b> No agent renames a symbol without running a call-graph impact analysis first. HIGH / CRITICAL risk halts for human review. No blind refactors.</li>
+        <li><b>Three-model code review.</b> Every review cycle runs Claude, Codex, and Gemini in parallel against the same diff. Findings merged; RemediationAgent picks up the union set.</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Code-Intelligence Augmentation Stack</div>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Graphify</b> &mdash; knowledge graphs across the codebase</li>
+            <li><b>GitNexus</b> &mdash; impact analysis before every symbol edit</li>
+            <li><b>Context7</b> &mdash; live, up-to-date library documentation</li>
+            <li><b>Semgrep + OWASP</b> &mdash; security scanning</li>
+            <li><b>Playwright</b> &mdash; browser validation of the deployed app</li>
+            <li><b>GitHub MCP</b> &mdash; repo operations</li>
+            <li><b>Shannon</b> &mdash; code-review orchestration</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">What the admin surface includes</div>
+          <div class="chips">
+            <span class="chip">Tenants</span>
+            <span class="chip">Directory</span>
+            <span class="chip">Connectors</span>
+            <span class="chip">n8n Servers</span>
+            <span class="chip">Memory</span>
+            <span class="chip">LLM Models</span>
+            <span class="chip">LLM Providers</span>
+            <span class="chip">LLM Logs</span>
+            <span class="chip">Council Settings</span>
+            <span class="chip">Revenue / Billing</span>
+            <span class="chip">Usage &amp; Health</span>
+            <span class="chip">Audit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Capability</th><th>What it delivers to an enterprise AI build</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Custom AI products</td><td class="result">Not an AI skin on top of a SaaS tool &mdash; delivered with the same pipeline that shipped Chat.AI itself.</td></tr>
+          <tr><td class="metric">Compliance built in</td><td class="result">HIPAA audit, tenant isolation, GDPR data-subject rights, and rate limiting are part of the generator, not a post-hoc patch.</td></tr>
+          <tr><td class="metric">Multi-LLM independence</td><td class="result">Provider abstraction with 8 LLM backends (OpenAI, Anthropic, Google, Azure, Cohere, Mistral, Groq, Z.ai) &mdash; no single-vendor lock-in.</td></tr>
+          <tr><td class="metric">Design-first discipline</td><td class="result">Figma spec is the contract, not a suggestion &mdash; FigmaIntegrationAgent validates the full 12-of-12 Figma Make deliverables.</td></tr>
+          <tr><td class="metric">Three-model review</td><td class="result">Every code-review cycle runs Claude + Codex + Gemini in parallel against the same diff; findings merged for remediation.</td></tr>
+          <tr><td class="metric">Impact analysis</td><td class="result">No agent renames a symbol without a call-graph impact analysis; HIGH / CRITICAL risk escalates to human review.</td></tr>
+          <tr><td class="metric">Evidence-backed</td><td class="result">Chat.AI shipped with 450 requirements reviewed, 521 issues identified, 0 critical at verification &mdash; documented in the handoff, not marketing copy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;Technijian is launching its own multi-tenant AI SaaS &mdash; multi-LLM, HIPAA-compliant, tenant-isolated, audit-logged &mdash; built end-to-end with the 14-agent GSD pipeline. The same pipeline runs on your AI build: three-model code review, impact-analysis gates, Figma-as-contract, and deploy with automated rollback. Ask to see the alpha.&rdquo;</div>
+          <div class="attr">&mdash; Flagship capability summary &middot; based on Chat.AI v8 handoff evidence &amp; GSD pipeline architecture</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Stop stitching SaaS tools. Build the AI product your business needs.</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: Chat.AI v8 handoff + GSD pipeline architecture docs</div>
+</div>
+
+</body>
+</html>

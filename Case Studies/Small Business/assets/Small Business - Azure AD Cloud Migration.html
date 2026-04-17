@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; SMB Azure AD Migration</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 92%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  /* Phase flow */
+  .flow { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .step { padding: 10px 10px; border-radius: 6px; background: var(--off-white); border-top: 3px solid var(--teal); position: relative; }
+  .step:nth-child(2) { border-top-color: var(--orange); }
+  .step:nth-child(3) { border-top-color: var(--blue); }
+  .step:nth-child(4) { border-top-color: var(--chartreuse); }
+  .step .n { font-size: 9px; color: var(--grey); text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; }
+  .step .t { font-size: 11.5px; font-weight: 700; color: var(--dark); margin: 2px 0 4px; }
+  .step .d { font-size: 9.5px; color: var(--grey); line-height: 1.4; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Small Business</span>
+    </div>
+    <div class="hero-title">21-User Small Business<br><span class="o">On-Prem AD &rarr; Entra ID (Azure AD) Migration</span></div>
+    <div class="hero-sub">How Technijian moved a 21-user small business off an aging on-premise Active Directory onto Microsoft Entra ID (Azure AD) &mdash; preserving OneDrive, Outlook, and user profiles while retiring the on-prem server.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Profile</div><div class="v">Small Business / SMB</div></div>
+    <div class="cell"><div class="k">Environment</div><div class="v">21 desktop users, on-prem AD</div></div>
+    <div class="cell"><div class="k">Services Engaged</div><div class="v">Cloud migration, identity, M365</div></div>
+    <div class="cell"><div class="k">Engagement Scope</div><div class="v">44&ndash;50 hrs (phased)</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>A 21-user small business relied on an <b>aging on-premise Active Directory server</b> for user logins, file access, and group policy. The server was past its useful life, the cost of a physical refresh was hard to justify for the user count, and remote work had made the on-prem domain model feel increasingly out of step with how the team actually worked.</p>
+          <p>The business wanted to move identity to <b>Microsoft Entra ID (Azure AD)</b>, decommission the on-prem server, and get out of the hardware-refresh cycle &mdash; <i>without</i> breaking OneDrive, Outlook, or the user profiles people had built up over years.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>Aging on-prem AD</b> with 21 user accounts and local profiles</li>
+            <li><b>Hardware refresh looming</b> &mdash; hard to justify CapEx for 21 users</li>
+            <li><b>Remote work</b> made the on-prem model increasingly awkward</li>
+            <li><b>OneDrive &amp; Outlook must survive</b> the identity cutover intact</li>
+            <li><b>User profiles</b> need to transfer, not be rebuilt</li>
+            <li><b>No time for an extended outage</b> &mdash; people have work to do</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian planned and executed a <b>phased cloud identity migration</b>: full environment assessment, target-state design, controlled cutover of each desktop, validation of OneDrive and Outlook functionality post-cutover, and formal decommissioning of the legacy on-prem server with documentation.</p>
+      <div class="flow">
+        <div class="step">
+          <div class="n">Phase 1</div>
+          <div class="t">Evaluation</div>
+          <div class="d">Assess current AD environment, identify needs and risks, produce an evaluation report that guides the migration strategy.</div>
+        </div>
+        <div class="step">
+          <div class="n">Phase 2</div>
+          <div class="t">Design</div>
+          <div class="d">Design the target Entra ID (Azure AD) environment: user roles, access levels, and policies documented before any change.</div>
+        </div>
+        <div class="step">
+          <div class="n">Phase 3</div>
+          <div class="t">Implementation</div>
+          <div class="d">Unjoin each desktop from the on-prem domain, join Entra ID, transfer user profiles, validate OneDrive and Outlook.</div>
+        </div>
+        <div class="step">
+          <div class="n">Phase 4</div>
+          <div class="t">Decommission</div>
+          <div class="d">Verify all data preserved in cloud, back up and securely decommission the old on-prem AD server, document the new setup.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">What We Preserved</div>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>User identities</b> &mdash; all 21 users transitioned cleanly to Entra ID</li>
+            <li><b>OneDrive</b> &mdash; file sync and share behavior validated post-migration</li>
+            <li><b>Outlook</b> &mdash; mail, calendar, contacts intact through identity change</li>
+            <li><b>User profiles</b> &mdash; desktop profile transfer, not forced rebuild</li>
+            <li><b>Access levels</b> &mdash; role/permission mapping preserved in the new design</li>
+            <li><b>Business continuity</b> &mdash; staggered cutovers, not a big-bang weekend</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">Platforms &amp; tools</div>
+          <div class="chips">
+            <span class="chip">Microsoft Entra ID (Azure AD)</span>
+            <span class="chip">On-Prem Active Directory</span>
+            <span class="chip">Microsoft 365</span>
+            <span class="chip">OneDrive for Business</span>
+            <span class="chip">Outlook / Exchange Online</span>
+            <span class="chip">Intune (endpoint mgmt)</span>
+            <span class="chip">Azure Portal</span>
+            <span class="chip">Windows Desktop Fleet</span>
+            <span class="chip">Secure Server Decommission</span>
+            <span class="chip">Documentation deliverable</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:12px 0 5px;">Why SMBs choose this</div>
+          <div class="chips">
+            <span class="chip">No more server refresh CapEx</span>
+            <span class="chip">Built for remote work</span>
+            <span class="chip">Modern MFA / conditional access</span>
+            <span class="chip">Lower operating overhead</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">21</div><div class="l">Users Migrated</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">4</div><div class="l">Phase Delivery</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">44-50</div><div class="l">Hours (Phased)</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">1</div><div class="l">Legacy Server Retired</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Stop renewing server warranties. Move identity to the cloud.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; SMB cloud migration since 2000</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Small Business &mdash; Azure AD Cloud Migration</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>The business now runs identity entirely in <b>Microsoft Entra ID</b>. The old on-prem server has been securely decommissioned. OneDrive, Outlook, and user profiles survived the cutover. The next server refresh doesn&rsquo;t exist &mdash; because the server doesn&rsquo;t exist anymore. And the whole environment is documented for the next IT engagement, whether it&rsquo;s Technijian or not.</p>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Identity platform</td><td class="result">All 21 users migrated to Microsoft Entra ID with role and access-level mapping preserved from the on-prem design.</td></tr>
+          <tr><td class="metric">OneDrive &amp; Outlook continuity</td><td class="result">OneDrive sync and Outlook mailbox / calendar / contacts verified working for every user after identity cutover &mdash; no rebuild required.</td></tr>
+          <tr><td class="metric">Desktop transitions</td><td class="result">Each desktop unjoined from the on-prem domain and joined to Entra ID with user profile transfer, not wipe-and-reload.</td></tr>
+          <tr><td class="metric">Legacy server retirement</td><td class="result">Old on-prem AD server backed up, validated out of service, and securely decommissioned with proper documentation.</td></tr>
+          <tr><td class="metric">Documentation deliverable</td><td class="result">Formal documentation of the new Entra ID setup handed over &mdash; including user roles, access policies, and decommission records.</td></tr>
+          <tr><td class="metric">Operating model change</td><td class="result">No more on-prem AD to patch, reboot, or refresh. Remote-work posture significantly improved via cloud-native identity.</td></tr>
+          <tr><td class="metric">Delivery approach</td><td class="result">Four-phase delivery (Evaluation &rarr; Design &rarr; Implementation &rarr; Decommission) with stakeholder signoff at each gate.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Deliverables</div>
+      <div class="work">
+        <div class="item"><b>Evaluation report</b> &mdash; Assessment of current AD environment, users, risks, and constraints &mdash; the document that drove every downstream decision.</div>
+        <div class="item"><b>Entra ID design</b> &mdash; Target-state design document: user roles, access levels, conditional-access and MFA policies, and group structure.</div>
+        <div class="item"><b>Cutover runbook</b> &mdash; Per-desktop unjoin / Entra ID join / profile transfer procedure with rollback criteria and user-comms checklist.</div>
+        <div class="item"><b>OneDrive / Outlook validation</b> &mdash; Post-cutover verification for each user: mailbox working, OneDrive syncing, Teams signed in, shared access intact.</div>
+        <div class="item"><b>Server decommission record</b> &mdash; Final backup, data-retention confirmation, secure shutdown, and formal decommission documentation.</div>
+        <div class="item"><b>New-environment documentation</b> &mdash; Operational handoff document describing the Entra ID setup, covering admin, user lifecycle, and support access.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;A 21-user small business retired its aging on-premise Active Directory server and moved identity to Microsoft Entra ID with OneDrive, Outlook, and user profiles fully preserved &mdash; delivered in four phases with stakeholder signoff at each gate and formal documentation handoff at the end.&rdquo;</div>
+          <div class="attr">&mdash; Anonymized engagement summary &middot; based on two 44&ndash;50 hr cloud-migration proposals (cloud-migration-6838 / 6839)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Retire the server. Keep the data. Modernize the identity model.</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: cloud-migration-6838 &amp; cloud-migration-6839 proposals</div>
+</div>
+
+</body>
+</html>

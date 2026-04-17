@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; 3CX v18 to v20 Multi-Client Upgrade</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 25px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 92%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  /* Industry pattern grid */
+  .ind-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .ind-card { background: var(--off-white); border-top: 3px solid var(--blue); padding: 9px 12px; border-radius: 0 0 6px 6px; }
+  .ind-card:nth-child(2) { border-top-color: var(--orange); }
+  .ind-card:nth-child(3) { border-top-color: var(--teal); }
+  .ind-card .ih { font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--grey); font-weight: 700; }
+  .ind-card .it { font-size: 12px; font-weight: 700; color: var(--dark); margin: 2px 0 3px; }
+  .ind-card .id { font-size: 10px; color: var(--grey); line-height: 1.4; }
+
+  /* 3-phase methodology */
+  .phases { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .phase { padding: 10px 12px; border-radius: 6px; background: var(--off-white); border-left: 4px solid var(--teal); }
+  .phase:nth-child(2) { border-left-color: var(--orange); }
+  .phase:nth-child(3) { border-left-color: var(--blue); }
+  .phase .pn { font-size: 9px; color: var(--grey); text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; }
+  .phase .pt { font-size: 12px; font-weight: 700; color: var(--dark); margin: 2px 0 4px; }
+  .phase .pd { font-size: 10px; color: var(--grey); line-height: 1.4; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Cross-Industry &middot; VoIP</span>
+    </div>
+    <div class="hero-title">3CX v18 &rarr; v20 Multi-Client Upgrade Pattern<br><span class="o">Healthcare &middot; Financial Services &middot; Real Estate</span></div>
+    <div class="hero-sub">How Technijian runs 3CX v18 to v20 platform upgrades as a repeatable three-phase pattern &mdash; delivered across healthcare, financial services, and real estate clients with consistent methodology and predictable outcomes.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Pattern</div><div class="v">3CX v18 &rarr; v20 upgrade</div></div>
+    <div class="cell"><div class="k">Client Coverage</div><div class="v">Multi-industry, 10+ engagements</div></div>
+    <div class="cell"><div class="k">Typical Scope</div><div class="v">31&ndash;32 hrs per client</div></div>
+    <div class="cell"><div class="k">Methodology</div><div class="v">3-phase, repeatable</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>3CX v18 reached end-of-life and v20 became the supported baseline for security, features, and vendor support. Across Technijian&rsquo;s 3CX-running client base, this created a <b>multi-industry upgrade wave</b> &mdash; and each client faced the same core concerns: <b>don&rsquo;t break customer-facing phone lines</b>, maintain documented rollback, and train users on what changed.</p>
+          <p>The challenge wasn&rsquo;t technical novelty &mdash; it was <b>doing this same upgrade well, repeatedly, across very different industries</b> without the quality slipping from client #1 to client #10.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>3CX v18 EOL</b> &mdash; vendor no longer supporting the version</li>
+            <li><b>v20 features</b> (security, UI, AI module) not available until upgraded</li>
+            <li><b>Customer-line risk</b> &mdash; advisor, reception, and DID lines all at stake</li>
+            <li><b>Rollback must exist</b> in case upgrade fails mid-flight</li>
+            <li><b>Users need training</b> &mdash; UI and features shifted between versions</li>
+            <li><b>Methodology must repeat</b> across healthcare, finance, real estate</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian packaged the 3CX v18 &rarr; v20 upgrade as a <b>repeatable three-phase pattern</b> delivered consistently across industries: pre-upgrade assessment and planning, the upgrade execution window itself, and post-upgrade testing plus user training. The same methodology runs whether the client is a medical practice, an insurance firm, or a multi-property operator.</p>
+      <div class="phases">
+        <div class="phase">
+          <div class="pn">Phase 1</div>
+          <div class="pt">Assessment &amp; Planning</div>
+          <div class="pd">Inventory current configuration and user requirements, devise a comprehensive upgrade strategy, and build a rollback plan. Weekly client updates throughout planning.</div>
+        </div>
+        <div class="phase">
+          <div class="pn">Phase 2</div>
+          <div class="pt">Upgrade Execution</div>
+          <div class="pd">Back up the 3CX server, vCenter snapshot for rollback safety, apply Windows + 3CX application patches, reboot, verify services, place test calls before releasing to production.</div>
+        </div>
+        <div class="phase">
+          <div class="pn">Phase 3</div>
+          <div class="pt">Testing &amp; User Training</div>
+          <div class="pd">Comprehensive post-upgrade functional testing, then interactive user training on new features and UI changes. User feedback captured and fed back to support.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Industries Where This Pattern Ran</div>
+      <div class="ind-grid">
+        <div class="ind-card">
+          <div class="ih">Healthcare</div>
+          <div class="it">Medical Practice Network</div>
+          <div class="id">32 hrs per 3CX platform. Phone lines supporting patient scheduling, clinical operations, and billing &mdash; zero disruption tolerance during business hours.</div>
+        </div>
+        <div class="ind-card">
+          <div class="ih">Financial Services</div>
+          <div class="it">Insurance / Advisory Firm</div>
+          <div class="id">31 hrs per upgrade. Advisor phone lines and client-call reliability treated as compliance-relevant; post-upgrade test calls mandatory before release.</div>
+        </div>
+        <div class="ind-card">
+          <div class="ih">Real Estate</div>
+          <div class="it">Multi-Property Operator</div>
+          <div class="id">Portfolio-wide rollout across 30+ property 3CX instances. Standard v20 config deployed property-by-property with unified admin and DID planning.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale (across pattern)</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">3</div><div class="l">Industries Served</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">10+</div><div class="l">Engagements (5-yr)</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">31-32</div><div class="l">Hours / Typical Engagement</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">3</div><div class="l">Phases per Upgrade</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Same upgrade, done dozens of times, consistently. That&rsquo;s the point.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; 3CX Partner since early platform versions</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Cross-Industry &mdash; 3CX v18 to v20 Upgrade Pattern</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>The pattern delivers <b>consistent outcomes</b> regardless of industry. Each client comes out on supported 3CX v20 with rollback evidence, documented test-call verification, and users trained on the new UI and features. The predictability of the methodology is the product &mdash; clients know what to expect because Technijian has run this upgrade before, many times.</p>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result (consistent across industries)</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Version posture</td><td class="result">Client moved off end-of-life 3CX v18 onto supported v20 baseline &mdash; closing vendor-support and security exposure.</td></tr>
+          <tr><td class="metric">Rollback safety</td><td class="result">vCenter snapshot taken before upgrade; full 3CX server backup completed; documented rollback path available if upgrade fails mid-flight.</td></tr>
+          <tr><td class="metric">Upgrade verification</td><td class="result">Windows + 3CX application patches applied; server rebooted; services verified running; test calls placed before releasing to production traffic.</td></tr>
+          <tr><td class="metric">User enablement</td><td class="result">Post-upgrade training sessions covering new v20 features and UI changes; feedback collected and routed to support for ongoing coaching.</td></tr>
+          <tr><td class="metric">Weekly reporting</td><td class="result">Progress updates delivered weekly through planning and assessment; daily updates during the upgrade window itself.</td></tr>
+          <tr><td class="metric">Repeatability</td><td class="result">Same three-phase methodology delivered across healthcare, financial services, and real estate &mdash; quality consistent from client #1 to client #10.</td></tr>
+          <tr><td class="metric">Accountability</td><td class="result">Single partner, single ticket queue, single escalation path for every 3CX engagement &mdash; regardless of which industry the client is in.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Work</div>
+      <div class="work">
+        <div class="item"><b>Configuration inventory</b> &mdash; Pre-upgrade documentation of the existing 3CX environment: extensions, DIDs, routing, SIP trunks, voicemail, auto-attendants, and integrations.</div>
+        <div class="item"><b>Rollback preparation</b> &mdash; Full 3CX server backup plus vCenter snapshot before any change. Clear, documented path to restore service if upgrade goes sideways.</div>
+        <div class="item"><b>Upgrade execution</b> &mdash; Windows updates applied; 3CX application upgraded from v18 to v20; server rebooted; services verified running before test traffic.</div>
+        <div class="item"><b>Test calls</b> &mdash; Placed test calls on designated lines post-upgrade; verified inbound, outbound, and intra-extension flows before releasing to production.</div>
+        <div class="item"><b>Post-upgrade patching</b> &mdash; Monthly patch cycles continue on the v20 baseline, including the 3CX AI module updates (e.g., v20.0.8.680 + AI module 1.x current).</div>
+        <div class="item"><b>User training</b> &mdash; Interactive sessions covering new v20 features, UI changes, and mobile-client updates; collected feedback for follow-on coaching.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;Technijian ran the 3CX v18 to v20 upgrade as a consistent three-phase pattern across healthcare, financial services, and real estate clients &mdash; delivering rollback-safe upgrades, test-call-verified cutovers, and user training with the same quality from the first engagement to the tenth.&rdquo;</div>
+          <div class="attr">&mdash; Pattern summary &middot; based on 10+ 3CX v18 to v20 engagements across client industries</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Pick a partner who has already done this upgrade, many times.</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: 10+ proposal engagements across 3 industries</div>
+</div>
+
+</body>
+</html>

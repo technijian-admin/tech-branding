@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; Multi-Location Restaurant Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 90%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  /* Monthly activity table */
+  .monthly { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .monthly th { background: var(--blue); color: #fff; padding: 6px 10px; text-align: left; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .monthly th.r { text-align: right; }
+  .monthly td { padding: 5px 10px; border-bottom: 1px solid var(--light-grey); color: var(--dark); }
+  .monthly td.r { text-align: right; color: var(--grey); }
+  .monthly tr:last-child td { font-weight: 700; background: var(--off-white); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Hospitality</span>
+    </div>
+    <div class="hero-title">Multi-Location Restaurant Group<br><span class="o">Ongoing SEO, Content &amp; WordPress Program</span></div>
+    <div class="hero-sub">How Technijian ran a full-stack monthly SEO + content + WordPress program for a multi-location restaurant group &mdash; with measurable SEMrush audit resolution and continuous organic-search visibility growth.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Industry</div><div class="v">Hospitality / Restaurant</div></div>
+    <div class="cell"><div class="k">Environment</div><div class="v">Multi-property, WordPress</div></div>
+    <div class="cell"><div class="k">Services Engaged</div><div class="v">SEO, Content, WordPress, Reports</div></div>
+    <div class="cell"><div class="k">Engagement Window</div><div class="v">4 months &middot; 340 hrs</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>A multi-location restaurant group depended on its websites for <b>reservation bookings, menu discovery, and local search visibility</b>. Each location had its own site, its own content calendar, and its own set of SEMrush audit findings &mdash; but no single partner owning the whole picture.</p>
+          <p>Organic rankings were slipping on key local terms. Blog content was sporadic. Technical SEO issues (broken links, cache/cart plugin conflicts on WooCommerce-style pages, page-speed drag) were piling up in the SEMrush queue. Weekly keyword tracking and reporting existed in the spreadsheets of whoever remembered to run them.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>SEMrush audit debt</b> across multiple property websites</li>
+            <li><b>Sporadic blog cadence</b> &mdash; no editorial calendar or SEO targeting</li>
+            <li><b>Technical SEO drag</b> from cache, cart, and plugin conflicts</li>
+            <li><b>Local-term ranking slippage</b> on reservation-driving keywords</li>
+            <li><b>No weekly reporting rhythm</b> &mdash; rankings checked ad hoc</li>
+            <li><b>Multi-property complexity</b> with no single accountable SEO partner</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian ran the program as a <b>monthly SEO + content + WordPress service</b> with a 4-person specialist team: a standing weekly review cadence, monthly keyword tracking across SEMrush / Google Search Console / Google Analytics / HOTH, technical SEO issue resolution, and a consistent blog publishing pipeline tuned for local intent and property-specific pages.</p>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Monthly keyword &amp; ranking tracking</b> across SEMrush, Google Search Console, Google Analytics, and HOTH &mdash; with expanded keyword monitoring over time</li>
+            <li><b>SEMrush / HOTH audit resolution</b> &mdash; technical SEO issues worked down on a standing cadence across the main and test sites</li>
+            <li><b>Content production</b> &mdash; researched, drafted, and published SEO-optimized blog posts with proper structure, keyword targeting, internal linking, and formatting</li>
+            <li><b>WordPress maintenance</b> &mdash; cache &amp; cart plugin optimization for stability, performance, and checkout reliability</li>
+            <li><b>Hours-of-operation accuracy</b> across site and OpenTable for reservation-driving queries</li>
+            <li><b>Weekly client reporting</b> and standing client calls to align priorities and review SEO improvements</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">Platforms &amp; tools</div>
+          <div class="chips">
+            <span class="chip">WordPress</span>
+            <span class="chip">WooCommerce</span>
+            <span class="chip">SEMrush</span>
+            <span class="chip">HOTH</span>
+            <span class="chip">Google Search Console</span>
+            <span class="chip">Google Analytics</span>
+            <span class="chip">OpenTable</span>
+            <span class="chip">Yoast SEO</span>
+            <span class="chip">Cache / Performance Plugins</span>
+            <span class="chip">Technijian PPT Reports</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:12px 0 5px;">Service tiers in play</div>
+          <div class="chips">
+            <span class="chip">My SEO &mdash; Level 2</span>
+            <span class="chip">My SEO &mdash; Level 3</span>
+            <span class="chip">Blog Creation</span>
+            <span class="chip">Report Set-up</span>
+            <span class="chip">Client Call Cadence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">4</div><div class="l">Specialists on Team</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">213</div><div class="l">Time Entries</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">340</div><div class="l">Hours Delivered</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">9</div><div class="l">Ticket Workstreams</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Restaurant bookings start with search visibility. Own it.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; Restaurant SEO &amp; WordPress since 2000</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Hospitality &mdash; Restaurant SEO &amp; WordPress Program</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>Over the engagement period, the program delivered <b>consistent monthly hours</b> on a predictable cadence &mdash; a documented editorial pipeline, closed SEMrush findings on each audit pass, and expanded keyword monitoring across the property portfolio. Reservation-driving local terms moved from "slipping" to "tracked and defended."</p>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Monthly Activity (2026 YTD)</div>
+      <table class="monthly">
+        <thead>
+          <tr><th>Month</th><th class="r">Time Entries</th><th class="r">Hours</th><th class="r">Tickets Active</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>January 2026</td><td class="r">56</td><td class="r">94.7</td><td class="r">7</td></tr>
+          <tr><td>February 2026</td><td class="r">60</td><td class="r">94.5</td><td class="r">2</td></tr>
+          <tr><td>March 2026</td><td class="r">66</td><td class="r">102.4</td><td class="r">4</td></tr>
+          <tr><td>April 2026 (partial)</td><td class="r">31</td><td class="r">48.8</td><td class="r">1</td></tr>
+          <tr><td>Total</td><td class="r">213</td><td class="r">340.4</td><td class="r">9 unique</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Editorial cadence</td><td class="result">Consistent monthly blog publishing pipeline across property websites &mdash; SEO-structured, keyword-targeted, internal-linked, published on cadence.</td></tr>
+          <tr><td class="metric">SEMrush audit resolution</td><td class="result">Audit issues closed on each pass across main and test sites; site stability and functionality improved through cache and cart plugin optimization.</td></tr>
+          <tr><td class="metric">Keyword coverage</td><td class="result">Monthly keyword monitoring tracked and expanded across SEMrush, GSC, and HOTH &mdash; with detailed performance reports delivered to client.</td></tr>
+          <tr><td class="metric">Reporting &amp; cadence</td><td class="result">Standing weekly client calls plus formal monthly performance reports (PPT format) for stakeholder review and next-step alignment.</td></tr>
+          <tr><td class="metric">Team model</td><td class="result">4-person specialist team under a single engagement &mdash; one accountable partner, consistent voice, no context loss between tickets.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Work</div>
+      <div class="work">
+        <div class="item"><b>SEO-optimized blog launch</b> &mdash; Researched, drafted, and published blog content for property websites to improve organic reach, audience engagement, and brand visibility.</div>
+        <div class="item"><b>SEMrush resolution cycles</b> &mdash; Technical errors resolved on property websites, broken links fixed, performance optimized, and seamless user experience validated after each audit pass.</div>
+        <div class="item"><b>WordPress optimization</b> &mdash; Cache and cart settings optimized across main and test sites for stability and functionality; updates completed and verified.</div>
+        <div class="item"><b>Monthly reporting</b> &mdash; SEMrush, Google Search Console, Google Analytics, and HOTH data consolidated into detailed performance reports and PPT presentations prepared for client review.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;A multi-location restaurant group consolidated its SEO, content, and WordPress maintenance under a single 4-person specialist team &mdash; moving from sporadic audit-response to a monthly editorial + technical SEO cadence with documented keyword coverage and reporting.&rdquo;</div>
+          <div class="attr">&mdash; Anonymized engagement summary &middot; based on 213 time entries + 9 tickets across 4 months</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Ready to build a monthly SEO engine that compounds?</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: 2026 YTD work log from Technijian SEO SDLC repo</div>
+</div>
+
+</body>
+</html>

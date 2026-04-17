@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Case Study &mdash; Precision Manufacturer</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #006DB6; --orange: #F67D4B; --teal: #1EAAC8;
+    --chartreuse: #CBDB2D; --dark: #1A1A2E; --grey: #59595B;
+    --light-grey: #E9ECEF; --off-white: #F8F9FA;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; position: relative; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 16px 40px 12px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .cs-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.15; margin-top: 16px; position: relative; z-index: 1; }
+  .hero-title .o { color: var(--orange); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 6px; font-style: italic; position: relative; z-index: 1; max-width: 90%; }
+  .orange-line { height: 3px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .profile { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .profile .cell { padding: 7px 14px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .profile .cell:last-child { border-right: 0; }
+  .profile .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .profile .v { font-size: 12px; font-weight: 700; margin-top: 2px; }
+
+  .body { padding: 12px 40px 10px; flex: 1; min-height: 0; overflow: hidden; }
+  .sh { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+  .sh::before { content: ''; width: 5px; height: 16px; background: var(--orange); border-radius: 2px; }
+  .sec { margin-bottom: 9px; }
+  .sec p { color: var(--grey); font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+  .sec p b { color: var(--dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+
+  .bullet { list-style: none; }
+  .bullet li { font-size: 10.5px; padding: 2px 0 2px 18px; position: relative; color: #333; line-height: 1.45; }
+  .bullet li::before { content: '\2713'; position: absolute; left: 0; top: 3px; color: var(--teal); font-weight: 800; font-size: 11px; }
+  .bullet li b { color: var(--dark); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .chip { font-size: 9.5px; font-weight: 600; color: var(--dark); background: var(--off-white); border: 1px solid var(--light-grey); padding: 3px 9px; border-radius: 10px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
+  .m-card { padding: 8px 8px; border-radius: 6px; text-align: center; background: var(--dark); position: relative; overflow: hidden; }
+  .m-card .top { position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .m-card .n { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+  .m-card .l { font-size: 8px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1.1px; margin-top: 4px; font-weight: 600; }
+
+  .rt { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 4px; border-radius: 5px; overflow: hidden; }
+  .rt th { background: var(--dark); color: #fff; padding: 7px 11px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .rt td { padding: 7px 11px; border-bottom: 1px solid var(--light-grey); font-size: 10.5px; vertical-align: top; }
+  .rt tr:nth-child(even) td { background: var(--off-white); }
+  .rt td.metric { font-weight: 700; color: var(--dark); width: 32%; }
+  .rt td.result { color: var(--grey); }
+
+  .pull { display: grid; grid-template-columns: 8px 1fr; margin-top: 6px; }
+  .pull .bar { background: var(--orange); border-radius: 2px; }
+  .pull .body2 { background: var(--off-white); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .pull .body2 .q { font-size: 12.5px; font-style: italic; color: var(--dark); line-height: 1.5; }
+  .pull .body2 .attr { font-size: 10px; color: var(--grey); margin-top: 8px; font-weight: 600; letter-spacing: 0.3px; }
+
+  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .work .item { font-size: 10.5px; color: #333; padding: 6px 10px; background: var(--off-white); border-left: 3px solid var(--teal); border-radius: 0 4px 4px 0; line-height: 1.45; }
+  .work .item b { color: var(--dark); }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 14px; font-weight: 700; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+  .foot { background: #2D2D2D; padding: 5px 40px; color: rgba(255,255,255,0.45); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+
+  .p2-head { background: var(--off-white); border-bottom: 1px solid var(--light-grey); padding: 8px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .p2-head img { height: 22px; }
+  .p2-head .tag { font-size: 9.5px; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .p2-head .tag b { color: var(--blue); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="cs-tag">Case Study &middot; Manufacturing</span>
+    </div>
+    <div class="hero-title">Precision Manufacturer<br><span class="o">Server, Backup &amp; Network Resilience</span></div>
+    <div class="hero-sub">How Technijian delivered server, backup, and network resilience for a precision manufacturer &mdash; protecting production schedules, engineering files, and customer delivery commitments.</div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="profile">
+    <div class="cell"><div class="k">Industry</div><div class="v">Precision Manufacturing</div></div>
+    <div class="cell"><div class="k">Environment</div><div class="v">Shop floor + engineering + ERP</div></div>
+    <div class="cell"><div class="k">Services Engaged</div><div class="v">Server, Backup, Network, VoIP</div></div>
+    <div class="cell"><div class="k">Engagement Window</div><div class="v">12 months &middot; 70+ hrs</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Challenge</div>
+      <div class="two-col">
+        <div>
+          <p>A precision manufacturer with shop-floor operations, an engineering team working on CAD files, and an ERP tied to customer delivery schedules couldn't afford extended downtime. Production-stopping events meant missed ship dates and unhappy customers &mdash; with penalties in some cases.</p>
+          <p>But the IT environment had evolved ad-hoc. Backups weren't consistently verified. Server admin was reactive. The network was a tangle of legacy switches and points of failure. And the VoIP platform was due for attention. Any one of those could take production offline for a shift or more.</p>
+        </div>
+        <div>
+          <ul class="bullet">
+            <li><b>Backup verification gaps</b> &mdash; backups running, but restores untested</li>
+            <li><b>Reactive server admin</b> &mdash; no scheduled patch or health cadence</li>
+            <li><b>Legacy network gear</b> with single points of failure</li>
+            <li><b>VoIP platform drift</b> affecting customer-facing phone lines</li>
+            <li><b>No documented DR runbook</b> for a production-stopping event</li>
+            <li><b>Production downtime = missed ship dates</b> &mdash; tight tolerance for IT failure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">The Solution</div>
+      <p>Technijian took over <b>server, backup, and network operations</b> with a resilience-first lens: verified backups (not just running backups), scheduled server maintenance, network hardening, and VoIP platform attention &mdash; all tracked as tickets so the plant manager can see exactly what was touched, when, and why.</p>
+      <div class="two-col">
+        <div>
+          <ul class="bullet">
+            <li><b>Backup verification discipline</b> &mdash; backup jobs monitored, failures investigated, test restores performed to confirm recoverability</li>
+            <li><b>Scheduled server maintenance</b> &mdash; monthly patch cycles with snapshot safety, verified reboots, and service-up validation</li>
+            <li><b>Network hardening</b> &mdash; config review, single-point-of-failure remediation, and wireless coverage improvements</li>
+            <li><b>VoIP platform operations</b> &mdash; 3CX patching, voicemail reliability, and call-flow stability with test-call verification</li>
+            <li><b>Endpoint management</b> &mdash; sensor and patch currency across shop-floor and front-office Windows devices</li>
+            <li><b>Accountability &amp; evidence</b> &mdash; every backup, patch, and network change lives in a ticket with time entries</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;">Platforms under management</div>
+          <div class="chips">
+            <span class="chip">Windows Server</span>
+            <span class="chip">Veeam Backup</span>
+            <span class="chip">Active Directory</span>
+            <span class="chip">SQL Server</span>
+            <span class="chip">ManageEngine RMM</span>
+            <span class="chip">3CX VoIP</span>
+            <span class="chip">Firewall / Switching</span>
+            <span class="chip">Wireless</span>
+            <span class="chip">CrowdStrike Falcon</span>
+            <span class="chip">Microsoft 365</span>
+          </div>
+          <div style="font-size:10px; font-weight:700; color:var(--dark); letter-spacing:1px; text-transform:uppercase; margin:12px 0 5px;">Work categories (12&nbsp;mo)</div>
+          <div class="chips">
+            <span class="chip">Network &middot; 27 tkts</span>
+            <span class="chip">Backup/Recovery &middot; 17 tkts</span>
+            <span class="chip">Server admin &middot; 11 tkts</span>
+            <span class="chip">SEO/Web &middot; 3 tkts</span>
+            <span class="chip">Endpoint &middot; 2 tkts</span>
+            <span class="chip">VoIP proposals &middot; 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Engagement Scale</div>
+      <div class="metrics">
+        <div class="m-card"><div class="top" style="background:var(--blue)"></div><div class="n" style="color:var(--teal)">12</div><div class="l">Months Managed</div></div>
+        <div class="m-card"><div class="top" style="background:var(--orange)"></div><div class="n" style="color:var(--orange)">60+</div><div class="l">Tickets Resolved</div></div>
+        <div class="m-card"><div class="top" style="background:var(--teal)"></div><div class="n" style="color:var(--chartreuse)">70+</div><div class="l">Hours Delivered</div></div>
+        <div class="m-card"><div class="top" style="background:var(--chartreuse)"></div><div class="n" style="color:#fff">3</div><div class="l">VoIP Engagements</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">When IT stops, production stops. Don't let backups be a surprise.</div>
+    <div class="c"><b>949.379.8500</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; Manufacturing IT since 2000</div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page">
+  <div class="p2-head">
+    <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian" style="filter:invert(1) hue-rotate(180deg); opacity:0.8;">
+    <div class="tag">Case Study &middot; <b>Manufacturing &mdash; Server, Backup &amp; Network Resilience</b></div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <div class="sh">The Results</div>
+      <p>Backups moved from "running" to <b>verified</b>. Server patching moved from reactive to scheduled. Network single-points-of-failure were documented and then eliminated where the plant could tolerate the change window. VoIP issues affecting customer lines were worked out of the system.</p>
+    </div>
+
+    <div class="sec">
+      <table class="rt">
+        <thead><tr><th>Outcome metric</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Backup verification</td><td class="result">Backup jobs monitored on cadence; failures investigated and resolved; periodic test-restore discipline confirming recoverability &mdash; not just backup success.</td></tr>
+          <tr><td class="metric">Server patch cadence</td><td class="result">Moved from reactive to scheduled monthly cycle with snapshot safety, verified reboots, and service-up validation before ticket closure.</td></tr>
+          <tr><td class="metric">Network resilience</td><td class="result">Network configuration reviewed; single-points-of-failure identified and remediated where the production schedule allowed change windows.</td></tr>
+          <tr><td class="metric">VoIP stability</td><td class="result">Three dedicated VoIP engagements (5h + 5h + 22h) to stabilize customer-facing phone lines and bring 3CX platform under managed operations.</td></tr>
+          <tr><td class="metric">Endpoint posture</td><td class="result">Shop-floor and front-office Windows devices brought into the sensor + patch compliance picture &mdash; no more devices flying under the radar.</td></tr>
+          <tr><td class="metric">Production protection</td><td class="result">Production-stopping IT event risk reduced through verified backups, scheduled maintenance, and documented change records.</td></tr>
+          <tr><td class="metric">Accountability</td><td class="result">Single partner, single ticket queue, single escalation path &mdash; plant manager can see exactly what IT touched, when, and why.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Work (12 months)</div>
+      <div class="work">
+        <div class="item"><b>Backup operations</b> &mdash; 17 tickets / 14 hours dedicated to backup job monitoring, failure investigation, remediation, and test-restore validation across production VMs.</div>
+        <div class="item"><b>Network operations</b> &mdash; 27 tickets / 11 hours covering switch, firewall, and wireless configuration, incident response, and single-point-of-failure remediation.</div>
+        <div class="item"><b>Server admin</b> &mdash; 11 tickets / 13 hours for scheduled and incident-driven server work, including snapshotting, patching, reboots, and service verification.</div>
+        <div class="item"><b>VoIP engagements</b> &mdash; Three proposal-scoped engagements (5h + 5h + 22h) focused on 3CX platform stabilization, phone provisioning, and call-flow reliability.</div>
+        <div class="item"><b>Endpoint posture</b> &mdash; 2 tickets / 2 hours of endpoint management work bringing shop-floor and front-office devices into the sensor and patch compliance picture.</div>
+        <div class="item"><b>Web / SEO support</b> &mdash; 3 tickets / 5 hours on website and SEO work where IT and marketing overlap &mdash; one partner, one scope.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Representative Outcome</div>
+      <div class="pull">
+        <div class="bar"></div>
+        <div class="body2">
+          <div class="q">&ldquo;A precision manufacturer shifted from reactive server admin and unverified backups to a documented resilience program &mdash; protecting production schedules, engineering files, and customer delivery commitments with a single accountable IT partner.&rdquo;</div>
+          <div class="attr">&mdash; Anonymized engagement summary &middot; based on 12 months of Technijian ticket &amp; time-entry activity</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Make resilience a program, not a prayer.</div>
+    <div class="c"><b>rjain@technijian.com</b> &middot; <b>949.379.8500</b> &middot; <b>technijian.com</b></div>
+  </div>
+  <div class="foot">&copy; 2026 Technijian &middot; All client-identifying details anonymized &middot; Source: 12-month ticket &amp; time-entry activity</div>
+</div>
+
+</body>
+</html>
