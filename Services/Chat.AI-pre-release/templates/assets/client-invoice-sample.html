@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Invoice SAMPLE-2026-06-001</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --red:#D13A3A; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; position: relative; background: #fff; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 22px 40px 20px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 36px; }
+  .doc-tag { font-size: 11px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 5px 14px; border-radius: 14px; text-transform: uppercase; }
+  .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; position: relative; z-index: 1; }
+  .hero-title { font-size: 28px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .num { color: var(--orange); font-weight: 600; font-size: 18px; letter-spacing: 0.5px; margin-top: 4px; display: block; }
+  .status-badge { padding: 8px 18px; border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+  .status-badge.paid { background: var(--chartreuse); color: var(--dark); }
+  .status-badge.processing { background: var(--teal); color: #fff; }
+  .status-badge.past-due { background: var(--red); color: #fff; }
+  .orange-line { height: 4px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .meta .cell { padding: 10px 16px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .meta .cell:last-child { border-right: 0; }
+  .meta .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .meta .v { font-size: 13px; font-weight: 700; margin-top: 3px; font-family: 'Open Sans', monospace; }
+
+  .body { padding: 22px 40px 16px; flex: 1; min-height: 0; overflow: hidden; }
+
+  .addrs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+  .addr-card { background: var(--off-white); border-left: 4px solid var(--blue); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .addr-card:nth-child(2) { border-left-color: var(--orange); }
+  .addr-label { font-size: 9px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--grey); font-weight: 700; margin-bottom: 6px; }
+  .addr-name { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .addr-line { font-size: 11px; color: var(--grey); line-height: 1.5; }
+
+  .items { width: 100%; border-collapse: collapse; margin-bottom: 10px; border-radius: 6px; overflow: hidden; }
+  .items thead th { background: var(--dark); color: #fff; padding: 10px 12px; text-align: left; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
+  .items thead th.r { text-align: right; }
+  .items tbody td { padding: 11px 12px; border-bottom: 1px solid var(--light-grey); font-size: 11px; color: var(--grey); }
+  .items tbody td.desc { font-weight: 600; color: var(--dark); }
+  .items tbody td.r { text-align: right; font-variant-numeric: tabular-nums; }
+  .items tbody tr:nth-child(even) td { background: var(--off-white); }
+
+  .totals { display: flex; justify-content: flex-end; margin-top: 8px; margin-bottom: 16px; }
+  .totals-block { width: 310px; }
+  .totals-row { display: flex; justify-content: space-between; padding: 7px 14px; font-size: 12px; color: var(--grey); font-variant-numeric: tabular-nums; }
+  .totals-row.subtotal { border-bottom: 1px solid var(--light-grey); }
+  .totals-row.tax { border-bottom: 1px solid var(--light-grey); }
+  .totals-row.tax .label { display: flex; flex-direction: column; }
+  .totals-row.tax .jur { font-size: 9px; color: var(--grey); font-weight: 400; margin-top: 2px; }
+  .totals-row.total { background: var(--blue); color: #fff; font-size: 14px; font-weight: 800; padding: 11px 14px; border-radius: 4px; margin-top: 4px; }
+
+  .payment { background: linear-gradient(135deg, var(--off-white), #eef5fb); border: 1px solid var(--light-grey); border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; }
+  .payment .title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--blue); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .payment .title::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--chartreuse); box-shadow: 0 0 0 3px rgba(203,219,45,0.25); }
+  .payment .msg { font-size: 12px; color: var(--dark); font-weight: 600; margin-bottom: 6px; }
+  .payment .details { font-size: 10.5px; color: var(--grey); display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+  .payment .details b { color: var(--dark); font-weight: 700; }
+
+  .tax-note { font-size: 9.5px; color: var(--grey); font-style: italic; line-height: 1.5; padding: 0 4px; }
+  .tax-note strong { color: var(--dark); font-style: normal; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 12px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 12px; font-weight: 600; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+
+  .foot { background: #2D2D2D; padding: 9px 40px; color: rgba(255,255,255,0.55); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+  .foot b { color: rgba(255,255,255,0.85); font-weight: 600; }
+  .tagline { font-style: italic; color: rgba(255,255,255,0.7); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="doc-tag">Invoice &middot; Chat.AI</span>
+    </div>
+    <div class="hero-bottom">
+      <div>
+        <div class="hero-title">Invoice<span class="num">SAMPLE-2026-06-001</span></div>
+      </div>
+      <span class="status-badge paid">Paid</span>
+    </div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="meta">
+    <div class="cell"><div class="k">Invoice Date</div><div class="v">2026-06-01</div></div>
+    <div class="cell"><div class="k">Billing Period</div><div class="v">2026-06</div></div>
+    <div class="cell"><div class="k">Status</div><div class="v">Complete</div></div>
+    <div class="cell"><div class="k">Transaction ID</div><div class="v">ch_3P7xYz8M...</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="addrs">
+      <div class="addr-card">
+        <div class="addr-label">Bill To</div>
+        <div class="addr-name">Sample Client, Inc.</div>
+        <div class="addr-line">Accounts Payable</div>
+        <div class="addr-line">billing@sampleclient.com</div>
+        <div class="addr-line">1 Sample Way, Irvine, CA 92618</div>
+      </div>
+      <div class="addr-card">
+        <div class="addr-label">From</div>
+        <div class="addr-name">Technijian</div>
+        <div class="addr-line">18 Technology Dr. Ste 141</div>
+        <div class="addr-line">Irvine, CA 92618</div>
+        <div class="addr-line">billing@technijian.com &middot; 949.379.8501</div>
+      </div>
+    </div>
+
+    <table class="items">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Period</th>
+          <th>Plan</th>
+          <th class="r">Tokens</th>
+          <th class="r">API Calls</th>
+          <th class="r">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="desc">Chat.AI Platform Subscription</td>
+          <td>2026-06</td>
+          <td>Quarterly</td>
+          <td class="r">7,754</td>
+          <td class="r">14</td>
+          <td class="r">$284.05</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="totals-block">
+        <div class="totals-row subtotal"><span>Subtotal</span><span>$284.05</span></div>
+        <div class="totals-row tax">
+          <span class="label">Tax <span class="jur">California &middot; SaaS not taxed</span></span>
+          <span>$0.00</span>
+        </div>
+        <div class="totals-row total"><span>Total</span><span>$284.05</span></div>
+      </div>
+    </div>
+
+    <div class="payment">
+      <div class="title">Charged to card on file &mdash; no action required</div>
+      <div class="msg">This invoice has been automatically charged and is paid in full.</div>
+      <div class="details">
+        <div><b>Payment method:</b> Visa ending in 4242</div>
+        <div><b>Transaction ID:</b> ch_3P7xYz8M1K2jN4v8</div>
+      </div>
+    </div>
+
+    <div class="tax-note">
+      <strong>Tax notice:</strong> SaaS subscriptions are not subject to sales tax in California. For clients in
+      states that tax SaaS (e.g., NY, TX, WA, PA, CT, OH, TN), applicable state tax is calculated at the rate
+      shown above based on the billing address of record.
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Questions about this invoice? We&rsquo;re here to help.</div>
+    <div class="c"><b>billing@technijian.com</b> &middot; <b>949.379.8501</b></div>
+  </div>
+  <div class="foot">
+    <b>Technijian</b> &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; <span class="tagline">Technology Support, Your Way.</span> &middot; &copy; 2026
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Invoice {{INVOICE_NUMBER}}</title>
+<!--
+  CHAT.AI CLIENT INVOICE TEMPLATE
+
+  This HTML is rendered to PDF by the Chat.AI billing module (see
+  IBillingService.GenerateClientInvoicePdfAsync in the server). Perform a
+  plain string-replace on every {{TOKEN}} before handing the HTML to the
+  Playwright renderer. Missing tokens should be replaced with an empty string.
+
+  TOKENS (all required unless noted):
+
+  Metadata:
+    {{INVOICE_NUMBER}}         e.g. "ORX-2026-06-001"
+    {{INVOICE_DATE}}           ISO date, e.g. "2026-06-01"
+    {{PERIOD}}                 e.g. "2026-06"
+    {{TRANSACTION_ID}}         Stripe charge ID, e.g. "ch_3P7xYz..." (optional)
+    {{STATUS}}                 "Complete" | "Processing" | "Past Due"
+    {{STATUS_CLASS}}           "paid" | "processing" | "past-due" (drives badge color)
+    {{STATUS_LABEL}}           "PAID" | "PROCESSING" | "PAST DUE"
+
+  Bill To:
+    {{CLIENT_NAME}}            e.g. "Sample Client, Inc."
+    {{CLIENT_CONTACT}}         e.g. "Accounts Payable"
+    {{CLIENT_EMAIL}}           e.g. "billing@sampleclient.com"
+    {{CLIENT_ADDRESS_LINE}}    Full address on one line (optional)
+
+  Line items (repeat per item — server-side loop produces repeated <tr> rows
+  matching the pattern in the table below):
+    {{DESCRIPTION}} | {{ITEM_PERIOD}} | {{PLAN_TYPE}} | {{TOKENS_USED}} | {{API_CALLS}} | {{AMOUNT}}
+
+  Totals:
+    {{SUBTOTAL}}               e.g. "$284.05"
+    {{TAX}}                    e.g. "$0.00" or "$22.48"
+    {{TAX_RATE}}               e.g. "0.00%" or "8.875%"
+    {{TAX_JURISDICTION}}       e.g. "California (SaaS not taxed)" or "New York"
+    {{TOTAL}}                  e.g. "$284.05"
+
+  Payment:
+    {{PAYMENT_METHOD}}         e.g. "Visa ending in 4242"
+
+  The CA footnote block should be hidden (server omits or adds style="display:none")
+  when TAX_JURISDICTION is not California.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --red:#D13A3A; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 12px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; position: relative; background: #fff; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 22px 40px 20px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 36px; }
+  .doc-tag { font-size: 11px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 5px 14px; border-radius: 14px; text-transform: uppercase; }
+  .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; position: relative; z-index: 1; }
+  .hero-title { font-size: 28px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-title .num { color: var(--orange); font-weight: 600; font-size: 18px; letter-spacing: 0.5px; margin-top: 4px; display: block; }
+  .status-badge { padding: 8px 18px; border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+  .status-badge.paid { background: var(--chartreuse); color: var(--dark); }
+  .status-badge.processing { background: var(--teal); color: #fff; }
+  .status-badge.past-due { background: var(--red); color: #fff; }
+  .orange-line { height: 4px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  /* METADATA STRIP */
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--blue); color: #fff; flex-shrink: 0; }
+  .meta .cell { padding: 10px 16px; border-right: 1px solid rgba(255,255,255,0.18); }
+  .meta .cell:last-child { border-right: 0; }
+  .meta .k { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 600; }
+  .meta .v { font-size: 13px; font-weight: 700; margin-top: 3px; font-family: 'Open Sans', monospace; }
+
+  /* BODY */
+  .body { padding: 22px 40px 16px; flex: 1; min-height: 0; overflow: hidden; }
+
+  /* ADDRESS BLOCKS */
+  .addrs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+  .addr-card { background: var(--off-white); border-left: 4px solid var(--blue); padding: 14px 18px; border-radius: 0 4px 4px 0; }
+  .addr-card:nth-child(2) { border-left-color: var(--orange); }
+  .addr-label { font-size: 9px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--grey); font-weight: 700; margin-bottom: 6px; }
+  .addr-name { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .addr-line { font-size: 11px; color: var(--grey); line-height: 1.5; }
+
+  /* LINE ITEMS */
+  .items { width: 100%; border-collapse: collapse; margin-bottom: 10px; border-radius: 6px; overflow: hidden; }
+  .items thead th { background: var(--dark); color: #fff; padding: 10px 12px; text-align: left; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
+  .items thead th.r { text-align: right; }
+  .items tbody td { padding: 11px 12px; border-bottom: 1px solid var(--light-grey); font-size: 11px; color: var(--grey); }
+  .items tbody td.desc { font-weight: 600; color: var(--dark); }
+  .items tbody td.r { text-align: right; font-variant-numeric: tabular-nums; }
+  .items tbody tr:nth-child(even) td { background: var(--off-white); }
+
+  /* TOTALS */
+  .totals { display: flex; justify-content: flex-end; margin-top: 8px; margin-bottom: 16px; }
+  .totals-block { width: 310px; }
+  .totals-row { display: flex; justify-content: space-between; padding: 7px 14px; font-size: 12px; color: var(--grey); font-variant-numeric: tabular-nums; }
+  .totals-row.subtotal { border-bottom: 1px solid var(--light-grey); }
+  .totals-row.tax { border-bottom: 1px solid var(--light-grey); }
+  .totals-row.tax .label { display: flex; flex-direction: column; }
+  .totals-row.tax .jur { font-size: 9px; color: var(--grey); font-weight: 400; margin-top: 2px; }
+  .totals-row.total { background: var(--blue); color: #fff; font-size: 14px; font-weight: 800; padding: 11px 14px; border-radius: 4px; margin-top: 4px; }
+
+  /* PAYMENT BLOCK */
+  .payment { background: linear-gradient(135deg, var(--off-white), #eef5fb); border: 1px solid var(--light-grey); border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; }
+  .payment .title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--blue); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .payment .title::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--chartreuse); box-shadow: 0 0 0 3px rgba(203,219,45,0.25); }
+  .payment .msg { font-size: 12px; color: var(--dark); font-weight: 600; margin-bottom: 6px; }
+  .payment .details { font-size: 10.5px; color: var(--grey); display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+  .payment .details b { color: var(--dark); font-weight: 700; }
+
+  /* TAX FOOTNOTE */
+  .tax-note { font-size: 9.5px; color: var(--grey); font-style: italic; line-height: 1.5; padding: 0 4px; }
+  .tax-note strong { color: var(--dark); font-style: normal; }
+
+  /* CTA (support line) */
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 12px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 12px; font-weight: 600; }
+  .cta .c { font-size: 11px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+
+  /* FOOTER */
+  .foot { background: #2D2D2D; padding: 9px 40px; color: rgba(255,255,255,0.55); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+  .foot b { color: rgba(255,255,255,0.85); font-weight: 600; }
+  .tagline { font-style: italic; color: rgba(255,255,255,0.7); }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="doc-tag">Invoice &middot; Chat.AI</span>
+    </div>
+    <div class="hero-bottom">
+      <div>
+        <div class="hero-title">Invoice<span class="num">{{INVOICE_NUMBER}}</span></div>
+      </div>
+      <span class="status-badge {{STATUS_CLASS}}">{{STATUS_LABEL}}</span>
+    </div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="meta">
+    <div class="cell"><div class="k">Invoice Date</div><div class="v">{{INVOICE_DATE}}</div></div>
+    <div class="cell"><div class="k">Billing Period</div><div class="v">{{PERIOD}}</div></div>
+    <div class="cell"><div class="k">Status</div><div class="v">{{STATUS}}</div></div>
+    <div class="cell"><div class="k">Transaction ID</div><div class="v">{{TRANSACTION_ID}}</div></div>
+  </div>
+
+  <div class="body">
+
+    <div class="addrs">
+      <div class="addr-card">
+        <div class="addr-label">Bill To</div>
+        <div class="addr-name">{{CLIENT_NAME}}</div>
+        <div class="addr-line">{{CLIENT_CONTACT}}</div>
+        <div class="addr-line">{{CLIENT_EMAIL}}</div>
+        <div class="addr-line">{{CLIENT_ADDRESS_LINE}}</div>
+      </div>
+      <div class="addr-card">
+        <div class="addr-label">From</div>
+        <div class="addr-name">Technijian</div>
+        <div class="addr-line">18 Technology Dr. Ste 141</div>
+        <div class="addr-line">Irvine, CA 92618</div>
+        <div class="addr-line">billing@technijian.com &middot; 949.379.8501</div>
+      </div>
+    </div>
+
+    <table class="items">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Period</th>
+          <th>Plan</th>
+          <th class="r">Tokens</th>
+          <th class="r">API Calls</th>
+          <th class="r">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- LINE_ITEMS_START -->
+        <tr>
+          <td class="desc">{{DESCRIPTION}}</td>
+          <td>{{ITEM_PERIOD}}</td>
+          <td>{{PLAN_TYPE}}</td>
+          <td class="r">{{TOKENS_USED}}</td>
+          <td class="r">{{API_CALLS}}</td>
+          <td class="r">{{AMOUNT}}</td>
+        </tr>
+        <!-- LINE_ITEMS_END -->
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="totals-block">
+        <div class="totals-row subtotal"><span>Subtotal</span><span>{{SUBTOTAL}}</span></div>
+        <div class="totals-row tax">
+          <span class="label">Tax <span class="jur">{{TAX_JURISDICTION}} &middot; {{TAX_RATE}}</span></span>
+          <span>{{TAX}}</span>
+        </div>
+        <div class="totals-row total"><span>Total</span><span>{{TOTAL}}</span></div>
+      </div>
+    </div>
+
+    <div class="payment">
+      <div class="title">Charged to card on file &mdash; no action required</div>
+      <div class="msg">This invoice has been automatically charged and is paid in full.</div>
+      <div class="details">
+        <div><b>Payment method:</b> {{PAYMENT_METHOD}}</div>
+        <div><b>Transaction ID:</b> {{TRANSACTION_ID}}</div>
+      </div>
+    </div>
+
+    <div class="tax-note">
+      <strong>Tax notice:</strong> SaaS subscriptions are not subject to sales tax in California. For clients in
+      states that tax SaaS (e.g., NY, TX, WA, PA, CT, OH, TN), applicable state tax is calculated at the rate
+      shown above based on the billing address of record.
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Questions about this invoice? We&rsquo;re here to help.</div>
+    <div class="c"><b>billing@technijian.com</b> &middot; <b>949.379.8501</b></div>
+  </div>
+  <div class="foot">
+    <b>Technijian</b> &middot; 18 Technology Dr. Ste 141, Irvine CA 92618 &middot; technijian.com &middot; <span class="tagline">Technology Support, Your Way.</span> &middot; &copy; 2026
+  </div>
+
+</div>
+
+</body>
+</html>

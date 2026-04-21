@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Billing Report 2026-01 through 2026-04</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --red:#D13A3A; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 11.5px; line-height: 1.45; background: #fff; }
+
+  .page { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; position: relative; background: #fff; }
+
+  .hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 20px 40px 18px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .hero::after  { content: ''; position: absolute; bottom: -60px; left: 10%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(246,125,75,0.13) 0%, transparent 70%); border-radius: 50%; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .hero-top img { height: 34px; }
+  .doc-tag { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 4px 12px; border-radius: 14px; text-transform: uppercase; }
+  .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 14px; position: relative; z-index: 1; }
+  .hero-title { font-size: 26px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .hero-sub { font-size: 11.5px; color: rgba(255,255,255,0.72); margin-top: 4px; font-style: italic; }
+  .confidential { font-size: 9px; letter-spacing: 2px; font-weight: 700; color: var(--orange); text-transform: uppercase; border: 1px solid rgba(246,125,75,0.4); padding: 5px 12px; border-radius: 4px; }
+  .orange-line { height: 4px; background: linear-gradient(90deg, var(--orange), var(--teal)); flex-shrink: 0; }
+
+  .body { padding: 16px 40px 12px; flex: 1; min-height: 0; overflow: hidden; }
+
+  .tenant-strip { background: var(--blue); color: #fff; padding: 9px 16px; border-radius: 5px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .tenant-strip .k { font-size: 9px; letter-spacing: 1.6px; text-transform: uppercase; opacity: 0.7; font-weight: 600; }
+  .tenant-strip .v { font-size: 15px; font-weight: 700; margin-left: 10px; }
+  .tenant-strip .generated { font-size: 9.5px; opacity: 0.8; font-family: 'Open Sans', monospace; }
+
+  .sh { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 7px; display: flex; align-items: center; gap: 8px; }
+  .sh::before { content: ''; width: 5px; height: 14px; background: var(--orange); border-radius: 2px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .tile { background: var(--off-white); border: 1px solid var(--light-grey); border-radius: 6px; padding: 10px 14px; position: relative; overflow: hidden; }
+  .tile::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--blue); }
+  .tile.accent-orange::before { background: var(--orange); }
+  .tile.accent-teal::before { background: var(--teal); }
+  .tile.accent-chart::before { background: var(--chartreuse); }
+  .tile.accent-dark::before { background: var(--dark); }
+  .tile .label { font-size: 8.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--grey); font-weight: 700; margin-bottom: 3px; }
+  .tile .val { font-size: 18px; font-weight: 800; color: var(--dark); font-variant-numeric: tabular-nums; }
+  .tile .sub { font-size: 9px; color: var(--grey); margin-top: 2px; font-weight: 500; }
+
+  .records { width: 100%; border-collapse: collapse; font-size: 9.5px; border-radius: 5px; overflow: hidden; }
+  .records thead th { background: var(--dark); color: #fff; padding: 7px 8px; text-align: left; font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .records thead th.r { text-align: right; }
+  .records tbody td { padding: 7px 8px; border-bottom: 1px solid var(--light-grey); color: var(--grey); font-variant-numeric: tabular-nums; vertical-align: middle; }
+  .records tbody td.r { text-align: right; }
+  .records tbody td.mono { font-family: 'Open Sans', monospace; font-size: 9px; color: var(--dark); }
+  .records tbody td.period { font-weight: 700; color: var(--dark); }
+  .records tbody tr:nth-child(even) td { background: var(--off-white); }
+
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 8.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
+  .pill.complete { background: rgba(203,219,45,0.22); color: #5a7e0c; }
+  .pill.processing { background: rgba(30,170,200,0.18); color: #0c6a80; }
+  .pill.past-due { background: rgba(209,58,58,0.18); color: #8a1d1d; }
+
+  .cta { margin-top: auto; background: linear-gradient(135deg, var(--blue), #004d80); padding: 10px 40px; color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .cta .t { font-size: 11.5px; font-weight: 600; }
+  .cta .c { font-size: 10.5px; font-weight: 600; }
+  .cta .c b { color: var(--chartreuse); }
+
+  .foot { background: #2D2D2D; padding: 8px 40px; color: rgba(255,255,255,0.55); font-size: 8.5px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+  .foot b { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+  @media print { @page { size: letter; margin: 0; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-top">
+      <img src="../../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <span class="doc-tag">Internal &middot; Chat.AI Billing</span>
+    </div>
+    <div class="hero-bottom">
+      <div>
+        <div class="hero-title">Billing Report</div>
+        <div class="hero-sub">Period: 2026-01 through 2026-04 &middot; Generated 2026-04-17 00:14:38 IST</div>
+      </div>
+      <span class="confidential">Confidential &middot; Internal Use</span>
+    </div>
+  </div>
+  <div class="orange-line"></div>
+
+  <div class="body">
+
+    <div class="tenant-strip">
+      <div><span class="k">Tenant</span><span class="v">Technijian</span></div>
+      <div class="generated">Source: dbo.BillingRecords (session-scoped tenant filter)</div>
+    </div>
+
+    <div class="sh">At a Glance</div>
+    <div class="tiles">
+      <div class="tile">
+        <div class="label">Records</div>
+        <div class="val">4</div>
+        <div class="sub">billing rows in scope</div>
+      </div>
+      <div class="tile accent-orange">
+        <div class="label">Total Billed</div>
+        <div class="val">$39,529.23</div>
+        <div class="sub">gross before tax</div>
+      </div>
+      <div class="tile accent-teal">
+        <div class="label">Latest Invoice</div>
+        <div class="val">2026-04-01</div>
+        <div class="sub">most recent billing cycle</div>
+      </div>
+
+      <div class="tile accent-teal">
+        <div class="label">Total Tokens</div>
+        <div class="val">79,686</div>
+        <div class="sub">LLM tokens consumed</div>
+      </div>
+      <div class="tile">
+        <div class="label">API Calls</div>
+        <div class="val">158</div>
+        <div class="sub">platform requests</div>
+      </div>
+      <div class="tile accent-chart">
+        <div class="label">Storage GB</div>
+        <div class="val">0.00</div>
+        <div class="sub">tenant file store</div>
+      </div>
+
+      <div class="tile accent-dark">
+        <div class="label">Payment Method</div>
+        <div class="val" style="font-size:13px">Card on file</div>
+        <div class="sub">default on file</div>
+      </div>
+      <div class="tile accent-orange">
+        <div class="label">Total Tax Collected</div>
+        <div class="val">$0.00</div>
+        <div class="sub">CA tenant &mdash; SaaS not taxed</div>
+      </div>
+      <div class="tile accent-chart">
+        <div class="label">Auto-Charge</div>
+        <div class="val" style="font-size:13px">Card on file</div>
+        <div class="sub">100% of records</div>
+      </div>
+    </div>
+
+    <div class="sh">Records</div>
+    <table class="records">
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Invoice&nbsp;#</th>
+          <th>Plan</th>
+          <th class="r">Tokens</th>
+          <th class="r">API</th>
+          <th class="r">Cost</th>
+          <th class="r">Tax</th>
+          <th>Jurisdiction</th>
+          <th>Status</th>
+          <th>Invoice Date</th>
+          <th>Due</th>
+          <th>Txn ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="period">2026-04</td>
+          <td class="mono">TCHN-2026-04-001</td>
+          <td>Enterprise</td>
+          <td class="r">7,754</td>
+          <td class="r">14</td>
+          <td class="r">$7,882.29</td>
+          <td class="r">$0.00</td>
+          <td>California</td>
+          <td><span class="pill complete">Complete</span></td>
+          <td>2026-04-01</td>
+          <td>2026-04-16</td>
+          <td class="mono">ch_3P7abc...</td>
+        </tr>
+        <tr>
+          <td class="period">2026-03</td>
+          <td class="mono">TCHN-2026-03-001</td>
+          <td>Enterprise</td>
+          <td class="r">40,265</td>
+          <td class="r">70</td>
+          <td class="r">$7,882.30</td>
+          <td class="r">$0.00</td>
+          <td>California</td>
+          <td><span class="pill complete">Complete</span></td>
+          <td>2026-03-01</td>
+          <td>2026-03-16</td>
+          <td class="mono">ch_3P6def...</td>
+        </tr>
+        <tr>
+          <td class="period">2026-02</td>
+          <td class="mono">TCHN-2026-02-001</td>
+          <td>Enterprise</td>
+          <td class="r">29,040</td>
+          <td class="r">70</td>
+          <td class="r">$15,882.35</td>
+          <td class="r">$0.00</td>
+          <td>California</td>
+          <td><span class="pill complete">Complete</span></td>
+          <td>2026-02-01</td>
+          <td>2026-02-16</td>
+          <td class="mono">ch_3P5ghi...</td>
+        </tr>
+        <tr>
+          <td class="period">2026-01</td>
+          <td class="mono">TCHN-2026-01-001</td>
+          <td>Enterprise</td>
+          <td class="r">2,627</td>
+          <td class="r">4</td>
+          <td class="r">$7,882.29</td>
+          <td class="r">$0.00</td>
+          <td>California</td>
+          <td><span class="pill processing">Processing</span></td>
+          <td>2026-02-27</td>
+          <td>2026-03-14</td>
+          <td class="mono">ch_3P4jkl...</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="cta">
+    <div class="t">Internal report &mdash; for Technijian billing &amp; finance review.</div>
+    <div class="c"><b>billing@technijian.com</b> &middot; <b>949.379.8501</b></div>
+  </div>
+  <div class="foot">
+    <b>Technijian</b> &middot; Chat.AI billing module &middot; Source: dbo.BillingRecords via SP-only data access &middot; Internal &amp; confidential &middot; &copy; 2026
+  </div>
+
+</div>
+
+</body>
+</html>
