@@ -569,4 +569,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Co-managed IT", "IT staff augmentation", "24/7 SOC services", "Azure specialist on demand", "SOC 2 Type II MSP"
+- **Long-Tail Keywords:** "how to build a co-managed IT RACI matrix", "adding a 24/7 SOC without hiring headcount", "preventing IT engineer burnout on-call rotation", "on demand Azure architect for mid-market", "co-managed IT for 500 employee company"
+- **Content Pillars to Rank For:** Co-managed IT RACI templates, preventing IT burnout, augmenting vs. replacing IT teams, hybrid cloud architecture.
+- **Search Intent:** Informational (looking for architecture/templates) moving to Transactional (looking for specialized bench strength).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "co-managed IT Orange County", "IT staff augmentation Irvine", "24/7 SOC Southern California", "mid-market IT consulting Newport Beach", "Azure specialist Los Angeles"
+- **Hyper-Local Focus:** Corporate/business parks in Irvine, Costa Mesa, and the Inland Empire.
+- **Geo-Fencing Targets:** Local SIM (Society for Information Management) chapter dinners, ISACA/ISSA local events, Gartner IT Symposium.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Bi-weekly. Tuesdays/Thursdays between 10 AM – 12 PM.
+- **Subject Line Formulas:** Peer-to-peer technical tone. (e.g., "Adding a 24/7 SOC without adding headcount", "Template: Co-managed IT RACI Matrix").
+- **Newsletter Content:** Deeply technical updates, zero marketing fluff. Include architecture diagrams, zero-day threat briefings, and actual PowerShell scripts or Terraform modules.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (IT Director, VP IT, Head of Infrastructure) + Company Size (100-800) + Skills (M365, Azure, Cybersecurity, ITIL).
+- **Ad Hooks:** "Extend your team, don't replace it." / "The weekend on-call rotation is burning out your best engineers. Let our 24/7 SOC handle it."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

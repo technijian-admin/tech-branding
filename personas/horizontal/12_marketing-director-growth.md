@@ -548,4 +548,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Unlimited SEO", "AI lead generation", "B2B public data harvesting", "AI marketing governance", "Reduce CPL"
+- **Long-Tail Keywords:** "SEO agency with unlimited monthly hours", "how to reduce cost per lead with AI", "using Claude and ChatGPT for B2B lead generation", "safely implementing AI governance in marketing", "alternatives to expensive B2B paid media"
+- **Content Pillars to Rank For:** AI in marketing, reducing CPL, moving past paid ads, SEO performance metrics, Claude/ChatGPT for B2B lead gen.
+- **Search Intent:** Solution-seeking (trying to replace an underperforming agency) and Tool-seeking (looking for AI leverage).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "SEO agency Orange County", "AI lead generation Irvine", "B2B marketing technology Newport Beach", "digital growth consulting Los Angeles", "marketing IT support Southern California"
+- **Hyper-Local Focus:** Office hubs in Irvine, Newport Beach, and Westside LA.
+- **Geo-Fencing Targets:** SoCal marketing conferences (Digital Marketing Association, HubSpot User Groups), AMA local chapter events.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Weekly or Bi-weekly. Tuesdays/Wednesdays at 10 AM.
+- **Subject Line Formulas:** ROI and case-study focused. (e.g., "How [Competitor] cut CPL by 30% with AI", "Stop paying hourly for SEO").
+- **Newsletter Content:** Highly visual, metrics-driven case studies. Snippets of AI-generated content vs human content, sample enriched lead lists, short video clips.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (Marketing Director, Head of Growth, CMO) + Skills (HubSpot, Lead Generation, SEO, Digital Marketing).
+- **Ad Hooks:** "Unlimited SEO. AI-enriched leads. Done-for-you content — without another agency." / "Stop paying for SEO that doesn't rank."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

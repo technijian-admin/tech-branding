@@ -571,4 +571,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Financial services IT", "RIA cybersecurity", "FINRA compliant archiving", "SEC IT compliance", "Broker-dealer MSP"
+- **Long-Tail Keywords:** "Reg S-P 72-hour breach response playbook for RIAs", "how to pass a FINRA cybersecurity exam", "WORM compliant archiving for wealth management", "implementing AI safely in financial services", "IT support for independent broker-dealers"
+- **Content Pillars to Rank For:** Navigating Reg S-P amendments, implementing WORM archiving with M365, surviving a FINRA exam, AI governance for RIAs.
+- **Search Intent:** Risk-mitigation and Regulatory (triggered by upcoming exams, new rules, or peer breaches).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "RIA cybersecurity Orange County", "SEC compliance IT support Newport Beach", "financial services MSP Irvine", "wealth management IT consulting San Diego", "broker dealer IT support Costa Mesa"
+- **Hyper-Local Focus:** Wealth management hubs in Newport Beach, Irvine, Costa Mesa, and San Diego.
+- **Geo-Fencing Targets:** NSCP Annual Conference, Schwab IMPACT, local CFA Society chapter meetings.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Monthly, plus triggered alerts for major SEC/FINRA rule changes. Tue – Thu, 9 – 10 AM.
+- **Subject Line Formulas:** Regulatory, evidence-based, formal. (e.g., "Is your Reg S-P 72-hour playbook ready?", "AI governance checklist for RIAs").
+- **Newsletter Content:** Redacted enforcement actions, 17a-4 archiving checklists, SOC 2 Type II readiness tips.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (Chief Compliance Officer, COO, Operations Principal) + Industry (Financial Services, Investment Management).
+- **Ad Hooks:** "Compliance-fluent IT that speaks FINRA." / "Don't let an archiving gap trigger an 8210 letter."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

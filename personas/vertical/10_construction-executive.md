@@ -544,4 +544,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Construction IT support", "Procore IT integration", "Job site Wi-Fi", "Luxury builder lead generation", "Construction cybersecurity"
+- **Long-Tail Keywords:** "how to set up reliable job site trailer Wi-Fi", "preventing wire fraud on commercial construction projects", "AI lead generation for luxury home builders", "integrating Procore with Sage 300 IT", "Azure AD hybrid setup for construction field workers"
+- **Content Pillars to Rank For:** Bridging trailer-to-office connectivity, preventing wire fraud on big projects, AI lead generation for luxury builders.
+- **Search Intent:** Operational (need better site Wi-Fi) or Growth (need luxury buyer leads).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "construction IT support Orange County", "job site IT services Irvine", "home builder lead generation Newport Beach", "commercial GC MSP Southern California", "contractor IT consulting Anaheim"
+- **Hyper-Local Focus:** Commercial developments and high-end residential areas (Newport, Laguna, Yorba Linda) + Class B office parks.
+- **Geo-Fencing Targets:** HBA of OC events, PCBC (Pacific Coast Builders Conference), IBS (International Builders' Show).
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Bi-weekly. Tue – Thu, 7 – 8 AM or 4 – 5:30 PM (catch them before/after site visits).
+- **Subject Line Formulas:** Direct, field-focused, and ROI-driven. (e.g., "Stop losing plans between the trailer and the office", "10 luxury buyer leads next month").
+- **Newsletter Content:** Case studies of peer builders, site Wi-Fi best practices, wire fraud prevention protocols.
+
+### Paid Ads & Social Targeting
+- **LinkedIn/Facebook Targeting:** Job Titles (President, Owner, VP Operations, General Manager) + Industry (Construction, Real Estate Development).
+- **Ad Hooks:** "Luxury buyer leads on autopilot. Site + office IT that actually works." / "When a $3M wire gets intercepted, who's your first call?"
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

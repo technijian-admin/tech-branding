@@ -550,4 +550,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Real estate AI lead generation", "Real estate SEO", "Property management IT", "Reduce Zillow leads", "Brokerage IT support"
+- **Long-Tail Keywords:** "how to reduce Zillow lead costs with AI", "best SEO strategies for luxury real estate brokerages", "public data harvesting for seller leads", "IT support for multi-family property management", "AI tools for real estate agents"
+- **Content Pillars to Rank For:** Beating Zillow ROI, AI tools for Realtors, SEO for luxury real estate, compliance (DRE/MLS) safe lead generation.
+- **Search Intent:** Transactional (looking to buy leads) and Informational (exploring AI).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "real estate IT support Orange County", "property management MSP Irvine", "real estate SEO Newport Beach", "luxury real estate lead generation Laguna Beach", "brokerage IT consulting Southern California"
+- **Hyper-Local Focus:** High-end real estate hubs: Newport Beach, Laguna Beach, Corona del Mar, Irvine.
+- **Geo-Fencing Targets:** CAR/OCAR association events, Inman Connect, RealTrends Gatherings, local luxury open house tours.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Weekly (opportunistic). Tue – Thu 8 – 10 AM.
+- **Subject Line Formulas:** Lead-volume and cost focused. (e.g., "30 seller leads for less than your Zillow bill", "Why your agents aren't using your CRM").
+- **Newsletter Content:** Quick video demos of lead harvesting, screenshots of lowered CPLs, case studies of local OC brokerages winning market share.
+
+### Paid Ads & Social Targeting
+- **Social Targeting:** Facebook Groups (Lab Coat Agents), Instagram (heavy DM outreach), LinkedIn (Broker/Owner titles).
+- **Ad Hooks:** "More listings. Cheaper per lead. On autopilot." / "Stop renting leads from Zillow. Own your pipeline with AI."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

@@ -567,4 +567,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Healthcare IT support", "Medical practice MSP", "HIPAA IT compliance", "EHR IT support", "Clinic ransomware defense"
+- **Long-Tail Keywords:** "HIPAA compliant IT support for medical groups", "how to prepare a medical practice for an OCR audit", "preventing EHR downtime during clinic hours", "cyber insurance requirements for ambulatory surgery centers", "best IT setup for multi-site medical practice"
+- **Content Pillars to Rank For:** HIPAA compliance checklists, managing EHR integrations, securing patient PHI, managing cyber insurance renewals for clinics.
+- **Search Intent:** Risk-mitigation and Solution-seeking (replacing an MSP that caused an incident or failed an audit).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "HIPAA compliant IT support Orange County", "medical practice IT support Irvine", "healthcare MSP Newport Beach", "EHR IT consulting Southern California", "clinic IT services Anaheim"
+- **Hyper-Local Focus:** Medical office buildings clustered around Hoag, UCI Health, and MemorialCare.
+- **Geo-Fencing Targets:** Local MGMA chapter meetings, OCMA (Orange County Medical Association) events, healthcare compliance seminars.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Monthly. Tue – Thu between 10 – 11 AM or 2 – 3 PM (avoid Mondays/Fridays).
+- **Subject Line Formulas:** Risk-averse, compliance-focused. (e.g., "OCR audit readiness checklist", "15-minute IR SLA for your practice", "Is your EHR integration creating a HIPAA gap?").
+- **Newsletter Content:** Redacted OCR resolution agreements (fear-based learning), BAA checklists, practical MFA rollout guides for physicians.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (Practice Administrator, COO, Director of Operations, Practice Manager) + Industry (Medical Practice, Hospital & Health Care).
+- **Ad Hooks:** "HIPAA-fluent managed IT. No more translating between your MSP and your attorney." / "If a staff mailbox got compromised tomorrow, what's your clock?"
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

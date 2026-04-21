@@ -577,4 +577,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "CMMC Level 2 MSP", "GCC High migration", "DFARS 7012 compliance", "NIST 800-171 assessment", "ITAR IT support"
+- **Long-Tail Keywords:** "how to prepare for a CMMC C3PAO assessment", "cost of GCC High migration for small defense contractor", "DFARS 7012 72-hour incident response playbook", "CUI scoping guide for precision manufacturing", "NIST 800-171 SSP and POA&M templates"
+- **Content Pillars to Rank For:** CMMC timeline updates, CUI scoping guides, GCC High pricing vs commercial, SSP and POA&M templates, preparing for a C3PAO assessment.
+- **Search Intent:** Highly specific and urgent (triggered by prime flowdown requirements).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "CMMC Level 2 MSP Orange County", "defense manufacturing IT support Anaheim", "ITAR compliant IT Long Beach", "GCC High migration Southern California", "aerospace manufacturing IT consulting Torrance"
+- **Hyper-Local Focus:** Industrial parks in Anaheim, Torrance, Long Beach, Santa Fe Springs, and the Irvine tech/industrial corridor.
+- **Geo-Fencing Targets:** NDIA and AUSA local chapter events, regional defense trade association meetings, CMMC Day.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Bi-weekly. Tuesdays or Thursdays, early AM (7:30 – 9:00 AM) or late afternoon (4:00 PM).
+- **Subject Line Formulas:** Direct, compliance-driven, timeline-focused. (e.g., "C3PAO Assessment Timeline for 2026", "Don't lose your prime contract over CUI").
+- **Newsletter Content:** DFARS updates, redacted SSP examples, shop-floor IT downtime reduction strategies, AI for precision estimating.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (VP Operations, COO, Plant Manager, General Manager) + Industry (Defense & Space, Aviation & Aerospace, Manufacturing).
+- **Ad Hooks:** "CMMC Level 2 readiness on your timeline — without losing your prime." / "Get your CUI enclave operational before your next prime audit."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

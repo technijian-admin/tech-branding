@@ -541,4 +541,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Restaurant SEO", "Restaurant IT support", "PCI compliance for POS", "Increase Google Maps rank", "Multi-unit hospitality IT"
+- **Long-Tail Keywords:** "how to increase Google Maps ranking for restaurants", "PCI compliance checklist for Toast POS", "preventing restaurant POS downtime during peak hours", "best Wi-Fi segmentation for restaurant guests", "SEO agency for multi-unit restaurant groups"
+- **Content Pillars to Rank For:** Boosting Google Maps rankings, protecting POS systems from downtime, PCI compliance guides for restaurants, reducing third-party delivery reliance.
+- **Search Intent:** Traffic-seeking (how to get more covers) and Crisis-resolution (POS/PCI issues).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "restaurant SEO agency Orange County", "hospitality IT support Newport Beach", "restaurant group MSP Los Angeles", "PCI compliance consulting Irvine", "food service IT Southern California"
+- **Hyper-Local Focus:** High-density dining areas (Newport Peninsula, Costa Mesa 17th St, Arts District LA, Downtown Anaheim).
+- **Geo-Fencing Targets:** CRA (California Restaurant Association) local events, local food & wine festivals, Western Foodservice & Hospitality Expo.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Bi-weekly. Tue – Thu, 10 – 11 AM or 2 – 3 PM (strictly between shifts).
+- **Subject Line Formulas:** Fast, visually engaging, ROI-focused. (e.g., "More Friday covers, less POS downtime", "Is your guest Wi-Fi violating PCI?").
+- **Newsletter Content:** Quick 60-second video tips, screenshots of local restaurant Google Maps rank improvements, PCI fine warnings.
+
+### Paid Ads & Social Targeting
+- **Social Targeting:** Instagram (highly visual ad placement), LinkedIn (Owner/Managing Partner titles).
+- **Ad Hooks:** "More covers. Cleaner PCI. Zero nights-lost." / "When your POS goes down next Friday at 7 PM, who do you call?"
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

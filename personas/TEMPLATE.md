@@ -428,4 +428,28 @@ Cite Technijian assets that support this persona:
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** [e.g., "Managed IT services", "Outsourced IT"]
+- **Long-Tail Keywords:** [e.g., "how to replace a one-person IT guy", "cost of managed IT services for 50 employees"]
+- **Content Pillars to Rank For:** [Topics they care about]
+- **Search Intent:** [Informational / Transactional / Solution-seeking / Crisis-resolution]
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** [e.g., "managed IT services Orange County", "IT support company Newport Beach"]
+- **Hyper-Local Focus:** [Specific cities, neighborhoods, or office parks]
+- **Geo-Fencing Targets:** [Specific events, conferences, or association meetings]
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** [e.g., Monthly. Tue – Thu, 9 – 11 AM.]
+- **Subject Line Formulas:** [Tone + example, e.g., Business-risk focused. "Is your cyber insurance actually covering you?"]
+- **Newsletter Content:** [Specific content types they value, e.g., 1-page executive summaries, no jargon.]
+
+### Paid Ads & Social Targeting
+- **LinkedIn/Facebook Targeting:** Job Titles ([Titles]) + Company Size ([Size]) + Geography/Industry ([Locations/Verticals]).
+- **Ad Hooks:** "[Primary hook 1]" / "[Primary hook 2]"
+
+---
+
 *Persona file version: 1.0 — Last reviewed: [date]*

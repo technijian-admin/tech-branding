@@ -529,4 +529,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Managed IT services", "Outsourced IT", "IT support for small business", "Office 365 migration", "Ransomware recovery"
+- **Long-Tail Keywords:** "how to replace a one-person IT guy", "cost of managed IT services for 50 employees", "small business cyber insurance requirements checklist", "Office 365 migration consultant for professional services", "what to do when business server goes down"
+- **Content Pillars to Rank For:** The hidden cost of a one-person IT guy, passing cyber insurance renewals, transitioning from break-fix to managed IT, local OC business tech support.
+- **Search Intent:** Solution-seeking (often triggered by an outage or unresponsiveness of their current IT setup).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "managed IT services Orange County", "outsourced IT for small business Irvine", "IT support company Newport Beach", "IT consulting Anaheim", "business IT support Costa Mesa"
+- **Hyper-Local Focus:** Class B office parks in Irvine, Newport Beach, Anaheim, Santa Ana, and Costa Mesa.
+- **Geo-Fencing Targets:** OC Business Journal events, Vistage/EO (Entrepreneurs' Organization) monthly meetings, local Chamber of Commerce mixers.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Monthly. Tue – Thu, 9 – 11 AM.
+- **Subject Line Formulas:** Business-risk and time-saving focused. (e.g., "Is your cyber insurance actually covering you?", "What happens when your IT guy goes on vacation?").
+- **Newsletter Content:** 1-page executive summaries. No jargon. Focus on case studies of peer businesses in Orange County, simple cyber tips, and ROI breakdowns of managed IT.
+
+### Paid Ads & Social Targeting
+- **LinkedIn/Facebook Targeting:** Job Titles (Owner, Founder, CEO, President, Managing Partner) + Company Size (11-200) + Geography (Orange County, CA).
+- **Ad Hooks:** "Run your business. We'll run your IT." / "Stop acting as the IT helpdesk for your employees."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

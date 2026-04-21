@@ -573,4 +573,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "SOC 2 Type II readiness", "Startup vCISO", "AWS Well-Architected review", "SaaS penetration testing", "Vanta implementation"
+- **Long-Tail Keywords:** "SOC 2 Type II readiness timeline for Series A startup", "how to pass enterprise security questionnaires fast", "AWS FinOps and cost optimization for SaaS", "continuous penetration testing for B2B SaaS", "integrating Vanta with AWS and GitHub"
+- **Content Pillars to Rank For:** SOC 2 evidence automation vs human implementation, AWS cost optimization for Series A startups, surviving enterprise security questionnaires.
+- **Search Intent:** Highly specific and urgent (triggered by a blocked enterprise deal or an upcoming audit).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "SaaS IT support Orange County", "startup cybersecurity Irvine", "AWS consultant Santa Monica", "SOC 2 readiness Southern California", "vCISO services Los Angeles"
+- **Hyper-Local Focus:** SoCal tech hubs (Irvine tech corridor, Santa Monica/Silicon Beach, Culver City). *Note: Highly receptive to remote/digital outreach.*
+- **Geo-Fencing Targets:** AWS re:Invent, local KubeCon meetups, Tech Coast Angels or Y-Combinator alumni events, SaaStr Annual.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Monthly or triggered by major tech events (e.g., a major CVE disclosure). Tue – Thu, 10 – 12 AM.
+- **Subject Line Formulas:** Zero-fluff, highly technical, problem-focused. (e.g., "SOC 2 Type II in 90 days: The exact project plan", "Stop pulling your staff engineers for security questionnaires").
+- **Newsletter Content:** Architecture diagrams, Terraform/IAM policy snippets, redacted SOC 2 bridge letters, real AWS cost-saving breakdowns.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (CTO, VP Engineering, Founding Engineer, Head of Infrastructure) + Company Size (11-200) + Industry (Technology, Software Development).
+- **Ad Hooks:** "Unblock your enterprise deals. SOC 2 Type II in 90 days." / "You shouldn't be your own 24/7 SOC. Let your engineers sleep."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

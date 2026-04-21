@@ -541,4 +541,28 @@
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Non-profit IT support", "TechSoup IT consulting", "Non-profit cybersecurity", "Donor database security", "A-133 audit IT"
+- **Long-Tail Keywords:** "how to pass IT compliance for A-133 audits", "preventing donor data breaches in non-profits", "maximizing TechSoup Microsoft 365 grants", "best IT setup for hybrid non-profit teams", "affordable managed IT for 501c3 organizations"
+- **Content Pillars to Rank For:** Optimizing TechSoup grants, securing donor databases, IT compliance for A-133 audits, non-profit hybrid work setups.
+- **Search Intent:** Informational (grant utilization) to Highly Transactional (audit findings remediation).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "non-profit IT support Orange County", "charity IT consulting Irvine", "foundation cybersecurity Newport Beach", "TechSoup implementation Southern California", "social services MSP Santa Ana"
+- **Hyper-Local Focus:** Community hubs, converted office parks, local philanthropic centers.
+- **Geo-Fencing Targets:** CalNonprofits seminars, OC Community Foundation gatherings, AFP local chapter events.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Monthly. Tue – Thu, 10 – 11 AM or 2 – 3 PM.
+- **Subject Line Formulas:** Mission and risk focused. (e.g., "Is your donor data audit-ready?", "Maximizing your TechSoup IT grants", "Don't let a phishing email ruin your capital campaign").
+- **Newsletter Content:** Board-ready 1-pagers, non-profit sector case studies, free IT assessment offers, plain-English security tips for volunteers.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (Executive Director, CEO, Head of School) + Industry (Non-profit Organization Management, Civic & Social Organization).
+- **Ad Hooks:** "Mission-grade IT at non-profit pricing." / "If your donor list leaked tomorrow, what would the board do?"
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

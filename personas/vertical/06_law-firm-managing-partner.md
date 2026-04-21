@@ -577,4 +577,28 @@ Catherine: > "I'll pay for quiet. I'll pay double for quiet. What I won't pay fo
 
 ---
 
+## 22. Marketing & Campaign Playbook
+
+### SEO & Search Intent
+- **Short-Tail Keywords:** "Law firm IT support", "iManage support", "NetDocuments MSP", "Legal cybersecurity", "ABA IT compliance"
+- **Long-Tail Keywords:** "preventing trust account wire fraud for law firms", "ABA 477R compliance IT checklist", "how to secure lateral attorney onboarding", "migrating from Worldox to NetDocuments", "AI governance policies for law associates"
+- **Content Pillars to Rank For:** Duty of technology competence, securing lateral onboarding, preventing trust account wire fraud, DMS hygiene projects.
+- **Search Intent:** Solution-seeking (often driven by a slow DMS, an angry partner, or a lateral move).
+
+### Geo-Targeting & Local Strategy
+- **Geo-Targeted Keywords:** "law firm IT support Orange County", "legal MSP Newport Beach", "iManage consultant Irvine", "law firm cybersecurity Los Angeles", "NetDocuments support DTLA"
+- **Hyper-Local Focus:** Class A office buildings in Newport Beach, Irvine Spectrum, Costa Mesa, and DTLA.
+- **Geo-Fencing Targets:** ILTACON, ABA Techshow, OCBA (Orange County Bar Association) Tech Law section events, ALA local chapter meetings.
+
+### Email Marketing & Newsletter Strategy
+- **Optimal Cadence:** Monthly. Tue – Thu, 10 – 11:30 AM or 4 – 5 PM.
+- **Subject Line Formulas:** Billable-hour protection and risk-focused. (e.g., "Lateral onboarding in under 5 days", "Is your firm violating ABA Model Rule 1.6?").
+- **Newsletter Content:** Malpractice case studies (fear-based), DMS optimization tips, sample AI governance policies for associates.
+
+### Paid Ads & Social Targeting
+- **LinkedIn Targeting:** Job Titles (Managing Partner, Firm Administrator, Chief Operating Officer) + Industry (Law Practice, Legal Services).
+- **Ad Hooks:** "IT built for the duty of technology competence." / "We handle IT so your partners can bill."
+
+---
+
 *Persona file version: 1.0 — Last reviewed: April 2026*

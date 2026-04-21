@@ -2,7 +2,7 @@
 
 **Purpose.** Authoritative, zero-vagueness buyer personas for every Technijian service. Each file defines exactly one persona with ~25 attribute blocks — identity, organization, role, goals, pains, buying behavior, objections, decision criteria, watering holes, Technijian fit, verbatim quotes, anti-persona, and risks. These are built to be copy-paste usable in sales plays, campaigns, website copy, collateral targeting, pricing, ad audiences, SDR scripts, and QBR narratives.
 
-**Scope.** 13 personas total: 10 vertical (industry-primary decision makers) + 3 horizontal (cross-industry buyer roles that show up alongside the vertical buyer).
+**Scope.** 17 personas total: 13 vertical (industry-primary decision makers) + 4 horizontal (cross-industry buyer roles that show up alongside the vertical buyer).
 
 ---
 
@@ -33,6 +33,9 @@ A complete sales motion usually addresses one vertical persona + one or two hori
 | 08 | [vertical/08_non-profit-executive-director.md](vertical/08_non-profit-executive-director.md) | Denise Washington — Executive Director / COO | Non-profit, social services | 10 – 100 staff, $2M – $25M budget | My IT, My Office, My Security, My Continuity, My SEO |
 | 09 | [vertical/09_hospitality-restaurant-owner.md](vertical/09_hospitality-restaurant-owner.md) | Antonio DiMarco — Restaurant Group Owner | Restaurants, hospitality, QSR | 3 – 30 locations, $5M – $80M | My SEO, My IT, My Security (PCI), My Office |
 | 10 | [vertical/10_construction-executive.md](vertical/10_construction-executive.md) | Javier Torres — Construction Executive / GC | Residential/commercial construction, luxury builder | 20 – 200 emp, $15M – $250M | My AI Lead Gen, My IT, My Security (endpoint), My Cloud (Azure AD Hybrid) |
+| 15 | [vertical/15_aec-principal.md](vertical/15_aec-principal.md) | Sarah Jenkins — AEC Principal / BIM Director | Architecture, Engineering, Design | 30 – 150 emp, $10M – $50M | My Cloud (AVD/GPU), My IT, My Continuity |
+| 16 | [vertical/16_local-government-city-manager.md](vertical/16_local-government-city-manager.md) | Marcus Washington — City Manager / IT Director | Local Government, Municipality, Utility District | 50 – 500 emp, $15M – $100M budget | My Security (Ransomware), My Continuity (FOIA), My Compliance (CJIS) |
+| 17 | [vertical/17_retail-ecommerce-operations-director.md](vertical/17_retail-ecommerce-operations-director.md) | Chloe Bennett — VP Retail & E-Commerce Ops | Omnichannel Retail, E-Commerce | 50 – 250 emp, $10M – $100M | My Cloud (AWS/Azure), My Dev (API/ERP), My Security (PCI-DSS) |
 
 ### Horizontal personas (cross-industry buyer roles)
 
@@ -41,6 +44,7 @@ A complete sales motion usually addresses one vertical persona + one or two hori
 | 11 | [horizontal/11_internal-it-director-comanaged.md](horizontal/11_internal-it-director-comanaged.md) | Sarah Okafor — Internal IT Director | Co-managed IT counterpart | Mid-market 100 – 800 emp | My IT Co-Managed, My Security, My Cloud, My Dev |
 | 12 | [horizontal/12_marketing-director-growth.md](horizontal/12_marketing-director-growth.md) | Jennifer Hayes — Marketing / Growth Director | Demand-generation buyer | Any growth-oriented vertical | My SEO, My AI Lead Gen, Chat.AI, My Dev |
 | 13 | [horizontal/13_cfo-economic-buyer.md](horizontal/13_cfo-economic-buyer.md) | Terry Williams — CFO / Controller | Economic buyer & signatory | Mid-market across verticals | Approves all; owns My Continuity, My Compliance spend |
+| 14 | [horizontal/14_digital-transformation-coo.md](horizontal/14_digital-transformation-coo.md) | Robert Vance — Digital Transformation COO | Operations buyer seeking modernization | Mature mid-market (Mfg, Logistics, Wholesale) | Strategic IT Consulting, My Dev (.NET/React), Power BI |
 
 ---
 
@@ -75,7 +79,7 @@ personas/
 ├── README.md               # This file — index, how to use
 ├── TEMPLATE.md             # Full attribute template (for adding new personas)
 ├── SERVICE_MAPPING.md      # Matrix: persona × service × fit + expected deal size
-├── vertical/               # 10 industry-primary decision-maker personas
+├── vertical/               # 13 industry-primary decision-maker personas
 │   ├── 01_smb-generalist-owner.md
 │   ├── 02_healthcare-practice-admin.md
 │   ├── 03_financial-services-compliance.md
@@ -86,10 +90,14 @@ personas/
 │   ├── 08_non-profit-executive-director.md
 │   ├── 09_hospitality-restaurant-owner.md
 │   └── 10_construction-executive.md
+│   └── 15_aec-principal.md
+│   ├── 16_local-government-city-manager.md
+│   └── 17_retail-ecommerce-operations-director.md
 └── horizontal/             # 3 cross-industry buyer-role personas
     ├── 11_internal-it-director-comanaged.md
     ├── 12_marketing-director-growth.md
     └── 13_cfo-economic-buyer.md
+    └── 14_digital-transformation-coo.md
 ```
 
 ---
