@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <!-- Hard drive / disk icon -->
+  <rect x="4" y="4" width="48" height="52" rx="8" fill="rgba(255,255,255,0.2)"/>
+  <ellipse cx="28" cy="30" rx="16" ry="16" fill="rgba(255,255,255,0.1)"/>
+  <ellipse cx="28" cy="30" rx="10" ry="10" fill="rgba(255,255,255,0.15)"/>
+  <circle cx="28" cy="30" r="4" fill="#1EAAC8"/>
+  <line x1="32" y1="20" x2="42" y2="12" stroke="#F67D4B" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="42" cy="12" r="3" fill="#F67D4B"/>
+
+  <!-- My Disk text white -->
+  <text x="62" y="28" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="22" fill="#ffffff">My Disk</text>
+  <text x="63" y="45" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="600" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="1.8">POWERED BY TECHNIJIAN</text>
+</svg>

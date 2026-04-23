@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: transparent; }
+  .frame { display: block; }
+
+  /* ========= SQUARE LOGO ICON (APP ICON) ========= */
+  .icon-square {
+    width: 512px; height: 512px;
+    background: linear-gradient(135deg, #1EAAC8 0%, #006DB6 50%, #004d80 100%);
+    border-radius: 112px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.2);
+  }
+  .icon-square::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.18) 0%, transparent 50%);
+    border-radius: 112px;
+  }
+  .icon-square svg { width: 320px; height: 320px; position: relative; z-index: 1; }
+
+  /* ========= HORIZONTAL LOGO (color, for light bg) ========= */
+  .logo-horizontal {
+    width: 720px; height: 180px;
+    display: flex; align-items: center; gap: 24px;
+    padding: 0 24px;
+    background: transparent;
+  }
+  .logo-horizontal .mark {
+    width: 140px; height: 140px;
+    background: linear-gradient(135deg, #1EAAC8 0%, #006DB6 55%, #004d80 100%);
+    border-radius: 32px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,109,182,0.25), inset 0 2px 0 rgba(255,255,255,0.2);
+    position: relative; overflow: hidden;
+    flex-shrink: 0;
+  }
+  .logo-horizontal .mark::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent);
+  }
+  .logo-horizontal .mark svg { width: 92px; height: 92px; position: relative; z-index: 1; }
+  .logo-horizontal .text { display: flex; flex-direction: column; justify-content: center; }
+  .logo-horizontal .wordmark { font-weight: 800; font-size: 68px; letter-spacing: -2.5px; line-height: 1; color: #1A1A2E; }
+  .logo-horizontal .wordmark .my { font-weight: 400; color: #006DB6; }
+  .logo-horizontal .tagline { font-weight: 600; font-size: 14px; letter-spacing: 3.5px; color: #006DB6; margin-top: 10px; text-transform: uppercase; }
+
+  /* ========= NAV BAR LOGO (white, for dark header) ========= */
+  .logo-nav {
+    width: 480px; height: 100px;
+    display: flex; align-items: center; gap: 14px;
+    padding: 0 14px;
+    background: transparent;
+  }
+  .logo-nav .mark {
+    width: 68px; height: 68px;
+    background: linear-gradient(135deg, #1EAAC8 0%, #006DB6 50%, #004d80 100%);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25);
+    position: relative; overflow: hidden;
+    flex-shrink: 0;
+  }
+  .logo-nav .mark::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15), transparent);
+  }
+  .logo-nav .mark svg { width: 46px; height: 46px; position: relative; z-index: 1; }
+  .logo-nav .text { display: flex; flex-direction: column; justify-content: center; }
+  .logo-nav .wordmark { font-weight: 800; font-size: 38px; letter-spacing: -1.4px; line-height: 1; color: #ffffff; }
+  .logo-nav .wordmark .my { font-weight: 400; color: rgba(255,255,255,0.75); }
+  .logo-nav .tagline { font-weight: 600; font-size: 9px; letter-spacing: 2.5px; color: rgba(255,255,255,0.55); margin-top: 5px; text-transform: uppercase; }
+
+  /* ========= FAVICON (just icon, rounded square) ========= */
+  .favicon-256 {
+    width: 256px; height: 256px;
+    background: linear-gradient(135deg, #1EAAC8 0%, #006DB6 50%, #004d80 100%);
+    border-radius: 56px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: inset 0 3px 0 rgba(255,255,255,0.2);
+    position: relative; overflow: hidden;
+  }
+  .favicon-256::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15), transparent);
+  }
+  .favicon-256 svg { width: 170px; height: 170px; position: relative; z-index: 1; }
+
+  .favicon-64 {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, #1EAAC8 0%, #006DB6 50%, #004d80 100%);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .favicon-64 svg { width: 44px; height: 44px; }
+
+  /* ========= LOGIN BACKGROUND (proper 1920×1080) ========= */
+  .login-bg {
+    width: 1920px; height: 1080px;
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse at 75% 20%, rgba(30,170,200,0.18) 0%, transparent 45%),
+      radial-gradient(ellipse at 20% 80%, rgba(246,125,75,0.10) 0%, transparent 45%),
+      linear-gradient(135deg, #0a1628 0%, #0d2847 35%, #0f3d6b 70%, #006DB6 100%);
+  }
+  .login-bg .mesh {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .login-bg .orb1 {
+    position: absolute; top: -300px; right: -200px;
+    width: 900px; height: 900px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,170,200,0.25) 0%, rgba(30,170,200,0.08) 40%, transparent 70%);
+    filter: blur(20px);
+  }
+  .login-bg .orb2 {
+    position: absolute; bottom: -200px; left: -150px;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(246,125,75,0.18) 0%, rgba(246,125,75,0.05) 40%, transparent 70%);
+    filter: blur(25px);
+  }
+  .login-bg .orb3 {
+    position: absolute; top: 40%; left: 55%;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,109,182,0.3) 0%, transparent 60%);
+    filter: blur(30px);
+  }
+  .login-bg .watermark {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.05;
+  }
+  .login-bg .watermark svg { width: 700px; height: 700px; }
+  .login-bg .brand-footer {
+    position: absolute; bottom: 48px; right: 64px;
+    font-family: 'Inter', sans-serif; text-align: right;
+    color: rgba(255,255,255,0.4);
+  }
+  .login-bg .brand-footer .bf-name { font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .login-bg .brand-footer .bf-tagline { font-size: 13px; font-weight: 500; letter-spacing: 1.5px; opacity: 0.7; }
+
+  /* Scattered geometric accents (very subtle) */
+  .login-bg .accent {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .a1 { top: 15%; left: 10%; width: 6px; height: 6px; }
+  .a2 { top: 25%; left: 22%; width: 4px; height: 4px; }
+  .a3 { top: 70%; left: 15%; width: 8px; height: 8px; }
+  .a4 { top: 80%; left: 45%; width: 5px; height: 5px; }
+  .a5 { top: 20%; left: 85%; width: 6px; height: 6px; }
+  .a6 { top: 60%; left: 75%; width: 4px; height: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ============ MY DISK ICON SVG (reused across sizes) ============ -->
+<svg style="display:none;">
+  <defs>
+    <!-- Master icon: Cloud + centered disk -->
+    <symbol id="mydisk-mark" viewBox="0 0 240 180">
+      <!-- Cloud shape - organic flowing curves -->
+      <path d="M 60 150
+               C 20 150, 12 110, 40 95
+               C 34 65, 64 48, 90 60
+               C 100 32, 140 24, 162 46
+               C 184 32, 218 48, 216 80
+               C 234 82, 234 118, 216 124
+               C 214 148, 182 156, 160 144
+               L 70 144
+               Z"
+            fill="#ffffff"
+            stroke="none"
+            opacity="0.98"/>
+
+      <!-- Disk platter - outer ring -->
+      <circle cx="122" cy="96" r="34"
+              fill="none"
+              stroke="#006DB6"
+              stroke-width="2.5"
+              opacity="0.35"/>
+      <!-- Disk platter - solid -->
+      <circle cx="122" cy="96" r="28"
+              fill="#006DB6"/>
+      <!-- Disk highlight -->
+      <ellipse cx="116" cy="88" rx="10" ry="5"
+               fill="#ffffff"
+               opacity="0.35"/>
+      <!-- Disk spindle -->
+      <circle cx="122" cy="96" r="6"
+              fill="#1EAAC8"/>
+      <circle cx="122" cy="96" r="2.5"
+              fill="#ffffff"/>
+
+      <!-- Read head arm (orange accent) -->
+      <line x1="156" y1="60" x2="132" y2="82"
+            stroke="#F67D4B"
+            stroke-width="4"
+            stroke-linecap="round"/>
+      <circle cx="156" cy="60" r="5"
+              fill="#F67D4B"/>
+      <circle cx="132" cy="82" r="2.5"
+              fill="#F67D4B"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ 1. SQUARE APP ICON (512x512) ============ -->
+<div class="frame" id="f_icon_square">
+  <div class="icon-square">
+    <svg><use href="#mydisk-mark"/></svg>
+  </div>
+</div>
+
+<!-- ============ 2. HORIZONTAL LOGO (color, 720x180) ============ -->
+<div class="frame" id="f_logo_horizontal">
+  <div class="logo-horizontal">
+    <div class="mark"><svg><use href="#mydisk-mark"/></svg></div>
+    <div class="text">
+      <div class="wordmark"><span class="my">My</span>Disk</div>
+      <div class="tagline">Powered by Technijian</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3. NAV BAR LOGO (white, 480x100) ============ -->
+<div class="frame" id="f_logo_nav">
+  <div class="logo-nav">
+    <div class="mark"><svg><use href="#mydisk-mark"/></svg></div>
+    <div class="text">
+      <div class="wordmark"><span class="my">My</span>Disk</div>
+      <div class="tagline">Powered by Technijian</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4. FAVICON 256 ============ -->
+<div class="frame" id="f_favicon_256">
+  <div class="favicon-256">
+    <svg><use href="#mydisk-mark"/></svg>
+  </div>
+</div>
+
+<!-- ============ 4b. FAVICON 64 ============ -->
+<div class="frame" id="f_favicon_64">
+  <div class="favicon-64">
+    <svg><use href="#mydisk-mark"/></svg>
+  </div>
+</div>
+
+<!-- ============ 5. LOGIN BACKGROUND (1920x1080) ============ -->
+<div class="frame" id="f_login_bg">
+  <div class="login-bg">
+    <div class="mesh"></div>
+    <div class="orb1"></div>
+    <div class="orb2"></div>
+    <div class="orb3"></div>
+    <div class="accent a1"></div>
+    <div class="accent a2"></div>
+    <div class="accent a3"></div>
+    <div class="accent a4"></div>
+    <div class="accent a5"></div>
+    <div class="accent a6"></div>
+    <div class="watermark"><svg><use href="#mydisk-mark"/></svg></div>
+    <div class="brand-footer">
+      <div class="bf-name">Technijian &middot; My Disk</div>
+      <div class="bf-tagline">Secure &middot; Synced &middot; Yours</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

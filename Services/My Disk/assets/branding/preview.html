@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Disk Brand Assets — Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: #f5f6f8; padding: 40px; }
+  h1 { font-size: 24px; color: #1A1A2E; margin-bottom: 8px; }
+  .sub { font-size: 13px; color: #666; margin-bottom: 28px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .card h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 6px; font-weight: 700; }
+  .card .meta { font-size: 11px; color: #999; margin-bottom: 16px; }
+  .bg-dark { background: linear-gradient(135deg, #1A1A2E, #0a2547); padding: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; min-height: 140px; }
+  .bg-light { background: #ffffff; padding: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; min-height: 140px; border: 1px solid #eee; }
+  .bg-blue { background: #006DB6; padding: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; min-height: 140px; }
+  img { max-width: 100%; display: block; }
+  .bg-full { border-radius: 8px; overflow: hidden; }
+  .bg-full img { width: 100%; display: block; }
+  .favicon-row { display: flex; gap: 20px; align-items: center; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+  .favicon-row .tabs { display: flex; gap: 12px; align-items: center; }
+  .tab { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid #ddd; border-radius: 6px 6px 0 0; padding: 8px 14px; font-size: 13px; color: #333; }
+  .tab img { width: 16px; height: 16px; }
+</style>
+</head>
+<body>
+  <h1>My Disk Brand Assets</h1>
+  <div class="sub">Four assets designed for the Nextcloud platform — all Retina quality at 2× scale.</div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>1. Primary Logo (Color)</h3>
+      <div class="meta">mydisk-logo-color.png — 720×180 — for marketing & light backgrounds</div>
+      <div class="bg-light"><img src="mydisk-logo-color.png" style="max-height:120px;"></div>
+    </div>
+
+    <div class="card">
+      <h3>2. Navigation Bar Logo (White)</h3>
+      <div class="meta">mydisk-logo-nav.png — 480×100 — for Nextcloud dark header</div>
+      <div class="bg-dark"><img src="mydisk-logo-nav.png" style="max-height:80px;"></div>
+    </div>
+
+    <div class="card">
+      <h3>3. App Icon</h3>
+      <div class="meta">mydisk-logo.png — 512×512 — for social / app stores</div>
+      <div class="bg-light"><img src="mydisk-logo.png" style="max-height:180px;"></div>
+    </div>
+
+    <div class="card">
+      <h3>4. Favicon</h3>
+      <div class="meta">mydisk-favicon.ico — multi-size ICO + 256 PNG — browser tabs</div>
+      <div class="favicon-row">
+        <div class="tabs">
+          <div class="tab"><img src="mydisk-favicon-64.png"> My Disk</div>
+          <div class="tab"><img src="mydisk-favicon-64.png"> Dashboard</div>
+          <div class="tab"><img src="mydisk-favicon-64.png"> Files</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:32px;" class="card">
+    <h3>5. Login Background</h3>
+    <div class="meta">mydisk-login-bg.jpg — 1920×1080 — Nextcloud login page background</div>
+    <div class="bg-full"><img src="mydisk-login-bg.jpg"></div>
+  </div>
+
+</body>
+</html>
