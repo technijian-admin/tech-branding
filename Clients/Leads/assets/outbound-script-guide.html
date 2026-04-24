@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Outbound Script Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0.6in 0.65in; }
+  @page :first { margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 11px; line-height: 1.55; background: #fff; }
+
+  /* ===== COVER PAGE (single letter page) ===== */
+  .cover { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; background: #fff; }
+  .cover-hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 50px 60px 40px; position: relative; overflow: hidden; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-hero::before { content: ''; position: absolute; top: -100px; right: -80px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(30,170,200,0.22) 0%, transparent 70%); border-radius: 50%; }
+  .cover-hero::after  { content: ''; position: absolute; bottom: -80px; left: 10%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(246,125,75,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .cover-top { position: relative; z-index: 1; }
+  .cover-top img { height: 54px; }
+  .cover-tag { font-size: 12px; letter-spacing: 4px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 7px 18px; border-radius: 16px; text-transform: uppercase; display: inline-block; margin-top: 36px; }
+  .cover-title { font-size: 56px; font-weight: 800; color: #fff; line-height: 1.05; position: relative; z-index: 1; margin-top: 20px; }
+  .cover-title .o { color: var(--orange); }
+  .cover-sub { font-size: 17px; color: rgba(255,255,255,0.78); margin-top: 16px; line-height: 1.5; max-width: 80%; position: relative; z-index: 1; }
+  .cover-meta { position: relative; z-index: 1; border-top: 2px solid rgba(255,255,255,0.18); padding-top: 24px; margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .cover-meta .k { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; }
+  .cover-meta .v { font-size: 15px; color: #fff; font-weight: 600; margin-top: 4px; }
+  .orange-line { height: 6px; background: linear-gradient(90deg, var(--orange), var(--teal), var(--chartreuse)); flex-shrink: 0; }
+  .cover-foot { background: #2D2D2D; padding: 14px 60px; color: rgba(255,255,255,0.55); font-size: 10px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+  .cover-foot b { color: rgba(255,255,255,0.88); }
+
+  /* ===== CONTENT PAGES (flow naturally) ===== */
+  .content { padding: 0; }
+  .content h1 { font-size: 22px; font-weight: 800; color: var(--blue); margin: 28px 0 8px; padding-bottom: 6px; border-bottom: 3px solid var(--orange); page-break-after: avoid; }
+  .content h1:first-child { margin-top: 0; }
+  .content h2 { font-size: 15px; font-weight: 700; color: var(--dark); margin: 18px 0 6px; page-break-after: avoid; }
+  .content h3 { font-size: 12.5px; font-weight: 700; color: var(--blue); margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 1.2px; page-break-after: avoid; }
+  .content p { margin-bottom: 7px; color: #333; font-size: 11px; line-height: 1.55; }
+  .content ul, .content ol { margin: 6px 0 10px 22px; }
+  .content li { font-size: 11px; line-height: 1.55; color: #333; margin-bottom: 3px; }
+  .content strong { color: var(--dark); font-weight: 700; }
+  .content em { color: var(--grey); font-style: italic; }
+  .content code { background: var(--off-white); border: 1px solid var(--light-grey); padding: 1px 5px; border-radius: 3px; font-family: 'Open Sans', monospace; font-size: 10px; color: var(--dark); }
+
+  blockquote { margin: 10px 0; padding: 10px 16px; background: var(--off-white); border-left: 4px solid var(--orange); border-radius: 0 4px 4px 0; font-size: 11px; font-style: italic; color: var(--dark); line-height: 1.55; page-break-inside: avoid; }
+  blockquote strong { font-style: normal; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10px; page-break-inside: auto; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  th { background: var(--dark); color: #fff; padding: 7px 9px; text-align: left; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  th.r { text-align: right; }
+  td { padding: 6px 9px; border-bottom: 1px solid var(--light-grey); vertical-align: top; color: var(--grey); }
+  td.r { text-align: right; font-variant-numeric: tabular-nums; }
+  td strong { color: var(--dark); }
+  tbody tr:nth-child(even) td { background: var(--off-white); }
+
+  .sec-break { page-break-before: always; }
+
+  /* Industry card */
+  .ind-card { background: var(--off-white); border-left: 4px solid var(--blue); padding: 10px 14px; margin: 10px 0; border-radius: 0 4px 4px 0; page-break-inside: avoid; }
+  .ind-card:nth-child(3n+1) { border-left-color: var(--blue); }
+  .ind-card:nth-child(3n+2) { border-left-color: var(--orange); }
+  .ind-card:nth-child(3n+3) { border-left-color: var(--teal); }
+  .ind-card h3 { margin-top: 0; }
+  .ind-card .pitch { font-size: 10.5px; color: var(--dark); font-weight: 600; margin-bottom: 6px; }
+  .ind-card .opener { font-size: 10.5px; font-style: italic; color: var(--grey); margin-bottom: 6px; padding: 6px 10px; background: #fff; border-left: 2px solid var(--teal); border-radius: 0 3px 3px 0; }
+  .ind-card ul { margin-top: 4px; margin-bottom: 0; }
+
+  /* Page footer via @page */
+  @media print {
+    @page { size: letter; margin: 0.6in 0.65in 0.75in; }
+    @page :first { margin: 0; }
+    @page { @bottom-left { content: "Technijian · Outbound Script Guide"; font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+    @page { @bottom-right { content: "Page " counter(page); font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="cover-hero">
+    <div class="cover-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <div><span class="cover-tag">Outbound Sales Playbook</span></div>
+      <div class="cover-title">Outbound Script Guide<br><span class="o">for Technijian Callers</span></div>
+      <div class="cover-sub">A field-tested script, industry-specific pivots, and an "already have an MSP" interim-wedge playbook for converting 3,406 California SMB leads into discovery meetings and AI / compliance engagements.</div>
+    </div>
+    <div class="cover-meta">
+      <div><div class="k">Lead List</div><div class="v">3,406 CA SMBs</div></div>
+      <div><div class="k">Industries</div><div class="v">15 verticals tagged</div></div>
+      <div><div class="k">Primary Goal</div><div class="v">3 discovery meetings / day</div></div>
+    </div>
+  </div>
+  <div class="orange-line"></div>
+  <div class="cover-foot"><b>Technijian</b> · 18 Technology Dr. Ste 141, Irvine CA 92618 · 949.379.8500 · technijian.com · Version 1.0 · 2026-04</div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div class="content">
+
+  <h1>1. Pre-Call Prep — 5 minutes per prospect</h1>
+  <p><strong>Before you dial, do these five things.</strong> They take 5 minutes total and double your connect rate.</p>
+  <ol>
+    <li><strong>Open the company website.</strong> Note the header tagline, what they sell, who they sell to. Skim the Careers page for tech-stack hints (Azure, AWS, EHR, QuickBooks).</li>
+    <li><strong>LinkedIn company page.</strong> Employee count, HQ, recent posts. If &lt;25, angle for owner/operator. If 25–200, angle for Director of IT / Ops / CFO.</li>
+    <li><strong>Google "[Company] technology" and "[Company] breach".</strong> Any news? A breach is your opener. A new CTO hire is your opener. An award is your opener.</li>
+    <li><strong>Check the industry tag</strong> in <code>leads-classified.csv</code>. That gives you the primary pitch, core service bundle, and MSP-interim wedges for their vertical (§4).</li>
+    <li><strong>Write down one specific observation</strong> to drop in the opener. This is what separates you from every other cold caller.</li>
+  </ol>
+  <p><strong>Target ratio:</strong> 8–12 dials per live conversation. <strong>Target per day:</strong> 20 meaningful conversations, 3 booked discovery meetings.</p>
+
+  <h1>2. The Master Script — ~3 min conversation</h1>
+
+  <h2>2.1 Opener (first 15 seconds)</h2>
+  <blockquote>"Hi, this is <strong>[Your Name]</strong> with <strong>Technijian</strong> — we're a managed IT and AI services firm out of Irvine. I know I'm calling out of the blue. Do you have 60 seconds, or did I catch you at a bad time?"</blockquote>
+  <p><strong>Why this works:</strong> Names yourself, names the company, names where you are (local), asks permission. California SMBs hate being surprised — they respect it when you ask.</p>
+  <p>If <em>"bad time"</em>: book a specific day + rough time. CRM it.<br>
+  If <em>"what's this about?"</em> (most common): move to 2.2.<br>
+  If <em>"sure, what's up?"</em>: move to 2.2.</p>
+
+  <h2>2.2 The One-Line Why</h2>
+  <blockquote>"I'm reaching out because we work with <strong>[industry]</strong> firms here in Orange County and LA — we run their IT, their cybersecurity, and increasingly their AI strategy. We keep seeing three things come up this year — <strong>[one pain relevant to their industry; see §4]</strong>. Is that something on your plate, or is IT already sorted out for you?"</blockquote>
+  <p><strong>Why this works:</strong> Industry-specific ("we work with construction firms") signals you're not spraying. The pain you mention is a <em>tell</em> — if they engage, you've qualified. If they say "IT is handled," you pivot to §3 (MSP-interim wedge).</p>
+
+  <h2>2.3 Discovery — 2 to 4 questions max</h2>
+  <p>Pick from this list. <strong>Do not ask all of them.</strong> Listen for where they engage.</p>
+  <ul>
+    <li>"How are you currently handling IT today — internal team, outsourced, or a mix?"</li>
+    <li>"When's the last time someone did a security or compliance assessment for you?"</li>
+    <li>"Where does AI fit in your roadmap — or hasn't it come up yet?"</li>
+    <li>"Are you on Microsoft 365 or Google Workspace? Any pain there?"</li>
+    <li>"What's the one IT or tech thing that's nagging at you right now — the thing you'd pay to make go away?"</li>
+  </ul>
+  <p><strong>Listen.</strong> You're not selling yet. You're qualifying whether there's a real problem and whether they have authority/budget.</p>
+
+  <h2>2.4 The Offer — pick ONE, don't stack</h2>
+  <table>
+    <thead><tr><th>If they said...</th><th>Offer this</th></tr></thead>
+    <tbody>
+      <tr><td>"We handle it ourselves / one internal guy"</td><td><strong>30-min IT assessment + written report.</strong> No-cost. "We'll tell you the three things we'd fix first."</td></tr>
+      <tr><td>"We have an MSP"</td><td><strong>Interim wedge</strong> — see §3. Do not try to replace the MSP on call one.</td></tr>
+      <tr><td>"We just had a breach / audit finding / compliance issue"</td><td><strong>Nexus Assess Pulse</strong> — vulnerability + pen test. $3–8K. 2 weeks. Written remediation plan.</td></tr>
+      <tr><td>"We're looking at AI but don't know where to start"</td><td><strong>Chat.AI demo + AI strategy session.</strong> 60 min. No cost.</td></tr>
+      <tr><td>"Budget is tight / not now"</td><td>Send a follow-up email + calendar a check-in for next quarter. Don't force it.</td></tr>
+      <tr><td>"We're fine, we've got a team"</td><td>One-line close: "Totally get it. If you ever want a second opinion on security or AI, my card's in this follow-up email. No pressure."</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.5 The Close — book the meeting</h2>
+  <blockquote>"Here's what I'd suggest: 30 minutes on Zoom — you bring whatever's on your mind IT-wise, I'll bring one of our senior folks who knows your industry. Worst case, you get a free hour of advice. Best case, we save you a ton of money or a ton of risk. What does next Tuesday or Thursday afternoon look like?"</blockquote>
+  <p>Get two options on the calendar. <strong>Send the invite before you hang up.</strong> Follow-up email within 10 minutes (§7).</p>
+
+  <h1 class="sec-break">3. "We Already Have an MSP" — Interim Wedge Playbook</h1>
+  <p><strong>This is the most important section.</strong> 60–70% of SMBs above $5M revenue already have an MSP. Do NOT try to displace the incumbent on the first call. You'll lose the deal and waste the lead.</p>
+  <p><strong>Instead, offer parallel-running services</strong> — services the incumbent MSP almost certainly isn't delivering. These are your wedge. Once you've delivered one of these well, displacement conversations happen naturally 12–24 months later when the MSP contract comes up for renewal.</p>
+
+  <h2>3.1 Universal MSP-interim wedges</h2>
+  <p>These apply across every industry:</p>
+
+  <h3>Chat.AI — Private-Tenant Enterprise AI</h3>
+  <blockquote>"We're launching a multi-tenant AI platform that runs on our own infrastructure — never trains on your data, supports 8 LLM providers, with HIPAA audit + GDPR data-subject rights built in. Your MSP isn't offering this. Most clients start with a 30-day pilot."</blockquote>
+
+  <h3>My AI — AI Strategy Consulting</h3>
+  <blockquote>"Your MSP keeps your email running. We help you figure out where AI actually moves the needle in your business. 60-minute assessment, written roadmap, no pressure."</blockquote>
+
+  <h3>Nexus Assess Pulse — Vulnerability Intel + Pen Test</h3>
+  <blockquote>"This isn't what your MSP does. It's an independent, external vuln scan + pen test. You hand the report to your cyber insurance carrier at renewal. $3–8K, delivered in 2 weeks."</blockquote>
+
+  <h3>My Compliance — Modular Compliance Services</h3>
+  <blockquote>"HIPAA, SOC 2, PCI, GDPR, CMMC — your MSP may be 'aware' of these but doesn't run a compliance program for you. We do. We pair with your existing IT to produce audit-ready evidence."</blockquote>
+
+  <h3>My AI Lead Gen — AI-Driven Outbound Lead Gen</h3>
+  <blockquote>"Totally outside the IT conversation. We use public-data scraping + AI enrichment to deliver scored, tiered leads your sales team can call Monday. Ask me about the luxury-home-builder case — 24 tier-1 leads in a 75-minute run."</blockquote>
+
+  <h3>My Dev — AI-Assisted Software Development</h3>
+  <blockquote>"We build custom applications 3–5× faster using our SDLC v7.0 methodology (AI-native). If your business depends on a piece of software that's getting stale or needs integration, this is for you."</blockquote>
+
+  <h3>My SEO — Search, Content, Video, AI Search</h3>
+  <blockquote>"Your MSP doesn't touch your website. We do SEO, content, video, and AI search optimization — unlimited monthly hours, one fee. If your phone isn't ringing from Google, this is where to start."</blockquote>
+
+  <h2>3.2 How to introduce the wedge</h2>
+  <p>After they say <em>"we already have an MSP"</em>:</p>
+  <blockquote>"Totally expected — and honestly, replacing your MSP isn't what I'd suggest anyway. What I'd ask is: <strong>is your MSP doing [AI / compliance / cybersecurity posture / SEO / custom dev]?</strong> Because those are the three things we hear SMBs wishing their MSP would do but it's not in scope. We run those as independent services alongside an existing IT partner all the time."</blockquote>
+  <p>Wait for them to tell you which gap they feel most. That's your wedge.</p>
+
+  <h2>3.3 Why this works long-term</h2>
+  <ul>
+    <li><strong>Service revenue</strong> from the wedge engagement (often $15–60K/yr)</li>
+    <li><strong>Relationship capital</strong> — you're the person who delivered value without stepping on their IT partner</li>
+    <li><strong>Future displacement</strong> — when their MSP drops the ball (and eventually they all do), you're the first call</li>
+  </ul>
+
+  <h1 class="sec-break">4. Industry-Specific Pivots</h1>
+  <p>Look up the prospect's industry tag in <code>leads-classified.csv</code>. Below is how to open and what to offer for each of the 14 specific industries, plus the fallback "Other" bucket.</p>
+
+  <div class="ind-card">
+    <h3>4.1 Healthcare (137 leads)</h3>
+    <div class="pitch">Primary pitch: HIPAA-ready managed IT + 3CX telephony platform ops — same team that runs multi-practice medical groups across Orange County.</div>
+    <div class="opener">Opener pain: "Cyber-insurance carriers are asking for a ton more evidence this year — HIPAA technical safeguards, audit logs, business-associate agreements. Is that something you're spending time on?"</div>
+    <p><strong>Key angle:</strong> HIPAA compliance is the hook. Even with an MSP, the MSP rarely produces audit-ready HIPAA evidence.</p>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Compliance (HIPAA)</strong> — technical safeguards audit, policies, training</li>
+      <li><strong>Chat.AI</strong> — private AI that never trains on PHI (most LLM tools are a HIPAA problem)</li>
+      <li><strong>My AI</strong> — scheduling / prior-auth / intake automation</li>
+      <li><strong>Nexus Assess Pulse</strong> — cyber-insurance-ready vuln report</li>
+      <li><strong>My AI Lead Gen</strong> — patient-acquisition lead gen from public signals</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.2 Financial Services (248 leads)</h3>
+    <div class="pitch">Primary pitch: Compliance-aware managed IT + 3CX + documented audit trail for financial firms.</div>
+    <div class="opener">Opener pain: "What's hitting us from CFO/COO conversations this year is SOC 2 readiness + cyber insurance renewals. Is that on your radar?"</div>
+    <p><strong>Key angle:</strong> SOC 2, PCI, Reg-BI, SEC cybersecurity rule (RIAs). Client-call recording + retention. Email security (BEC is the #1 financial loss).</p>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Compliance</strong> — SOC 2 Type II readiness</li>
+      <li><strong>My Security</strong> — quarterly pen test + email security + BEC wire-fraud prevention</li>
+      <li><strong>Chat.AI</strong> — private AI for advisor workflows (never trains on client data)</li>
+      <li><strong>My AI</strong> — underwriting, claims, loan-processing automation</li>
+      <li><strong>Nexus Assess Pulse</strong> — cyber-insurance renewal evidence</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.3 Legal (201 leads)</h3>
+    <div class="pitch">Primary pitch: M365 + secure file management + privileged-communications protection for law firms.</div>
+    <div class="opener">Opener pain: "Two things hitting law firms this year — AI for research / drafting / e-discovery, and client security questionnaires that ask about things your current IT isn't documenting. Which one's louder at your firm?"</div>
+    <p><strong>Key angle:</strong> Attorney-client privilege + BEC wire-fraud + AI-assisted legal work. Many legal-tech tools train on firm data — that's a privilege problem.</p>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>Chat.AI</strong> — private AI for legal research / drafting / doc review (privilege preserved)</li>
+      <li><strong>My AI</strong> — intake triage, matter summarization, e-discovery</li>
+      <li><strong>My Security</strong> — email / BEC / wire-fraud prevention (top legal-sector loss)</li>
+      <li><strong>My Compliance</strong> — state bar client-data protection</li>
+      <li><strong>Nexus Assess Pulse</strong> — pen test for cyber insurance</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.4 Real Estate (9 leads — small but high-value)</h3>
+    <div class="pitch">Primary pitch: Portfolio-wide 3CX VoIP + endpoint security + hybrid identity — rollouts across 30+ property portfolios.</div>
+    <div class="opener">Opener pain: "Two things come up with property operators — fragmented phone systems across properties, and AI for finding acquisition targets before other buyers. Either resonate?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Sip (3CX)</strong> — portfolio-wide VoIP standardization</li>
+      <li><strong>My AI Lead Gen</strong> — acquisition leads from permits, HOAs, just-sold signals (3–6 mo earlier)</li>
+      <li><strong>My AI</strong> — tenant-service automation</li>
+      <li><strong>My SEO</strong> — property-listing SEO + local search</li>
+      <li><strong>My Compliance</strong> — tenant PII + background-check data privacy</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.5 Construction (282 leads — largest named vertical)</h3>
+    <div class="pitch">Primary pitch: Jobsite + HQ managed IT + CrowdStrike endpoint security — proven across 130+ ticket / 340+ hr engagements.</div>
+    <div class="opener">Opener pain: "Construction firms hit two walls this year — cyber-insurance carriers asking for evidence they don't have, and lead flow getting compressed as every builder chases the same permits. Either familiar?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>Nexus Assess Pulse</strong> — cyber-insurance + GC security questionnaire evidence</li>
+      <li><strong>My AI Lead Gen</strong> — construction leads from permits, DRB agendas, HOA filings (3–6 mo earlier)</li>
+      <li><strong>My AI</strong> — PM automation, RFI/submittal triage, estimating</li>
+      <li><strong>My Cloud</strong> — hosted DC + Azure AD (retire aging on-prem servers)</li>
+      <li><strong>My Compliance</strong> — CMMC posture for federal-adjacent work</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.6 Manufacturing (60 leads)</h3>
+    <div class="pitch">Primary pitch: Shop-floor + engineering IT + verified backup + network resilience — production-safe migrations with loaner-server patterns.</div>
+    <div class="opener">Opener pain: "Two things we see at manufacturers — backup programs that never actually tested a restore, and AI use cases in quality / predictive maintenance that nobody has time to sort through. Either on your radar?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Continuity</strong> — verified-restore backup program</li>
+      <li><strong>My AI</strong> — OT/IT analytics, predictive maintenance, QC AI</li>
+      <li><strong>Nexus Assess Pulse</strong> — OT-aware vuln assessment</li>
+      <li><strong>My Compliance</strong> — ITAR / CMMC posture</li>
+      <li><strong>My Dev</strong> — MES / ERP integrations and modernization</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.7 Logistics &amp; Transport (89 leads)</h3>
+    <div class="pitch">Primary pitch: Fleet / dispatch IT + VoIP + hosted infrastructure.</div>
+    <div class="opener">Opener pain: "Two things in logistics right now — AI for route / demand / ETA, and security controls tightening from shippers and brokers. Either worth 5 minutes?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My AI</strong> — route optimization, demand forecasting, predictive ETA</li>
+      <li><strong>My Dev</strong> — TMS / dispatch / EDI integrations</li>
+      <li><strong>Chat.AI</strong> — private AI for ops playbook automation</li>
+      <li><strong>Nexus Assess Pulse</strong> — cyber-insurance vuln report</li>
+      <li><strong>My AI Lead Gen</strong> — shipper / broker prospecting</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.8 Hospitality &amp; F&amp;B (25 leads)</h3>
+    <div class="pitch">Primary pitch: Restaurant / hotel IT + POS + WiFi + SEO + content.</div>
+    <div class="opener">Opener pain: "Two things restaurants and hotels ask us about — PCI compliance on payment terminals, and getting found on Google for local search. Either loud at your place?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My SEO</strong> — restaurant SEO + WordPress (340 hrs / 4 mo YTD proven)</li>
+      <li><strong>My AI</strong> — reservation triage, review-response automation</li>
+      <li><strong>Chat.AI</strong> — guest-facing concierge AI</li>
+      <li><strong>My AI Lead Gen</strong> — event / catering lead gen</li>
+      <li><strong>My Compliance</strong> — PCI-DSS payment-card compliance</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.9 Non-Profit (58 leads)</h3>
+    <div class="pitch">Primary pitch: M365 Nonprofit + mailbox migration + B2B partner collaboration (cross-tenant setups).</div>
+    <div class="opener">Opener pain: "Three things non-profits wrestle with — mailbox chaos from reseller O365 accounts, B2B collaboration with partner agencies, and grant reporting. Any of those on your plate?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Office</strong> — mailbox migration + B2B cross-tenant setup</li>
+      <li><strong>Chat.AI</strong> — donor-communication AI</li>
+      <li><strong>My AI</strong> — grant writing, impact reporting, donor segmentation</li>
+      <li><strong>My SEO</strong> — donation-page conversion + SEO</li>
+      <li><strong>My Compliance</strong> — HIPAA, FERPA, donor-PII review</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.10 Technology &amp; AI (107 leads)</h3>
+    <div class="pitch">Primary pitch: SOC 2 readiness + DevOps + IT ops for tech SMBs.</div>
+    <div class="opener">Opener pain: "Tech companies tell us two things are the blocker — SOC 2 Type II to close enterprise deals, and SaaS security review on top of it. Either blocking revenue right now?"</div>
+    <p><strong>Key angle:</strong> These may <em>already</em> be a competitor — don't sell IT. Sell compliance, AI tooling, or dev acceleration.</p>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Compliance</strong> — SOC 2 Type II program (enterprise-deal blocker)</li>
+      <li><strong>My Security</strong> — SaaS security review + pen test</li>
+      <li><strong>My Dev</strong> — SDLC v7.0 AI-assisted dev acceleration</li>
+      <li><strong>Chat.AI</strong> — internal team AI (IP-safe)</li>
+      <li><strong>Nexus Assess Pulse</strong> — continuous vuln intelligence</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.11 Marketing &amp; Media (99 leads)</h3>
+    <div class="pitch">Primary pitch: Creative-studio IT + M365 + Adobe CC + render/storage.</div>
+    <div class="opener">Opener pain: "Two things in agencies — AI changing the creative-brief and copy pipeline, and new-business lead gen for agencies themselves. Either live conversations?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My AI Lead Gen</strong> — agency prospect gen</li>
+      <li><strong>Chat.AI</strong> — creative-brief + copy AI (no client-IP training)</li>
+      <li><strong>My AI</strong> — content production pipeline automation</li>
+      <li><strong>My SEO</strong> — agency's own SEO</li>
+      <li><strong>My Dev</strong> — custom creative-ops tooling / CMS</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.12 Automotive (20 leads)</h3>
+    <div class="pitch">Primary pitch: Dealership IT + DMS integration + compliance.</div>
+    <div class="opener">Opener pain: "Two things dealers keep asking us — Safeguards Rule compliance under GLBA, and AI for service-advisor / inventory pricing. Either sitting on your desk?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Compliance</strong> — Safeguards Rule (GLBA)</li>
+      <li><strong>My AI</strong> — service-advisor automation, inventory pricing, lead scoring</li>
+      <li><strong>Chat.AI</strong> — private AI for sales / service workflows</li>
+      <li><strong>My SEO</strong> — local dealer SEO + review management</li>
+      <li><strong>My AI Lead Gen</strong> — local auto-service lead gen</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.13 Education (16 leads)</h3>
+    <div class="pitch">Primary pitch: School / academy IT + M365 Education + FERPA + device management.</div>
+    <div class="opener">Opener pain: "Schools tell us two things — FERPA / COPPA pressure and staff wanting AI but needing to keep student data out. Either you've got opinions on?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>My Compliance</strong> — FERPA + COPPA review</li>
+      <li><strong>Chat.AI</strong> — private staff AI (never trains on student data)</li>
+      <li><strong>My AI</strong> — curriculum / admin automation, tutoring augmentation</li>
+      <li><strong>My SEO</strong> — enrollment SEO</li>
+      <li><strong>My Security</strong> — ransomware hardening (schools are a top target)</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.14 Professional Services (181 leads)</h3>
+    <div class="pitch">Primary pitch: Managed M365 + secure file collaboration + client-data protection.</div>
+    <div class="opener">Opener pain: "Prof-services firms ask us two things — client security questionnaires asking for controls you don't have documented, and AI for proposals / research / client briefs. Either a real pain?"</div>
+    <p><strong>MSP-interim wedges:</strong></p>
+    <ul>
+      <li><strong>Chat.AI</strong> — private AI for client-facing teams (confidentiality-safe)</li>
+      <li><strong>My AI</strong> — proposal generation, research, client-brief drafting</li>
+      <li><strong>My Compliance</strong> — client-data handling review</li>
+      <li><strong>My AI Lead Gen</strong> — B2B services prospecting</li>
+      <li><strong>My Dev</strong> — custom client portals / client-ops tooling</li>
+    </ul>
+  </div>
+
+  <div class="ind-card">
+    <h3>4.15 Other (1,874 leads — the catch-all)</h3>
+    <div class="pitch">Use the Master Script (§2) + Universal MSP-interim wedges (§3.1).</div>
+    <p>Your goal: quickly determine the <em>real</em> industry (listen to what they say they do) and mentally map them to one of the 14 specific buckets above, then switch to that bucket's opener mid-conversation.</p>
+  </div>
+
+  <h1 class="sec-break">5. Objection Handlers</h1>
+
+  <h3>"We're not interested."</h3>
+  <blockquote>"Totally fair. Can I ask — is that because IT is handled and you're happy, or because now isn't the time? Just so I know whether to come back in a quarter or close out the file."</blockquote>
+  <p>Listen for <em>"handled"</em> → §3 (MSP interim wedge). Listen for <em>"not now"</em> → calendar a check-in.</p>
+
+  <h3>"Send me some information."</h3>
+  <p>This is almost always a brush-off. Counter with:</p>
+  <blockquote>"Happy to — what specifically? If you tell me what area you'd actually want to understand better, I can send something targeted. Otherwise I'm just adding to your inbox, and neither of us wants that."</blockquote>
+  <p>Specific topic → send matching service one-pager (§8). "Just whatever" → brush-off; 90-day re-touch.</p>
+
+  <h3>"We already have an MSP and we're happy."</h3>
+  <blockquote>"Great — we work alongside MSPs all the time. Two questions: does your MSP handle AI strategy, and do they deliver compliance evidence to your auditors or cyber-insurance carrier? Because those are the two areas where we pick up the slack for about half our clients."</blockquote>
+  <p>Yes to both → nurture. No to either → §3.</p>
+
+  <h3>"We're too small."</h3>
+  <blockquote>"Every client we have was too small at some point. Our smallest clients are 5 people, our biggest are 500. If IT or AI takes up more than 2 hours a week of your time personally, we can probably help. Sound familiar?"</blockquote>
+
+  <h3>"Budget is tight."</h3>
+  <blockquote>"Understood. Here's the deal — we do a no-cost 30-minute assessment that just tells you the three things we'd fix first. You do nothing with it, you keep the report. If there's budget later, you know where to start. If there isn't, no pressure. Worth 30 minutes?"</blockquote>
+
+  <h3>"I don't make the decisions on IT."</h3>
+  <blockquote>"That's actually helpful. Who would be the right person — the owner, or someone in Finance or Ops? I'll reach out to them directly so I'm not taking up your time on something that's not yours to decide."</blockquote>
+  <p>Get the name + title. CRM it.</p>
+
+  <h3>"Call me back in six months."</h3>
+  <blockquote>"Absolutely. Quick question — is six months a specific trigger (like a contract renewal or a budget cycle), or just a general 'not now'? If it's a trigger I'll schedule for right before that."</blockquote>
+
+  <h3>"How did you get my number?"</h3>
+  <blockquote>"We pulled you from a public business directory. Nothing shady — I can tell you exactly where if you want. Is there anything about the outreach you'd want us to do differently?"</blockquote>
+  <p>Answer honestly. If they ask to be removed, note in CRM + remove from list.</p>
+
+  <h1 class="sec-break">6. Call Disposition Codes (for CRM)</h1>
+  <p>Log every call with one of these:</p>
+  <table>
+    <thead><tr><th>Code</th><th>Meaning</th><th>Next action</th></tr></thead>
+    <tbody>
+      <tr><td><strong>C-BM</strong></td><td>Connected — booked meeting</td><td>Invite sent, follow-up email, CRM updated</td></tr>
+      <tr><td><strong>C-INT</strong></td><td>Connected — interested, not ready</td><td>Nurture sequence, 30/60/90-day touches</td></tr>
+      <tr><td><strong>C-MSP</strong></td><td>Connected — has MSP, open to interim wedge</td><td>Follow-up email with wedge one-pager</td></tr>
+      <tr><td><strong>C-NI</strong></td><td>Connected — not interested</td><td>6-month suppress</td></tr>
+      <tr><td><strong>C-DNC</strong></td><td>Connected — do-not-call request</td><td>Remove from list, note in CRM</td></tr>
+      <tr><td><strong>VM-1/2/3</strong></td><td>Voicemail, attempt #</td><td>Max 3 VMs, then move to nurture</td></tr>
+      <tr><td><strong>NR</strong></td><td>No answer</td><td>Retry different day / time</td></tr>
+      <tr><td><strong>WR</strong></td><td>Wrong number / company gone</td><td>Remove from list</td></tr>
+      <tr><td><strong>GATE</strong></td><td>Gatekeeper — got name / deferred</td><td>Name captured, schedule direct call</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Daily target:</strong> 60 dials → 20 conversations → 3 booked meetings.</p>
+
+  <h1 class="sec-break">7. Follow-Up Email Templates</h1>
+  <p>Send within 10 minutes of every meaningful connect. Brief, specific, one CTA.</p>
+
+  <h2>7.1 After a booked discovery meeting</h2>
+  <blockquote>
+    <strong>Subject:</strong> Confirming our Thursday chat — Technijian<br><br>
+    Hi [Name] —<br><br>
+    Thanks for the time today. Confirming Thursday, 2 PM PT, 30 minutes on Zoom. Invite is on the way separately.<br><br>
+    I'll bring our [industry] lead so you get someone who knows your world, not a generalist. If anything specific comes up before then that you'd want us to prep, just reply to this email.<br><br>
+    Quick read ahead of the call: [attach the matching industry one-pager from §8]<br><br>
+    — [Your Name], Technijian<br>
+    rjain@technijian.com · 949.379.8500 · technijian.com
+  </blockquote>
+
+  <h2>7.2 After an "interested but not ready" connect</h2>
+  <blockquote>
+    <strong>Subject:</strong> Following up on our call — no pressure, just context<br><br>
+    Hi [Name] —<br><br>
+    Appreciated the time earlier. As promised, here's the one-pager for [service they expressed interest in].<br><br>
+    I'll check back in [90 days / Q3 / after the specific trigger they mentioned]. Meantime, if anything comes up — security concern, AI question, compliance deadline — my line is the fastest way to reach me.<br><br>
+    — [Your Name], Technijian<br>
+    rjain@technijian.com · 949.379.8500 · technijian.com
+  </blockquote>
+
+  <h2>7.3 After an "MSP-happy" connect</h2>
+  <blockquote>
+    <strong>Subject:</strong> Alongside your MSP — not replacing them<br><br>
+    Hi [Name] —<br><br>
+    Thanks for the candid conversation. As discussed, here are the three services we commonly run alongside an existing MSP:<br><br>
+    • <strong>Chat.AI</strong> — private-tenant enterprise AI (never trains on your data)<br>
+    • <strong>My Compliance</strong> — HIPAA / SOC 2 / PCI / GDPR / CMMC program delivery<br>
+    • <strong>Nexus Assess Pulse</strong> — independent vuln + pen-test for cyber insurance<br><br>
+    Any of these sound useful and we can set up 20 minutes with our [service] lead. Otherwise I'll circle back in a quarter in case priorities shift.<br><br>
+    — [Your Name], Technijian<br>
+    rjain@technijian.com · 949.379.8500 · technijian.com
+  </blockquote>
+
+  <h2>7.4 After a voicemail (VM-1)</h2>
+  <blockquote>
+    <strong>Subject:</strong> Left you a voicemail — short version below<br><br>
+    Hi [Name] —<br><br>
+    Just left a VM. Quick version: we're Technijian, an Orange County managed IT + AI firm. I reached out because [specific observation — their recent news, their industry pain]. If that resonates, a 15-minute call next week to see if it's worth a longer conversation.<br><br>
+    — [Your Name], Technijian<br>
+    rjain@technijian.com · 949.379.8500 · technijian.com
+  </blockquote>
+
+  <h1 class="sec-break">8. Service One-Liner Reference</h1>
+  <p>Drop these verbatim or close to it. Each has a matching PDF one-pager in Technijian Services collateral.</p>
+  <table>
+    <thead><tr><th style="width:20%">Service</th><th>One-line pitch</th></tr></thead>
+    <tbody>
+      <tr><td><strong>My IT</strong></td><td>Orange County's managed IT partner since 2000 — proactive 24/7 support from U.S.-based technicians on our pod model.</td></tr>
+      <tr><td><strong>My Security</strong></td><td>24/7 threat prevention, detection, and response delivered by U.S.-based analysts. CrowdStrike-powered. Layered defense.</td></tr>
+      <tr><td><strong>My Cloud</strong></td><td>Your cloud, your terms — private cloud in our datacenter, public cloud on Azure/AWS, or hybrid. Migration, ops, and governance.</td></tr>
+      <tr><td><strong>My Compliance</strong></td><td>Compliance, operationalized — HIPAA, SOC 2, PCI, GDPR, CMMC. Modular services today, seamless path to the Nexus automation platform.</td></tr>
+      <tr><td><strong>My Continuity</strong></td><td>Backup. Recovery. Resilience. Veeam-powered protection against ransomware, outages, and audit findings. Verified restores.</td></tr>
+      <tr><td><strong>My AI</strong></td><td>Enterprise AI consulting — from strategy through hands-on implementation. We turn ambiguity into deployed, operational AI.</td></tr>
+      <tr><td><strong>My AI Lead Gen</strong></td><td>Fresh, enriched, ready-to-outreach leads — harvested from public data, scored by AI, delivered on autopilot.</td></tr>
+      <tr><td><strong>My Dev</strong></td><td>Software development reimagined with AI — custom apps and integrations delivered 3–5× faster via SDLC v7.0 Claude Code-native methodology.</td></tr>
+      <tr><td><strong>My Office</strong></td><td>Microsoft 365 delivered as a service — migration, SharePoint, Teams, security, and Copilot under one managed roof.</td></tr>
+      <tr><td><strong>My SEO</strong></td><td>SEO, content, video, AI search optimization, and digital marketing — all in one service with unlimited monthly hours.</td></tr>
+      <tr><td><strong>My Sip</strong> (pre-release)</td><td>3CX VoIP routing and telephony platform ops — proven across multi-practice medical, financial firms, 30+ property portfolios.</td></tr>
+      <tr><td><strong>Nexus Assess Pulse</strong> (pre-release)</td><td>Unified IT risk assessment, compliance reporting, and AI-enhanced penetration testing — from discovery to exploitation proof.</td></tr>
+      <tr><td><strong>Chat.AI</strong> (pre-release)</td><td>Secure, multi-model AI with collective intelligence, workflow automation, and enterprise governance. Never trains on your data.</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">9. Contact Information &amp; Cadence</h1>
+
+  <h2>For callers to use:</h2>
+  <ul>
+    <li><strong>Main / sales line:</strong> 949.379.8500</li>
+    <li><strong>Email:</strong> <code>rjain@technijian.com</code> (or your assigned outbound alias)</li>
+    <li><strong>Website:</strong> <code>technijian.com</code></li>
+    <li><strong>Address:</strong> 18 Technology Dr. Ste 141, Irvine CA 92618</li>
+    <li><strong>Billing / support line</strong> (do NOT use for outbound sales): 949.379.8501</li>
+  </ul>
+
+  <h2>Daily (caller):</h2>
+  <ul>
+    <li>60 dials</li>
+    <li>20 meaningful conversations</li>
+    <li>3 booked discovery meetings</li>
+    <li>All CRM entries same-day</li>
+  </ul>
+
+  <h2>Weekly (Friday):</h2>
+  <ul>
+    <li>Review conversion: dials → connects → conversations → meetings</li>
+    <li>Which industry buckets convert best? Which openers landed?</li>
+    <li>Update this script with learnings. Iterate.</li>
+  </ul>
+
+  <p style="margin-top:20px; font-size:10px; color:var(--grey); font-style:italic;">Version 1.0 — 2026-04-20. Author: Technijian sales operations. Update this file as you learn what works.</p>
+
+</div>
+
+</body>
+</html>
