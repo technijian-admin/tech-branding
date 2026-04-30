@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Home Cybersecurity Remediation — Pre-Visit Client Packet</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --red:#D13A3A; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0.65in 0.7in 0.85in; }
+  @page :first { margin: 0; }
+  @page { @bottom-left { content: "Technijian · Home Cybersecurity Remediation — Pre-Visit Packet"; font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+  @page { @bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 11.5px; line-height: 1.55; background: #fff; }
+
+  /* COVER PAGE */
+  .cover { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; background: #fff; }
+  .cover-hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 50px 60px 40px; position: relative; overflow: hidden; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-hero::before { content: ''; position: absolute; top: -100px; right: -80px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(30,170,200,0.22) 0%, transparent 70%); border-radius: 50%; }
+  .cover-hero::after  { content: ''; position: absolute; bottom: -80px; left: 10%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(246,125,75,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .cover-top { position: relative; z-index: 1; }
+  .cover-top img { height: 54px; }
+  .cover-tag { font-size: 12px; letter-spacing: 4px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 7px 18px; border-radius: 16px; text-transform: uppercase; display: inline-block; margin-top: 36px; }
+  .cover-title { font-size: 46px; font-weight: 800; color: #fff; line-height: 1.05; position: relative; z-index: 1; margin-top: 18px; }
+  .cover-title .o { color: var(--orange); }
+  .cover-sub { font-size: 16px; color: rgba(255,255,255,0.78); margin-top: 14px; line-height: 1.5; max-width: 84%; position: relative; z-index: 1; }
+  .prepared-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 22px 28px; margin-top: 30px; position: relative; z-index: 1; }
+  .prepared-card .pc-label { font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 700; }
+  .prepared-card .pc-name { font-size: 22px; font-weight: 800; color: #fff; margin: 6px 0 4px; }
+  .prepared-card .pc-addr { font-size: 13px; color: rgba(255,255,255,0.72); }
+  .prepared-card .pc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.18); }
+  .prepared-card .pc-grid .k { font-size: 9px; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 600; }
+  .prepared-card .pc-grid .v { font-size: 12px; color: #fff; font-weight: 600; margin-top: 4px; border-bottom: 1px dashed rgba(255,255,255,0.4); padding-bottom: 4px; min-height: 22px; }
+  .cover-note { font-size: 11px; color: rgba(255,255,255,0.7); font-style: italic; margin-top: 24px; position: relative; z-index: 1; }
+  .orange-line { height: 6px; background: linear-gradient(90deg, var(--orange), var(--teal), var(--chartreuse)); flex-shrink: 0; }
+  .cover-foot { background: #2D2D2D; padding: 14px 60px; color: rgba(255,255,255,0.55); font-size: 10px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+  .cover-foot b { color: rgba(255,255,255,0.88); }
+
+  /* CONTENT PAGES */
+  .content h1 { font-size: 22px; font-weight: 800; color: var(--blue); margin: 28px 0 8px; padding-bottom: 6px; border-bottom: 3px solid var(--orange); page-break-after: avoid; }
+  .content h1:first-child { margin-top: 0; }
+  .content h2 { font-size: 14.5px; font-weight: 700; color: var(--dark); margin: 18px 0 6px; page-break-after: avoid; }
+  .content h3 { font-size: 12px; font-weight: 700; color: var(--blue); margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 1.2px; page-break-after: avoid; }
+  .content p { margin-bottom: 8px; color: #333; font-size: 11.5px; line-height: 1.6; }
+  .content ul, .content ol { margin: 6px 0 12px 22px; }
+  .content li { font-size: 11.5px; line-height: 1.55; color: #333; margin-bottom: 4px; }
+  .content strong { color: var(--dark); font-weight: 700; }
+  .content em { color: var(--grey); font-style: italic; }
+
+  .sec-break { page-break-before: always; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10.5px; page-break-inside: auto; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  th { background: var(--dark); color: #fff; padding: 8px 11px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  td { padding: 8px 11px; border-bottom: 1px solid var(--light-grey); vertical-align: top; color: var(--grey); }
+  td strong { color: var(--dark); }
+  tbody tr:nth-child(even) td { background: var(--off-white); }
+
+  /* Sender block (for letter page) */
+  .letter-from { font-size: 11px; color: var(--grey); line-height: 1.55; margin-bottom: 12px; }
+  .letter-from .name { font-size: 13px; font-weight: 700; color: var(--blue); }
+
+  /* Highlight callout */
+  .callout { background: var(--off-white); border-left: 4px solid var(--orange); padding: 12px 16px; margin: 12px 0; border-radius: 0 4px 4px 0; page-break-inside: avoid; }
+  .callout strong { color: var(--dark); }
+
+  /* Form table (used in authorization & checklist) */
+  .form-tbl { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 11px; }
+  .form-tbl td { padding: 9px 11px; border: 1px solid var(--light-grey); vertical-align: top; }
+  .form-tbl td.label { background: var(--off-white); font-weight: 700; color: var(--dark); width: 32%; }
+  .form-tbl td.fill { min-height: 26px; background: #fff; color: var(--grey); }
+
+  /* Checkbox tables */
+  .check-tbl th.cb, .check-tbl td.cb { width: 30px; text-align: center; }
+  .check-tbl td.cb { font-size: 14px; color: var(--grey); }
+
+  /* Signature block */
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; page-break-inside: avoid; }
+  .sig-card { border: 1px solid var(--light-grey); border-radius: 6px; padding: 14px 16px; background: var(--off-white); }
+  .sig-card .sl { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1.2px; }
+  .sig-card .ss { height: 38px; border-bottom: 1px solid var(--grey); margin: 16px 0 8px; }
+  .sig-card .sf { font-size: 10px; color: var(--grey); margin-bottom: 5px; }
+
+  .red { color: var(--red); font-weight: 700; }
+  .green { color: #2d8a2d; font-weight: 700; }
+
+  @media print { @page { size: letter; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="cover-hero">
+    <div class="cover-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <div><span class="cover-tag">Home Cybersecurity Remediation</span></div>
+      <div class="cover-title">Pre-Visit<br><span class="o">Client Packet</span></div>
+      <div class="cover-sub">Everything you need to know before the Technijian technician arrives — what to expect, how to prepare, and the authorization we'll review together at the start of the visit.</div>
+    </div>
+    <div class="prepared-card">
+      <div class="pc-label">Prepared for</div>
+      <div class="pc-name">[Client Name]</div>
+      <div class="pc-addr">[Client Address]</div>
+      <div class="pc-grid">
+        <div><div class="k">Scheduled Visit Date</div><div class="v">&nbsp;</div></div>
+        <div><div class="k">Scheduled Arrival</div><div class="v">&nbsp;</div></div>
+        <div><div class="k">Assigned Technician</div><div class="v">&nbsp;</div></div>
+      </div>
+    </div>
+    <div class="cover-note">Please read this packet through and complete the preparation checklist before the visit.</div>
+  </div>
+  <div class="orange-line"></div>
+  <div class="cover-foot"><b>Technijian, Inc.</b> · 18 Technology Dr. Ste 141, Irvine CA 92618 · 949.379.8501 · technijian.com · <em>Technology Support, Your Way.</em></div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div class="content">
+
+  <h1>Welcome &mdash; A Note from the Team</h1>
+
+  <div class="letter-from">
+    <div class="name">Technijian, Inc.</div>
+    18 Technology Dr. Ste 141, Irvine CA 92618<br>
+    949.379.8501 &middot; billing@technijian.com &middot; technijian.com
+  </div>
+
+  <p>Dear [Client First Name],</p>
+
+  <p>Thank you for trusting Technijian with the security of your home network. We're looking forward to our visit on [visit date], and this packet is meant to help both of us get the most out of the day.</p>
+
+  <h2>Here's the short version of what's happening and why</h2>
+
+  <p>Based on the cybersecurity assessment we completed, your home has a handful of issues that really do need attention &mdash; most notably the exterior <strong>HikVision cameras</strong> (which are actively being attacked at internet scale), the aging <strong>AT&amp;T gateway</strong>, and the fact that everything on your network currently sits on a <strong>single flat segment</strong> with no separation between your laptop and devices like cameras and TVs. None of these are emergencies in the sense that something is on fire today, but all of them represent risk that compounds the longer it sits.</p>
+
+  <p>The good news is that the highest-value fixes don't require tearing anything apart. In one focused day, we can close the most urgent gaps, build proper network segmentation, harden your laptop, and set up the pathway for ongoing 24/7 support from our team so nothing slides backwards after we leave.</p>
+
+  <h2>What this packet covers</h2>
+
+  <ul>
+    <li><strong>What to expect on visit day</strong> &mdash; the schedule, what the tech will do, when we'll need you</li>
+    <li><strong>What to prepare before we arrive</strong> &mdash; a short checklist so the day runs smoothly</li>
+    <li><strong>Decisions you'll want to think through</strong> &mdash; a few choices easier to make now than on the fly</li>
+    <li><strong>Authorization form</strong> &mdash; a standard permission page we'll ask you to sign at the start of the visit</li>
+    <li><strong>How the ongoing 24/7 support handoff works</strong> after the visit</li>
+  </ul>
+
+  <div class="callout">
+    <strong>A practical note:</strong> we'll need about <strong>two hours of your time during the first half of the day</strong> (for things that require your personal passwords, like turning on two-factor authentication on your email and bank). After that, you can go about your day &mdash; we'll work through the rest independently and check in with you at the end for a walkthrough.
+  </div>
+
+  <p>If anything in here is unclear or you want to talk through it before the visit, please call us at <strong>949.379.8501</strong> or reply to the email this packet came with. We're happy to spend 15 minutes on the phone to walk through anything that doesn't make sense.</p>
+
+  <p>Looking forward to seeing you on [visit date].</p>
+
+  <p>Warm regards,<br>
+  <strong>The Technijian Team</strong></p>
+
+  <h1 class="sec-break">What to Expect on Visit Day</h1>
+
+  <p>Your visit is scheduled as a single <strong>8-hour engagement</strong> with one Technijian technician onsite, working through a planned sequence of tasks. The day is designed so that the work requiring your participation happens early &mdash; we don't want you tied up all day.</p>
+
+  <h2>The Schedule at a Glance</h2>
+
+  <table>
+    <thead>
+      <tr><th>Time Block</th><th>You Needed?</th><th>What's Happening</th><th>Est. Time</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Hour 1</strong></td><td><span class="red">Yes</span></td><td>Introductions, brief walkthrough of the home, review of today's plan, sign the authorization form. Set up your password manager and change your WiFi password.</td><td>60 min</td></tr>
+      <tr><td><strong>Hour 2</strong></td><td><span class="red">Yes</span></td><td>Enable two-factor authentication on your most important accounts (email, bank, Amazon/Ring, Apple ID). This is the part that needs you to type your own passwords.</td><td>60 min</td></tr>
+      <tr><td><strong>Hours 3&ndash;5</strong></td><td><span class="green">No</span></td><td>Camera &amp; printer firmware updates, password changes on devices, and the big one &mdash; building out the new network segmentation so your cameras and TVs sit on a separate network from your laptop.</td><td>~3 hours</td></tr>
+      <tr><td><strong>Hour 6</strong></td><td>Brief check-in</td><td>Verify everything still works &mdash; can you still print? Does casting to the TV still work? Is the doorbell still notifying you? We iron out anything that broke.</td><td>60 min</td></tr>
+      <tr><td><strong>Hour 7</strong></td><td>Briefly</td><td>Laptop hardening &mdash; enable disk encryption, set up automatic backup, migrate browser passwords to the password manager.</td><td>60 min</td></tr>
+      <tr><td><strong>Hour 8</strong></td><td><span class="red">Yes</span></td><td>Final walkthrough with you, hand off documentation, explain how your 24/7 remote support works going forward.</td><td>60 min</td></tr>
+    </tbody>
+  </table>
+
+  <p><em>Total of your time needed: roughly 3 hours across the day, concentrated in the first 2 hours and the last hour. In between, the tech works independently and you can carry on with your day.</em></p>
+
+  <h2>What the Tech Will Bring</h2>
+  <ul>
+    <li>Laptop, network testing tools, and cables</li>
+    <li>USB drives for firmware updates on equipment without internet access</li>
+    <li>A label maker (for labeling the new network names on the equipment)</li>
+    <li>Clean documentation forms they'll fill out as they go</li>
+  </ul>
+
+  <h2>What the Tech Will <span style="color:var(--red)">NOT</span> Do</h2>
+  <p>To set expectations clearly &mdash; this visit is focused on cybersecurity remediation. The following are outside today's scope:</p>
+  <ul>
+    <li>Installing new hardware you haven't already agreed to (new routers, cameras, etc. &mdash; we'll recommend them, but install is a separate visit)</li>
+    <li>Physical camera replacement or alarm system replacement &mdash; those require specialist installers and separate scheduling</li>
+    <li>General computer tune-ups, printer troubleshooting unrelated to security, or help with software you use for work</li>
+    <li>Moving furniture, cable management, or drilling</li>
+  </ul>
+
+  <p><em>If you have additional needs beyond the cybersecurity scope, let us know and we can schedule a follow-up visit &mdash; but we don't want to compromise today's schedule by trying to fit extra work into it.</em></p>
+
+  <h1 class="sec-break">Before the Tech Arrives</h1>
+
+  <p>Please work through this checklist in the day or two before your scheduled visit. None of it is difficult, but doing it in advance will save meaningful time on visit day &mdash; and time saved on prep is time we can spend on actual security work.</p>
+
+  <h2>1. Account Access</h2>
+
+  <p>We'll need you to be able to log in to these accounts during the visit. If you use a shared household account, make sure the person who knows that password will be home.</p>
+
+  <table class="check-tbl">
+    <thead>
+      <tr><th class="cb">&#9744;</th><th>Account</th><th>Why we need it</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td><strong>Primary email account(s)</strong></td><td>To enable two-factor authentication and verify recovery options are current</td></tr>
+      <tr><td class="cb">&#9744;</td><td><strong>Amazon / Ring</strong></td><td>Ring doorbell privacy settings, shared users review, 2FA</td></tr>
+      <tr><td class="cb">&#9744;</td><td><strong>Apple ID</strong> (or Google / Microsoft account)</td><td>Device security settings, 2FA, Find My</td></tr>
+      <tr><td class="cb">&#9744;</td><td><strong>Bank &amp; brokerage</strong></td><td>To enable 2FA &mdash; we do not need to see your balances or transactions, only the security settings</td></tr>
+      <tr><td class="cb">&#9744;</td><td><strong>AT&amp;T account</strong></td><td>To request a replacement gateway (we'll coordinate this with you)</td></tr>
+      <tr><td class="cb">&#9744;</td><td><strong>Orbi WiFi app / admin portal</strong></td><td>To reconfigure the network &mdash; this is the big one for the day</td></tr>
+      <tr><td class="cb">&#9744;</td><td><strong>Camera / NVR admin login</strong></td><td>If you still have the original credentials, please find them. If not, we'll factory-reset as needed.</td></tr>
+      <tr><td class="cb">&#9744;</td><td><strong>Alarm system monitoring account</strong></td><td>Contact info for your alarm monitoring company, so we can verify the panel's reporting path</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>A tip that will make the day smoother:</strong> if you already use a password manager, make sure you're signed in on the device you'll have with you during the visit. If you don't use one, no problem &mdash; we'll set one up together in the first hour.
+  </div>
+
+  <h2>2. Physical Access</h2>
+  <p>Please make sure the tech can reach every piece of networked equipment on visit day. This means clear access to:</p>
+  <ul>
+    <li>The AT&amp;T gateway (currently in Barb's Office)</li>
+    <li>The Orbi WiFi router and any satellite nodes</li>
+    <li>The NetworX alarm panel</li>
+    <li>Exterior cameras (so we can verify model numbers and labels) &mdash; just the wiring and mounting points, we don't need to take any down</li>
+    <li>The NVR / camera monitor screen in Tom's Office</li>
+    <li>The Dell XPS laptop</li>
+    <li>Both HP printers</li>
+  </ul>
+  <p><em>If any of these are behind locked doors or in cabinets, please have them accessible &mdash; or plan to have someone home who can open them.</em></p>
+
+  <h2>3. A Few Decisions to Think About</h2>
+  <p>You'll make these decisions during the visit, but thinking them through in advance makes the day faster:</p>
+
+  <table>
+    <thead>
+      <tr><th>Decision</th><th>What you're choosing between</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Password manager</strong></td><td>1Password (~$60/year, polished, family-friendly), Bitwarden (free tier is usable, paid ~$10/yr), or Apple Passwords (free, built-in if you're all-Apple). We'll recommend one based on your setup.</td></tr>
+      <tr><td><strong>Cloud backup provider</strong></td><td>Backblaze (~$99/yr, unlimited, simple), iDrive (similar price, more features), or iCloud/OneDrive (free tier, capacity-limited). All are fine &mdash; main question is whether you want unlimited or are happy with a capped plan.</td></tr>
+      <tr><td><strong>Guest WiFi name</strong></td><td>We'll create a separate network for visitors. What would you like it called? (Something simple like 'YourLastName-Guest' is common.)</td></tr>
+      <tr><td><strong>Camera replacement plan</strong></td><td>We strongly recommend replacing the HikVision cameras within 90 days. We'll give you a recommendation on visit day and coordinate with your preferred installer afterward &mdash; you don't need to decide today.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. What You Should <span class="red">NOT</span> Do Before We Arrive</h2>
+  <p>Please <strong class="red">do not</strong> attempt to make any of the changes in the assessment report yourself before the visit. We've seen several cases where a well-intentioned early attempt (changing the WiFi password, for example) ended up disconnecting half the devices in the home, which then takes an hour of the visit to untangle.</p>
+
+  <p>Leave everything as it is. We'll do it together in the right order. The only thing we'd ask you to do in advance is locate the credentials and accounts listed above &mdash; not to change anything.</p>
+
+  <h1 class="sec-break">After the Visit: Your 24/7 Remote Support</h1>
+
+  <p>A one-day onsite visit sets up the security baseline. Keeping it in good shape over time is where our 24/7 remote support comes in. This section explains what that looks like so there are no surprises.</p>
+
+  <h2>How the Handoff Works</h2>
+  <p>During the last hour of the onsite visit, your Technijian tech sets up a <strong>secure remote-access tool</strong> on your Dell XPS. This gives our 24/7 support team the ability to assist you without needing to drive to your house every time something needs attention &mdash; which is what makes it cost-effective and fast.</p>
+
+  <div class="callout">
+    <strong>To be clear about privacy:</strong> the remote team has their own dedicated admin accounts on your network equipment &mdash; they do not use your personal credentials. Any remote session happens with your awareness (you'll see a notification), and sessions are logged.
+  </div>
+
+  <h2>Who Actually Helps You</h2>
+  <p>Technijian operates with both a <strong>U.S. team</strong> (here in Orange County) and an <strong>international support team</strong> based in India, working on a 24/7 shift pattern. This is standard for modern managed services and is how we're able to offer overnight and weekend coverage at a reasonable price.</p>
+  <ul>
+    <li>U.S.-based account management and escalations</li>
+    <li>International (India-based) Tier 1 and Tier 2 remote support &mdash; same team every time, not a rotating queue</li>
+    <li>Local dispatch available if something requires onsite hands &mdash; typically the same technician who did your initial visit</li>
+  </ul>
+
+  <h2>What the Remote Team Handles</h2>
+  <p>The ongoing support covers most of what comes up in a home network over time:</p>
+  <ul>
+    <li><strong>Monthly patching</strong> &mdash; Windows updates on the laptop, firmware checks on router/mesh/cameras/printers</li>
+    <li><strong>Backup verification</strong> &mdash; making sure your data is actually being backed up each month</li>
+    <li><strong>Security log review</strong> &mdash; scanning for unusual device behavior on your network</li>
+    <li><strong>Ad-hoc support</strong> &mdash; printer stopped working, a new device won't connect, a suspicious email you want to run past someone</li>
+    <li><strong>Quarterly deep audit</strong> &mdash; a thorough review every three months</li>
+    <li><strong>Annual re-assessment</strong> &mdash; a full refresh of the report we just did, once a year</li>
+  </ul>
+
+  <h2>What the Remote Team Does <span class="red">NOT</span> Handle</h2>
+  <p>Some things still require a local visit or specialist. The remote team will coordinate these for you, but they're billed separately:</p>
+  <ul>
+    <li>Physical device replacement (cameras, alarm panel, printers)</li>
+    <li>Hardware failures that need onsite diagnosis</li>
+    <li>AT&amp;T technician dispatches</li>
+    <li>Anything involving actual physical security of the home</li>
+  </ul>
+
+  <h2>Typical Monthly Time</h2>
+  <p>For your specific environment (roughly 30 networked devices, two active users), we estimate about <strong>7.5 hours per month</strong> of remote support work once things settle into a steady state. The first three months run a bit higher because the team is completing follow-up items from the onsite visit.</p>
+
+  <p><em>Your monthly retainer and exact terms are covered in a separate proposal &mdash; please review that document for pricing. If you have questions about the remote contract specifically, feel free to ask your Technijian account manager.</em></p>
+
+  <h1 class="sec-break">Client Authorization Form</h1>
+  <p style="font-size: 12px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Home Cybersecurity Remediation Visit</p>
+  <p style="font-size: 11px; color: var(--grey); font-style: italic; margin-bottom: 18px;">To be signed by the homeowner at the start of the onsite visit.</p>
+
+  <h3>Client Information</h3>
+  <table class="form-tbl">
+    <tr><td class="label">Client Name(s)</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Service Address</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Phone</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Email</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Visit Date</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Technician Name</td><td class="fill">&nbsp;</td></tr>
+  </table>
+
+  <h3>Authorization Granted</h3>
+  <p>By signing below, the undersigned client (or authorized representative of the household) authorizes <strong>Technijian, Inc.</strong> and its assigned technician(s) to perform the following activities on the property listed above, solely for the purpose of the Home Cybersecurity Remediation engagement:</p>
+  <ol>
+    <li><strong>Access and log in</strong> to network equipment, including but not limited to the internet gateway, WiFi mesh, wireless access points, security cameras, network video recorders, printers, computers, and smart home devices located on the property.</li>
+    <li><strong>Change administrative credentials</strong> on the above equipment, with all new credentials securely recorded and transferred to the client at the conclusion of the visit.</li>
+    <li><strong>Apply firmware and software updates</strong> to network equipment and authorized computers.</li>
+    <li><strong>Reconfigure the home network</strong>, including creating new WiFi networks (IoT / guest segments), changing network names, and implementing firewall rules to segment devices.</li>
+    <li><strong>Install authorized software</strong> on the client's Dell XPS laptop, including: a password manager, endpoint backup software, and a secure remote-access tool for ongoing support.</li>
+    <li><strong>Configure accounts</strong> for the Technijian 24/7 remote support team to provide ongoing managed services, separate from the client's own personal accounts.</li>
+    <li><strong>Physically remove, disconnect, or decommission</strong> equipment identified in the cybersecurity assessment as inactive or unnecessary, after confirming with the client.</li>
+    <li><strong>Document the configuration</strong> of the network and endpoints as a record of the engagement, to be retained securely by Technijian and shared with the client.</li>
+  </ol>
+
+  <h3>Scope Limitations</h3>
+  <p>This authorization does <strong class="red">NOT</strong> grant permission for the following, which remain out of scope:</p>
+  <ul>
+    <li>Accessing any personal files, emails, photos, or documents on the client's devices beyond what is incidental to the security configuration being performed.</li>
+    <li>Installing any software or services beyond those explicitly listed above.</li>
+    <li>Making purchases on the client's behalf without separate written approval.</li>
+    <li>Sharing any information gathered during the visit with third parties outside Technijian and its contracted 24/7 support personnel, except as required by law.</li>
+    <li>Replacing, removing, or physically altering any equipment not explicitly listed in this engagement without separate written approval.</li>
+  </ul>
+
+  <h3>Client Acknowledgments</h3>
+  <p>The client acknowledges that:</p>
+  <ul>
+    <li>The services performed will make material changes to the home network that may require the client to re-enter credentials on some connected devices after the visit.</li>
+    <li>Certain legacy devices may not be compatible with current security standards (such as WPA3 WiFi) and may require replacement at the client's discretion &mdash; Technijian will advise but will not replace equipment without separate authorization.</li>
+    <li>Some items from the cybersecurity assessment cannot be completed during a single visit and will be deferred to the ongoing remote support contract (if engaged) or future scheduled visits.</li>
+    <li>Recommendations made during or after the visit (such as replacing the HikVision cameras) are the client's decision to act upon, and Technijian will support whichever choice the client makes.</li>
+  </ul>
+
+  <h3>Privacy &amp; Data Handling</h3>
+  <p>Technijian will not record video, audio, or screen captures during the visit without separate consent. Configuration details documented for future support will be stored in Technijian's secure internal systems with access limited to the assigned technician team. Credentials created during the visit will be delivered to the client via a secure password manager handoff and not retained in any other form by Technijian beyond what is necessary to provide ongoing support (if contracted).</p>
+
+  <h3>Signatures</h3>
+  <div class="sig-grid">
+    <div class="sig-card">
+      <div class="sl">Client Signature</div>
+      <div class="ss"></div>
+      <div class="sf">Printed Name: ____________________________</div>
+      <div class="sf">Date: ____________________________</div>
+    </div>
+    <div class="sig-card">
+      <div class="sl">Technijian Technician Signature</div>
+      <div class="ss"></div>
+      <div class="sf">Printed Name: ____________________________</div>
+      <div class="sf">Date: ____________________________</div>
+    </div>
+  </div>
+  <p style="font-size: 10px; color: var(--grey); font-style: italic; margin-top: 14px;">A countersigned copy of this form will be left with the client at the conclusion of the visit.</p>
+
+</div>
+
+</body>
+</html>

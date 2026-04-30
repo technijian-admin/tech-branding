@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Home Cybersecurity Remediation — Onsite Visit Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --red:#D13A3A; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0.6in 0.65in 0.85in; }
+  @page :first { margin: 0; }
+  @page { @bottom-left { content: "Technijian · Onsite Visit Checklist — CONFIDENTIAL · For Technician Use"; font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+  @page { @bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 11px; line-height: 1.5; background: #fff; }
+
+  .cover { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; background: #fff; }
+  .cover-hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 50px 60px 40px; position: relative; overflow: hidden; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-hero::before { content: ''; position: absolute; top: -100px; right: -80px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(30,170,200,0.22) 0%, transparent 70%); border-radius: 50%; }
+  .cover-hero::after  { content: ''; position: absolute; bottom: -80px; left: 10%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(246,125,75,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .cover-top { position: relative; z-index: 1; }
+  .cover-top img { height: 54px; }
+  .cover-tag { font-size: 12px; letter-spacing: 4px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 7px 18px; border-radius: 16px; text-transform: uppercase; display: inline-block; margin-top: 32px; margin-right: 8px; }
+  .conf-tag { font-size: 11px; letter-spacing: 3px; font-weight: 700; color: var(--orange); border: 1px solid rgba(246,125,75,0.55); background: rgba(246,125,75,0.12); padding: 7px 16px; border-radius: 16px; text-transform: uppercase; display: inline-block; margin-top: 32px; }
+  .cover-title { font-size: 44px; font-weight: 800; color: #fff; line-height: 1.05; position: relative; z-index: 1; margin-top: 16px; }
+  .cover-title .o { color: var(--orange); }
+  .cover-sub { font-size: 15px; color: rgba(255,255,255,0.78); margin-top: 14px; line-height: 1.5; max-width: 86%; position: relative; z-index: 1; }
+  .toc-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 22px 28px; margin-top: 24px; position: relative; z-index: 1; }
+  .toc-card .tc-label { font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 700; margin-bottom: 12px; }
+  .toc-card .tc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+  .toc-card .tc-item { font-size: 11.5px; color: rgba(255,255,255,0.85); display: flex; gap: 12px; }
+  .toc-card .tc-item .num { color: var(--orange); font-weight: 700; min-width: 18px; }
+  .cover-warn { background: rgba(209,58,58,0.18); border-left: 4px solid var(--red); padding: 12px 18px; margin-top: 20px; border-radius: 0 4px 4px 0; position: relative; z-index: 1; font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.55; }
+  .cover-warn strong { color: #fff; }
+  .orange-line { height: 6px; background: linear-gradient(90deg, var(--orange), var(--teal), var(--chartreuse)); flex-shrink: 0; }
+  .cover-foot { background: #2D2D2D; padding: 14px 60px; color: rgba(255,255,255,0.55); font-size: 10px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+  .cover-foot b { color: rgba(255,255,255,0.88); }
+
+  .content h1 { font-size: 20px; font-weight: 800; color: var(--blue); margin: 24px 0 6px; padding-bottom: 5px; border-bottom: 3px solid var(--orange); page-break-after: avoid; }
+  .content h1:first-child { margin-top: 0; }
+  .content h2 { font-size: 13.5px; font-weight: 700; color: var(--dark); margin: 14px 0 5px; page-break-after: avoid; }
+  .content h3 { font-size: 11.5px; font-weight: 700; color: var(--blue); margin: 10px 0 3px; text-transform: uppercase; letter-spacing: 1.2px; page-break-after: avoid; }
+  .content p { margin-bottom: 6px; color: #333; font-size: 11px; line-height: 1.55; }
+  .content ul { margin: 4px 0 8px 22px; }
+  .content li { font-size: 11px; line-height: 1.5; color: #333; margin-bottom: 2px; }
+  .content strong { color: var(--dark); font-weight: 700; }
+  .content em { color: var(--grey); font-style: italic; }
+
+  .sec-break { page-break-before: always; }
+
+  .lead-in { background: var(--off-white); border-left: 4px solid var(--orange); padding: 9px 14px; margin: 6px 0 10px; border-radius: 0 4px 4px 0; font-size: 10.5px; color: var(--dark); line-height: 1.5; page-break-inside: avoid; }
+  .lead-in strong { color: var(--dark); }
+
+  .key-line { font-size: 10px; color: var(--grey); font-style: italic; margin: 4px 0 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 12px; font-size: 10.5px; page-break-inside: auto; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  th { background: var(--dark); color: #fff; padding: 6px 9px; text-align: left; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  th.cb, td.cb { width: 26px; text-align: center; }
+  td { padding: 7px 9px; border-bottom: 1px solid var(--light-grey); vertical-align: top; color: var(--grey); font-size: 10.5px; }
+  td.cb { color: var(--grey); font-size: 13px; }
+  td strong { color: var(--dark); }
+  tbody tr:nth-child(even) td { background: var(--off-white); }
+
+  /* Subhead row inside a table */
+  tr.subhead td { background: #e6f0fa; color: var(--blue); font-weight: 700; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px; padding: 5px 9px; }
+
+  .form-tbl { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 11px; }
+  .form-tbl td { padding: 8px 11px; border: 1px solid var(--light-grey); vertical-align: top; color: var(--dark); }
+  .form-tbl td.label { background: var(--off-white); font-weight: 700; color: var(--dark); width: 32%; }
+  .form-tbl td.fill { min-height: 22px; background: #fff; color: var(--grey); }
+
+  .blank-rows td { height: 28px; background: #fff; }
+
+  .red { color: var(--red); font-weight: 700; }
+  .grn { color: #2d8a2d; font-weight: 700; }
+
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; page-break-inside: avoid; }
+  .sig-card { border: 1px solid var(--light-grey); border-radius: 6px; padding: 14px 16px; background: var(--off-white); }
+  .sig-card .sl { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1.2px; }
+  .sig-card .ss { height: 38px; border-bottom: 1px solid var(--grey); margin: 14px 0 6px; }
+  .sig-card .sf { font-size: 10px; color: var(--grey); margin-bottom: 5px; }
+
+  @media print { @page { size: letter; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="cover-hero">
+    <div class="cover-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <div>
+        <span class="cover-tag">Home Cybersecurity Remediation</span>
+        <span class="conf-tag">Confidential · Tech Use</span>
+      </div>
+      <div class="cover-title">Onsite Visit<br><span class="o">Checklist</span></div>
+      <div class="cover-sub">Technician worksheet for the 8-hour Home Cybersecurity Remediation engagement. Complete during the visit, return to operations within 24 hours for final report generation.</div>
+    </div>
+    <div class="toc-card">
+      <div class="tc-label">Worksheet Sections</div>
+      <div class="tc-grid">
+        <div class="tc-item"><span class="num">1</span><span>Check-In &amp; Pre-Flight</span></div>
+        <div class="tc-item"><span class="num">2</span><span>Credentials &amp; Account Security</span></div>
+        <div class="tc-item"><span class="num">3</span><span>Device-by-Device Audit</span></div>
+        <div class="tc-item"><span class="num">4</span><span>HikVision Camera Hardening</span></div>
+        <div class="tc-item"><span class="num">5</span><span>Network Segmentation Build-Out</span></div>
+        <div class="tc-item"><span class="num">6</span><span>Endpoint Hardening: Dell XPS</span></div>
+        <div class="tc-item"><span class="num">7</span><span>24/7 Remote Support Handoff</span></div>
+        <div class="tc-item"><span class="num">8</span><span>Deferred Items &amp; Issues</span></div>
+        <div class="tc-item"><span class="num">9</span><span>Visit Sign-Off</span></div>
+      </div>
+    </div>
+    <div class="cover-warn">
+      <strong>Important:</strong> Do <strong>not</strong> record any client passwords in this worksheet. Confirm actions only. Original returns to Technijian operations within 24 hours of visit completion.
+    </div>
+  </div>
+  <div class="orange-line"></div>
+  <div class="cover-foot"><b>Technijian, Inc.</b> · 18 Technology Dr. Ste 141, Irvine CA 92618 · 949.379.8501 · technijian.com · CONFIDENTIAL — Tech Worksheet</div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div class="content">
+
+  <h1>Visit Summary</h1>
+  <p class="key-line">Complete at check-in.</p>
+  <table class="form-tbl">
+    <tr><td class="label">Client Name(s)</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Service Address</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Visit Date</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Technician Name</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Arrival Time</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Departure Time</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="label">Client Present?</td><td class="fill">&#9744; Yes &nbsp;&nbsp; &#9744; No &mdash; who was present: ____________________</td></tr>
+    <tr><td class="label">Authorization form signed?</td><td class="fill">&#9744; Yes &nbsp;&nbsp; &#9744; No &nbsp;&mdash; <em>(work must not proceed until signed)</em></td></tr>
+    <tr><td class="label">Pre-visit prep completed?</td><td class="fill">&#9744; Fully &nbsp;&nbsp; &#9744; Partially &mdash; note gaps: ____________________ &nbsp;&nbsp; &#9744; Not at all</td></tr>
+  </table>
+
+  <h1>Section 1 — Check-In &amp; Pre-Flight (First 30 Minutes)</h1>
+  <div class="lead-in">Complete all items below before beginning any configuration work. If any item is blocked, note the blocker and determine whether to proceed or reschedule.</div>
+
+  <h2>Initial Walkthrough</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:38%">Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Greet client, introduce self, confirm scope of visit matches client understanding</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Review authorization form with client; obtain signature before any configuration changes</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Walk through the home to physically locate each device in the inventory</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Verify inventory matches actual equipment; note any additions, removals, or substitutions</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Confirm client has pre-visit prep items ready (account credentials, physical access)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Take baseline photos of current network equipment locations (cable runs, rack area)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Test current WiFi: connect tech laptop, note current SSID(s) and confirm admin access to Orbi</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Inventory Deltas from Assessment</h2>
+  <p class="key-line">List any devices found onsite that were NOT in the original inventory, or devices in the inventory that are no longer present.</p>
+  <table>
+    <thead><tr><th>Added / Removed</th><th>Device</th><th>Location</th></tr></thead>
+    <tbody class="blank-rows">
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Known Blockers / Issues at Start</h2>
+  <table>
+    <tbody class="blank-rows">
+      <tr><td style="height: 32px;">&nbsp;</td></tr>
+      <tr><td style="height: 32px;">&nbsp;</td></tr>
+      <tr><td style="height: 32px;">&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Section 2 — Credentials &amp; Account Security (Hours 1–2)</h1>
+  <div class="lead-in">This section covers the work that requires the homeowner present and typing their own passwords. <strong>Front-load this</strong> to free the client afterward. <strong class="red">Do NOT record any client passwords</strong> in this document &mdash; only confirm actions were completed.</div>
+
+  <h2>2.1 Password Manager Setup</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:38%">Details / Value</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Password manager product selected</td><td>Product: ____________ <br><em>(1Password / Bitwarden / Apple Passwords / other)</em></td></tr>
+      <tr><td class="cb">&#9744;</td><td>Account created using client's primary email</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Master passphrase set by client (not observed by tech; 5+ words)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Recovery codes printed and given to client in sealed envelope</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Installed on Dell XPS browser</td><td>Browser: ____________</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Installed on client's phone</td><td>iOS / Android</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Installed on spouse's phone (if applicable)</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.2 WiFi &amp; Router Credentials</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:38%">Findings / Actions</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Old Orbi WiFi password &mdash; was it written on the client's physical document?</td><td>&#9744; Yes &mdash; destroyed onsite &nbsp; &#9744; No &nbsp; <br>Client had other copies: __________</td></tr>
+      <tr><td class="cb">&#9744;</td><td>New Orbi WiFi password generated (20+ char, stored in password manager only)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Orbi admin password changed (separate from WiFi password)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>AT&amp;T gateway admin password &mdash; changed if possible, or documented if carrier-locked</td><td>&#9744; Changed &nbsp; &#9744; Carrier-locked &nbsp; &#9744; Currently unknown</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Shredded any credential-bearing paper documents onsite</td><td>Description of items destroyed: __________</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.3 Two-Factor Authentication Enabled</h2>
+  <p class="key-line">For each account, note whether 2FA was already enabled, enabled today, or not enabled (with reason).</p>
+  <table>
+    <thead><tr><th>Account</th><th class="cb">Already On</th><th class="cb">Enabled Today</th><th class="cb">Not Enabled</th><th>Method</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Primary email (client)</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>Primary email (spouse)</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>Apple ID / Google / Microsoft</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>Amazon / Ring</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>Bank (primary)</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>Brokerage</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>AT&amp;T account</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>Password manager</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>Orbi / Netgear account</strong></td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td class="cb">&#9744;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+  <p class="key-line">2FA method legend: <strong>App</strong> = authenticator app · <strong>SMS</strong> = text message · <strong>HW</strong> = hardware key (YubiKey) · <strong>N/A</strong> = not available</p>
+
+  <h1 class="sec-break">Section 3 — Device-by-Device Audit (Hour 3)</h1>
+  <div class="lead-in">Log into each network-connected device, record the current firmware version, note whether default credentials were still in place, and record the action taken. Every device in the inventory has a row; add rows for any devices found onsite that weren't in the assessment.</div>
+  <p class="key-line"><strong>Column key:</strong> FW Before = firmware version found · FW After = firmware after update · Default PW? = was device still using default credentials? · PW Chg = password changed to managed credential?</p>
+
+  <table>
+    <thead><tr><th>Location</th><th>Device</th><th>FW Before</th><th>FW After</th><th>Default PW?</th><th>PW Chg</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr class="subhead"><td colspan="7">Network</td></tr>
+      <tr><td>Barb's Ofc</td><td>AT&amp;T Gateway 5268AC FXN</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Living Rm</td><td>Orbi Router (primary)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Tom's Ofc</td><td>Orbi Satellite</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Barb's Ofc</td><td>AT&amp;T Wireless AP</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr class="subhead"><td colspan="7">Security</td></tr>
+      <tr><td>Exterior</td><td>HikVision Cam 1 (loc:____)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Exterior</td><td>HikVision Cam 2 (loc:____)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Exterior</td><td>HikVision Cam 3 (loc:____)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Exterior</td><td>HikVision Cam 4 (loc:____)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Tom's Ofc</td><td>Northern NVR</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Kitchen</td><td>NetworX NX8V2 Alarm</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Front Door</td><td>Ring Doorbell</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr class="subhead"><td colspan="7">Smart TVs</td></tr>
+      <tr><td>Family Rm</td><td>Samsung UHTV 8 Series</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Kitchen</td><td>Vizio TV</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Tom's Ofc</td><td>Samsung TV</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Master BR</td><td>Vizio TV 1080p</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr class="subhead"><td colspan="7">Streamers</td></tr>
+      <tr><td>Family Rm</td><td>Apple TV</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Family Rm</td><td>AT&amp;T U-verse STB</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Kitchen</td><td>AT&amp;T U-verse STB</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Tom's Ofc</td><td>AT&amp;T U-verse STB</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Master BR</td><td>AT&amp;T U-verse STB</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr class="subhead"><td colspan="7">Printers</td></tr>
+      <tr><td>Tom's Ofc</td><td>HP OfficeJet Pro 9015e</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Barb's Ofc</td><td>HP DeskJet 3755</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr class="subhead"><td colspan="7">Endpoints</td></tr>
+      <tr><td>Tom's Ofc</td><td>Dell XPS Laptop</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr class="subhead"><td colspan="7">Other</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Section 4 — HikVision Camera Hardening (Priority)</h1>
+  <div class="lead-in">Given the elevated risk level of HikVision devices (<strong class="red">F-03 CRITICAL</strong>), complete the camera-specific hardening tasks below. These are <strong>in addition to</strong> the standard password/firmware work in Section 3.</div>
+
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Hardening Task</th><th style="width:36%">Finding / Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Verified Hik-Connect / EZVIZ cloud relay is DISABLED on each camera</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Disabled any cloud sync or remote-access features on NVR</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Confirmed no port-forwards point to camera or NVR IPs on router</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Disabled UPnP on Orbi and AT&amp;T gateway</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Checked for CVE-2025-66177 patch status; applied if available</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Verified cameras are reachable only from NVR (not general LAN) &mdash; test from tech laptop</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Outbound internet access blocked for camera IPs at router firewall</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>NVR outbound internet limited to firmware update endpoints only (or manual updates)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Documented each camera's physical location, MAC address, and model number</td><td>See Section 3 notes</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Discussed replacement timeline with client (recommended 90 days)</td><td>Client decision: __________</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Camera Physical Inventory</h2>
+  <p class="key-line">Record the details of each HikVision camera for the replacement planning handoff to the remote team.</p>
+  <table>
+    <thead><tr><th>Cam #</th><th>Mount Location</th><th>Model #</th><th>MAC Address</th><th>PoE or 12V?</th><th>Field of View</th><th>Notes</th></tr></thead>
+    <tbody class="blank-rows">
+      <tr><td><strong>1</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>2</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>3</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>4</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>5</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>6</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Section 5 — Network Segmentation Build-Out (Hours 3–5)</h1>
+  <div class="lead-in"><strong>This is the largest single task of the day.</strong> Configure the Orbi mesh to broadcast three networks: Trusted, IoT, and Guest. Migrate each device to its appropriate network. Test extensively before moving on.</div>
+
+  <h2>5.1 SSID Configuration</h2>
+  <table>
+    <thead><tr><th>SSID Purpose</th><th>SSID Name</th><th>Band</th><th>Security</th><th>Client Isolation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Trusted (primary)</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>WPA3 / WPA2-AES</td><td>No</td></tr>
+      <tr><td><strong>IoT (devices)</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>WPA2-AES</td><td>Yes (recommended)</td></tr>
+      <tr><td><strong>Guest</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>WPA2-AES</td><td>Yes (required)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.2 Device Migration</h2>
+  <p class="key-line">Check off each device as it's migrated to the correct network. If a device cannot join the new network, note the reason.</p>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Device</th><th>Target Net</th><th>Migrated?</th><th>Issues</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Dell XPS Laptop</td><td>Trusted</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Client's phone(s)</td><td>Trusted</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Spouse's phone(s)</td><td>Trusted</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Apple TV (Family Rm)</td><td>Trusted</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Samsung TV (Family Rm)</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Vizio TV (Kitchen)</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Samsung TV (Tom's Ofc)</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Vizio TV (Master BR)</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>HP OfficeJet 9015e</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>HP DeskJet 3755</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>HikVision Cams (via NVR)</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Ring Doorbell</td><td>IoT</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>NetworX Alarm (if IP)</td><td>IoT (isolated)</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>AT&amp;T U-verse STBs</td><td>IoT or separate</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Other: ____________</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Other: ____________</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.3 Firewall Rules</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Rule</th><th style="width:32%">Verified Working?</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>IoT &rarr; Trusted: <strong>BLOCKED</strong></td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Guest &rarr; Trusted: <strong>BLOCKED</strong></td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Guest &rarr; IoT: <strong>BLOCKED</strong></td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Trusted &rarr; IoT: <strong>ALLOWED</strong> (needed for casting, printing)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Camera IPs &rarr; Internet: <strong>BLOCKED</strong> (except NVR for firmware)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>UPnP: <strong>DISABLED</strong> on router</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Remote admin (WAN): <strong>DISABLED</strong> on router</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.4 Connectivity Verification (Hour 6)</h2>
+  <p class="key-line">Before moving on, walk through these real-world scenarios with the client to confirm nothing broke.</p>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Test</th><th style="width:36%">Result</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Client's phone connects to Trusted network and browses internet</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Dell XPS prints to HP OfficeJet</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>AirPlay / Cast from phone to Samsung TV works</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Ring app on phone shows live doorbell feed</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>NVR in Tom's Office displays all camera feeds</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Apple TV streams content (Netflix / etc.) successfully</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>AT&amp;T U-verse STBs receive video signal</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Guest network verified isolated &mdash; guest device cannot see Trusted devices</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Section 6 — Endpoint Hardening: Dell XPS (Hour 7)</h1>
+  <div class="lead-in">Complete the laptop security baseline. The homeowner should be briefly available for password entry and recovery key acknowledgment.</div>
+
+  <h2>6.1 Operating System &amp; Updates</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:36%">Value / Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>OS name &amp; version documented</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>All pending OS updates applied (reboot if required)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Automatic updates enabled</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Microsoft Defender (or equivalent) confirmed active, cloud protection on</td><td>Product: __________</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Dell firmware / BIOS updated via Dell Update utility</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6.2 Disk Encryption</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:36%">Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>BitLocker / FileVault enabled on primary drive</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Recovery key backed up to Microsoft account (or Apple ID)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Recovery key ALSO printed and given to client in sealed envelope</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Client verbally acknowledged recovery key importance and storage location</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6.3 Backup</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:36%">Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Cloud backup provider selected and account created</td><td>Provider: __________</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Backup agent installed and initial backup started</td><td>Est. completion: __________</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Backup scope confirmed with client (which folders)</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Encryption passphrase set by client (not known to tech)</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6.4 Password &amp; Browser Migration</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:36%">Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Browser-stored passwords exported to password manager</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Browser password saving DISABLED after migration</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Password manager audit run &mdash; flagged weak/duplicate passwords noted for client</td><td># flagged: ______</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Standard (non-admin) user account created for daily use (if applicable)</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Section 7 — 24/7 Remote Support Handoff (Hour 8)</h1>
+  <div class="lead-in"><strong>This is the critical handoff to the Technijian 24/7 support team.</strong> If this section isn't completed properly, the remote team cannot provide ongoing support. <strong class="red">Do NOT skip or rush.</strong></div>
+
+  <h2>7.1 Remote Access Tool</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Task</th><th style="width:36%">Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Remote access tool installed on Dell XPS</td><td>Product: __________</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Dedicated Technijian admin account created on XPS (separate from client account)</td><td>Username: __________</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Unattended access configured with notification to client on session start</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Test remote connection from tech's phone/laptop &mdash; confirmed working</td><td>&nbsp;</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Client informed about how they'll receive notifications when remote team connects</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.2 Credential Handoff to Remote Team</h2>
+  <p class="key-line">Record which credentials have been provisioned for the remote team's use. <strong class="red">Do NOT record actual passwords</strong> in this form &mdash; only confirm accounts exist in the Technijian shared vault.</p>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>System</th><th>Remote Admin Acct?</th><th>In Shared Vault?</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Orbi admin portal</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+      <tr><td class="cb">&#9744;</td><td>AT&amp;T gateway admin</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Dell XPS (admin user)</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+      <tr><td class="cb">&#9744;</td><td>HikVision NVR</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+      <tr><td class="cb">&#9744;</td><td>HP OfficeJet 9015e admin</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+      <tr><td class="cb">&#9744;</td><td>HP DeskJet 3755 admin</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Ring / Amazon (shared-user only)</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Cloud backup console</td><td>&#9744; Yes &nbsp; &#9744; No &nbsp; &#9744; N/A</td><td>&#9744; Yes &nbsp; &#9744; No</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.3 Documentation Package for Remote Team</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Item</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>Network diagram (current state) uploaded to client file in Technijian ticketing system</td></tr>
+      <tr><td class="cb">&#9744;</td><td>SSID names and segmentation details documented</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Device inventory with MAC addresses and assigned networks captured</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Client preferences documented (preferred contact method, best hours for remote sessions)</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Outstanding items from this visit logged as tickets for remote team</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Month 1 handoff call with assigned remote pod scheduled</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.4 Client Briefing on Remote Support</h2>
+  <table>
+    <thead><tr><th class="cb">&#9744;</th><th>Client Briefed On</th></tr></thead>
+    <tbody>
+      <tr><td class="cb">&#9744;</td><td>How to reach Technijian 24/7 support (phone, email, portal)</td></tr>
+      <tr><td class="cb">&#9744;</td><td>What remote team will do proactively (monthly patching, backup verification, etc.)</td></tr>
+      <tr><td class="cb">&#9744;</td><td>What to do if they see a remote-access notification they don't expect</td></tr>
+      <tr><td class="cb">&#9744;</td><td>What's NOT covered by remote (physical replacements, installer work)</td></tr>
+      <tr><td class="cb">&#9744;</td><td>Client received Technijian welcome email / portal login</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Section 8 — Deferred Items &amp; Issues Encountered</h1>
+  <div class="lead-in">Record anything that could not be completed during this visit and must be handled by the remote team, a future onsite visit, or a specialist. <strong>Be specific</strong> &mdash; this section drives the final report's open-items list.</div>
+
+  <h2>8.1 Deferred to Remote Team</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Target Month</th><th>Priority</th></tr></thead>
+    <tbody class="blank-rows">
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>8.2 Deferred to Onsite Follow-Up or Specialist</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Vendor / Specialist</th><th>Target Date</th></tr></thead>
+    <tbody class="blank-rows">
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>8.3 Issues Encountered During Visit</h2>
+  <p class="key-line">Document anything that didn't go as planned &mdash; devices that wouldn't update, features that were unavailable, client decisions that changed scope.</p>
+  <table>
+    <tbody class="blank-rows">
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>8.4 Recommendations to Communicate in Final Report</h2>
+  <p class="key-line">Items you want emphasized in the final report to the client beyond the standard findings.</p>
+  <table>
+    <tbody class="blank-rows">
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Section 9 — Visit Sign-Off</h1>
+  <div class="lead-in">Both technician and client sign at the end of the visit. The client receives a copy of this completed worksheet before the tech departs; the original returns to Technijian operations for final report generation.</div>
+
+  <h2>Technician Summary</h2>
+  <p class="key-line">In your own words, summarize the outcome of the visit for the final report.</p>
+  <table>
+    <tbody class="blank-rows">
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+      <tr><td style="height:32px;">&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Post-Visit Risk Level Assessment</h2>
+  <p class="key-line">Based on work completed today, what is the new risk level of the environment?</p>
+  <table>
+    <thead><tr><th>Finding</th><th style="width:18%">Now Rated</th><th>Reason / Residual Risk</th></tr></thead>
+    <tbody>
+      <tr><td><strong>F-01: WiFi Credentials</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-02: AT&amp;T Gateway</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-03: HikVision Cameras</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-04: Network Segmentation</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-05: NetworX Alarm</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-06: Smart TVs</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-07: HP Printers</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-08: Dell XPS Hardening</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-09: Ring Doorbell</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-10: AT&amp;T Redundant AP</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-11: Orbi WiFi</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-12: Inactive Phone HW</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td><strong>F-13: Laptop Backup</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+  <p class="key-line">Risk levels: <strong class="red">CRITICAL</strong> / <strong>HIGH</strong> / MEDIUM / <span class="grn">LOW</span> / <span class="grn">RESOLVED</span></p>
+
+  <h2>Overall Environment Risk After Visit</h2>
+  <p style="font-size: 12px;">&#9744; <strong class="red">CRITICAL</strong> &nbsp;&nbsp; &#9744; <strong>HIGH</strong> &nbsp;&nbsp; &#9744; MEDIUM &nbsp;&nbsp; &#9744; <span class="grn">LOW</span> &nbsp;&nbsp; &#9744; <span class="grn">BASELINE ACHIEVED</span></p>
+
+  <h2>Signatures</h2>
+  <div class="sig-grid">
+    <div class="sig-card">
+      <div class="sl">Technician</div>
+      <div class="ss"></div>
+      <div class="sf">Signature: ____________________________</div>
+      <div class="sf">Printed Name: ____________________________</div>
+      <div class="sf">Date / Time: ____________________________</div>
+    </div>
+    <div class="sig-card">
+      <div class="sl">Client</div>
+      <div class="ss"></div>
+      <div class="sf">Signature: ____________________________</div>
+      <div class="sf">Printed Name: ____________________________</div>
+      <div class="sf">Date / Time: ____________________________</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:18px;">Return This Form</h2>
+  <p>The original completed form returns to Technijian operations within <strong>24 hours of visit completion</strong> for final report generation. Submit by:</p>
+  <ol>
+    <li>Uploading scan to the client ticket in Technijian's ticketing system, or</li>
+    <li>Returning the physical copy to the Irvine office.</li>
+  </ol>
+
+</div>
+
+</body>
+</html>
