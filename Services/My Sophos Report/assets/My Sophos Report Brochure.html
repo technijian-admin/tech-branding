@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Sophos Report — Technijian</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #006DB6;
+    --orange: #F67D4B;
+    --dark: #1A1A2E;
+    --teal: #1EAAC8;
+    --light: #F4F8FC;
+    --gray: #6B7280;
+    --border: #E5EAF0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #d0d5dc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px;
+    gap: 24px;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    position: relative;
+  }
+
+  /* ── SHARED HEADER / FOOTER ── */
+  .page-header {
+    background: var(--dark);
+    padding: 14px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .page-header .logo img { height: 24px; display: block; }
+  .page-header .product { color: #fff; font-size: 13px; font-weight: 700; }
+  .page-header .product span { color: var(--teal); }
+  .page-header .pg-label { color: rgba(255,255,255,0.5); font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .page-footer {
+    background: var(--dark);
+    padding: 10px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .page-footer .f-left { color: rgba(255,255,255,0.55); font-size: 9.5px; }
+  .page-footer .f-left strong { color: #fff; }
+  .page-footer .f-pg { color: rgba(255,255,255,0.4); font-size: 9.5px; }
+
+  /* ── INNER CONTENT ── */
+  .inner-content {
+    flex: 1;
+    padding: 32px 44px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── SECTION HEADING ── */
+  .section-heading { margin-bottom: 20px; flex-shrink: 0; }
+  .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 5px; }
+  .section-heading h2 { font-size: 26px; font-weight: 800; color: var(--dark); line-height: 1.15; }
+  .section-heading h2 em { color: var(--blue); font-style: normal; }
+  .section-heading .sub { font-size: 11.5px; color: var(--gray); line-height: 1.6; margin-top: 7px; max-width: 640px; }
+
+  /* ══════════════════════════════
+     PAGE 1 — COVER
+  ══════════════════════════════ */
+  .cover-page {
+    background: linear-gradient(160deg, var(--dark) 0%, #0d2044 60%, #1a3a6b 100%);
+    display: flex;
+    flex-direction: column;
+    height: 11in;
+    overflow: hidden;
+    position: relative;
+  }
+  .cover-page::before {
+    content: '';
+    position: absolute;
+    right: -100px; top: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(0,109,182,0.15);
+  }
+  .cover-page::after {
+    content: '';
+    position: absolute;
+    left: -80px; bottom: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(246,125,75,0.08);
+  }
+  .cover-header {
+    padding: 28px 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative; z-index: 1;
+    flex-shrink: 0;
+  }
+  .cover-header img { height: 30px; }
+  .cover-badge { background: var(--orange); color: #fff; font-size: 10px; font-weight: 700; padding: 5px 14px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; }
+  .cover-body {
+    flex: 1;
+    padding: 0 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .cover-eyebrow { color: var(--teal); font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+  .cover-headline { color: #fff; font-size: 40px; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .cover-headline em { color: var(--orange); font-style: normal; }
+  .cover-sub { color: rgba(255,255,255,0.72); font-size: 13px; line-height: 1.65; max-width: 600px; margin-bottom: 28px; }
+  .cover-stats { display: flex; gap: 14px; margin-bottom: 28px; }
+  .cs-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 12px 18px; text-align: center; min-width: 100px; }
+  .cs-num { color: #fff; font-size: 26px; font-weight: 800; line-height: 1; }
+  .cs-num span { color: var(--orange); }
+  .cs-label { color: rgba(255,255,255,0.65); font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.7px; margin-top: 3px; }
+  .cover-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .cv-tier { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 16px; }
+  .cv-tier-name { color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .cv-tier-price { color: #fff; font-size: 22px; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
+  .cv-tier-price span { font-size: 13px; color: var(--teal); font-weight: 600; }
+  .cv-tier-api { color: rgba(255,255,255,0.5); font-size: 9.5px; margin-bottom: 8px; }
+  .cv-tier-feat { color: rgba(255,255,255,0.65); font-size: 10px; line-height: 1.6; }
+  .cover-footer {
+    padding: 18px 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+  .cover-footer .cf-left { color: rgba(255,255,255,0.45); font-size: 10px; }
+  .cover-footer .cf-cta { background: var(--orange); color: #fff; font-size: 11px; font-weight: 700; padding: 8px 22px; border-radius: 6px; text-decoration: none; }
+
+  /* ══════════════════════════════
+     PAGE 2 — THE PROBLEM
+  ══════════════════════════════ */
+  .problem-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .prob-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow: hidden;
+  }
+  .prob-card.resolved { border-left-color: var(--blue); }
+  .prob-label { font-size: 12px; font-weight: 700; color: var(--dark); }
+  .prob-without { display: flex; align-items: flex-start; gap: 7px; }
+  .prob-x { color: #dc2626; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .prob-without-text { font-size: 10.5px; color: #6b7280; line-height: 1.5; }
+  .prob-with { flex: 1; display: flex; align-items: flex-start; gap: 7px; background: rgba(0,109,182,0.05); border-radius: 6px; padding: 7px 9px; }
+  .prob-chk { color: #16a34a; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+  .prob-with-text { font-size: 10.5px; color: var(--dark); font-weight: 500; line-height: 1.5; }
+
+  /* ══════════════════════════════
+     PAGE 3 — REPORT SECTIONS (1–6)
+  ══════════════════════════════ */
+  .sections-grid-top {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .sec-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .sec-num {
+    width: 30px; height: 30px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .sec-num.adv { background: var(--orange); }
+  .sec-body { flex: 1; overflow: hidden; }
+  .sec-title { font-size: 11.5px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .sec-desc { font-size: 10px; color: var(--gray); line-height: 1.5; }
+  .sec-tag { display: inline-block; font-size: 8.5px; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-top: 4px; }
+  .sec-tag.all { background: var(--light); color: var(--blue); }
+  .sec-tag.adv { background: rgba(246,125,75,0.1); color: var(--orange); }
+
+  /* ══════════════════════════════
+     PAGE 4 — ADVANCED TIER DEEP DIVE
+  ══════════════════════════════ */
+  .adv-layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .adv-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .adv-card-icon { font-size: 20px; margin-bottom: 6px; }
+  .adv-card-title { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .adv-card-sub { font-size: 9.5px; color: var(--orange); font-weight: 600; margin-bottom: 8px; }
+  .adv-card-body { flex: 1; }
+  .adv-bullet { font-size: 10.5px; color: #374151; line-height: 1.6; display: flex; gap: 6px; margin-bottom: 2px; }
+  .adv-bullet::before { content: '→'; color: var(--blue); font-weight: 700; flex-shrink: 0; font-size: 10px; }
+  .adv-callout {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+  .adv-callout strong { color: var(--teal); }
+
+  /* ══════════════════════════════
+     PAGE 5 — TECHNICAL SETUP
+  ══════════════════════════════ */
+  .setup-layout { flex: 1; display: flex; gap: 20px; overflow: hidden; }
+  .setup-left { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .setup-right { width: 252px; display: flex; flex-direction: column; gap: 12px; }
+
+  .tier-req-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .tier-req-header {
+    padding: 9px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tier-req-header.ess { background: var(--blue); }
+  .tier-req-header.adv { background: var(--dark); }
+  .tier-req-body { padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .req-item { display: flex; gap: 8px; align-items: flex-start; }
+  .req-num { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .req-num.ess { background: var(--blue); }
+  .req-num.adv { background: var(--dark); }
+  .req-text { font-size: 10.5px; color: #374151; line-height: 1.5; }
+  .req-text strong { color: var(--dark); }
+
+  .api-compare-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 1;
+  }
+  .api-compare-header { background: var(--dark); color: #fff; font-size: 11px; font-weight: 700; padding: 9px 14px; }
+  .api-compare-body { padding: 8px 0; }
+  .api-row { display: flex; align-items: flex-start; gap: 0; padding: 5px 14px; border-bottom: 1px solid var(--border); }
+  .api-row:last-child { border-bottom: none; }
+  .api-data { font-size: 9.5px; color: var(--gray); flex: 1.2; }
+  .api-endpoint { font-size: 9px; font-family: monospace; color: var(--teal); flex: 2; }
+
+  .network-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .network-title { font-size: 11px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .net-option { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .net-option:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .net-badge { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 8px; flex-shrink: 0; margin-top: 1px; }
+  .net-badge.rec { background: rgba(0,109,182,0.1); color: var(--blue); }
+  .net-badge.alt { background: var(--light); color: var(--gray); }
+  .net-text { font-size: 10.5px; color: #374151; line-height: 1.5; }
+
+  .readonly-box {
+    background: rgba(22,163,74,0.06);
+    border: 1px solid rgba(22,163,74,0.25);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .readonly-title { font-size: 11px; font-weight: 700; color: #15803d; margin-bottom: 5px; }
+  .readonly-text { font-size: 10.5px; color: #374151; line-height: 1.55; }
+
+  .delivery-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    flex: 1;
+  }
+  .delivery-title { font-size: 11px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .del-row { display: flex; justify-content: space-between; font-size: 10px; padding: 4px 0; border-bottom: 1px solid var(--border); gap: 8px; }
+  .del-row:last-child { border-bottom: none; }
+  .del-key { color: var(--gray); flex-shrink: 0; }
+  .del-val { font-weight: 600; color: var(--dark); text-align: right; }
+
+  /* ══════════════════════════════
+     PAGE 6 — COMPETITIVE COMPARISON
+  ══════════════════════════════ */
+  .full-compare { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .full-compare table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+  .full-compare th { background: var(--dark); color: #fff; padding: 10px 10px; text-align: center; font-size: 10px; font-weight: 600; }
+  .full-compare th:first-child { text-align: left; }
+  .full-compare th.ess-h { background: var(--blue); }
+  .full-compare th.adv-h { background: #1a4a8a; }
+  .full-compare td { padding: 10px 10px; border-bottom: 1px solid var(--border); color: #374151; text-align: center; vertical-align: middle; }
+  .full-compare td:first-child { text-align: left; font-weight: 500; color: var(--dark); }
+  .full-compare tr:nth-child(even) td { background: var(--light); }
+  .full-compare .ess-col { background: rgba(0,109,182,0.07) !important; }
+  .full-compare .adv-col { background: rgba(0,74,138,0.07) !important; }
+  .full-compare .chk { color: #16a34a; font-size: 15px; font-weight: 700; }
+  .full-compare .no { color: #dc2626; font-size: 14px; }
+  .full-compare .part { color: #d97706; font-size: 13px; }
+  .full-compare .dash { color: #9ca3af; font-size: 14px; }
+  .compare-note { background: var(--light); border-radius: 8px; padding: 10px 14px; font-size: 9.5px; color: var(--gray); line-height: 1.6; margin-top: 10px; flex-shrink: 0; }
+  .compare-note strong { color: var(--dark); }
+  .comp-why { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; flex-shrink: 0; }
+  .comp-why-item { background: rgba(0,109,182,0.05); border: 1px solid rgba(0,109,182,0.18); border-radius: 8px; padding: 14px 16px; border-top: 3px solid var(--blue); }
+  .comp-why-title { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  .comp-why-text { font-size: 10px; color: #374151; line-height: 1.6; }
+
+  /* ══════════════════════════════
+     PAGE 7 — PRICING + ROI
+  ══════════════════════════════ */
+  .pricing-page-layout { flex: 1; display: flex; gap: 18px; overflow: hidden; }
+  .pricing-page-left { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .pricing-page-right { width: 244px; display: flex; flex-direction: column; gap: 10px; }
+
+  .pc-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .pc-card.featured {
+    background: linear-gradient(135deg, var(--blue), #004a8a);
+    border: none;
+    position: relative;
+  }
+  .pc-card.featured::after {
+    content: '★ MOST POPULAR';
+    position: absolute;
+    top: 10px; right: 12px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+  }
+  .pc-price-block { text-align: center; min-width: 88px; }
+  .pc-tier-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray); }
+  .pc-card.featured .pc-tier-name { color: rgba(255,255,255,0.65); }
+  .pc-api { font-size: 8.5px; color: var(--gray); margin: 1px 0 2px; }
+  .pc-card.featured .pc-api { color: rgba(255,255,255,0.45); }
+  .pc-amount { font-size: 24px; font-weight: 800; color: var(--dark); line-height: 1; }
+  .pc-amount sup { font-size: 12px; vertical-align: super; }
+  .pc-amount sub { font-size: 10.5px; font-weight: 400; color: var(--gray); }
+  .pc-card.featured .pc-amount { color: #fff; }
+  .pc-card.featured .pc-amount sub { color: rgba(255,255,255,0.6); }
+  .pc-annual { font-size: 8.5px; color: var(--blue); font-weight: 600; margin-top: 2px; }
+  .pc-card.featured .pc-annual { color: var(--teal); }
+  .pc-features { flex: 1; }
+  .pc-item { font-size: 10px; color: #374151; display: flex; align-items: flex-start; gap: 5px; margin-bottom: 3px; line-height: 1.4; }
+  .pc-card.featured .pc-item { color: rgba(255,255,255,0.85); }
+  .pc-item::before { content: '✓'; color: var(--blue); font-weight: 700; font-size: 10px; flex-shrink: 0; }
+  .pc-card.featured .pc-item::before { color: var(--teal); }
+
+  .roi-box { background: var(--dark); border-radius: 10px; padding: 14px 16px; }
+  .roi-title { color: #fff; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
+  .roi-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .roi-row:last-child { border-bottom: none; }
+  .roi-label { color: rgba(255,255,255,0.7); font-size: 10px; }
+  .roi-val { color: var(--orange); font-size: 13px; font-weight: 800; }
+  .roi-footnote { color: rgba(255,255,255,0.4); font-size: 9px; margin-top: 8px; line-height: 1.5; }
+
+  .bundle-box { background: var(--light); border-radius: 10px; padding: 12px 14px; border-top: 3px solid var(--orange); }
+  .bundle-title { font-size: 11px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .bundle-row { font-size: 10px; color: #374151; display: flex; gap: 6px; margin-bottom: 3px; }
+  .bundle-row::before { content: '✦'; color: var(--orange); flex-shrink: 0; font-size: 9px; }
+
+  .volume-box { background: rgba(0,109,182,0.06); border: 1px solid rgba(0,109,182,0.2); border-radius: 8px; padding: 10px 12px; }
+  .volume-title { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  .volume-row { font-size: 10px; color: #374151; margin-bottom: 3px; display: flex; justify-content: space-between; }
+  .volume-disc { font-weight: 700; color: var(--blue); }
+
+  /* ══════════════════════════════
+     PAGE 8 — WHY TECHNIJIAN + CTA
+  ══════════════════════════════ */
+  .why-layout { flex: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .why-card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-top: 3px solid var(--blue); }
+  .why-icon { font-size: 22px; margin-bottom: 8px; }
+  .why-title { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 5px; }
+  .why-desc { font-size: 10.5px; color: var(--gray); line-height: 1.6; }
+
+  .cta-block {
+    background: linear-gradient(135deg, var(--blue), #004a8a);
+    border-radius: 14px;
+    padding: 28px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-block::before { content: ''; position: absolute; right: -40px; top: -40px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+  .cta-eyebrow { color: var(--teal); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .cta-headline { color: #fff; font-size: 22px; font-weight: 800; margin-bottom: 7px; }
+  .cta-sub { color: rgba(255,255,255,0.72); font-size: 11.5px; line-height: 1.6; margin-bottom: 18px; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; }
+  .cta-btn-primary { background: var(--orange); color: #fff; font-size: 12px; font-weight: 700; padding: 9px 24px; border-radius: 8px; text-decoration: none; }
+  .cta-btn-secondary { background: rgba(255,255,255,0.12); color: #fff; font-size: 12px; font-weight: 600; padding: 9px 24px; border-radius: 8px; text-decoration: none; border: 1px solid rgba(255,255,255,0.25); }
+  .cta-contact { color: rgba(255,255,255,0.55); font-size: 10px; margin-top: 12px; }
+
+  @media print {
+    body { background: none; padding: 0; gap: 0; }
+    .page { box-shadow: none; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     PAGE 1 — COVER
+══════════════════════════════ -->
+<div class="page cover-page">
+  <div class="cover-header">
+    <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
+    <div class="cover-badge">Managed Firewall Reporting</div>
+  </div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">IPS · ATP · Web Filter · Traffic Analytics · Delivered Monthly</div>
+    <div class="cover-headline">My <em>Sophos</em> Report</div>
+    <div class="cover-sub">
+      Every hour, your Sophos firewalls generate thousands of signals — intrusion attempts, malware callbacks, web policy violations, and network anomalies. Most MSPs see a fraction of it. We pull every IPS signature hit, ATP callback, and VPN event directly from your firewall, classify it, route billable tickets automatically, and deliver a plain-English monthly report on the 1st. You stop firefighting. You start billing.
+    </div>
+    <div class="cover-stats">
+      <div class="cs-card">
+        <div class="cs-num">1<span>hr</span></div>
+        <div class="cs-label">Alert detection cadence</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-num">12</div>
+        <div class="cs-label">Report sections</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-num"><span>$</span>99</div>
+        <div class="cs-label">Starting per tenant/mo</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-num">75<span>%</span></div>
+        <div class="cs-label">Less than SIEM/MSSP</div>
+      </div>
+    </div>
+    <div class="cover-tiers">
+      <div class="cv-tier">
+        <div class="cv-tier-name">Essentials</div>
+        <div class="cv-tier-price">$99<span>/mo</span></div>
+        <div class="cv-tier-api">Central Partner API · 1–5 firewalls</div>
+        <div class="cv-tier-feat">Alerts · inventory · WAN/VPN events · firmware · monthly report · auto CP ticket</div>
+      </div>
+      <div class="cv-tier" style="border-top: 2px solid var(--orange);">
+        <div class="cv-tier-name">Advanced ★ Most Popular</div>
+        <div class="cv-tier-price">$199<span>/mo</span></div>
+        <div class="cv-tier-api">Central + XGS REST API · 1–5 firewalls</div>
+        <div class="cv-tier-feat">+ IPS/IDS per-signature · ATP malware · web filter · traffic analytics · per-user activity · on-demand</div>
+      </div>
+      <div class="cv-tier">
+        <div class="cv-tier-name">Enterprise</div>
+        <div class="cv-tier-price">$299<span>/mo</span></div>
+        <div class="cv-tier-api">Central + XGS REST API · 6+ firewalls</div>
+        <div class="cv-tier-feat">+ Multi-site topology · API export · custom routing · 9 AM SLA · dedicated success contact</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cf-left">Technijian &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014 &nbsp;·&nbsp; info@technijian.com</div>
+    <a href="#" class="cf-cta">Get Your First Report Free &rarr;</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 2 — THE PROBLEM
+══════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+    <div class="product">My <span>Sophos</span> Report</div>
+    <div class="pg-label">The Problem</div>
+  </div>
+  <div class="inner-content">
+    <div class="section-heading">
+      <div class="eyebrow">Why MSPs Need This</div>
+      <h2>Sophos Central Has the Data.<br><em>Your Clients Never See It.</em></h2>
+      <div class="sub">Your firewalls generate thousands of signals every day — IPS blocks, ATP callbacks, web violations, VPN events. Most of it never reaches your client. My Sophos Report changes every workflow below.</div>
+    </div>
+    <div class="problem-grid">
+      <div class="prob-card resolved">
+        <div class="prob-label">IPS/IDS events invisible</div>
+        <div class="prob-without"><div class="prob-x">✗</div><div class="prob-without-text">Buried in the firewall log viewer — no one looks, no one reports, no client ever knows.</div></div>
+        <div class="prob-with"><div class="prob-chk">✓</div><div class="prob-with-text">Pulled hourly from the XGS log engine. Top signatures in every Advanced report with CVE references and MITRE mapping.</div></div>
+      </div>
+      <div class="prob-card resolved">
+        <div class="prob-label">Open alerts going unnoticed</div>
+        <div class="prob-without"><div class="prob-x">✗</div><div class="prob-without-text">Alerts sit in Central for days or weeks. No ticket. No billable work. Client calls when it breaks.</div></div>
+        <div class="prob-with"><div class="prob-chk">✓</div><div class="prob-with-text">Every alert detected hourly. CP ticket created automatically — billable to client contract within 60 minutes.</div></div>
+      </div>
+      <div class="prob-card resolved">
+        <div class="prob-label">Malware callbacks unreported</div>
+        <div class="prob-without"><div class="prob-x">✗</div><div class="prob-without-text">ATP fires for a host phoning home to a C2 server. Nobody investigates. Host stays compromised.</div></div>
+        <div class="prob-with"><div class="prob-chk">✓</div><div class="prob-with-text">ATP events listed by internal host, destination, threat name, and action. Unresolved callbacks flagged P1.</div></div>
+      </div>
+      <div class="prob-card resolved">
+        <div class="prob-label">Web filter violations unmeasured</div>
+        <div class="prob-without"><div class="prob-x">✗</div><div class="prob-without-text">Client asks "is policy working?" — you have no answer without manually mining the Central log viewer.</div></div>
+        <div class="prob-with"><div class="prob-chk">✓</div><div class="prob-with-text">Top blocked categories, per-user violation counts, policy exceptions, and Shadow IT app detections every month.</div></div>
+      </div>
+      <div class="prob-card resolved">
+        <div class="prob-label">No proactive firewall billing</div>
+        <div class="prob-without"><div class="prob-x">✗</div><div class="prob-without-text">2–4 billable incidents per client per month go unlogged. Industry benchmark: $1,500+/mo per 10 tenants missed.</div></div>
+        <div class="prob-with"><div class="prob-chk">✓</div><div class="prob-with-text">Automatic ticket creation recovers missed billing. 10 tenants → $1,500 recovered in month 1 (conservative).</div></div>
+      </div>
+      <div class="prob-card resolved">
+        <div class="prob-label">Traffic anomalies missed</div>
+        <div class="prob-without"><div class="prob-x">✗</div><div class="prob-without-text">Top talkers and bandwidth spikes discovered only when the client complains or the ISP calls.</div></div>
+        <div class="prob-with"><div class="prob-chk">✓</div><div class="prob-with-text">Top hosts by outbound bandwidth, unusual internal traffic patterns, and protocol anomalies flagged monthly.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="f-left"><strong>Technijian</strong> &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014</div>
+    <div class="f-pg">2 of 8</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 3 — REPORT SECTIONS 1–6
+══════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+    <div class="product">My <span>Sophos</span> Report</div>
+    <div class="pg-label">Report Contents — Part 1</div>
+  </div>
+  <div class="inner-content">
+    <div class="section-heading">
+      <div class="eyebrow">12 Sections. One Branded Word Document.</div>
+      <h2>Sections 1–6: Foundation &amp;<br><em>Threat Intelligence</em></h2>
+      <div class="sub">Sections 1–3 and 9–12 run on the Sophos Central Partner API (all tiers). Sections 4–8 require the XGS device-side REST API (Advanced and Enterprise). Sections are auto-omitted — not shown as blank — when the data source is unavailable.</div>
+    </div>
+    <div class="sections-grid-top">
+      <div class="sec-card">
+        <div class="sec-num">1</div>
+        <div class="sec-body">
+          <div class="sec-title">Executive Summary</div>
+          <div class="sec-desc">KPI strip — firewalls, open alerts, IPS blocks, ATP hits, web violations, VPN tunnels, firmware compliance %. Month-over-month indicators and plain-English status narrative. Top-priority callout box.</div>
+          <span class="sec-tag all">All tiers</span>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">2</div>
+        <div class="sec-body">
+          <div class="sec-title">Firewall Inventory &amp; Health</div>
+          <div class="sec-desc">All firewalls: model, serial, firmware vs. latest, WAN IPs, online/offline/degraded, uptime. HA pair status. Firmware out-of-date flagged P2. Unused rules (0 hits) flagged as cleanup candidates.</div>
+          <span class="sec-tag all">All tiers</span>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">3</div>
+        <div class="sec-body">
+          <div class="sec-title">Alert Activity</div>
+          <div class="sec-desc">Total alerts by severity (Critical/High/Medium/Low/Info). Category breakdown. New vs. aging vs. resolved. Top 10 by severity + age with linked CP ticket numbers. Aging alerts &gt; 7 days flagged as escalation risk.</div>
+          <span class="sec-tag all">All tiers</span>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num adv">4</div>
+        <div class="sec-body">
+          <div class="sec-title">IPS / IDS Threat Intelligence</div>
+          <div class="sec-desc">Top 10 attack signatures with CVE references, attack category (SQLi, RCE, buffer overflow), action taken. Top attacker IPs (country, hit count). Top targeted internal hosts. MITRE ATT&amp;CK mapping. Week-over-week trend.</div>
+          <span class="sec-tag adv">Advanced+ (XGS REST API)</span>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num adv">5</div>
+        <div class="sec-body">
+          <div class="sec-title">ATP &amp; Advanced Threat Protection</div>
+          <div class="sec-desc">Malware callbacks, C2 destinations, malicious file detections — per-event detail with internal host, destination, threat name, action, and timestamp. Unresolved ATP hits flagged P1. Repeat offenders highlighted (likely compromised).</div>
+          <span class="sec-tag adv">Advanced+ (XGS REST API)</span>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num adv">6</div>
+        <div class="sec-body">
+          <div class="sec-title">Web Filtering &amp; Application Control</div>
+          <div class="sec-desc">Top 10 blocked categories by request count. Top users by blocked volume. Policy exceptions (rule overrides). Application control — Shadow IT detections (unsanctioned cloud storage, VPNs). SSL/TLS inspection coverage %.</div>
+          <span class="sec-tag adv">Advanced+ (XGS REST API)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="f-left"><strong>Technijian</strong> &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014</div>
+    <div class="f-pg">3 of 8</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 4 — REPORT SECTIONS 7–12
+══════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+    <div class="product">My <span>Sophos</span> Report</div>
+    <div class="pg-label">Report Contents — Part 2</div>
+  </div>
+  <div class="inner-content">
+    <div class="section-heading">
+      <div class="eyebrow">Advanced Tier Sections</div>
+      <h2>Sections 7–12: Traffic, Users,<br><em>VPN &amp; Recommendations</em></h2>
+      <div class="sub">These sections complete the Advanced and Enterprise report — delivering SIEM-quality firewall visibility at a fraction of SIEM cost. Sections 9–12 available on all tiers.</div>
+    </div>
+    <div class="adv-layout">
+      <div class="adv-card">
+        <div class="adv-card-icon">📊</div>
+        <div class="adv-card-title">Section 7 — Network Traffic Analytics</div>
+        <div class="adv-card-sub">Advanced+ · XGS REST API</div>
+        <div class="adv-card-body">
+          <div class="adv-bullet">Total inbound/outbound bandwidth for the month</div>
+          <div class="adv-bullet">Top 10 internal hosts by outbound bandwidth (data exfiltration signal)</div>
+          <div class="adv-bullet">Top 10 external destinations by connection count and bandwidth</div>
+          <div class="adv-bullet">Daily bandwidth graph — spikes and anomalous patterns called out</div>
+          <div class="adv-bullet">Internal traffic anomalies: unusual ports or subnets (lateral movement signal)</div>
+        </div>
+      </div>
+      <div class="adv-card">
+        <div class="adv-card-icon">👤</div>
+        <div class="adv-card-title">Section 8 — User Security Activity</div>
+        <div class="adv-card-sub">Advanced+ · XGS REST API</div>
+        <div class="adv-card-body">
+          <div class="adv-bullet">Per-user threat summary: IPS events, ATP detections, web filter blocks per user</div>
+          <div class="adv-bullet">Admin authentication events: successful/failed logins, source IP, method</div>
+          <div class="adv-bullet">Remote access VPN users: sessions, bytes transferred, auth failures, unusual countries</div>
+          <div class="adv-bullet">Privileged action audit: firewall config changes — what changed, who, when</div>
+        </div>
+      </div>
+      <div class="adv-card">
+        <div class="adv-card-icon">🌐</div>
+        <div class="adv-card-title">Section 9 — VPN &amp; Remote Access</div>
+        <div class="adv-card-sub">All tiers · Central API + XGS REST (Advanced+)</div>
+        <div class="adv-card-body">
+          <div class="adv-bullet">Site-to-site VPN tunnels: status, uptime %, bytes transferred, downtime events</div>
+          <div class="adv-bullet">Remote access VPN: unique users, peak concurrent, auth failures, unusual source countries</div>
+          <div class="adv-bullet">SD-WAN failover events, automatic failback confirmed (Advanced+)</div>
+          <div class="adv-bullet">VPN certificates expiring in next 90 days flagged as P3 action item</div>
+        </div>
+      </div>
+      <div class="adv-card">
+        <div class="adv-card-icon">📋</div>
+        <div class="adv-card-title">Sections 10–12 — Activity, Findings, About</div>
+        <div class="adv-card-sub">All tiers</div>
+        <div class="adv-card-body">
+          <div class="adv-bullet"><strong>Section 10:</strong> CP tickets opened this month, alerts resolved, firmware updates applied, config changes from audit log</div>
+          <div class="adv-bullet"><strong>Section 11:</strong> P1/P2/P3 action list — unresolved ATP hits, IPS volume trending up, firmware drift, VPN instability — with remediation effort estimates</div>
+          <div class="adv-bullet"><strong>Section 12:</strong> Data sources, API access method, scope note (firewall only — endpoint covered by Huntress), tenant ID + firewall serials</div>
+        </div>
+        <div class="adv-callout"><strong>P1 findings include:</strong> active ATP hit on internal host · Critical alert open &gt;48h · WAN failover still active at month-end · admin brute force detected · outbound C2 callback</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="f-left"><strong>Technijian</strong> &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014</div>
+    <div class="f-pg">4 of 8</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 5 — TECHNICAL SETUP
+══════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+    <div class="product">My <span>Sophos</span> Report</div>
+    <div class="pg-label">Technical Setup</div>
+  </div>
+  <div class="inner-content">
+    <div class="section-heading">
+      <div class="eyebrow">Setup in 1–3 Business Days</div>
+      <h2>Two API Paths.<br><em>Both Read-Only. Both Secure.</em></h2>
+      <div class="sub">Essentials uses only the Sophos Central Partner API — no firewall configuration needed. Advanced/Enterprise additionally uses the XGS device-side REST API for full on-box log access.</div>
+    </div>
+    <div class="setup-layout">
+      <div class="setup-left">
+        <div class="tier-req-box">
+          <div class="tier-req-header ess">Essentials Tier — Sophos Central Partner API Only</div>
+          <div class="tier-req-body">
+            <div class="req-item">
+              <div class="req-num ess">1</div>
+              <div class="req-text"><strong>Sophos Central Partner credentials</strong> — OAuth2 client ID + secret from Partner Settings → API Credentials. Read-only scope. 5 minutes to generate.</div>
+            </div>
+            <div class="req-item">
+              <div class="req-num ess">2</div>
+              <div class="req-text"><strong>Branding assets</strong> — logo (PNG, min 600px wide) and hex color codes for the Word template.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tier-req-box">
+          <div class="tier-req-header adv">Advanced / Enterprise — Adds XGS Device-Side REST API</div>
+          <div class="tier-req-body">
+            <div class="req-item">
+              <div class="req-num adv">3</div>
+              <div class="req-text"><strong>XGS REST API enabled</strong> — Administration → Device Access → Local Service ACL → enable HTTPS API. System → Administration → enable REST API. Supported on XGS firmware v18+.</div>
+            </div>
+            <div class="req-item">
+              <div class="req-num adv">4</div>
+              <div class="req-text"><strong>Dedicated read-only API user</strong> — create a separate admin account on each XGS restricted to Technijian's public IP range (/32 block). We provide the IP list after onboarding.</div>
+            </div>
+            <div class="req-item">
+              <div class="req-num adv">5</div>
+              <div class="req-text"><strong>Network access to port 4444</strong> — Technijian infrastructure reaches <code style="font-size:9px;background:#f3f4f6;padding:1px 4px;border-radius:3px;">https://&lt;firewall&gt;:4444/</code> via S2S VPN (recommended) or management port restricted to our IP range.</div>
+            </div>
+          </div>
+        </div>
+        <div class="api-compare-box">
+          <div class="api-compare-header">XGS REST API — Key Endpoints (read-only)</div>
+          <div class="api-compare-body">
+            <div class="api-row"><span class="api-data">IPS events</span><span class="api-endpoint">GET /api/v1/monitor/ips</span></div>
+            <div class="api-row"><span class="api-data">ATP / malware callbacks</span><span class="api-endpoint">GET /api/v1/monitor/atp</span></div>
+            <div class="api-row"><span class="api-data">Web filter logs</span><span class="api-endpoint">GET /api/v1/monitor/webfilter</span></div>
+            <div class="api-row"><span class="api-data">Traffic analytics</span><span class="api-endpoint">GET /api/v1/monitor/interface</span></div>
+            <div class="api-row"><span class="api-data">VPN tunnels</span><span class="api-endpoint">GET /api/v1/monitor/ipsec</span></div>
+            <div class="api-row"><span class="api-data">Admin audit log</span><span class="api-endpoint">GET /api/v1/monitor/admin</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="setup-right">
+        <div class="readonly-box">
+          <div class="readonly-title">🔒 Read-Only. Always.</div>
+          <div class="readonly-text">We never push configuration changes, acknowledge alerts on your behalf, or modify any firewall settings. All API calls are GET-only. Bearer tokens have a 30-minute TTL and are refreshed automatically by the pull script.</div>
+        </div>
+        <div class="network-box">
+          <div class="network-title">Network Access Options (Advanced+)</div>
+          <div class="net-option">
+            <span class="net-badge rec">Recommended</span>
+            <div class="net-text"><strong>S2S VPN:</strong> Permanent IPsec or SSL VPN tunnel from Technijian DC to client site — already configured for most managed clients.</div>
+          </div>
+          <div class="net-option">
+            <span class="net-badge alt">Alternative</span>
+            <div class="net-text"><strong>Management port restricted:</strong> HTTPS management on port 4444 restricted to Technijian /32 IP block only. Acceptable for clients without S2S VPN.</div>
+          </div>
+        </div>
+        <div class="delivery-box">
+          <div class="delivery-title">Delivery &amp; Operations</div>
+          <div class="del-row"><span class="del-key">Alert detection</span><span class="del-val">Hourly (Central API)</span></div>
+          <div class="del-row"><span class="del-key">XGS data pull</span><span class="del-val">Every 4 hours</span></div>
+          <div class="del-row"><span class="del-key">Report delivery</span><span class="del-val">1st of month, 9 AM</span></div>
+          <div class="del-row"><span class="del-key">Format</span><span class="del-val">Microsoft Word (.docx)</span></div>
+          <div class="del-row"><span class="del-key">Setup time</span><span class="del-val">Ess: 1 day · Adv: 2–3 days</span></div>
+          <div class="del-row"><span class="del-key">Data residency</span><span class="del-val">US · not retained post-report</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="f-left"><strong>Technijian</strong> &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014</div>
+    <div class="f-pg">5 of 8</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 6 — COMPETITIVE COMPARISON
+══════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+    <div class="product">My <span>Sophos</span> Report</div>
+    <div class="pg-label">Competitive Comparison</div>
+  </div>
+  <div class="inner-content">
+    <div class="section-heading">
+      <div class="eyebrow">How We Stack Up</div>
+      <h2>SIEM-Quality Firewall Visibility.<br><em>Without the SIEM Price Tag.</em></h2>
+      <div class="sub">Sophos Central has the data. Auvik monitors the network. Perch gives you SIEM correlation. None of them produce a branded, client-ready Word report with automatic billable ticket creation on every alert — at under $200/month per site.</div>
+    </div>
+    <div class="full-compare">
+      <table>
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th class="ess-h">Essentials $99</th>
+            <th class="adv-h">Advanced $199</th>
+            <th>Sophos Central</th>
+            <th>Perch SIEM</th>
+            <th>Auvik</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Branded DOCX client deliverable</td>
+            <td class="ess-col"><span class="chk">✓</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Auto CP ticket on every alert</td>
+            <td class="ess-col"><span class="chk">✓</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>IPS per-signature event detail</td>
+            <td class="ess-col"><span class="dash">—</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="part">~</span></td>
+            <td><span class="chk">✓</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>ATP / malware callback detail</td>
+            <td class="ess-col"><span class="dash">—</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="part">~</span></td>
+            <td><span class="chk">✓</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Web filter category analytics</td>
+            <td class="ess-col"><span class="dash">—</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="part">~</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Network traffic analytics</td>
+            <td class="ess-col"><span class="dash">—</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="part">~</span></td>
+            <td><span class="part">~</span></td>
+            <td><span class="chk">✓</span></td>
+          </tr>
+          <tr>
+            <td>Per-user threat activity</td>
+            <td class="ess-col"><span class="dash">—</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="part">~</span></td>
+            <td><span class="part">~</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Automated monthly delivery</td>
+            <td class="ess-col"><span class="chk">✓</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Bundle with M365 / Meraki</td>
+            <td class="ess-col"><span class="chk">✓</span></td>
+            <td class="adv-col"><span class="chk">✓</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Public per-tenant pricing</td>
+            <td class="ess-col" style="font-weight:700;color:var(--blue);">$99/mo</td>
+            <td class="adv-col" style="font-weight:700;color:#1a4a8a;">$199/mo</td>
+            <td style="font-size:9.5px;color:#6b7280;">Free (included)</td>
+            <td style="font-size:9.5px;color:#6b7280;">~$300–$800/site</td>
+            <td style="font-size:9.5px;color:#6b7280;">~$29+/device</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="compare-note">
+        <strong>✓ Full &nbsp;·&nbsp; ~ Partial / raw data &nbsp;·&nbsp; — Not in this tier &nbsp;·&nbsp; ✗ Not available</strong><br>
+        Sophos Central provides raw data in the dashboard — but generates no client-ready deliverable, creates no tickets, and requires manual export for every report. Perch SIEM provides IPS/ATP correlation but at $300–$800/site with no DOCX output and no automated delivery. Auvik excels at multi-vendor network monitoring but is device-priced with no threat analytics. My Sophos Report Advanced at $199 delivers equivalent per-firewall visibility as a branded monthly Word report — with automatic ticketing included.
+      </div>
+      <div class="comp-why">
+        <div class="comp-why-item">
+          <div class="comp-why-title">vs. Sophos Central</div>
+          <div class="comp-why-text">Central provides raw logs and a dashboard — but zero deliverables, zero ticketing, and zero automation. My Sophos Report turns that same API data into a branded Word document delivered on the 1st, with every alert already converted to a billable CP ticket.</div>
+        </div>
+        <div class="comp-why-item">
+          <div class="comp-why-title">vs. Perch SIEM</div>
+          <div class="comp-why-text">Perch delivers SIEM-quality IPS/ATP correlation but costs $300–$800/site with no DOCX output and no automated monthly delivery. Advanced at $199/mo gives MSPs equivalent per-firewall threat visibility packaged as a client-ready deliverable.</div>
+        </div>
+        <div class="comp-why-item">
+          <div class="comp-why-title">vs. Auvik</div>
+          <div class="comp-why-text">Auvik is the right tool for multi-vendor infrastructure monitoring. My Sophos Report is purpose-built for Sophos XGS firewall security reporting — with threat intelligence, per-user activity, and monthly deliverables Auvik doesn't produce.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="f-left"><strong>Technijian</strong> &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014</div>
+    <div class="f-pg">6 of 8</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 7 — PRICING + ROI
+══════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+    <div class="product">My <span>Sophos</span> Report</div>
+    <div class="pg-label">Pricing &amp; ROI</div>
+  </div>
+  <div class="inner-content">
+    <div class="section-heading">
+      <div class="eyebrow">Simple Per-Tenant Pricing</div>
+      <h2>Priced by API Depth &amp; Firewall Count.<br><em>Not by Device, Not by User.</em></h2>
+      <div class="sub">One price per Sophos Central tenant per month. HA pairs count as one. Tier based on active firewalls at last day of prior month. Annual saves 17% across all tiers.</div>
+    </div>
+    <div class="pricing-page-layout">
+      <div class="pricing-page-left">
+        <div class="pc-card">
+          <div class="pc-price-block">
+            <div class="pc-tier-name">Essentials</div>
+            <div class="pc-api">Central API · 1–5 FW</div>
+            <div class="pc-amount"><sup>$</sup>99<sub>/mo</sub></div>
+            <div class="pc-annual">$990/yr — save 17%</div>
+          </div>
+          <div class="pc-features">
+            <div class="pc-item">All 12 report sections (API-available data)</div>
+            <div class="pc-item">Hourly alert detection + auto CP ticket</div>
+            <div class="pc-item">Alert aging tracker + 24h escalation</div>
+            <div class="pc-item">Firewall inventory + firmware compliance</div>
+            <div class="pc-item">WAN / VPN connectivity events</div>
+            <div class="pc-item">Monthly delivery (1st of month)</div>
+            <div class="pc-item">12-month report archive</div>
+          </div>
+        </div>
+        <div class="pc-card featured">
+          <div class="pc-price-block">
+            <div class="pc-tier-name">Advanced</div>
+            <div class="pc-api">Central + XGS REST · 1–5 FW</div>
+            <div class="pc-amount"><sup>$</sup>199<sub>/mo</sub></div>
+            <div class="pc-annual">$1,990/yr — save 17%</div>
+          </div>
+          <div class="pc-features">
+            <div class="pc-item">Everything in Essentials</div>
+            <div class="pc-item">IPS/IDS per-signature events + MITRE mapping</div>
+            <div class="pc-item">ATP malware callbacks + C2 detection</div>
+            <div class="pc-item">Web filter category analytics + Shadow IT</div>
+            <div class="pc-item">Network traffic analytics + top talkers</div>
+            <div class="pc-item">Per-user threat + traffic activity</div>
+            <div class="pc-item">HA pair monitoring + failover log</div>
+            <div class="pc-item">On-demand report generation</div>
+          </div>
+        </div>
+        <div class="pc-card">
+          <div class="pc-price-block">
+            <div class="pc-tier-name">Enterprise</div>
+            <div class="pc-api">Central + XGS REST · 6+ FW</div>
+            <div class="pc-amount"><sup>$</sup>299<sub>/mo</sub></div>
+            <div class="pc-annual">$2,990/yr — save 17%</div>
+          </div>
+          <div class="pc-features">
+            <div class="pc-item">Everything in Advanced</div>
+            <div class="pc-item">Multi-site WAN topology map</div>
+            <div class="pc-item">API export (JSON)</div>
+            <div class="pc-item">Custom alert routing rules</div>
+            <div class="pc-item">SLA: report delivery by 1st 9 AM</div>
+            <div class="pc-item">Dedicated customer success contact</div>
+          </div>
+        </div>
+      </div>
+      <div class="pricing-page-right">
+        <div class="roi-box">
+          <div class="roi-title">ROI Calculator</div>
+          <div class="roi-row"><span class="roi-label">10 Essentials tenants</span><span class="roi-val">$135/mo saved</span></div>
+          <div class="roi-row"><span class="roi-label">20 Advanced tenants</span><span class="roi-val">$570/mo saved</span></div>
+          <div class="roi-row"><span class="roi-label">Recovered billing (10 tenants)</span><span class="roi-val">$1,500 month 1</span></div>
+          <div class="roi-row"><span class="roi-label">Advanced vs. SIEM per site</span><span class="roi-val">38–75% less</span></div>
+          <div class="roi-footnote">Labor savings based on 1.5h/tenant (Essentials) or 2.5h/tenant (Advanced) at $75/hr. Recovered billing from 2 missed incidents/client at $75 each. SIEM comparison: Perch/Arctic Wolf at $300–$800/site.</div>
+        </div>
+        <div class="bundle-box">
+          <div class="bundle-title">Bundle &amp; Save</div>
+          <div class="bundle-row">+ My Meraki Report ($150/org) → save <strong>10%</strong></div>
+          <div class="bundle-row">+ My M365 Report ($15–$129/tenant) → save <strong>10%</strong></div>
+          <div class="bundle-row">All three services together → save <strong>15%</strong></div>
+          <div style="font-size:9px;color:var(--gray);margin-top:8px;">Example: 30 users + Sophos Advanced + Meraki<br>$49+$199+$150 = $398 → Bundle: <strong>$338/mo</strong></div>
+        </div>
+        <div class="volume-box">
+          <div class="volume-title">MSP Volume Pricing</div>
+          <div class="volume-row"><span>10–24 tenants</span><span class="volume-disc">10% off</span></div>
+          <div class="volume-row"><span>25+ tenants</span><span class="volume-disc">20% off</span></div>
+          <div style="font-size:9px;color:var(--gray);margin-top:6px;">Contact us for volume agreements. First report free — no credit card required.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="f-left"><strong>Technijian</strong> &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014</div>
+    <div class="f-pg">7 of 8</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 8 — WHY TECHNIJIAN + CTA
+══════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+    <div class="product">My <span>Sophos</span> Report</div>
+    <div class="pg-label">Why Technijian</div>
+  </div>
+  <div class="inner-content">
+    <div class="section-heading">
+      <div class="eyebrow">Your Reporting Partner</div>
+      <h2>Built for MSPs by a<br><em>Sophos Gold Partner.</em></h2>
+      <div class="sub">We built My Sophos Report for our own MSP operations before making it available to other partners. Every workflow — alert detection, ticket creation, report generation — runs against the same APIs you have access to.</div>
+    </div>
+    <div class="why-layout">
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🔥</div>
+          <div class="why-title">Direct Firewall Access</div>
+          <div class="why-desc">Advanced tier reads the XGS on-box log engine directly — the same log database as the local log viewer. You get every IPS hit and ATP event before Sophos aggregates or suppresses it.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🔒</div>
+          <div class="why-title">Read-Only. Always.</div>
+          <div class="why-desc">All API calls are GET-only. We never push config changes, acknowledge alerts on your behalf, or modify any firewall settings. Your environment stays entirely under your control.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">⚡</div>
+          <div class="why-title">Alerts in Under 60 Minutes</div>
+          <div class="why-desc">Central Partner API is polled hourly. New alert = CP ticket created within 60 minutes, billable against the client's contract, assigned to your support team with correct priority.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📄</div>
+          <div class="why-title">Your Brand, Your Report</div>
+          <div class="why-desc">Every report carries your company logo and colors. There is no Technijian attribution in the client deliverable. The report is entirely your managed firewall service.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💰</div>
+          <div class="why-title">SIEM Value. Not SIEM Cost.</div>
+          <div class="why-desc">Advanced at $199/site gives equivalent firewall-layer visibility to Perch or Arctic Wolf at $300–$800/site. Compelling cost justification for clients who've been told they "need a SIEM."</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📦</div>
+          <div class="why-title">Full Stack Available</div>
+          <div class="why-desc">Bundle with My M365 Report and My Meraki Report for complete managed reporting — network, firewall, and cloud productivity — with 10–15% bundle discounts.</div>
+        </div>
+      </div>
+      <div class="cta-block">
+        <div class="cta-eyebrow">Get Started Today</div>
+        <div class="cta-headline">Your First Report Is Free</div>
+        <div class="cta-sub">Provide your Sophos Central Partner API credential — we'll onboard one tenant and deliver a complete report within 1 business day. No credit card required. See exactly what your clients have been missing.</div>
+        <div class="cta-actions">
+          <a href="#" class="cta-btn-primary">Start Free Trial &rarr;</a>
+          <a href="#" class="cta-btn-secondary">Book a 15-Min Demo</a>
+        </div>
+        <div class="cta-contact">technijian.com &nbsp;·&nbsp; info@technijian.com &nbsp;·&nbsp; (888) 818-1014</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="f-left"><strong>Technijian</strong> &nbsp;·&nbsp; technijian.com &nbsp;·&nbsp; (888) 818-1014 &nbsp;·&nbsp; Sophos is a trademark of Sophos Ltd. All rights reserved.</div>
+    <div class="f-pg">8 of 8</div>
+  </div>
+</div>
+
+</body>
+</html>

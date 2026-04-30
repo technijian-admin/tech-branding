@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Meraki Report — Technijian</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #006DB6;
+    --orange: #F67D4B;
+    --dark: #1A1A2E;
+    --teal: #1EAAC8;
+    --light: #F4F8FC;
+    --gray: #6B7280;
+    --border: #E5EAF0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #e8edf2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 32px;
+    min-height: 100vh;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--dark);
+    padding: 14px 36px 14px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-logo img { height: 28px; display: block; }
+  .header-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.25); }
+  .header-product { color: #fff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-product span { color: var(--teal); }
+  .header-badge {
+    background: var(--orange);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--blue) 0%, #004a8a 100%);
+    padding: 18px 36px 16px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hero-tagline {
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hero-headline {
+    color: #fff;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.15;
+    max-width: 480px;
+    margin-bottom: 8px;
+  }
+  .hero-headline em { color: var(--orange); font-style: normal; }
+  .hero-sub {
+    color: rgba(255,255,255,0.82);
+    font-size: 11.5px;
+    line-height: 1.5;
+    max-width: 520px;
+    margin-bottom: 12px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 24px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px;
+    padding: 8px 14px;
+    min-width: 80px;
+    text-align: center;
+  }
+  .stat-num {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .stat-num span { color: var(--orange); }
+  .stat-label {
+    color: rgba(255,255,255,0.75);
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: 3px;
+  }
+
+  /* ── BODY ── */
+  .body {
+    flex: 1;
+    padding: 14px 36px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ── DELIVERABLES ── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .deliv-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    border-top: 3px solid var(--blue);
+  }
+  .deliv-icon {
+    width: 24px; height: 24px;
+    background: var(--light);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  .deliv-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .deliv-desc {
+    font-size: 10px;
+    color: var(--gray);
+    line-height: 1.45;
+  }
+
+  /* ── COMPARISON ── */
+  .comparison-wrap { display: flex; gap: 16px; }
+  .comp-table { flex: 1; }
+  .comp-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+  }
+  .comp-table th {
+    background: var(--dark);
+    color: #fff;
+    padding: 5px 8px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .comp-table th.highlight { background: var(--blue); }
+  .comp-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--border);
+    color: #374151;
+    vertical-align: middle;
+  }
+  .comp-table tr:nth-child(even) td { background: var(--light); }
+  .comp-table .check { color: #16a34a; font-weight: 700; font-size: 13px; }
+  .comp-table .cross { color: #dc2626; font-size: 13px; }
+  .comp-table .partial { color: #d97706; font-size: 12px; }
+  .comp-table .our-col { background: rgba(0,109,182,0.06) !important; font-weight: 600; color: var(--dark); }
+  .comp-table td:first-child { font-weight: 500; color: var(--dark); }
+
+  /* ── PRICING ── */
+  .pricing-section { }
+  .pricing-layout { display: flex; gap: 10px; align-items: flex-start; }
+
+  .price-free {
+    flex: 0 0 148px;
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  .price-free .tier-name { font-size: 11px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .price-free .tier-price { font-size: 22px; font-weight: 800; color: var(--dark); }
+  .price-free .tier-note { font-size: 10px; color: var(--gray); margin-top: 4px; line-height: 1.4; }
+
+  .price-pro {
+    flex: 1;
+    background: linear-gradient(135deg, var(--blue) 0%, #004a8a 100%);
+    border-radius: 10px;
+    padding: 12px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .price-pro::before {
+    content: '★ RECOMMENDED';
+    position: absolute;
+    top: 10px; right: 12px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+  .price-pro .tier-name { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .price-pro .tier-price { font-size: 28px; font-weight: 800; color: #fff; line-height: 1; }
+  .price-pro .tier-price sup { font-size: 14px; vertical-align: super; }
+  .price-pro .tier-price sub { font-size: 12px; vertical-align: baseline; color: rgba(255,255,255,0.7); font-weight: 400; }
+  .price-pro .tier-annual { font-size: 10.5px; color: var(--teal); font-weight: 600; margin-top: 2px; }
+  .price-pro .tier-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 10px;
+    margin-top: 8px;
+  }
+  .price-pro .feature-line {
+    font-size: 10px;
+    color: rgba(255,255,255,0.88);
+    display: flex; align-items: flex-start; gap: 5px;
+  }
+  .price-pro .feature-line::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+
+  /* ── SAVINGS ROW ── */
+  .savings-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .savings-card {
+    background: var(--light);
+    border-radius: 8px;
+    padding: 9px 12px;
+    text-align: center;
+    border-left: 3px solid var(--orange);
+  }
+  .savings-orgs { font-size: 10px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+  .savings-num { font-size: 18px; font-weight: 800; color: var(--dark); }
+  .savings-num span { color: var(--orange); }
+  .savings-sub { font-size: 9px; color: var(--gray); margin-top: 2px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--dark);
+    padding: 12px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-left { color: rgba(255,255,255,0.65); font-size: 10px; }
+  .footer-left strong { color: #fff; }
+  .footer-cta {
+    background: var(--orange);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 7px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+
+  @media print {
+    body { background: none; padding: 0; }
+    .page { box-shadow: none; width: 100%; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian"></div>
+      <div class="header-divider"></div>
+      <div class="header-product">My <span>Meraki</span> Report</div>
+    </div>
+    <div class="header-badge">Managed Reporting</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tagline">Automated · Branded · Delivered Monthly</div>
+    <div class="hero-headline">
+      Stop Spending 4 Hours Per Client<br>on <em>Manual Meraki Reports</em>
+    </div>
+    <div class="hero-sub">
+      My Meraki Report is a fully managed, per-organization reporting service that delivers a branded Word document every month — covering IDS/IPS events, firewall config snapshots, VPN status, device inventory, and a complete change audit log showing who changed what, before and after.
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">4<span>hrs</span></div>
+        <div class="stat-label">saved per org/mo</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">50<span>%</span></div>
+        <div class="stat-label">vs. manual labor cost</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">branded deliverable</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">30<span>d</span></div>
+        <div class="stat-label">config history diff</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- WHAT'S IN EVERY REPORT -->
+    <div>
+      <div class="section-label">What's in Every Monthly Report</div>
+      <div class="deliverables-grid">
+        <div class="deliv-card">
+          <div class="deliv-icon">🛡️</div>
+          <div class="deliv-title">IDS/IPS + AMP Event Roll-Up</div>
+          <div class="deliv-desc">Threat events summarized and categorized by severity — no manual log diving.</div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-icon">🔥</div>
+          <div class="deliv-title">Firewall, VPN &amp; DHCP Activity</div>
+          <div class="deliv-desc">Full L3 rules, inbound, port forwards, S2S VPN, content filtering, and DHCP leases.</div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-icon">📸</div>
+          <div class="deliv-title">Config Snapshot + WAN Status</div>
+          <div class="deliv-desc">Complete firewall and WAN interface configuration with live uptime status at report time.</div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-icon">📋</div>
+          <div class="deliv-title">Change Audit Log</div>
+          <div class="deliv-desc">Who changed what, with before/after values — every admin action documented and attributed.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARISON -->
+    <div>
+      <div class="section-label">How We Compare</div>
+      <div class="comp-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="highlight">My Meraki Report</th>
+              <th>Cisco Meraki Insight</th>
+              <th>Auvik</th>
+              <th>Liongard</th>
+              <th>Native Dashboard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Branded Word deliverable</td>
+              <td class="our-col"><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Config change audit (who/before/after)</td>
+              <td class="our-col"><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="partial">~</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>IDS/IPS + AMP event summary</td>
+              <td class="our-col"><span class="check">✓</span></td>
+              <td><span class="partial">~</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="partial">~</span></td>
+            </tr>
+            <tr>
+              <td>VPN + SSID + VLAN snapshot</td>
+              <td class="our-col"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">~</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>On-demand &amp; weekly reports</td>
+              <td class="our-col"><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Price per org/month</td>
+              <td class="our-col" style="font-weight:700; color: var(--blue);">$150</td>
+              <td>$30–$100<br><span style="font-size:9px; color:#6b7280;">per network — no deliverable</span></td>
+              <td>$15–$27<br><span style="font-size:9px; color:#6b7280;">per device — no DOCX</span></td>
+              <td>$29–$39<br><span style="font-size:9px; color:#6b7280;">config only — no events</span></td>
+              <td>Included<br><span style="font-size:9px; color:#6b7280;">PDF only — no branding</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="pricing-section">
+      <div class="section-label">Pricing — Per Meraki Org / Month</div>
+      <div class="pricing-layout">
+        <div class="price-free">
+          <div class="tier-name">Free Trial</div>
+          <div class="tier-price">$0</div>
+          <div class="tier-note">1 Meraki org · 1 report/mo<br>Branded output included<br>No credit card required</div>
+        </div>
+        <div class="price-pro">
+          <div class="tier-name">Professional — All Features</div>
+          <div class="tier-price"><sup>$</sup>150<sub>/org/mo</sub></div>
+          <div class="tier-annual">Annual: $1,500/yr per org — save $300 (17% off)</div>
+          <div class="tier-features">
+            <div class="feature-line">Monthly branded Word report</div>
+            <div class="feature-line">Config snapshot + WAN config</div>
+            <div class="feature-line">IDS/IPS + AMP event summary</div>
+            <div class="feature-line">Firewall + VPN + DHCP activity</div>
+            <div class="feature-line">Change audit log (who/before/after)</div>
+            <div class="feature-line">30-day versioned config history + diff</div>
+            <div class="feature-line">Per-device inventory + firmware</div>
+            <div class="feature-line">Weekly + on-demand reports</div>
+            <div class="feature-line">Unlimited admin users</div>
+            <div class="feature-line">Volume pricing above 25 orgs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVINGS -->
+    <div>
+      <div class="section-label">Monthly Savings vs. Manual Reporting</div>
+      <div class="savings-row">
+        <div class="savings-card">
+          <div class="savings-orgs">5 Meraki Orgs</div>
+          <div class="savings-num"><span>$</span>750<span>/mo saved</span></div>
+          <div class="savings-sub">Manual labor: $1,500/mo &rarr; My Meraki Report: $750/mo</div>
+        </div>
+        <div class="savings-card">
+          <div class="savings-orgs">15 Meraki Orgs</div>
+          <div class="savings-num"><span>$</span>2,250<span>/mo saved</span></div>
+          <div class="savings-sub">Manual labor: $4,500/mo &rarr; My Meraki Report: $2,250/mo</div>
+        </div>
+        <div class="savings-card">
+          <div class="savings-orgs">50 Meraki Orgs</div>
+          <div class="savings-num"><span>$</span>7,500<span>/mo saved</span></div>
+          <div class="savings-sub">Manual labor: $15,000/mo &rarr; My Meraki Report: $7,500/mo</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>Technijian</strong> &nbsp;|&nbsp; technijian.com &nbsp;|&nbsp; (888) 818-1014 &nbsp;|&nbsp; info@technijian.com<br>
+      My Meraki Report is a Technijian managed reporting service. All trademarks are property of their respective owners.
+    </div>
+    <a href="#" class="footer-cta">Start Free Trial &rarr;</a>
+  </div>
+
+</div>
+</body>
+</html>
