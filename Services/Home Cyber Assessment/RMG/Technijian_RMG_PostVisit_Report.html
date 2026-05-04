@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Home Cybersecurity Remediation — Post-Visit Report · Tom (RMG)</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#006DB6; --orange:#F67D4B; --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --red:#D13A3A; --green:#2A8A2A; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: letter; margin: 0.65in 0.7in 0.85in; }
+  @page :first { margin: 0; }
+  @page { @bottom-left { content: "Technijian \B7 Home Cybersecurity Remediation \2014 Post-Visit Report \B7 CONFIDENTIAL"; font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+  @page { @bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: 'Open Sans', sans-serif; font-size: 8px; color: #59595B; } }
+  html, body { margin: 0; }
+  body { font-family: 'Open Sans', sans-serif; color: #333; font-size: 11.5px; line-height: 1.55; background: #fff; }
+
+  /* COVER */
+  .cover { width: 8.5in; height: 11in; max-height: 11in; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; }
+  .cover-hero { background: linear-gradient(135deg, var(--dark), #0a1628 55%, #0d2847); padding: 50px 60px 40px; position: relative; overflow: hidden; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-hero::before { content: ''; position: absolute; top: -100px; right: -80px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(30,170,200,0.22) 0%, transparent 70%); border-radius: 50%; }
+  .cover-hero::after  { content: ''; position: absolute; bottom: -80px; left: 10%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(246,125,75,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .cover-top { position: relative; z-index: 1; }
+  .cover-top img { height: 54px; }
+  .cover-tag { font-size: 11px; letter-spacing: 4px; font-weight: 700; color: var(--teal); border: 1px solid rgba(30,170,200,0.5); background: rgba(30,170,200,0.12); padding: 7px 18px; border-radius: 16px; text-transform: uppercase; display: inline-block; margin-top: 32px; margin-right: 8px; }
+  .conf-tag { font-size: 11px; letter-spacing: 3px; font-weight: 700; color: var(--orange); border: 1px solid rgba(246,125,75,0.55); background: rgba(246,125,75,0.12); padding: 7px 16px; border-radius: 16px; text-transform: uppercase; display: inline-block; margin-top: 32px; }
+  .cover-title { font-size: 44px; font-weight: 800; color: #fff; line-height: 1.05; position: relative; z-index: 1; margin-top: 18px; }
+  .cover-title .o { color: var(--orange); }
+  .cover-sub { font-size: 15px; color: rgba(255,255,255,0.78); margin-top: 12px; line-height: 1.5; max-width: 88%; position: relative; z-index: 1; }
+  .prepared-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 22px 28px; margin-top: 28px; position: relative; z-index: 1; }
+  .pc-label { font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 700; }
+  .pc-name { font-size: 24px; font-weight: 800; color: #fff; margin: 6px 0 4px; }
+  .pc-addr { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .pc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.18); }
+  .pc-k { font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.52); font-weight: 600; }
+  .pc-v { font-size: 12px; color: #fff; font-weight: 700; margin-top: 5px; }
+
+  /* Risk badge on cover */
+  .risk-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(209,58,58,0.22); border: 1.5px solid rgba(209,58,58,0.6); border-radius: 8px; padding: 11px 20px; margin-top: 22px; position: relative; z-index: 1; }
+  .rb-label { font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.65); font-weight: 700; }
+  .rb-value { font-size: 18px; font-weight: 800; color: #E05555; letter-spacing: 2px; }
+  .rb-note { font-size: 10px; color: rgba(255,255,255,0.65); line-height: 1.4; max-width: 380px; }
+
+  .orange-line { height: 6px; background: linear-gradient(90deg, var(--orange), var(--teal), var(--chartreuse)); flex-shrink: 0; }
+  .cover-foot { background: #2D2D2D; padding: 14px 60px; color: rgba(255,255,255,0.55); font-size: 10px; text-align: center; flex-shrink: 0; letter-spacing: 0.3px; }
+  .cover-foot b { color: rgba(255,255,255,0.88); }
+
+  /* CONTENT */
+  .content h1 { font-size: 21px; font-weight: 800; color: var(--blue); margin: 26px 0 7px; padding-bottom: 6px; border-bottom: 3px solid var(--orange); page-break-after: avoid; }
+  .content h1:first-child { margin-top: 0; }
+  .content h2 { font-size: 14px; font-weight: 700; color: var(--dark); margin: 18px 0 6px; page-break-after: avoid; }
+  .content h3 { font-size: 11.5px; font-weight: 700; color: var(--blue); margin: 12px 0 4px; text-transform: uppercase; letter-spacing: 1.2px; page-break-after: avoid; }
+  .content p { margin-bottom: 8px; color: #333; font-size: 11.5px; line-height: 1.6; }
+  .content ul { margin: 6px 0 10px 20px; }
+  .content li { font-size: 11.5px; line-height: 1.55; color: #333; margin-bottom: 4px; }
+  .content strong { color: var(--dark); font-weight: 700; }
+  .content em { color: var(--grey); font-style: italic; }
+
+  .sec-break { page-break-before: always; }
+
+  .callout { background: var(--off-white); border-left: 4px solid var(--orange); padding: 11px 16px; margin: 12px 0; border-radius: 0 4px 4px 0; page-break-inside: avoid; font-size: 11px; }
+  .callout strong { color: var(--dark); }
+  .callout.critical { border-left-color: var(--red); background: #FEF5F5; }
+  .callout.good { border-left-color: var(--green); background: #F2FBF2; }
+
+  /* Summary stats bar */
+  .stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--light-grey); border-radius: 8px; overflow: hidden; margin: 14px 0 18px; }
+  .stat-cell { padding: 14px 16px; border-right: 1px solid var(--light-grey); }
+  .stat-cell:last-child { border-right: none; }
+  .sc-k { font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--grey); font-weight: 700; margin-bottom: 5px; }
+  .sc-v { font-size: 22px; font-weight: 800; color: var(--blue); line-height: 1; }
+  .sc-v.red { color: var(--red); }
+  .sc-v.orange { color: var(--orange); }
+  .sc-v.green { color: var(--green); }
+  .sc-note { font-size: 9px; color: var(--grey); margin-top: 3px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 10.5px; page-break-inside: auto; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  th { background: var(--dark); color: #fff; padding: 7px 10px; text-align: left; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--light-grey); vertical-align: top; color: var(--grey); font-size: 10.5px; }
+  td strong { color: var(--dark); }
+  tbody tr:nth-child(even) td { background: var(--off-white); }
+  tr.subhead td { background: #E6F0FA; color: var(--blue); font-weight: 700; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.8px; padding: 5px 10px; }
+
+  /* Risk level styling */
+  .risk-critical { color: var(--red); font-weight: 700; }
+  .risk-high { color: #C05000; font-weight: 700; }
+  .risk-medium { color: #B07800; font-weight: 700; }
+  .risk-low { color: var(--green); font-weight: 700; }
+  .risk-resolved { color: var(--green); font-weight: 700; }
+
+  /* Priority flag pill */
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .pill.crit { background: #FDECEA; color: var(--red); border: 1px solid #F5C6C6; }
+  .pill.high { background: #FEF0E6; color: #C05000; border: 1px solid #F5D6B5; }
+  .pill.med { background: #FFFBE6; color: #B07800; border: 1px solid #F5E6A0; }
+  .pill.low { background: #EEF8EE; color: var(--green); border: 1px solid #AADAAA; }
+
+  /* Completed / deferred check marks */
+  .done { color: var(--green); font-weight: 700; }
+  .deferred { color: #C05000; font-weight: 700; }
+
+  @media print { @page { size: letter; } * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="cover-hero">
+    <div class="cover-top">
+      <img src="../../../assets/Technijian Logo - white text.png" alt="Technijian">
+      <div>
+        <span class="cover-tag">Home Cybersecurity Remediation</span>
+        <span class="conf-tag">Confidential</span>
+      </div>
+      <div class="cover-title">Post-Visit<br><span class="o">Report</span></div>
+      <div class="cover-sub">Summary of onsite work completed, current risk status for each finding, and your Month&nbsp;1 remote team action plan.</div>
+    </div>
+
+    <div>
+      <div class="prepared-card">
+        <div class="pc-label">Prepared for</div>
+        <div class="pc-name">Tom &mdash; 11611 Heathcliff Drive</div>
+        <div class="pc-addr">11611 Heathcliff Drive &nbsp;&middot;&nbsp; Prepared May 2026</div>
+        <div class="pc-grid">
+          <div><div class="pc-k">Visit Date</div><div class="pc-v">May 1, 2026</div></div>
+          <div><div class="pc-k">Technician</div><div class="pc-v">Sai</div></div>
+          <div><div class="pc-k">Hours Onsite</div><div class="pc-v">9.5 hrs</div></div>
+          <div><div class="pc-k">Overall Risk</div><div class="pc-v" style="color:#E05555;">HIGH</div></div>
+        </div>
+      </div>
+
+      <div class="risk-badge">
+        <div>
+          <div class="rb-label">Post-Visit Risk Rating</div>
+          <div class="rb-value">HIGH RISK</div>
+        </div>
+        <div class="rb-note">Significant progress achieved on credentials, device hardening, and remote support setup. Network-layer security tasks remain open pending Orbi admin access recovery. Two CRITICAL items require immediate Month&nbsp;1 attention.</div>
+      </div>
+    </div>
+  </div>
+  <div class="orange-line"></div>
+  <div class="cover-foot"><b>Technijian, Inc.</b> &nbsp;&middot;&nbsp; 18 Technology Dr. Ste 141, Irvine CA 92618 &nbsp;&middot;&nbsp; 949.379.8501 &nbsp;&middot;&nbsp; technijian.com &nbsp;&middot;&nbsp; CONFIDENTIAL</div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="content">
+
+  <h1>Visit Summary</h1>
+
+  <div class="stat-bar">
+    <div class="stat-cell">
+      <div class="sc-k">Tasks Completed</div>
+      <div class="sc-v green">28</div>
+      <div class="sc-note">of ~50 scoped items</div>
+    </div>
+    <div class="stat-cell">
+      <div class="sc-k">Devices Migrated</div>
+      <div class="sc-v green">10</div>
+      <div class="sc-note">to ORBI-68 Trusted</div>
+    </div>
+    <div class="stat-cell">
+      <div class="sc-k">2FA Accounts</div>
+      <div class="sc-v orange">6 / 9</div>
+      <div class="sc-note">3 deferred</div>
+    </div>
+    <div class="stat-cell">
+      <div class="sc-k">Critical Open Items</div>
+      <div class="sc-v red">2</div>
+      <div class="sc-note">Orbi + HikVision</div>
+    </div>
+  </div>
+
+  <p>Your technician Sai was onsite on <strong>May 1, 2026</strong> (8:15&nbsp;AM&ndash;5:45&nbsp;PM) for the Home Cybersecurity Remediation engagement. The authorization form was signed and on file before any configuration work began.</p>
+
+  <p>The visit covered credentials and account security, a complete device-by-device audit, endpoint hardening on your Dell&nbsp;XPS, and full remote support setup. The primary blocker for the day was the Orbi&nbsp;RBR50 admin portal &mdash; credentials were not accepted, which prevented network segmentation, firewall rule configuration, and full HikVision hardening. Those tasks have been escalated as the top priority items for your remote team in Month&nbsp;1.</p>
+
+  <h2>What Was Accomplished on May 1</h2>
+  <table>
+    <thead><tr><th style="width:55%">Item</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr class="subhead"><td colspan="2">Credentials &amp; Account Security</td></tr>
+      <tr><td>Password manager confirmed active on all devices (Microsoft Edge on Dell XPS, iOS)</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>New Orbi WiFi password generated (20+ chars) &mdash; stored in password manager only</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>Orbi admin password changed &mdash; stored in password manager only</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>AT&amp;T gateway admin &mdash; carrier-locked; Device Access Code is ISP-managed</td><td><span class="done">&#10003; Documented</span></td></tr>
+      <tr><td>2FA confirmed on 6 accounts (primary email ×2, Apple ID, Amazon/Ring, bank, password manager)</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>2FA on brokerage and AT&amp;T account &mdash; deferred</td><td><span class="deferred">&#10007; Month 1</span></td></tr>
+      <tr class="subhead"><td colspan="2">Device Audit &amp; Firmware</td></tr>
+      <tr><td>AT&amp;T Gateway 5268AC FXN &mdash; firmware audited (ISP-managed, current)</td><td><span class="done">&#10003; Audited</span></td></tr>
+      <tr><td>Vizio TV (Kitchen) &mdash; firmware updated from 3.710 to 3.720</td><td><span class="done">&#10003; Updated</span></td></tr>
+      <tr><td>Samsung TVs, Apple TV, Dell XPS, Ring, NVR, STBs, printers &mdash; all inventoried</td><td><span class="done">&#10003; Inventoried</span></td></tr>
+      <tr><td>Orbi RBR50 &mdash; admin portal inaccessible (all credentials rejected)</td><td><span class="deferred">&#10007; CRITICAL &mdash; Month 1</span></td></tr>
+      <tr><td>HikVision cameras &mdash; firmware 4.17.0.1224564 noted; hardening deferred</td><td><span class="deferred">&#10007; CRITICAL &mdash; Month 1</span></td></tr>
+      <tr><td>Unknown Ethernet device (MAC: cc:0d:ec:5e:ec:9a) &mdash; identity not confirmed</td><td><span class="deferred">&#10007; HIGH &mdash; Month 1</span></td></tr>
+      <tr class="subhead"><td colspan="2">Network Migration &amp; Segmentation</td></tr>
+      <tr><td>Dell XPS, client phones, Apple TV migrated to ORBI-68 Trusted</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>All smart TVs, HP printers migrated to ORBI-68 Trusted</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>Ring doorbell reconnected to ORBI-68 after password change &mdash; Live View confirmed</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>All connectivity tests passed (printing, casting, streaming, Ring, NVR, STBs)</td><td><span class="done">&#10003; All passed</span></td></tr>
+      <tr><td>IoT SSID creation &mdash; client preferred single network; Orbi admin also unavailable</td><td><span class="deferred">&#10007; HIGH &mdash; Month 1</span></td></tr>
+      <tr><td>AT&amp;T gateway Wi-Fi still broadcasting Orbi68 (dual-broadcast risk) &mdash; deferred</td><td><span class="deferred">&#10007; HIGH &mdash; Month 1</span></td></tr>
+      <tr class="subhead"><td colspan="2">Dell XPS Endpoint Hardening</td></tr>
+      <tr><td>Windows 11 fully updated; automatic updates confirmed enabled</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>Microsoft Defender active with cloud protection enabled</td><td><span class="done">&#10003; Confirmed</span></td></tr>
+      <tr><td>Dell firmware updated via Dell Update utility</td><td><span class="done">&#10003; Updated</span></td></tr>
+      <tr><td>OneDrive backup confirmed active (initial scope: machine-level)</td><td><span class="done">&#10003; Confirmed</span></td></tr>
+      <tr><td>BitLocker (disk encryption) &mdash; found DISABLED; enabling deferred to Month 1</td><td><span class="deferred">&#10007; HIGH &mdash; Month 1</span></td></tr>
+      <tr><td>Browser password migration to password manager &mdash; deferred</td><td><span class="deferred">&#10007; Month 1</span></td></tr>
+      <tr class="subhead"><td colspan="2">Remote Support Handoff</td></tr>
+      <tr><td>Technijian remote access tool installed on Dell XPS and tested working</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>Technijian admin account created (RMG-Barbara-Win7-Dell) &mdash; separate from your account</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>Client briefed on 24/7 remote support model, notifications, and escalation path</td><td><span class="done">&#10003; Completed</span></td></tr>
+      <tr><td>Technijian welcome email and portal login delivered</td><td><span class="done">&#10003; Completed</span></td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Current Risk Status &mdash; All Findings</h1>
+
+  <p>The table below shows the post-visit risk rating for every finding from the original assessment. Ratings reflect work completed on May&nbsp;1 plus residual risk from open items.</p>
+
+  <table>
+    <thead><tr><th style="width:28%">Finding</th><th style="width:14%">Post-Visit Rating</th><th>Status &amp; Residual Risk</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>F-01 &mdash; WiFi Credentials</strong></td>
+        <td><span class="risk-medium">MEDIUM</span></td>
+        <td>New Orbi WiFi and admin passwords set and stored in password manager only. Residual: Orbi admin portal access not yet confirmed working; AT&amp;T gateway also still broadcasting the same SSID (Orbi68), creating a bypass path.</td>
+      </tr>
+      <tr>
+        <td><strong>F-02 &mdash; AT&amp;T Gateway</strong></td>
+        <td><span class="risk-medium">MEDIUM</span></td>
+        <td>Firmware is ISP-managed and current. WPA2-AES in use. Residual: WPA3 not supported on this hardware model (5268AC FXN). WPS still enabled &mdash; should be disabled. AT&amp;T Wi-Fi broadcasting on both bands.</td>
+      </tr>
+      <tr>
+        <td><strong>F-03 &mdash; HikVision Cameras</strong></td>
+        <td><span class="risk-critical">CRITICAL</span></td>
+        <td>No hardening completed during visit. Cloud relay (Hik-Connect) appears active on client phone. Credentials on NVR unverified. No firewall isolation implemented. CVE-2025-66177 patch status unconfirmed on firmware 4.17.0.1224564. Highest single priority for remote team.</td>
+      </tr>
+      <tr>
+        <td><strong>F-04 &mdash; Network Segmentation</strong></td>
+        <td><span class="risk-high">HIGH</span></td>
+        <td>IoT SSID not created (client preferred single network; Orbi admin also unavailable). Firewall rules not configured or verified. All devices currently on a single flat network. AT&amp;T dual-broadcast creates additional bypass risk.</td>
+      </tr>
+      <tr>
+        <td><strong>F-05 &mdash; NetworX Alarm</strong></td>
+        <td><span class="risk-low">LOW</span></td>
+        <td>No IP-based management interface found. Alarm is operational. Network exposure is minimal. No action required.</td>
+      </tr>
+      <tr>
+        <td><strong>F-06 &mdash; Smart TVs</strong></td>
+        <td><span class="risk-medium">MEDIUM</span></td>
+        <td>Vizio Kitchen TV firmware updated. All accessible TVs migrated to ORBI-68 Trusted. Residual: Master BR Vizio TV was not accessible &mdash; status unknown. TVs remain on Trusted (not isolated IoT) pending segmentation.</td>
+      </tr>
+      <tr>
+        <td><strong>F-07 &mdash; HP Printers</strong></td>
+        <td><span class="risk-medium">MEDIUM</span></td>
+        <td>Printing from Dell XPS confirmed working. Firmware versions noted; updates not attempted. Admin credential status on both printers unknown &mdash; remote team to verify and change defaults.</td>
+      </tr>
+      <tr>
+        <td><strong>F-08 &mdash; Dell XPS Hardening</strong></td>
+        <td><span class="risk-high">HIGH</span></td>
+        <td>OS updates applied, Defender active, Dell firmware updated, remote access installed. Residual: <strong>BitLocker (disk encryption) is DISABLED</strong> &mdash; all data on the laptop is at risk if the device is lost or stolen. Browser password migration incomplete. OneDrive backup active but encryption passphrase not configured.</td>
+      </tr>
+      <tr>
+        <td><strong>F-09 &mdash; Ring Doorbell</strong></td>
+        <td><span class="risk-medium">MEDIUM</span></td>
+        <td>Ring successfully reconnected after WiFi password change. Live View confirmed working. Residual: firmware version not captured; Ring remains on Trusted network and should move to IoT when segmentation is created.</td>
+      </tr>
+      <tr>
+        <td><strong>F-10 &mdash; AT&amp;T Redundant AP</strong></td>
+        <td><span class="risk-high">HIGH</span></td>
+        <td>AT&amp;T Motorola AP (MAC: f8:8b:37:9a:6e:e9, SSID: ATT_Motorola_AP_9A6EE9) identified on AT&amp;T gateway Port 4. Login not possible during visit. Purpose and necessity not confirmed &mdash; may be redundant once Orbi is fully configured. Remote team to assess and disable if not needed.</td>
+      </tr>
+      <tr>
+        <td><strong>F-11 &mdash; Orbi WiFi</strong></td>
+        <td><span class="risk-critical">CRITICAL</span></td>
+        <td>Admin portal (http://10.0.0.1) was reachable but all credentials were rejected throughout the visit. Orbi firmware, UPnP, remote management, and port-forward audit all remain unverified. This is the single biggest blocker for full security implementation. Recovery of Orbi admin access is the top Month&nbsp;1 priority.</td>
+      </tr>
+      <tr>
+        <td><strong>F-12 &mdash; Unknown Ethernet Device</strong></td>
+        <td><span class="risk-high">HIGH</span></td>
+        <td>An active Ethernet device (MAC: cc:0d:ec:5e:ec:9a) was found connected to the network. Identity was not confirmed during the visit. This device must be identified before network segmentation is finalized &mdash; an unknown device on a home network is a meaningful risk.</td>
+      </tr>
+      <tr>
+        <td><strong>F-13 &mdash; Laptop Backup</strong></td>
+        <td><span class="risk-medium">MEDIUM</span></td>
+        <td>OneDrive is active and running. Residual: OneDrive does not use a client-set encryption passphrase. Specific folder scope not confirmed. Remote team to review backup coverage and encryption options.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Month 1 Remote Team Action Plan</h1>
+
+  <p>The items below will be worked by your assigned Technijian remote support team in your first month of service. Items are listed in priority order. You do not need to take any action on these &mdash; the remote team will contact you to schedule sessions as needed.</p>
+
+  <div class="callout critical">
+    <strong>Two CRITICAL items require action before anything else:</strong> (1) Recovering the Orbi admin credentials unlocks the network-layer security work; (2) HikVision camera hardening addresses the highest single risk in the home. Both are scheduled for Month&nbsp;1.
+  </div>
+
+  <table>
+    <thead><tr><th>Priority</th><th style="width:52%">Action Item</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="pill crit">CRITICAL</span></td>
+        <td><strong>Recover Orbi RBR50 admin credentials</strong> and complete all Orbi configuration: UPnP disable, remote management disable, port-forward audit, firmware verification, firewall rule implementation, IoT SSID (if client agrees)</td>
+        <td>Everything in the network-layer plan depends on this. Remote team will attempt credential recovery via Netgear account reset; factory reset is the fallback if recovery fails.</td>
+      </tr>
+      <tr>
+        <td><span class="pill crit">CRITICAL</span></td>
+        <td><strong>Complete all HikVision / NVR hardening:</strong> verify Hik-Connect cloud relay status and discuss replacement access method with client; check Platform Access, DDNS, NAT/UPnP on NVR; block outbound internet from camera IPs at firewall; document camera MACs and model numbers; verify CVE-2025-66177 patch</td>
+        <td>All 4 cameras have unverified credential and network exposure status. Cloud relay is likely active. This is F-03 CRITICAL from the original assessment.</td>
+      </tr>
+      <tr>
+        <td><span class="pill high">HIGH</span></td>
+        <td><strong>Enable BitLocker disk encryption</strong> on the Dell&nbsp;XPS primary drive; provide recovery key in sealed envelope</td>
+        <td>BitLocker was found disabled. All laptop data is unprotected against physical theft until this is enabled.</td>
+      </tr>
+      <tr>
+        <td><span class="pill high">HIGH</span></td>
+        <td><strong>Disable AT&amp;T gateway Wi-Fi</strong> (2.4&nbsp;GHz and 5&nbsp;GHz) after confirming Orbi coverage; disable WPS on AT&amp;T gateway</td>
+        <td>Requires Orbi admin first. AT&amp;T dual-broadcast currently allows devices to bypass any Orbi segmentation.</td>
+      </tr>
+      <tr>
+        <td><span class="pill high">HIGH</span></td>
+        <td><strong>Identify unknown Ethernet device</strong> (MAC: cc:0d:ec:5e:ec:9a) connected to AT&amp;T Port&nbsp;4</td>
+        <td>Identity must be confirmed before finalizing network segmentation. Could be a smart home hub, game console, or unrecognized device.</td>
+      </tr>
+      <tr>
+        <td><span class="pill high">HIGH</span></td>
+        <td><strong>Assess AT&amp;T Motorola AP</strong> (MAC: f8:8b:37:9a:6e:e9) &mdash; confirm purpose or disable if redundant</td>
+        <td>Device is connected to AT&amp;T gateway Port 4. Purpose unknown; likely redundant once Orbi is properly configured.</td>
+      </tr>
+      <tr>
+        <td><span class="pill high">HIGH</span></td>
+        <td><strong>Add all credentials to Technijian shared vault:</strong> Orbi admin, Dell XPS admin account (RMG-Barbara-Win7-Dell), HP OfficeJet, HP DeskJet, NVR</td>
+        <td>Remote team can only provide effective support when credentials are in the shared vault. Orbi and NVR pending; HP printers pending verification.</td>
+      </tr>
+      <tr>
+        <td><span class="pill med">MEDIUM</span></td>
+        <td><strong>Enable IoT network segmentation</strong> (once Orbi access restored): create IoT SSID; migrate HikVision NVR, Ring, smart TVs, and printers to isolated segment; implement firewall rules</td>
+        <td>Client preferred a single WiFi network during the visit. Remote team will re-present the security case for segmentation. Implementation requires Orbi admin access.</td>
+      </tr>
+      <tr>
+        <td><span class="pill med">MEDIUM</span></td>
+        <td><strong>Enable 2FA on brokerage and AT&amp;T accounts</strong></td>
+        <td>Both accounts were deferred during the visit. Remote team to follow up with client.</td>
+      </tr>
+      <tr>
+        <td><span class="pill med">MEDIUM</span></td>
+        <td><strong>Complete browser password migration:</strong> export from iCloud Keychain to current password manager; disable browser password saving; run password audit</td>
+        <td>Client had passwords in iCloud Keychain. Migration to be assisted by remote team at next scheduled session.</td>
+      </tr>
+      <tr>
+        <td><span class="pill med">MEDIUM</span></td>
+        <td><strong>Verify HP printer credentials and firmware</strong> (OfficeJet Pro 9015e and DeskJet 3755)</td>
+        <td>Default credential status unknown. Firmware not updated. Remote team to access admin portals and apply updates.</td>
+      </tr>
+      <tr>
+        <td><span class="pill med">MEDIUM</span></td>
+        <td><strong>HikVision camera replacement planning</strong> &mdash; present client with replacement options; coordinate with preferred installer</td>
+        <td>Replacement within 90 days strongly recommended. See next section for details.</td>
+      </tr>
+      <tr>
+        <td><span class="pill med">MEDIUM</span></td>
+        <td><strong>Confirm and document client preferences:</strong> preferred contact method, best hours for remote sessions, confirm backup encryption options (OneDrive), confirm backup folder scope</td>
+        <td>To be captured at Month 1 handoff call.</td>
+      </tr>
+      <tr>
+        <td><span class="pill low">LOW</span></td>
+        <td><strong>Verify Master Bedroom Vizio TV</strong> connectivity and firmware</td>
+        <td>Device was inaccessible on visit day. Remote team to verify when client makes it accessible.</td>
+      </tr>
+      <tr>
+        <td><span class="pill low">LOW</span></td>
+        <td><strong>Confirm technician laptop</strong> (TE-HQ-LPT-41, MAC: 98:fc:84:e6:16:51) was removed from AT&amp;T network device list</td>
+        <td>Likely Sai's laptop from the visit. Should not appear in permanent device inventory.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">Decisions We Need From You</h1>
+
+  <p>The following items are your decisions to make. We will support whichever path you choose, but a decision allows us to schedule the right work. No urgency required &mdash; your remote team will discuss each of these at the Month&nbsp;1 call.</p>
+
+  <h2>1. HikVision Camera Replacement &mdash; Recommended within 90 Days</h2>
+
+  <div class="callout critical">
+    <strong>This is our strongest recommendation from the visit.</strong> HikVision cameras are actively being targeted at internet scale due to known vulnerabilities. All four exterior cameras (front south, back north, front north, pool area) and a fifth patio camera are affected.
+  </div>
+
+  <p>Even after we harden the current cameras (cloud relay off, firewall isolation, credentials changed), HikVision&rsquo;s risk profile remains elevated due to the company&rsquo;s ownership structure and its placement on the U.S. FCC Covered List. Our recommendation is to plan a replacement within 90 days.</p>
+
+  <p><strong>What you need to decide:</strong> Would you like Technijian to recommend replacement cameras and coordinate with an installer, or do you have a preferred vendor or installer you&rsquo;d like to use? We can work with either approach.</p>
+
+  <h2>2. Network Segmentation (IoT SSID)</h2>
+
+  <p>During the visit, you indicated you preferred a single WiFi network rather than separate Trusted/IoT/Guest segments. We understand the appeal &mdash; one network is simpler to manage day to day.</p>
+
+  <p>Our recommendation is still to create an IoT segment, for one specific reason: the HikVision cameras and NVR need to be isolated from your laptop and phones. Even after the cameras are replaced, the principle of putting surveillance equipment and smart TVs on a separate network from your financial and personal devices is a meaningful security improvement.</p>
+
+  <p><strong>What you need to decide:</strong> Would you like us to set up a separate IoT-only SSID (hidden from normal view, so it&rsquo;s not cluttering your WiFi list)? Or would you prefer we proceed only with isolating the cameras at the firewall level without creating additional SSIDs? Either approach is achievable once we have Orbi admin access back.</p>
+
+  <h2>3. Brokerage and AT&amp;T Account 2FA</h2>
+
+  <p>Two accounts didn&rsquo;t get 2FA enabled during the visit. Both are straightforward &mdash; the remote team can walk through either one in a 10-minute phone or screen-share session.</p>
+  <ul>
+    <li><strong>Brokerage account:</strong> Client preferred to handle this independently. If you&rsquo;d like the remote team to walk through it with you, just let them know at the Month&nbsp;1 call.</li>
+    <li><strong>AT&amp;T account:</strong> Login wasn&rsquo;t available during the visit. Remote team can assist when you have AT&amp;T account credentials available.</li>
+  </ul>
+
+  <h1 class="sec-break">Network Configuration as of May 1, 2026</h1>
+
+  <p>For reference, this is the confirmed network topology and device list as of the end of the visit.</p>
+
+  <h2>Network Topology</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Device</th><th>IP / MAC</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Internet Gateway</td><td><strong>AT&amp;T Gateway 5268AC FXN</strong></td><td>192.168.1.254 &nbsp;/&nbsp; E0:22:03:67:91:18</td><td>Primary active router. Carrier-locked firmware. AT&amp;T Wi-Fi broadcasting Orbi68 &mdash; to be disabled.</td></tr>
+      <tr><td>Mesh Router</td><td><strong>Orbi RBR50 (Primary)</strong></td><td>10.0.0.1 &nbsp;/&nbsp; BC:A5:11:20:E3:04</td><td>Downstream of AT&amp;T in router mode. Admin access BLOCKED &mdash; top Month 1 priority.</td></tr>
+      <tr><td>Mesh Node</td><td><strong>Orbi Satellite</strong></td><td>&mdash;</td><td>Managed via Orbi primary. Pending admin access recovery.</td></tr>
+      <tr><td>NVR</td><td><strong>Northern NVR</strong></td><td>10.0.0.2 &nbsp;/&nbsp; 08:41:89:0C:FE:6E</td><td>Internal camera subnet: 192.168.254.1/24. All 4+ camera feeds confirmed visible.</td></tr>
+      <tr><td>Unknown</td><td><strong>Unknown Ethernet Device</strong></td><td>MAC: CC:0D:EC:5E:EC:9A</td><td>Active on network. Identity not confirmed. Must be identified.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Active SSIDs Post-Visit</h2>
+  <table>
+    <thead><tr><th>SSID</th><th>Source</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ORBI-68</strong></td><td>Orbi (5&nbsp;GHz)</td><td><span class="done">Active</span></td><td>Trusted network. New strong password set and stored in password manager.</td></tr>
+      <tr><td><strong>ORBI68-guest</strong></td><td>Orbi (2.4&nbsp;GHz)</td><td><span class="done">Active</span></td><td>Guest network. Client isolation enabled.</td></tr>
+      <tr><td><strong>Orbi68</strong> (both bands)</td><td>AT&amp;T Gateway</td><td><span class="deferred">Risk &mdash; to be disabled</span></td><td>AT&amp;T broadcasting same SSID as Orbi. Devices may connect here and bypass any Orbi segmentation. To be disabled once Orbi admin access is restored and device migration confirmed complete.</td></tr>
+      <tr><td><strong>ATT_Motorola_AP_9A6EE9</strong></td><td>AT&amp;T Motorola AP</td><td><span class="deferred">Assess &mdash; likely redundant</span></td><td>Separate AP on AT&amp;T Port 4. Purpose to be confirmed by remote team.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Device Network Assignments Post-Visit</h2>
+  <table>
+    <thead><tr><th>Device</th><th>Network</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr class="subhead"><td colspan="3">Trusted Devices (ORBI-68)</td></tr>
+      <tr><td>Dell XPS Laptop</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated &mdash; printing confirmed</span></td></tr>
+      <tr><td>Client&rsquo;s phone</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated &mdash; internet confirmed</span></td></tr>
+      <tr><td>Spouse&rsquo;s phone</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated</span></td></tr>
+      <tr><td>Apple TV (Family Room)</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated &mdash; streaming confirmed</span></td></tr>
+      <tr><td>Samsung TV (Family Room)</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated &mdash; casting confirmed</span></td></tr>
+      <tr><td>Vizio TV (Kitchen)</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated &mdash; firmware updated</span></td></tr>
+      <tr><td>Samsung TV (Tom&rsquo;s Office)</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated</span></td></tr>
+      <tr><td>HP OfficeJet Pro 9015e</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated &mdash; printing confirmed</span></td></tr>
+      <tr><td>HP DeskJet 3755</td><td>ORBI-68</td><td><span class="done">&#10003; Migrated</span></td></tr>
+      <tr><td>Ring Doorbell</td><td>ORBI-68</td><td><span class="done">&#10003; Reconnected &mdash; Live View confirmed</span></td></tr>
+      <tr class="subhead"><td colspan="3">Wired / Carrier-Managed (No Action Required)</td></tr>
+      <tr><td>HikVision Cameras ×4+</td><td>Wired to NVR (192.168.254.x)</td><td><span class="deferred">Hardening deferred &mdash; CRITICAL Month 1</span></td></tr>
+      <tr><td>AT&amp;T U-verse STBs (×4)</td><td>HomePNA / Coax (carrier-managed)</td><td><span class="done">&#10003; Video signal confirmed all units</span></td></tr>
+      <tr><td>NetworX NX8V2 Alarm</td><td>No IP interface</td><td><span class="done">&#10003; Operational &mdash; no action required</span></td></tr>
+      <tr class="subhead"><td colspan="3">Deferred / Not Accessible</td></tr>
+      <tr><td>Vizio TV (Master Bedroom)</td><td>Unknown &mdash; not accessible</td><td><span class="deferred">Deferred to Month 1</span></td></tr>
+      <tr><td>Unknown Ethernet Device (cc:0d:ec:5e:ec:9a)</td><td>Unknown &mdash; on AT&amp;T LAN</td><td><span class="deferred">Must be identified before segmentation</span></td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="sec-break">What Happens Next</h1>
+
+  <h2>Your Month 1 Remote Support Schedule</h2>
+
+  <table>
+    <thead><tr><th>Timeframe</th><th>Action</th><th>Who</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Within 24 hours of visit</strong></td><td>Technician (Sai) logs all deferred items as tickets in Technijian ticketing system</td><td>Sai (Technician)</td></tr>
+      <tr><td><strong>Within 5 business days</strong></td><td>Your assigned remote pod contacts you to schedule Month 1 handoff call</td><td>Technijian Remote Team</td></tr>
+      <tr><td><strong>Month 1 &mdash; Session 1</strong></td><td>Orbi admin recovery; BitLocker enablement; disable AT&amp;T Wi-Fi; identify unknown device</td><td>Remote Team</td></tr>
+      <tr><td><strong>Month 1 &mdash; Session 2</strong></td><td>HikVision / NVR hardening; browser password migration; printer credential verification</td><td>Remote Team</td></tr>
+      <tr><td><strong>Month 1 &mdash; Ongoing</strong></td><td>Windows updates (monthly), backup verification, security log review</td><td>Remote Team (proactive)</td></tr>
+      <tr><td><strong>Months 1&ndash;3</strong></td><td>HikVision replacement planning and coordination (pending your decision)</td><td>Remote Team + installer</td></tr>
+    </tbody>
+  </table>
+
+  <h2>How to Reach Us</h2>
+  <table>
+    <thead><tr><th>Channel</th><th>Contact</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Phone</strong></td><td>949.379.8501</td><td>Urgent issues, anything requiring live conversation</td></tr>
+      <tr><td><strong>Email</strong></td><td>billing@technijian.com</td><td>Non-urgent requests, questions, documentation</td></tr>
+      <tr><td><strong>Client Portal</strong></td><td>See welcome email for link</td><td>Ticket status, session scheduling, report archive</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout good">
+    <strong>One thing to keep in mind:</strong> when you see a remote-access notification pop up on your Dell XPS, it means the Technijian remote team is starting a scheduled support session. This is expected and normal. If you ever see a notification at a time you didn&rsquo;t expect or schedule, call us immediately at 949.379.8501 &mdash; that&rsquo;s the right response even if it turns out to be a false alarm.
+  </div>
+
+  <p style="margin-top: 18px; font-size: 11px; color: var(--grey); font-style: italic;">This report was prepared by Technijian, Inc. based on the onsite visit completed May 1, 2026 by technician Sai. All work performed was within the scope authorized by the client-signed authorization form. For questions about this report, contact your Technijian account manager at 949.379.8501 or billing@technijian.com.</p>
+
+</div>
+
+</body>
+</html>
