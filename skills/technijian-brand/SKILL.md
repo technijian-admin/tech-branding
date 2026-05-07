@@ -17,8 +17,8 @@ Use this skill to apply Technijian's official brand identity to any content. Thi
 
 - **Company**: Technijian
 - **Founded**: November 2000 by Ravi Jain
-- **Tagline**: "Technology Support, Your Way."
-- **Secondary tagline**: "technology as a solution"
+- **Tagline**: "technology as a solution" (lowercase, no period — the official Technijian tagline as of 2026-05-06)
+- **Retired tagline (do NOT use):** "Technology Support, Your Way."
 - **HQ**: 18 Technology Dr., Ste 141, Irvine, CA 92618
 - **Phone**: 949.379.8500
 - **Website**: technijian.com

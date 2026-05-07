@@ -1,0 +1,195 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Technijian Brand Tokens — single source of truth for all skills and build scripts. DTCG-format design tokens. When values change here, every skill that reads this file picks them up automatically. Last reviewed: 2026-05-06.",
+
+  "company": {
+    "name":     { "$value": "Technijian", "$type": "string" },
+    "founded":  { "$value": "2000-11", "$type": "string" },
+    "founder":  { "$value": "Ravi Jain", "$type": "string" },
+    "tagline":  { "$value": "technology as a solution", "$type": "string", "$description": "Official tagline as of 2026-05-06. Lowercase, no period. The previous tagline 'Technology Support, Your Way.' is RETIRED — never use it." },
+    "address":  { "$value": "18 Technology Dr., Ste 141, Irvine, CA 92618", "$type": "string", "$description": "Legacy single-address field. Prefer offices.usa or offices.india." },
+    "website":  { "$value": "technijian.com", "$type": "string" },
+    "domain":   { "$value": "https://technijian.com", "$type": "string" }
+  },
+
+  "offices": {
+    "usa": {
+      "label":      { "$value": "United States Headquarters", "$type": "string" },
+      "label_short":{ "$value": "USA Headquarters", "$type": "string" },
+      "street":     { "$value": "18 Technology Dr., Ste 141", "$type": "string" },
+      "city":       { "$value": "Irvine", "$type": "string" },
+      "region":     { "$value": "CA", "$type": "string" },
+      "postal":     { "$value": "92618", "$type": "string" },
+      "country":    { "$value": "United States", "$type": "string" },
+      "country_code":{ "$value": "US", "$type": "string" },
+      "phone":      { "$value": "+1 949.379.8499", "$type": "string", "$description": "Main office line — reaches USA + India. This is what appears on letterhead." },
+      "phone_sales":{ "$value": "+1 949.379.8500", "$type": "string", "$description": "Sales direct dial — use only in sales CTAs" },
+      "phone_billing":{ "$value": "+1 949.379.8501", "$type": "string", "$description": "Billing direct dial — use only on invoices/statements" },
+      "address_oneline": { "$value": "18 Technology Dr., Ste 141, Irvine, CA 92618, USA", "$type": "string" },
+      "address_block":   { "$value": ["18 Technology Dr., Ste 141", "Irvine, CA 92618", "United States"], "$type": "array" },
+      "hours":      { "$value": "24/7 Managed Services · Office: Mon–Fri 8:00 AM – 6:00 PM PT", "$type": "string" },
+      "tax_id_label":{ "$value": "EIN", "$type": "string" },
+      "primary_contact":{ "$value": { "name": "Ravi Jain", "title": "Founder & CEO", "email": "rjain@technijian.com" }, "$type": "object" }
+    },
+    "india": {
+      "label":      { "$value": "India Delivery Center", "$type": "string" },
+      "label_short":{ "$value": "India Office", "$type": "string" },
+      "street":     { "$value": "Plot No. 07, 1st Floor, Panchkula IT Park", "$type": "string" },
+      "city":       { "$value": "Panchkula", "$type": "string" },
+      "region":     { "$value": "Haryana", "$type": "string" },
+      "postal":     { "$value": "134109", "$type": "string" },
+      "country":    { "$value": "India", "$type": "string" },
+      "country_code":{ "$value": "IN", "$type": "string" },
+      "phone":      { "$value": "+1 949.379.8499", "$type": "string", "$description": "India office has NO local number. Use the main USA line — it reaches the India team during US-overlap hours and a callback is arranged otherwise. NEVER fabricate a +91 number." },
+      "address_oneline": { "$value": "Plot No. 07, 1st Floor, Panchkula IT Park, Panchkula, Haryana 134109, India", "$type": "string" },
+      "address_block":   { "$value": ["Plot No. 07, 1st Floor", "Panchkula IT Park", "Panchkula, Haryana 134109", "India"], "$type": "array" },
+      "hours":      { "$value": "24/7 Managed Services · Office: Mon–Sat 9:30 AM – 7:00 PM IST", "$type": "string" },
+      "tax_id_label":{ "$value": "GSTIN", "$type": "string" },
+      "primary_contact":{ "$value": { "name": "Shelja Mehta", "title": "India Operations Lead", "email": "smehta@technijian.com" }, "$type": "object" }
+    }
+  },
+
+  "phone": {
+    "main":    { "$value": "949.379.8499", "$type": "string", "$description": "Main office line — reaches BOTH the USA office and the India team (India has no local number). Use on letterhead, business cards, website footer, contact pages — the single number a recipient can call to reach Technijian for any reason." },
+    "sales":   { "$value": "949.379.8500", "$type": "string", "$description": "Direct line to Sales. Use ONLY in sales-specific marketing CTAs (e.g., 'Schedule a call: 949.379.8500'). Default to .main on letterhead and general contact." },
+    "billing": { "$value": "949.379.8501", "$type": "string", "$description": "Direct line to Billing/Support. Use ONLY on invoices, statements, payment receipts, collection notices." }
+  },
+
+  "email": {
+    "founder":  { "$value": "rjain@technijian.com", "$type": "string" },
+    "sales":    { "$value": "sales@technijian.com", "$type": "string" },
+    "billing":  { "$value": "billing@technijian.com", "$type": "string" },
+    "support":  { "$value": "support@technijian.com", "$type": "string" }
+  },
+
+  "color": {
+    "primary": {
+      "orange": { "$value": "#F67D4B", "$type": "color", "$description": "Core Orange — primary accent, CTAs, highlights. FAILS WCAG AA on white for body text; use only ≥18px bold, icons, buttons." },
+      "blue":   { "$value": "#006DB6", "$type": "color", "$description": "Core Blue — primary brand, headings, links. Passes WCAG AA on white (5.6:1)." }
+    },
+    "secondary": {
+      "teal":       { "$value": "#1EAAC8", "$type": "color", "$description": "Supporting accent, icons, checkmarks" },
+      "chartreuse": { "$value": "#CBDB2D", "$type": "color", "$description": "ROI/savings highlights — use sparingly" },
+      "grey":       { "$value": "#59595B", "$type": "color", "$description": "Brand Grey — body text, captions" }
+    },
+    "neutral": {
+      "dark":         { "$value": "#1A1A2E", "$type": "color", "$description": "Dark Charcoal — dark backgrounds, hero sections (NEVER pure black)" },
+      "near_black":   { "$value": "#2D2D2D", "$type": "color", "$description": "Footer backgrounds" },
+      "off_white":    { "$value": "#F8F9FA", "$type": "color", "$description": "Page backgrounds, card backgrounds" },
+      "white":        { "$value": "#FFFFFF", "$type": "color" },
+      "light_grey":   { "$value": "#E9ECEF", "$type": "color", "$description": "Borders, dividers" },
+      "wordmark_grey":{ "$value": "#6D6E71", "$type": "color", "$description": "Logo wordmark only" }
+    },
+    "status": {
+      "critical": { "$value": "#CC0000", "$type": "color", "$description": "Critical findings, fail status" },
+      "high":     { "$value": "#F67D4B", "$type": "color", "$description": "Maps to Core Orange" },
+      "medium":   { "$value": "#1EAAC8", "$type": "color", "$description": "Maps to Teal" },
+      "low":      { "$value": "#59595B", "$type": "color", "$description": "Maps to Brand Grey" },
+      "pass":     { "$value": "#28A745", "$type": "color", "$description": "Compliance pass, success" }
+    }
+  },
+
+  "typography": {
+    "family": {
+      "sans":    { "$value": "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", "$type": "fontFamily", "$description": "Primary corporate typeface — DOCX, PPTX, email, letterhead" },
+      "display": { "$value": "'Plus Jakarta Sans', 'Open Sans', sans-serif", "$type": "fontFamily", "$description": "Marketing display headings — datasheets, brochures, web heroes" },
+      "body":    { "$value": "'DM Sans', 'Open Sans', sans-serif", "$type": "fontFamily", "$description": "Marketing body text — datasheets, brochures" },
+      "mono":    { "$value": "'JetBrains Mono', 'Fira Code', Consolas, monospace", "$type": "fontFamily", "$description": "Code, ticket IDs, technical references" }
+    },
+    "size": {
+      "h1":      { "$value": "42px", "$type": "fontSize" },
+      "h2":      { "$value": "28px", "$type": "fontSize" },
+      "h3":      { "$value": "20px", "$type": "fontSize" },
+      "body":    { "$value": "16px", "$type": "fontSize" },
+      "small":   { "$value": "13px", "$type": "fontSize" },
+      "caption": { "$value": "11px", "$type": "fontSize" }
+    },
+    "weight": {
+      "regular":   { "$value": 400, "$type": "fontWeight" },
+      "medium":    { "$value": 500, "$type": "fontWeight" },
+      "semibold":  { "$value": 600, "$type": "fontWeight" },
+      "bold":      { "$value": 700, "$type": "fontWeight" },
+      "extrabold": { "$value": 800, "$type": "fontWeight" }
+    },
+    "line_height": {
+      "tight":   { "$value": 1.2, "$type": "number" },
+      "snug":    { "$value": 1.3, "$type": "number" },
+      "normal":  { "$value": 1.6, "$type": "number" }
+    }
+  },
+
+  "spacing": {
+    "xs":  { "$value": "4px",  "$type": "dimension" },
+    "sm":  { "$value": "8px",  "$type": "dimension" },
+    "md":  { "$value": "16px", "$type": "dimension" },
+    "lg":  { "$value": "24px", "$type": "dimension" },
+    "xl":  { "$value": "32px", "$type": "dimension" },
+    "2xl": { "$value": "48px", "$type": "dimension" },
+    "3xl": { "$value": "64px", "$type": "dimension" }
+  },
+
+  "radius": {
+    "sm":   { "$value": "4px",  "$type": "dimension" },
+    "md":   { "$value": "6px",  "$type": "dimension" },
+    "lg":   { "$value": "8px",  "$type": "dimension" },
+    "pill": { "$value": "999px","$type": "dimension" }
+  },
+
+  "shadow": {
+    "card":       { "$value": "0 2px 8px rgba(0,0,0,0.08)",  "$type": "shadow" },
+    "card_hover": { "$value": "0 4px 16px rgba(0,0,0,0.12)", "$type": "shadow" }
+  },
+
+  "logo": {
+    "full_color_small":   { "$value": "assets/logos/png/technijian-logo-full-color-600x125.png",  "$type": "asset", "$description": "Light backgrounds — DOCX/PPTX headers, letterhead" },
+    "full_color_medium":  { "$value": "assets/logos/png/technijian-logo-full-color-1200x251.png", "$type": "asset", "$description": "Light backgrounds — presentations, web" },
+    "full_color_large":   { "$value": "assets/logos/png/technijian-logo-full-color-2400x502.png", "$type": "asset", "$description": "Light backgrounds — print, hi-res" },
+    "reverse_white":      { "$value": "assets/logos/png/technijian-logo-reverse-white-5000x1667.png", "$type": "asset", "$description": "Solid-dark backgrounds (no transparency needed)" },
+    "dark_bg_transparent":{ "$value": "assets/logos/png/technijian-logo-dark-bg-transparent.png",  "$type": "asset", "$description": "PREFERRED for dark hero/cover sections — colorful dot-grid icon + white wordmark on transparent background, no tagline" },
+    "favicon_ico":        { "$value": "assets/favicons/favicon.ico", "$type": "asset" },
+    "og_image":           { "$value": "assets/favicons/og-image-1200x630.png", "$type": "asset" }
+  },
+
+  "service_pillar": {
+    "managed_it":      { "$value": { "color": "{color.primary.blue}",   "icon": "assets/icons/service-pillars/icon-managed-it.svg" }, "$type": "object" },
+    "cybersecurity":   { "$value": { "color": "{color.primary.orange}", "icon": "assets/icons/service-pillars/icon-cybersecurity.svg" }, "$type": "object" },
+    "cloud":           { "$value": { "color": "{color.secondary.teal}", "icon": "assets/icons/service-pillars/icon-cloud.svg" }, "$type": "object" },
+    "compliance":      { "$value": { "color": "{color.primary.blue}",   "icon": "assets/icons/service-pillars/icon-compliance.svg" }, "$type": "object" },
+    "software_ai":     { "$value": { "color": "{color.secondary.teal}", "icon": "assets/icons/service-pillars/icon-software-ai.svg" }, "$type": "object" },
+    "consulting":      { "$value": { "color": "{color.primary.orange}", "icon": "assets/icons/service-pillars/icon-consulting.svg" }, "$type": "object" }
+  },
+
+  "page": {
+    "letter_width":  { "$value": "8.5in",  "$type": "dimension" },
+    "letter_height": { "$value": "11in",   "$type": "dimension" },
+    "letter_width_px":  { "$value": 816,   "$type": "number", "$description": "Playwright pixel equivalent at 96dpi" },
+    "letter_height_px": { "$value": 1056,  "$type": "number", "$description": "Playwright pixel equivalent at 96dpi" },
+    "default_margin": { "$value": "1in", "$type": "dimension" }
+  },
+
+  "voice": {
+    "tone": {
+      "$value": ["friendly_not_unprofessional","informative_not_authoritative","smart_not_complicated","confident_not_showy","proactive_not_pushy"],
+      "$type": "array"
+    },
+    "use_words":   { "$value": ["partner","team","dedicated","proactive","preventive","practical","effective","investment","navigate compliance","modern","AI-forward"], "$type": "array" },
+    "avoid_words": { "$value": ["vendor","resource","asset","reactive","break-fix","revolutionary","game-changing","disruptive","cost","expense","guarantee compliance","cutting-edge","bleeding-edge","synergistic","end-to-end","leverage","unlock","seamless"], "$type": "array" }
+  },
+
+  "differentiators": {
+    "$value": [
+      "Technijians Pod Model — dedicated team assigned to each client",
+      "25+ years continuous operation since 2000",
+      "24/7 global support — U.S. + India offices, no extra cost",
+      "Cybersecurity-first — security embedded, not bolted on",
+      "AI-forward innovation — practical AI integration"
+    ],
+    "$type": "array"
+  },
+
+  "boilerplate": {
+    "short_25w":  { "$value": "Technijian is an IT services company providing managed IT, cybersecurity, cloud, and AI solutions to small and mid-sized businesses since 2000.", "$type": "string" },
+    "medium_50w": { "$value": "Founded in 2000, Technijian delivers managed IT services, cybersecurity, cloud solutions, compliance support, and AI-driven development for small and mid-sized businesses. With offices in Irvine, CA and India, our dedicated Technijians pod model provides 24/7 support from a team that knows your infrastructure inside and out.", "$type": "string" },
+    "long_100w":  { "$value": "Technijian is a full-spectrum IT services company founded in 2000 by Ravi Jain. For over 25 years, we have served small and mid-sized businesses with managed IT services, CrowdStrike-powered cybersecurity, cloud infrastructure, compliance frameworks (HIPAA, PCI, SOC 2, GDPR), and AI-driven software development. Our Technijians pod model assigns a dedicated team to each client, providing deep institutional knowledge and eliminating the fragmented experience common with other managed service providers. With offices in Irvine, California and India, we deliver 24/7 global support at no additional cost. Technijian's cybersecurity-first, AI-forward approach helps businesses leverage technology as a competitive advantage.", "$type": "string" }
+  }
+}

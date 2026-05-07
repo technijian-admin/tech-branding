@@ -1,13 +1,33 @@
 ---
 name: technijian-letterhead
-description: Generate brand-compliant Technijian letters and correspondence on company letterhead as DOCX files. Use when creating formal letters, client correspondence, cover letters, notices, or any official Technijian communication that requires letterhead.
+description: Generate brand-compliant Technijian letters and correspondence on company letterhead (USA Headquarters or India Delivery Center) as DOCX or HTML/PDF. Use when creating formal letters, client correspondence, cover letters, notices, or any official Technijian communication that requires letterhead. Always pick the correct office variant for the sender.
 ---
 
 # Technijian Letterhead & Correspondence Generator
 
 ## Overview
 
-Generates Technijian-branded formal letters and correspondence as DOCX files on company letterhead. All output follows the Technijian Brand Guide 2026 with correct header, footer, colors, and professional formatting.
+Generates Technijian-branded formal letters and correspondence on company letterhead. Two office variants are supported and MUST be selected based on the sender's location:
+
+| Office | Use when | Output files |
+|---|---|---|
+| **USA Headquarters** (Irvine, CA) | Sender is U.S.-based, recipient is U.S./international, billing in USD | `technijian-letterhead-usa.docx` / `.html` / `.pdf` |
+| **India Delivery Center** (Panchkula, Haryana) | Sender is India-based, vendor/government correspondence inside India, GSTIN required | `technijian-letterhead-india.docx` / `.html` / `.pdf` |
+
+Source files in [assets/print/templates/](../../assets/print/templates/):
+- `technijian-letterhead-usa.{html,pdf,docx}` — US HQ (full-color visual reference + editable)
+- `technijian-letterhead-india.{html,pdf,docx}` — India office (with IN country badge + GSTIN footer)
+- `technijian-letterhead-template.docx` — legacy alias = USA HQ
+- `generate-letterhead-pdfs.py` — Playwright renderer that builds both PDFs from HTML
+
+Build (single source of truth = `assets/brand-tokens.json`):
+
+```bash
+node scripts/build-letterhead.js                                     # builds both DOCX
+py -3.12 assets/print/templates/generate-letterhead-pdfs.py          # builds both PDFs
+```
+
+All output follows the Technijian Brand Guide 2026 with correct header, footer, colors, and professional formatting.
 
 **Keywords**: letterhead, letter, correspondence, formal letter, cover letter, notice, official letter, technijian, docx
 
@@ -94,18 +114,47 @@ const LIGHT_GREY = "E9ECEF";
 9. Closing + signature block
 10. Footer
 
+## Office Selection Rules (USA vs India)
+
+**ALWAYS select the office that matches the sender's billing entity, not the recipient's location.** If unclear, ask before generating.
+
+| Document | Office |
+|---|---|
+| US-based AE/CSM sending US-client correspondence | USA |
+| Welcome letters for US-based clients | USA |
+| Notices for US clients (maintenance windows, change notifications) | USA |
+| Pro forma invoices issued from the India entity (with GSTIN) | India |
+| Vendor coordination inside India (Panchkula, supplier letters) | India |
+| Letters from Shelja Mehta or India-based team members | India |
+| Government / GST / TDS correspondence | India |
+| MSAs/SOWs signed by Ravi Jain (US entity) | USA |
+
+### Differences between the two letterheads
+
+| Element | USA | India |
+|---|---|---|
+| Office identifier in header | "United States Headquarters" | "India Delivery Center" + IN country badge |
+| Address block | Irvine, CA, USA | Panchkula, Haryana, India |
+| Phone | +1 949.379.8500 | +91 [Panchkula direct] |
+| Date format | "March 7, 2026" | "7 March 2026" |
+| Recipient PIN/ZIP | "City, State ZIP" | "City, State PIN, Country" |
+| Footer extra field | — | `GSTIN [Panchkula entity GSTIN]` |
+| Sister-office line in footer | India Office, Panchkula | USA Headquarters, Irvine |
+
 ## Letterhead Formatting
 
 ### Header
 
 ```
-[Technijian Logo - 160px wide, left-aligned]
-────────────────────────────────────────────── (2px Core Blue line)
+[Technijian Logo - 180px wide, left-aligned]    [OFFICE LABEL — uppercase, blue, letter-spaced]
+                                                [Address block, right-aligned, grey]
+                                                [Phone │ technijian.com]
+══════════════════════════════════════════════ (3px Orange→Teal→Blue tricolor accent rule)
 ```
 
-- Logo: `assets/logos/png/technijian-logo-full-color-600x125.png`
-- Blue line: Full page width, 2px, Core Blue `006DB6`
-- Space below line: 24pt
+- Logo: `assets/logos/png/technijian-logo-full-color-1200x251.png` (or `-600x125.png` for DOCX)
+- Tricolor rule: equal thirds Core Orange → Teal → Core Blue, 3px tall, full-width within page margins
+- Space below rule: 0.45in to start of body
 
 ### Footer
 
