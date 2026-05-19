@@ -1,190 +1,251 @@
 ---
 name: technijian-biz-dev-blueprint
-description: Generate a complete AI-Driven Digital Business Development Blueprint for a Technijian prospect or client. Produces a 55–65 page branded DOCX + PDF report with 7 customer personas, competitive landscape, Technijian capability proof mapped to client use cases, Y1 ROI model, 90/180/365 implementation roadmap, and Quick Wins — plus three Playwright-rendered diagrams embedded in the document. Built from the RKE engagement (2026-05-18) as the canonical pattern.
+description: Generate an AI-Driven Digital Business Development Blueprint for a Technijian prospect or client. A research-driven, client-specific branded DOCX + PDF report that shows exactly how AI transforms their business development function — with Technijian products named and priced as the implementation partner. Section count, persona count, and diagrams are determined by research, not fixed in advance.
 ---
 
 # Technijian AI-Driven Business Development Blueprint
 
 ## Overview
 
-Generates a premium 55–65 page branded consulting deliverable that shows a prospect or client *exactly* how AI transforms their business development function — with Technijian products named and priced as the implementation partner.
+Generates a premium branded consulting deliverable (typically 40–70 pages depending on client complexity) that shows a prospect or client *exactly* how AI transforms their business development function — with Technijian products named and priced as the implementation partner.
 
 **Keywords**: business development, AI blueprint, growth strategy, personas, competitive landscape, ROI, roadmap, DOCX, biz dev, digital transformation
 
-**Canonical example**: `Clients/RKE/build-rke-report.js` — the first complete implementation of this pattern (RK Engineering Group, Newport Beach, delivered 2026-05-18).
+**Canonical example**: `Clients/RKE/build-rke-report.js` — first full implementation (RK Engineering Group, Newport Beach, 2026-05-18).
+
+**Key principle**: Every decision — which sections to include, how many personas to build, which diagrams to create — must be driven by what the research actually reveals about this specific client. Never copy the RKE structure verbatim. Use it as a reference, not a template.
 
 ---
 
-## Phase 0: Intake
+## Phase 0: Intake & Research Planning
 
-Before opening an editor, gather:
+Before writing a single section, answer these questions. The answers determine structure.
+
+### 1. Client complexity assessment
+
+| Question | Answer shapes |
+|----------|---------------|
+| How many distinct service lines does the client have? | Section 03 depth; persona count |
+| Are they in a regulated industry? | Whether to include a Regulatory section |
+| Do they have an existing market analysis or strategy doc? | Starting point depth; gaps to fill |
+| How many distinct buyer types can you name with confidence? | Persona count |
+| Is the competitive landscape documented or do you need to research it? | Competitor section complexity |
+| What's the likely deal size with Technijian? | Investment table calibration |
+| Is this a single location or multi-market client? | Whether to include a geographic expansion section |
+
+### 2. Data gathering checklist
 
 | Item | Source | Why |
 |------|--------|-----|
-| Existing market analysis or strategy deck | Client-provided | The base layer — expand, don't replace |
-| Client website + LinkedIn | Public | Org structure, service lines, portfolio |
-| Target procurement channels | Client or research | Public vs private, RFPs, direct |
-| Regulatory / compliance environment | Industry research | Shapes AI use-case framing |
-| Named competitors (3–5) | Client or research | Competitive landscape section |
-| Current pain points (if shared) | Discovery call notes | Shapes persona priorities |
-| Active engagement / opportunity size | Internal CRM | Calibrates investment table |
+| Client website (full crawl) | Public | Services, tone, gaps, trust signals |
+| Google/Yelp reviews (50+) | Public | Real customer language, pain points, churn triggers |
+| LinkedIn company + owner | Public | Team size, markets served, positioning |
+| Named competitors (research 5–8) | Yelp, Google, search | Competitive moat analysis |
+| Client-provided materials | Client | Source of truth for facts, portfolio, pricing |
+| Procurement / sales channels | Discovery or research | How buyers actually find and hire them |
+| Regulatory or licensing requirements | Industry research | Only if relevant; skip if consumer-facing service business |
+| Pricing (client's and competitors') | Public + client | ROI model input |
 
-**If no source document exists**: run the Blueprint cold. Use web research to populate Sections 01–05, then layer in the Technijian sections (06–14). The report structure is the same.
-
----
-
-## Report Structure (14 Sections + Appendix)
-
-Always follow this exact order. Do not skip sections.
-
-| # | Section | Key Content |
-|---|---------|-------------|
-| — | Cover | Blue top bar, logo, orange divider, title, client name, date, orange bottom bar |
-| — | TOC | Auto-populated via invisible Heading1 paragraphs adjacent to each colored section header |
-| 01 | Executive Summary | 4 KPI stat cards from client portfolio data (years, projects/clients served, personas, win rate or key metric) |
-| 02 | Regulatory / Industry Architecture | The rules, frameworks, or market dynamics that define the client's operating environment |
-| 03 | Service Architecture | Client's service lines — 3–4 categories with 4–6 bullets each |
-| 04 | Project Portfolio Highlights | 4–6 named real projects/clients (anonymize if needed) with outcome framing |
-| 05 | Strategic Market Dynamics & Procurement | How buyers find and hire the client; public vs private; decision drivers |
-| 06 | The Customer Personas | 4 primary + 3 emerging personas with Volume×Margin quadrant diagram |
-| 07 | Competitive Landscape | 5–7 named competitors, positioning table, gap analysis |
-| 08 | Technijian Capability Proof | 5 proven Technijian builds mapped to client-specific applications (the "we've done this before" section) |
-| 09 | How AI Transforms [Client]'s Growth Engine | Inbound / Outbound / Internal AI + 4-column AI Tools matrix citing Technijian services |
-| 10 | Projected Business Impact & Service Investment | KPI lift table, Y1 ROI, capacity recovery hours, Service Investment Map by product |
-| 11 | Implementation Roadmap | 90/180/365 day milestones with deliverables and timeline diagram |
-| 12 | Quick Wins | 5 actions the client can start week 1 (no Technijian contract required) |
-| 13 | Conclusion | Next-steps callout box + CTA |
-| 14 | About Technijian | Productized services (My AI, My SEO, My Dev) + contact table |
-| A | Appendix | Works cited with URLs (30–45 sources) |
+**If no source document exists**: run cold. Use web research to populate the business-context sections, then layer the Technijian sections on top.
 
 ---
 
-## Phase 1: Research (Sections 01–05)
+## Phase 1: Research Synthesis
 
-### Client intelligence checklist
+Before writing sections, produce a `_research.md` file in the client folder with:
 
-- [ ] Full list of named service offerings and how they are described publicly
-- [ ] Regulatory frameworks named (CEQA, HIPAA, ADA, NFPA, etc.)
-- [ ] Any "state-of-the-market" dynamics (consolidation, regulation changes, AI adoption curve)
-- [ ] Procurement pathways — RFPs, master service agreements, direct hire, referral
-- [ ] Geographic footprint and target markets
-- [ ] Real project names and outcomes (from portfolio, press releases, or LinkedIn)
+1. **Business snapshot** — what they do, who they serve, founding story, key stats
+2. **Competitive landscape** — named competitors, their ratings, pricing, strengths, gaps
+3. **Customer voice** — exact phrases from real reviews; what customers praise and what they complain about
+4. **Market gaps** — what no competitor is doing well (these become AI opportunities)
+5. **AI opportunity inventory** — brainstorm 10–15 ways AI could help THIS specific business; rank by impact and Technijian fit
+6. **Persona candidates** — list every buyer type you can find evidence for; you'll cull during writing
 
-**Voice rules during research**: No `leverage`, `seamless`, `unlock`, `world-class`, `robust`, `vendor`, `cutting-edge`. Use `trusted`, `low-friction`, `proven`, `purpose-built`.
+This file is the foundation. Sections are written from it, not invented during writing.
 
 ---
 
-## Phase 2: Persona Development (Section 06)
+## Report Structure (Research-Driven)
+
+**Do not use a fixed template.** Select sections from the menu below based on what the research supports. Every section included must have enough real data to fill it credibly. Better to write 6 dense sections than 14 thin ones.
+
+### Always-include (every blueprint)
+
+| Section | Key Content |
+|---------|-------------|
+| Cover | Blue top bar, logo, orange divider, title, client name, date, orange bottom bar |
+| TOC | Auto-populated via invisible Heading1 paragraphs adjacent to each colored section header |
+| Executive Summary | KPI stat cards from real client data (use as many cards as you have credible stats — typically 3–5) |
+| The Customer (Personas) | Research-driven personas — as many as the data supports; see persona guidance below |
+| Competitive Landscape | Named, researched competitors — as many as exist; see competitor guidance below |
+| Technijian Capability Proof | Map proven Technijian builds to THIS client's specific use cases |
+| How AI Transforms [Client]'s Growth Engine | Inbound / Outbound / Internal AI; AI Tools matrix citing Technijian services |
+| Business Impact & Service Investment | KPI lift, ROI model, Service Investment Map with real pricing |
+| Implementation Roadmap | Milestones paced to client complexity — not always 90/180/365 |
+| Quick Wins | Client-specific actions they can take in week 1, no contract required |
+| Conclusion + CTA | Next-steps callout |
+| About Technijian | My AI, My SEO, My Dev + contact table |
+| Appendix | Works cited (however many sources the research produced) |
+
+### Include-if-relevant (add when research justifies it)
+
+| Section | Include when |
+|---------|-------------|
+| Regulatory / Industry Architecture | Client operates in a regulated environment (legal, healthcare, engineering, financial services, construction) |
+| Service Architecture | Client has 3+ distinct service lines worth explaining to a new buyer |
+| Project / Portfolio Highlights | Client has a named portfolio of past work they're proud of |
+| Strategic Market Dynamics & Procurement | Client's buyer journey is complex or non-obvious (B2B, RFPs, institutional buyers) |
+| Geographic Expansion Strategy | Client is actively targeting new markets or cities |
+| Brand & Digital Presence Audit | Client has a significant gap between their quality of work and their online presence |
+
+---
+
+## Phase 2: Persona Development
+
+### Persona count: research-driven
+
+Do not target a fixed number. Build as many personas as you can support with evidence:
+
+- **Must have evidence**: a real customer review, a described client type, a buyer segment you can name with confidence
+- **Stop when**: you're inventing personas to fill a number rather than describing real buyer segments
+- **Typical range**: 3–6 personas; fewer for focused businesses, more for multi-market or multi-service clients
+- **Distinguish tiers if helpful**: if some personas are high-volume/core and others are niche/emerging, say so — but don't force a split if the data doesn't show one
 
 ### Persona card format
 
 Each persona = one colored table card:
 - Header row: persona color background + persona name (white bold, 24pt)
-- Label/value rows: 5 rows — Role, Pain Points (3 bullets), Decision Driver, AI Opportunity, Technijian Hook
-
-### The 7-persona model
-
-Build **4 primary personas** (high volume, established) + **3 emerging/niche personas** (growing, specialized):
-
-| Tier | Count | Description |
-|------|-------|-------------|
-| Primary | 4 | Core buyer types who represent 80% of revenue today |
-| Emerging | 3 | High-margin niches the client can capture with AI differentiation |
+- Label/value rows: Role, Pain Points (2–4 bullets), Decision Driver, AI Opportunity, Technijian Hook
 
 ### Volume × Margin quadrant diagram
 
-After all 7 persona cards, embed **Figure 6.0** — a scatter plot with:
-- X-axis: Volume (deal frequency)
-- Y-axis: Margin (fee/deal)
-- Numbered dots (1–7) + externalized persona key panel
-- Rendered via HTML + Playwright (see Diagram section below)
+Include this diagram **only if** you have 4+ personas AND can credibly place each on a volume/margin axis. For consumer service businesses with similar margin profiles, a different visual (e.g., frequency × spend) may be more honest.
 
-**Persona color assignments** (use in order):
+### Persona color pool (assign in order of importance)
+
 ```
-Primary 1 → Core Blue   (006DB6)
-Primary 2 → Core Orange (F67D4B)
-Primary 3 → Teal        (1EAAC8)
-Primary 4 → Critical Red (CC0000)
-Emerging 5 → Chartreuse  (8BC34A)
-Emerging 6 → Dark Charcoal (1A1A2E)
-Emerging 7 → Teal (repeat, lighter shade)
+Primary personas  → Core Blue (006DB6), Core Orange (F67D4B), Teal (1EAAC8), Critical Red (CC0000)
+Secondary personas → Chartreuse (8BC34A), Dark Charcoal (1A1A2E), Purple (7B2D8B), Gold (F5A623)
 ```
 
 ---
 
-## Phase 3: Competitive Landscape (Section 07)
+## Phase 3: Competitive Landscape
 
-### Competitor analysis format
+### Competitor count: research-driven
 
-Main table: 6 columns — Competitor | HQ | Size | Strengths | Weaknesses | AI Posture
+Include every named competitor you can find with real data. Don't pad with generic categories ("national chains") and don't limit to 5 if 8 exist.
+
+**Minimum data required per competitor to include them:**
+- Name + location
+- One measurable fact (Yelp rating, review count, years in business, or price point)
+- One identifiable strength or weakness
+
+### Competitor table format
+
+Adapt columns to the industry. Standard: Name | Market | Rating/Reviews | Strengths | Weaknesses | AI/Digital Posture
 
 ### Gap analysis callout
 
-After the table, a Core Blue bordered callout box:
-> **The AI Differentiation Gap**: Explain in 2–3 sentences why none of the competitors have AI-native processes — and how Technijian closes that gap.
-
-**Research minimum**: 5 named competitors with real data (website, LinkedIn, public RFPs). Do not invent competitor data.
+After the table, a Core Blue bordered callout: where is the white space no competitor owns? This becomes the AI differentiation thesis.
 
 ---
 
-## Phase 4: Technijian Capability Proof (Section 08)
+## Phase 4: Diagrams
 
-This section is the centerpiece. It proves Technijian has already built what the client needs.
+### Diagram selection: what best visualizes THIS client's data?
 
-### The 5 proven builds to cite
+Do not default to the RKE three-diagram set. For each potential diagram, ask: *does this data structure actually need a visual, or does a table serve better?*
 
-Map exactly 5 Technijian proven capabilities to 5 client-specific applications:
+**Diagram candidates:**
 
-| Proven Build | Adaptation Pattern |
+| Visual type | Use when |
+|-------------|----------|
+| Volume × Margin scatter | 4+ personas with meaningfully different volume and margin profiles |
+| Frequency × Spend scatter | Consumer service businesses where volume and margin are similar across personas |
+| AI growth engine architecture | Client has inbound + outbound + internal AI opportunities worth illustrating |
+| Implementation timeline | Roadmap has 3+ distinct phases with sequential dependencies |
+| Before/after comparison | Client has a measurable current-state vs future-state contrast |
+| Geographic heat map | Multi-market client where location matters to the strategy |
+| Funnel / conversion diagram | Client has a defined sales or customer journey worth mapping |
+| Competitive radar chart | 5+ competitors with 4+ comparable attributes |
+
+**Always render via HTML + CSS + Lucide icons + Playwright.** Never matplotlib.
+
+**Skip a diagram if**: the same information reads better as a table or bullet list. A diagram earns its page — if it doesn't add clarity, cut it.
+
+---
+
+## Phase 5: Technijian Capability Proof
+
+This section is the credibility centerpiece — it comes BEFORE the AI growth pitch. It proves Technijian has already built what this specific client needs.
+
+### Build count: research-driven
+
+Map as many proven Technijian builds as are genuinely relevant to this client. Don't force 5 if 3 are clearly applicable, and don't pad to hit a number. Each build must have a specific, named client application — not a generic one.
+
+**Proven Technijian builds available to cite** (select what fits):
+
+| Proven Build | Best fit for |
 |---|---|
-| Multi-Agent SEO Automation (Claude/GPT-4o/Gemini + MCP + SEMrush/GA4/Perplexity) | Answer Engine Optimization (AEO) content machine for the client's regulatory keywords |
-| AI Document Intelligence for FINRA (RFPs: days → minutes) | Client's RFP-response engine for their primary procurement channel |
-| LLM Council pattern (ScamShield: 3-model peer review) | AI peer-review tool for the client's core deliverables (studies, proposals, reports) |
-| Weaviate + Obsidian knowledge system | Client's institutional knowledge graph (decades of projects → queryable KB) |
-| AI-Native SDLC v7.0 (3–5× faster ship) | Custom tools built for the client's specific workflows (calculators, monitors, CRMs) |
+| Multi-Agent SEO + AEO Platform (Claude/GPT-4o/Gemini + MCP + SEMrush/GA4/Perplexity) | Any client who wins business through online visibility or content authority |
+| AI Document Intelligence (RFPs: days → minutes) | B2B clients with proposal-heavy sales cycles |
+| LLM Council pattern — 3-model peer review (ScamShield) | Clients whose core deliverable is a document, report, or recommendation |
+| Weaviate + Obsidian knowledge system | Clients with years of institutional knowledge locked in files and people's heads |
+| AI-Native SDLC v7.0 — custom app delivery 3–5× faster | Clients who need a specific workflow tool, calculator, or CRM built |
+| AI-Powered Review & Reputation System | Consumer-facing businesses where online ratings drive new customer acquisition |
+| Local SEO + Google Business Profile AI automation | Local service businesses competing on map pack ranking and review velocity |
+| AI Booking & Scheduling Optimization | Service businesses where booking friction causes revenue loss |
+| Social Content AI — before/after, short-form video | Visually-driven service businesses (auto, beauty, home services, food) |
 
-Each build = a callout box with:
-- Dark Charcoal header: "Proven Build #N: [Build Name]"
-- 2 rows: "What Technijian Built" | "How This Applies to [Client]"
+### Callout box format
+
+Each build = one callout box:
+- Dark Charcoal header: "Proven Build: [Build Name]"
+- Row 1: "What Technijian Built" — describe the actual build in 1–2 sentences
+- Row 2: "How This Applies to [Client]" — the specific application for this client
 - Left accent bar in Core Blue
 
 ---
 
-## Phase 5: AI Growth Engine (Section 09)
+## Phase 6: AI Growth Engine
 
-### Three channels
+### Three channels (always include all three)
 
 | Channel | Content |
 |---------|---------|
-| **Inbound** | Answer Engine Optimization (AEO/SEO) — content strategy for AI-cited authority in the client's domain |
-| **Outbound** | AI-powered lead generation — automated prospecting, outreach personalization, pipeline tracking |
-| **Internal** | AI automation — capacity recovery, quality control, knowledge retention, proposal acceleration |
+| **Inbound** | Answer Engine Optimization (AEO/SEO) — content strategy for AI-cited authority in the client's domain; Google Map Pack dominance for local businesses |
+| **Outbound** | AI-powered lead generation — automated prospecting, review generation, referral activation, outreach personalization |
+| **Internal** | AI automation — booking optimization, capacity recovery, knowledge retention, quality control |
 
 ### AI Tools matrix
 
-4-column table (not 3): Tool / Use Case / Impact Metric / **Technijian Service**
+Always 4 columns: Tool / Use Case / Impact Metric / **Technijian Service**
 
-The 4th column names the specific My AI / My SEO / My Dev offering — no abstract "AI for X" framing.
+The 4th column names the specific My AI / My SEO / My Dev offering. No abstract "AI for X" framing — name the product.
+
+Rows = as many AI tools as are relevant to this client. Don't pad; don't cut tools that genuinely apply.
 
 ---
 
-## Phase 6: Business Impact & Service Investment (Section 10)
+## Phase 7: Business Impact & Service Investment
 
 ### KPI lift table
 
-| KPI | Current State | With AI | Lift |
-|-----|-------------|---------|------|
-| Proposal win rate | Client's current % | + estimate | + X pts |
-| Billable-equivalent hours recovered | 0 | Y hours/yr | New capacity |
-| Time-to-proposal | Client's current | Reduced by Z% | — |
-| Content-attributed pipeline | $0 | $ target | — |
+Build KPI rows from what THIS client actually cares about. Do not copy the RKE row set. Typical rows for different client types:
+
+- **Service businesses**: new customers/month, review rating, repeat booking rate, response time
+- **B2B/professional services**: proposal win rate, time-to-proposal, pipeline value, hours recovered
+- **Multi-location**: revenue per location, referral rate, average ticket size
+
+Always use the client's current state as the baseline where known. If unknown, say "estimated current" with the assumption noted.
 
 ### Y1 ROI model
 
 | Row | Value |
 |-----|-------|
 | Technijian Service Investment (Y1) | $X–$Y range |
-| Projected new pipeline attributed to AI | $A–$B |
+| Projected revenue attributed to AI program | $A–$B |
 | ROI ratio | Nx–Mx |
 | Payback period | Q quarter |
 
@@ -193,62 +254,64 @@ Use real pricing from:
 - `services/My AI/assets/my-ai-content.txt`
 - Any service investment data from client discovery
 
-### Service Investment Map (10.4)
+### Service Investment Map
 
-Explicit table: Technijian Service | Tier / Description | Monthly Investment | Y1 Total
+Table: Technijian Service | Tier / Description | Monthly Investment | Y1 Total
 
-Always include at minimum:
-- My SEO (with specific tier and add-ons)
-- My AI (Fractional Advisor + at least one engagement type)
-- My Dev (scoped build + Managed App Services)
+Include every product that genuinely applies. Skip products that don't fit this client — don't include My Dev just to look comprehensive if there's no dev scope.
 
 ---
 
-## Phase 7: Implementation Roadmap (Section 11)
+## Phase 8: Implementation Roadmap
 
-### 3-phase structure
+### Phase structure: research-driven
 
-| Phase | Timeline | Milestones |
-|-------|----------|------------|
-| Foundation | 0–90 days | 2 milestones — infrastructure + knowledge base |
-| Growth | 90–180 days | 2 milestones — first content engine + lead gen |
-| Scale | 180–365 days | 2 milestones — ROI loop closed + next-gen builds |
+Do not default to 90/180/365 days. Pace the roadmap to what the client can realistically absorb:
 
-Each milestone: Name + 3 bullet deliverables.
+- **Simple service business**: 30/60/90 days (fast wins matter; don't overwhelm)
+- **Mid-complexity B2B**: 90/180/270 days
+- **Complex enterprise / regulated**: 90/180/365 days
 
-### Timeline diagram (Figure 11.0)
+Label phases by outcome, not just calendar dates. "Foundation → Growth → Scale" works well. "Quick Wins → Automation → Intelligence" works for some clients. Use whatever framing fits.
 
-Rendered via HTML + Playwright:
-- Horizontal timeline bar with 3 gradient phase zones (blue → orange → teal)
-- 6 milestone markers with Lucide icon circles
-- 3 outcome boxes below the bar with top accent color bars
-- Milestone labels outside/above bar (no overlapping)
+Each phase: 2–4 milestones. Each milestone: name + 2–4 bullet deliverables.
 
----
+### Timeline diagram
 
-## Phase 8: Quick Wins (Section 12)
+Include a timeline diagram **only if** the roadmap has 3+ sequential phases and the visual helps the reader understand dependencies. For simple 2-phase plans, a table is cleaner.
 
-5 actions the client can take in Week 1 — **no Technijian contract required**:
-
-1. Something they can Google or start researching today
-2. A free tool audit (GA4, Search Console, LinkedIn analytics)
-3. A content or keyword gap they can act on manually
-4. A process they can document for future AI training data
-5. A competitor monitoring setup (Google Alerts, LinkedIn notifications)
-
-Frame these as "proof of concept" steps — they naturally lead to engaging Technijian for acceleration.
+If you include a diagram, render via HTML + Playwright (not matplotlib):
+- Horizontal bar with gradient phase zones
+- Milestone markers with Lucide icon circles
+- Milestone labels that do NOT overlap
+- Outcome boxes or callouts below the bar
 
 ---
 
-## Diagrams: HTML + Playwright (3 Required)
+## Phase 9: Quick Wins
 
-Never use matplotlib. Always use HTML + CSS + Lucide icons + Playwright for production-grade output.
+Client-specific actions the client can take in their first week — **no Technijian contract required**.
 
-### Setup
+### Count: as many as apply, minimum 3
+
+Each Quick Win must be:
+- Specific to this client's situation (not generic advice)
+- Completable without spending money or signing anything
+- A natural on-ramp to Technijian's engagement
+
+**Example categories** (adapt to client):
+- A free tool they can audit today (Google Business Profile, GA4, Search Console)
+- A review generation action they can do manually (text their last 10 customers)
+- A content gap they can fill this week (add photos, update hours, write FAQ)
+- A competitor they should monitor (set a Google Alert)
+- An internal process they can document (for future AI training data)
+
+---
+
+## Playwright Render Setup
 
 ```python
 from playwright.sync_api import sync_playwright
-import base64
 
 def render_diagram(html_content, output_path, width=1200, height=700):
     with sync_playwright() as p:
@@ -260,33 +323,7 @@ def render_diagram(html_content, output_path, width=1200, height=700):
         browser.close()
 ```
 
-### Diagram 1: Persona Volume × Margin Quadrant (Figure 6.0)
-
-- 900×650px SVG-in-HTML
-- X-axis: Volume (deal frequency), Y-axis: Margin ($/deal)
-- Numbered filled circles (diameter 40px) in persona colors
-- Persona key panel on the right (6 cols: # | Name | Color chip | Volume | Margin | Priority)
-- Subtle diagonal shading for high-volume + high-margin quadrant
-
-### Diagram 2: AI Growth Engine Architecture (Figure 9.0)
-
-- 1200×700px
-- 3-column layout: Data Sources | AI Layer (dark gradient center) | Outputs
-- Lucide icons in colored circle bubbles (file-text, brain, network, etc.)
-- Each column: 4–5 item cards with icon + label + 1-line description
-- Subtle drop shadows on cards, accent underline on column headers
-
-### Diagram 3: 90/180/365 Implementation Timeline (Figure 11.0)
-
-- 1400×600px
-- Horizontal gradient bar: blue (days 0–90) → orange (90–180) → teal (180–365)
-- 6 milestone markers: Lucide icon in white circle on colored background
-- Phase zone labels above bar ("Foundation", "Growth", "Scale")
-- Milestone labels alternating above/below connector lines (no overlap)
-- 3 outcome cards below bar with top color accent
-
-### Fonts (inline as @import)
-
+### Fonts
 ```html
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
@@ -294,9 +331,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; }
 </style>
 ```
 
-### Lucide icons
-
-Embed as inline SVG (MIT license). Do not use external CDN — embed the SVG paths directly for reproducibility.
+Embed Lucide icons as inline SVG (MIT license). No external CDN — embed SVG paths directly for reproducibility.
 
 ---
 
