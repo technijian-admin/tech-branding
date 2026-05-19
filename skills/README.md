@@ -4,13 +4,19 @@ These skills enable Technijian team members to generate brand-compliant material
 
 All skills read from a single source of truth: [`assets/brand-tokens.json`](../assets/brand-tokens.json) (DTCG-format design tokens). When you change a brand value there, every skill picks it up automatically.
 
-## Available Skills (22 total)
+## Available Skills (23 total)
 
 ### Foundation (1)
 
 | Skill | What It Does |
 |---|---|
 | `technijian-brand` | Master brand reference — colors, typography, voice, UI specs, two-office data |
+
+### Business development (1)
+
+| Skill                          | What It Generates                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------ |
+| `technijian-biz-dev-blueprint` | DOCX+PDF AI growth blueprint — personas, competitors, capability proof, ROI model, roadmap |
 
 ### Document generation (10)
 
@@ -107,6 +113,12 @@ When marketplace publication is ready, all Technijian skills will be installable
 ```
 
 ## Usage Examples
+
+**AI Growth Blueprint (new client):**
+> "Build a biz-dev blueprint for Pacific Structural Engineers — Newport Beach seismic/structural firm, ~40 staff, primarily public agency clients. No source doc; research from their website."
+
+**AI Growth Blueprint (from existing analysis):**
+> "Build a biz-dev blueprint for Meridian Environmental. Source deck is at Clients/Meridian/meridian-market-analysis.docx. Competitors: SWCA, ICF, Stantec, ESA, Ascent."
 
 **Letterhead (US):**
 > "Draft a welcome letter for John Smith, CTO of Anderson Real Estate, on USA letterhead."
