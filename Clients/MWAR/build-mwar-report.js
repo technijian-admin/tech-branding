@@ -590,7 +590,7 @@ docChildren.push(
 
   p('Figure 4.0 below maps each persona by service frequency (how often they need wheel repair per year) and average revenue per visit — illustrating which segments drive the most immediate growth opportunity.', { italics: true, color: BRAND_GREY }),
   spacer(60),
-  diagramImage(DIAGRAM_PERSONAS_BUF, 'Monaco Customer Personas — Frequency vs. Revenue', 580, 1.55),
+  diagramImage(DIAGRAM_PERSONAS_BUF, 'Monaco Customer Personas — Frequency vs. Revenue', 580, 1.50),
   diagramCaption('Figure 4.0 — Monaco Customer Segments: Service Frequency vs. Revenue per Visit'),
 );
 
@@ -720,6 +720,13 @@ docChildren.push(
     'Technijian built an AI chatbot and SMS intake system that handles customer inquiries outside business hours, qualifies jobs with a photo-based quote flow, and slots bookings into the shop calendar without human intervention.',
     'Applied to Monaco: a customer texts a photo of their wheel damage at 9pm Saturday. The AI responds with a quote range, asks for their location and preferred time, and confirms the appointment. Javon arrives Monday with a full schedule — and zero lost weekend leads. This single system addresses Monaco\'s biggest unmonitored revenue gap.'
   ),
+  spacer(140),
+
+  capabilityBox(
+    'Proven Build 5 — My AI Lead Gen: Automated Outbound Prospecting',
+    'Technijian\'s My AI Lead Gen platform automates the full outbound prospecting cycle: identify high-fit B2B targets from public data (dealer inventory systems, fleet operator directories, collision shop listings), draft AI-personalized outreach sequences in the client\'s voice, and manage follow-up cadences until a reply or a booked call — all without manual effort.',
+    'Applied to Monaco: Technijian runs a dealer and fleet outreach program targeting Orange County and Las Vegas new-car dealers who accumulate wheel damage from lot moves and test drives. AI-personalized emails go out from Javon\'s inbox, with automated Day 3 and Day 7 follow-ups. Positive responses are flagged for Javon to close personally. Secondary sequences target fleet managers and corporate accounts. Goal: 2 new wholesale dealer accounts within 60 days; 8+ by end of Year 1 — adding an estimated $8,000–$12,000 per month in B2B revenue at volume pricing.'
+  ),
 );
 
 // ---------- 08 AI GROWTH ENGINE ----------
@@ -728,7 +735,7 @@ docChildren.push(
   spacer(100),
   p('Monaco\'s AI growth program operates across three channels simultaneously: inbound demand generation, outbound relationship building, and internal capacity optimization. Together, they close the gap between Monaco\'s current output and its full operational capacity.'),
   spacer(200),
-  diagramImage(DIAGRAM_ARCH_BUF, 'Monaco AI Growth Engine Architecture', 580, 1.72),
+  diagramImage(DIAGRAM_ARCH_BUF, 'Monaco AI Growth Engine Architecture', 560, 1.61),
   diagramCaption('Figure 8.0 — Monaco AI Growth Engine: Three-Channel Architecture'),
   spacer(160),
 
@@ -748,7 +755,8 @@ docChildren.push(
       ['Inbound', 'Before/after content pipeline', 'Instagram & TikTok posts from every repair', 'Follower growth, profile visits', 'My AI'],
       // Outbound
       ['Outbound', 'Review velocity system', 'Auto SMS post-service review request', 'New reviews / month', 'My AI'],
-      ['Outbound', 'Dealer outreach automation', 'Identify & sequence new OC dealerships', 'New dealer accounts / quarter', 'My AI'],
+      ['Outbound', 'My AI Lead Gen — dealer prospecting', 'Identify & AI-sequence OC + LV new-car dealers; personalized emails from Javon\'s inbox + auto follow-up', 'New wholesale dealer accounts / quarter', 'My AI Lead Gen'],
+      ['Outbound', 'My AI Lead Gen — fleet & B2B', 'Fleet managers, corporate accounts, rental operators — outbound prospecting sequences', 'Fleet accounts closed / quarter', 'My AI Lead Gen'],
       ['Outbound', 'Referral activation', 'Body shop partner loyalty + volume tracking', 'Partner referral revenue', 'My Dev'],
       // Internal
       ['Internal', 'AI booking & quote bot', 'After-hours intake, photo-to-quote, scheduling', 'After-hours bookings captured', 'My Dev'],
@@ -832,14 +840,97 @@ docChildren.push(
   ),
 );
 
-// ---------- 10 IMPLEMENTATION ROADMAP ----------
+// ---------- 10 SUBSCRIPTION & MEMBERSHIP PRICING ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '10'),
+  ...sectionHeader('Subscription & Membership Pricing Strategy', TEAL, '10'),
+  spacer(100),
+  p('As Monaco\'s AI program matures and the customer base grows, a subscription or membership model creates predictable monthly recurring revenue, locks in loyalty, and enables capacity planning. Done correctly, it also builds a competitive moat that is nearly impossible for solo-operator competitors to replicate.'),
+  spacer(120),
+
+  subHeader('Why Subscriptions Work for Monaco'),
+  buildTable(
+    [{ label: 'Benefit', weight: 2.5 }, { label: 'What It Means for Monaco', weight: 5 }],
+    [
+      ['Predictable revenue', 'Subscription fees arrive regardless of whether damage occurs — smoothing seasonal dips'],
+      ['Capacity planning', 'Knowing 100 subscribers will book ~400 repairs/year lets Javon schedule staff and mobile routes proactively'],
+      ['Customer lock-in', 'Subscribers are 3–5× less likely to shop a competitor for each repair — they already paid'],
+      ['AI upsell surface', 'Subscription CRM flags renewal dates, upgrade opportunities, and add-on services (calipers, chrome delete)'],
+      ['Moat', 'No solo mobile operator can afford to offer a structured subscription program — this differentiates Monaco immediately'],
+    ],
+  ),
+  spacer(160),
+
+  subHeader('Recommended Tier Structure'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.5 },
+      { label: 'Annual Fee', weight: 1.5 },
+      { label: 'Included Repairs', weight: 1.5 },
+      { label: 'Retail Value', weight: 1.5 },
+      { label: 'Savings', weight: 1 },
+      { label: 'Best For', weight: 2.5 },
+    ],
+    [
+      ['Silver', '$349/yr ($29/mo)', '4 repairs/yr', '$500', '30%', 'Single-car owners, lease drivers'],
+      ['Gold', '$649/yr ($54/mo)', '8 repairs/yr', '$1,000', '35%', 'Dual-car households, Tesla owners'],
+      ['Platinum', '$999/yr ($83/mo)', '12 repairs/yr', '$1,500', '33%', 'Car enthusiasts, collectors'],
+      ['Fleet / Dealer', 'Custom — min. $1,200/yr', 'Unlimited at volume rate', '—', '$75–$85/wheel', 'Dealerships, fleet managers'],
+    ],
+  ),
+  spacer(120),
+  p('Each tier is priced to deliver meaningful customer savings while protecting Monaco\'s per-repair margin. At volume, a subscription repair costs Monaco approximately the same as a walk-in — but generates guaranteed pipeline.'),
+  spacer(160),
+
+  subHeader('Usage Abuse Prevention — The Fair-Use Framework'),
+  p('The highest-risk scenario: a customer on the 4-repair Silver plan damages 8–12 wheels in a year. The following layered approach prevents margin erosion without punishing honest customers.'),
+  spacer(100),
+  buildTable(
+    [
+      { label: 'Control Layer', weight: 2 },
+      { label: 'How It Works', weight: 4 },
+      { label: 'Enforcement', weight: 2.5 },
+    ],
+    [
+      ['VIN linkage', 'Each subscription is tied to one registered vehicle\'s VIN. A second vehicle = second subscription.', 'Captured at sign-up; AI CRM validates at booking'],
+      ['Cooldown window', 'The same wheel is not eligible for repair within 60 days of a previous repair on that wheel.', 'CRM blocks booking; AI flags duplicate requests'],
+      ['Overage pricing', 'Repairs 1–4 at member rate. Repairs 5–8 at 15% discount. Repairs 9+ at full retail ($125–$175).', 'Pricing applied automatically at checkout'],
+      ['AI usage monitoring', 'CRM flags any account using 2× the cohort average. Ravi or Javon receives an alert for manual review.', 'My AI CRM anomaly detection; monthly report'],
+      ['Early-term clause', 'Accounts showing systematic over-use within 90 days may be offered an upgrade or a plan exit at prorated refund.', 'Human decision; AI surfaces the candidates'],
+    ],
+  ),
+  spacer(120),
+  p('The key principle: make the price of abuse higher than the price of upgrading. A customer repairing 8 wheels should find it cheaper to upgrade to Gold than to pay Silver + overage fees — steering them toward the right tier organically.'),
+  spacer(160),
+
+  subHeader('Revenue Impact Scenarios'),
+  buildTable(
+    [
+      { label: 'Scenario', weight: 2 },
+      { label: 'Subscribers', weight: 1 },
+      { label: 'Avg Repairs/Yr', weight: 1.5 },
+      { label: 'Avg Fee/Yr', weight: 1.5 },
+      { label: 'Annual Recurring Revenue', weight: 2 },
+      { label: 'Monthly Recurring Revenue', weight: 1.5 },
+    ],
+    [
+      ['Conservative (Yr 1)', '50', '4.2', '$399', '$19,950', '~$1,660/mo'],
+      ['Target (Yr 2)', '150', '4.8', '$499', '$74,850', '~$6,240/mo'],
+      ['Aggressive (Yr 3)', '300', '5.2', '$549', '$164,700', '~$13,725/mo'],
+      ['Fleet add-on', '6 dealer accts', '24 repairs/yr', '$1,400', '$8,400', '~$700/mo'],
+    ],
+  ),
+  spacer(100),
+  p('At 150 subscribers (Year 2 target), Monaco collects ~$6,240/month in guaranteed subscription fees — providing a predictable revenue floor regardless of seasonal fluctuation. Combined with the capacity gains from the AI program, this transforms Monaco\'s financial profile from purely transactional to partially recurring.'),
+);
+
+// ---------- 11 IMPLEMENTATION ROADMAP ----------
+docChildren.push(
+  ...sectionHeader('Implementation Roadmap', TEAL, '11'),
   spacer(100),
   p('The Monaco AI Growth Program is designed for fast impact. Rather than a multi-year transformation, this roadmap is built for 90-day proof-of-concept cycles — with meaningful, measurable results visible within the first 30 days.'),
   spacer(200),
-  diagramImage(DIAGRAM_TIMELINE_BUF, 'Monaco 30-60-90 Day Implementation Timeline', 580, 2.1),
-  diagramCaption('Figure 10.0 — Monaco AI Growth Program: 30/60/90 Day Roadmap'),
+  diagramImage(DIAGRAM_TIMELINE_BUF, 'Monaco 30-60-90 Day Implementation Timeline', 580, 2.30),
+  diagramCaption('Figure 11.0 — Monaco AI Growth Program: 30/60/90 Day Roadmap'),
   spacer(160),
 
   subHeader('Phase 1 — Foundation (Days 1–30)', { color: CORE_BLUE }),
@@ -877,7 +968,7 @@ docChildren.push(
 
 // ---------- 11 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '11'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '12'),
   spacer(100),
   p('These are five actions Monaco can take immediately — before any Technijian contract is signed. Each one is a concrete step that creates value this week and naturally leads to the larger AI program.'),
   spacer(140),
@@ -915,7 +1006,7 @@ docChildren.push(
 
 // ---------- 12 CONCLUSION ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '12'),
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '13'),
   spacer(100),
   p('Monaco Wheel Restoration has everything it needs to dominate the Orange County and San Clemente wheel repair markets: the craft, the reputation, the capacity, and a 13-year head start. The missing piece is a systematic AI program that makes the quality of the work as visible online as it is in person.'),
   p('The opportunity is not abstract. It is 2 additional wheels per day, captured after hours by an AI that never sleeps. It is 50 San Clemente reviews that make Monaco the first name that appears when a local searches "wheel repair near me." It is a dealer base that doubles because an AI handles the outreach Javon does not have time for.'),
@@ -950,7 +1041,7 @@ docChildren.push(
 
 // ---------- 13 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '13'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '14'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California. We build and operate the AI systems that help local and regional businesses compete at scale — without adding headcount.'),
   spacer(140),
