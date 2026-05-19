@@ -147,17 +147,76 @@ Ranked by estimated revenue impact × Technijian fit.
 
 ---
 
-## 07 — Gaps in Research (needs owner input)
+## 07 — Javon's Answers (2026-05-19)
 
-- [ ] Average ticket price (per wheel, per job)
-- [ ] Monthly job volume (how many wheels/month currently)
-- [ ] Current booking method (phone, text, website form?)
-- [ ] Do they have any dealer/fleet accounts today?
-- [ ] What % of business is mobile vs in-shop?
+### Pricing (confirmed by owner)
+
+| Service | Price |
+|---------|-------|
+| Wheel repair — in-shop | $125/wheel |
+| Wheel repair — mobile | $150–$175/wheel |
+| Brake caliper painting | $750 |
+| Chrome delete | $600–$1,599 |
+| Vehicle wrap | $2,400–$5,000 |
+
+### Volume (confirmed by owner)
+
+| Metric | Value |
+|--------|-------|
+| Max wheels/day (capacity) | 20–30 |
+| Average wheels/day (current) | 10–12 |
+| Capacity utilization | ~40–48% |
+| Estimated wheels/month (avg) | ~240 (11/day × 22 working days) |
+
+### Booking method
+
+- **Primary**: Phone calls and text messages (~75%)
+- **Secondary**: Online form submission (~25%)
+- No AI-powered booking, no after-hours capture
+
+### B2B relationships
+
+- **Dealerships**: 4 (was more; scaled back as direct retail grew)
+- **Body shops**: A handful weekly (consistent referral stream)
+- Note: Javon intentionally shifted from dealer-primary to direct retail. Both channels active.
+
+---
+
+## Revenue Model (estimated from Javon's data)
+
+### Monthly baseline estimate
+
+| Service | Units/Month | Avg Price | Revenue |
+|---------|-------------|-----------|---------|
+| Wheel repair (in-shop, ~70%) | 168 wheels | $125 | $21,000 |
+| Wheel repair (mobile, ~30%) | 72 wheels | $162 | $11,664 |
+| Caliper painting (est.) | ~6 jobs | $750 | $4,500 |
+| Chrome delete (est.) | ~3 jobs | $1,100 | $3,300 |
+| Vehicle wraps (est.) | ~1–2 jobs | $3,700 | $5,550 |
+| **Total estimated** | | | **~$46,000/month** |
+
+**Annual run rate: ~$550,000**
+
+### Capacity gap (the AI ROI story)
+
+| Scenario | Wheels/Day | Vs. Current | Monthly Revenue Add | Annual Add |
+|----------|------------|-------------|--------------------|-----------| 
+| Current | 11 avg | — | — | — |
+| +2 wheels/day | 13 | +18% | +$6,160 | +$73,920 |
+| 60% capacity | 15 | +36% | +$12,320 | +$147,840 |
+| 75% capacity | 19 | +73% | +$24,640 | +$295,680 |
+
+At $140 avg/wheel (blended in-shop/mobile), just 2 additional wheels/day covers the full Technijian program investment.
+
+---
+
+## 08 — Gaps Still Open
+
+- [ ] San Clemente brand name — "San Clemente Wheel Repair" confirmed or TBD?
+- [ ] Weekend hours — is extending to Saturday a possibility operationally?
 - [ ] Current ad spend (Google Ads, Yelp Ads)?
-- [ ] San Clemente WR — is the brand name locked in or TBD?
-- [ ] Does Ravi have someone handling social already or is it manual?
-- [ ] Las Vegas location — is it operated separately or same team?
+- [ ] Who handles social today — Javon personally or staff?
+- [ ] Las Vegas — same team or separate operation?
 
 ---
 
