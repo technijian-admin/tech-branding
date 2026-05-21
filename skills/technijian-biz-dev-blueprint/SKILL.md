@@ -29,11 +29,25 @@ Before writing a single section, answer these questions. The answers determine s
 | Are they in a regulated industry? | Whether to include a Regulatory section |
 | Do they have an existing market analysis or strategy doc? | Starting point depth; gaps to fill |
 | How many distinct buyer types can you name with confidence? | Persona count |
+| Does the client sell to a broad market or a finite, *named* list of buyers? | Demand-gen (volume) vs. account-based / ABM (depth) — see GTM motion below |
 | Is the competitive landscape documented or do you need to research it? | Competitor section complexity |
 | What's the likely deal size with Technijian? | Investment table calibration |
 | Is this a single location or multi-market client? | Whether to include a geographic expansion section |
 
-### 2. Data gathering checklist
+### 2. Go-to-market (GTM) motion — broad demand-gen vs. account-based (CRITICAL)
+
+**Classify this before writing the growth engine. Getting it wrong is the single most common way this deliverable misses.** It decides whether the "How AI Transforms Growth" section is framed as *volume demand generation* or *account-based (ABM) depth*.
+
+| Signal | Motion | Growth-engine framing |
+|--------|--------|----------------------|
+| Sells to a large, open market; success = more qualified leads in the funnel; buyer is often anonymous until they raise a hand | **Broad demand-gen** | Lead generation, inbound funnels, review velocity, map-pack — volume plays are appropriate |
+| Sells to a finite, KNOWN universe of buyers they can name; wins work through relationships, referrals, RFPs, or on-call master agreements; "we know exactly who our targets are" | **Account-based (ABM)** | Account intelligence, trigger/signal monitoring on named targets, RFP/proposal automation, pre-meeting account dossiers, personalized per-account outreach — NEVER "lead generation" or "shotgun marketing" |
+
+**Default by industry**: AEC / engineering, government-contracting, professional services (legal, accounting, consulting), niche B2B, and DME / medical-device-style B2B2C firms are almost always **account-based**. Local consumer services (auto, home services, healthcare practices, beauty, food) are usually **broad demand-gen**. When unsure, ask the client one question: *"Do you have a known list of target accounts, or are you trying to reach a broad market?"*
+
+**Why this matters (RKE lesson, 2026-05-21):** The RKE blueprint was technically strong but was followed by a demand-gen offer ("a Digital Marketing Campaign for inbound and lead gen"). RKE's president declined: *"we are intentionally not looking for a broad 'shotgun' marketing approach or generalized lead generation... we know exactly who our targets are."* The capability was right; the framing was wrong. For an ABM client, reframe the SAME AI as the layer *under* their named-account strategy — see Phase 6.
+
+### 3. Data gathering checklist
 
 | Item | Source | Why |
 |------|--------|-----|
@@ -55,11 +69,12 @@ Before writing a single section, answer these questions. The answers determine s
 Before writing sections, produce a `_research.md` file in the client folder with:
 
 1. **Business snapshot** — what they do, who they serve, founding story, key stats
-2. **Competitive landscape** — named competitors, their ratings, pricing, strengths, gaps
-3. **Customer voice** — exact phrases from real reviews; what customers praise and what they complain about
-4. **Market gaps** — what no competitor is doing well (these become AI opportunities)
-5. **AI opportunity inventory** — brainstorm 10–15 ways AI could help THIS specific business; rank by impact and Technijian fit
-6. **Persona candidates** — list every buyer type you can find evidence for; you'll cull during writing
+2. **GTM motion** — classify as broad demand-gen or account-based (ABM) per Phase 0.2. For ABM clients, capture the *named-account universe*: target segments + example named accounts (e.g., "key developers, municipal agencies, planning firms"). This is what the growth engine targets instead of a generic lead funnel.
+3. **Competitive landscape** — named competitors, their ratings, pricing, strengths, gaps
+4. **Customer voice** — exact phrases from real reviews; what customers praise and what they complain about
+5. **Market gaps** — what no competitor is doing well (these become AI opportunities)
+6. **AI opportunity inventory** — brainstorm 10–15 ways AI could help THIS specific business; rank by impact and Technijian fit
+7. **Persona candidates** — list every buyer type you can find evidence for; you'll cull during writing
 
 This file is the foundation. Sections are written from it, not invented during writing.
 
@@ -210,13 +225,17 @@ Each build = one callout box:
 
 ## Phase 6: AI Growth Engine
 
+**First, match the framing to the client's GTM motion (Phase 0.2).** The three channels stay, but their *content* changes completely between a broad demand-gen client and an account-based (ABM) client. For an ABM client, the phrase "lead generation" should not appear — reframe it as account intelligence and targeted outreach.
+
 ### Three channels (always include all three)
 
-| Channel | Content |
-|---------|---------|
-| **Inbound** | Answer Engine Optimization (AEO/SEO) — content strategy for AI-cited authority in the client's domain; Google Map Pack dominance for local businesses |
-| **Outbound** | AI-powered lead generation — automated prospecting, review generation, referral activation, outreach personalization |
-| **Internal** | AI automation — booking optimization, capacity recovery, knowledge retention, quality control |
+| Channel | Broad demand-gen framing | Account-based (ABM) framing |
+|---------|--------------------------|------------------------------|
+| **Inbound** | AEO/SEO for AI-cited authority; Google Map Pack dominance; review velocity | Authority/AEO content aimed at the *specific named buyers* — the technical questions those planners/agencies/buyers actually ask — so the firm is the cited expert in its narrow domain |
+| **Outbound** | AI lead generation — automated prospecting, review generation, referral activation, broad outreach personalization | Account intelligence + **trigger/signal monitoring** on named targets (new filings, RFPs, project awards, leadership changes); **RFP/proposal auto-drafting**; **pre-meeting account dossiers**; personalized per-account outreach against the client's *existing* target list |
+| **Internal** | AI automation — booking optimization, capacity recovery, knowledge retention, quality control | Knowledge graph of institutional history → case studies matched to each target; capacity recovery; quality control on deliverables |
+
+> **Never pitch broad lead-gen / "shotgun" marketing to an account-based client.** They already know who their targets are; the value is depth and timing, not volume. State plainly that AI *supports* the human relationship layer (referrals, trust, in-person) and does not replace it — that honesty builds credibility. (RKE declined the engagement on exactly this framing error — see Phase 0.2.)
 
 ### AI Tools matrix
 
@@ -430,6 +449,7 @@ $word.Quit()
 - [ ] Investment ranges match current pricing files in `services/`
 - [ ] Cross-references between sections are correct (e.g., "see Section 11.1" actually exists)
 - [ ] Persona count is consistent across all sections that mention it
+- [ ] Growth-engine framing matches the client's GTM motion (Phase 0.2) — NO "lead generation" / "inbound funnel" / "shotgun" language for an account-based (ABM) client
 
 ### Gate 2: Voice compliance
 Run `technijian-voice` skill on the full draft text before inserting into docx-js. Flag and fix:
@@ -482,6 +502,7 @@ This is a **business development consulting document**, not a marketing brochure
 5. **Quick Wins are zero-commitment**: Frame them as self-serve actions — do not attach Technijian pricing to them
 6. **ROI model is projected, not guaranteed**: Use "projected", "estimated", "modeled at" — never "guaranteed"
 7. **Client industry language throughout**: Use the same terms the client uses (CEQA not "environmental law", VMT not "traffic metrics") — this shows domain knowledge
+8. **Match the growth framing to the GTM motion**: For account-based (ABM) clients — AEC, government, professional services, niche B2B — never use "lead generation", "fill your funnel", or "shotgun" language. Frame AI as account intelligence + RFP automation + targeted per-account outreach *under* their existing named-account strategy. See Phase 0.2.
 
 ---
 
