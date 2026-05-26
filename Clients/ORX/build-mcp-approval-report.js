@@ -1,0 +1,652 @@
+// OrthoKinetix (powered by OrthoXpress) — OXP Live MCP Server: Solution Overview & Approval
+// Technijian-branded DOCX report builder. Reads brand-tokens.json for brand values.
+// Pattern adapted from Clients/ORX/build-orx-report.js.
+// Facts verified live against the OrthoXpressDB production database on 2026-05-22
+// (see orx-web-oxplive/docs/sdlc/MCP-SERVER-SYSTEM-SPECIFICATION.md and docs/as-built/db-contracts/).
+
+const fs = require('fs');
+const path = require('path');
+const {
+  Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+  ImageRun, Header, Footer, AlignmentType,
+  TableOfContents, HeadingLevel, BorderStyle, WidthType, ShadingType,
+  VerticalAlign, PageNumber, PageBreak
+} = require('docx');
+
+// ---------- Brand constants ----------
+const tokens = JSON.parse(fs.readFileSync(
+  path.join(__dirname, '..', '..', 'assets', 'brand-tokens.json'), 'utf8'
+));
+const strip = (h) => (h || '').replace('#', '');
+const CORE_BLUE     = strip(tokens.color.primary.blue.$value);
+const CORE_ORANGE   = strip(tokens.color.primary.orange.$value);
+const TEAL          = strip(tokens.color.secondary.teal.$value);
+const CHARTREUSE    = strip(tokens.color.secondary.chartreuse.$value);
+const DARK_CHARCOAL = strip(tokens.color.neutral.dark.$value);
+const BRAND_GREY    = strip(tokens.color.secondary.grey.$value);
+const OFF_WHITE     = strip(tokens.color.neutral.off_white.$value);
+const WHITE         = 'FFFFFF';
+const LIGHT_GREY    = strip(tokens.color.neutral.light_grey.$value);
+const CRITICAL      = strip(tokens.color.status.critical.$value);
+const PASS          = strip(tokens.color.status.pass.$value);
+const GOLD          = 'C9922A';
+
+const FONT_HEAD = 'Open Sans';
+const FONT_BODY = 'Open Sans';
+
+const LOGO_PATH = path.join(__dirname, '..', '..', tokens.logo.full_color_small.$value);
+const LOGO_BUF  = fs.readFileSync(LOGO_PATH);
+
+const TODAY = '2026-05-22';
+const CLIENT = 'OrthoKinetix';
+const DOC_SUBTITLE = 'OXP Live MCP Server — Solution Overview & Approval';
+
+// ---------- Layout constants ----------
+const noBorder  = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+const noBorders = { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder };
+const cellBorder  = { style: BorderStyle.SINGLE, size: 4, color: LIGHT_GREY };
+const cellBorders = { top: cellBorder, bottom: cellBorder, left: cellBorder, right: cellBorder };
+
+const PAGE_W   = 12240;
+const MARGIN   = 1440;
+const CONTENT_W = PAGE_W - MARGIN * 2; // 9360
+
+// ---------- Helpers ----------
+function spacer(size = 200) {
+  return new Paragraph({ spacing: { before: size, after: 0 }, children: [new TextRun('')] });
+}
+function pageBreak() { return new Paragraph({ children: [new PageBreak()] }); }
+function p(text, opts = {}) {
+  const { size = 22, color = BRAND_GREY, bold = false, italics = false,
+    align = AlignmentType.JUSTIFIED, spaceBefore = 0, spaceAfter = 140 } = opts;
+  return new Paragraph({
+    alignment: align,
+    spacing: { before: spaceBefore, after: spaceAfter, line: 320 },
+    children: [new TextRun({ text, size, color, bold, italics, font: FONT_BODY })],
+  });
+}
+
+function sectionHeader(text, color = CORE_BLUE, num = '') {
+  const label = num ? `${num}  ${text}` : text;
+  const headingPara = new Paragraph({
+    heading: HeadingLevel.HEADING_1,
+    keepNext: true,
+    pageBreakBefore: true,
+    spacing: { before: 480, after: 120, line: 240 },
+    children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
+  });
+  const visualTable = new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: [120, CONTENT_W - 120],
+    borders: noBorders,
+    rows: [new TableRow({ children: [
+      new TableCell({
+        width: { size: 120, type: WidthType.DXA },
+        shading: { fill: color, type: ShadingType.CLEAR },
+        borders: noBorders,
+        children: [new Paragraph({ children: [new TextRun('')] })],
+      }),
+      new TableCell({
+        width: { size: CONTENT_W - 120, type: WidthType.DXA },
+        borders: noBorders,
+        margins: { top: 100, bottom: 100, left: 200, right: 0 },
+        verticalAlign: VerticalAlign.CENTER,
+        children: [new Paragraph({ children: [new TextRun({ text: label, size: 34, bold: true, color, font: FONT_HEAD })] })],
+      }),
+    ]})],
+  });
+  // pageBreakBefore on headingPara handles the per-section page break (no extra pageBreak() to avoid blank pages)
+  return [headingPara, visualTable];
+}
+
+function subHeader(text, opts = {}) {
+  const { color = CORE_BLUE, size = 26 } = opts;
+  return new Paragraph({
+    heading: HeadingLevel.HEADING_2,
+    keepNext: true, keepLines: true,
+    spacing: { before: 280, after: 120 },
+    children: [new TextRun({ text, size, bold: true, color, font: FONT_HEAD })],
+  });
+}
+
+const NUM_BULLETS = 'bullets';
+function bullet(text, opts = {}) {
+  return new Paragraph({
+    numbering: { reference: NUM_BULLETS, level: 0 },
+    spacing: { before: 40, after: 80, line: 300 },
+    children: [new TextRun({ text, size: 22, color: BRAND_GREY, font: FONT_BODY, ...opts })],
+  });
+}
+
+function calloutBox(title, body, color = CORE_BLUE) {
+  const titleP = new Paragraph({
+    keepNext: true, keepLines: true,
+    spacing: { before: 80, after: 80 },
+    children: [new TextRun({ text: title, size: 22, bold: true, color, font: FONT_HEAD })],
+  });
+  const bodyArr = Array.isArray(body) ? body : [body];
+  const bodyParas = bodyArr.map((b, i) => new Paragraph({
+    keepNext: i < bodyArr.length - 1, keepLines: true,
+    spacing: { before: 40, after: 60, line: 300 },
+    children: [new TextRun({ text: b, size: 20, color: BRAND_GREY, font: FONT_BODY })],
+  }));
+  return new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: [80, CONTENT_W - 80],
+    rows: [new TableRow({ cantSplit: true, children: [
+      new TableCell({
+        width: { size: 80, type: WidthType.DXA },
+        shading: { fill: color, type: ShadingType.CLEAR },
+        borders: noBorders,
+        children: [new Paragraph({ children: [new TextRun('')] })],
+      }),
+      new TableCell({
+        width: { size: CONTENT_W - 80, type: WidthType.DXA },
+        shading: { fill: OFF_WHITE, type: ShadingType.CLEAR },
+        borders: noBorders,
+        margins: { top: 160, bottom: 160, left: 240, right: 200 },
+        children: [titleP, ...bodyParas],
+      }),
+    ]})],
+  });
+}
+
+function kpiCell(number, label, color = CORE_BLUE, w = 0) {
+  return new TableCell({
+    width: { size: w, type: WidthType.DXA },
+    shading: { fill: OFF_WHITE, type: ShadingType.CLEAR },
+    borders: noBorders,
+    margins: { top: 200, bottom: 200, left: 100, right: 100 },
+    verticalAlign: VerticalAlign.CENTER,
+    children: [
+      new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 40 }, children: [new TextRun({ text: number, size: 48, bold: true, color, font: FONT_HEAD })] }),
+      new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 0 }, children: [new TextRun({ text: label, size: 17, color: BRAND_GREY, font: FONT_BODY })] }),
+    ],
+  });
+}
+function kpiRow(items) {
+  const w = Math.floor(CONTENT_W / items.length);
+  return new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: items.map(() => w),
+    borders: noBorders,
+    rows: [new TableRow({ children: items.map(it => kpiCell(it.number, it.label, it.color || CORE_BLUE, w)) })],
+  });
+}
+
+function buildTable(columns, rows, opts = {}) {
+  const { headerColor = CORE_BLUE, zebra = true } = opts;
+  const totalWeight = columns.reduce((s, c) => s + c.weight, 0);
+  let colWidths = columns.map(c => Math.floor(CONTENT_W * (c.weight / totalWeight)));
+  const diff = CONTENT_W - colWidths.reduce((s, w) => s + w, 0);
+  colWidths[colWidths.length - 1] += diff;
+
+  const headerCells = columns.map((c, i) => new TableCell({
+    width: { size: colWidths[i], type: WidthType.DXA },
+    shading: { fill: headerColor, type: ShadingType.CLEAR },
+    borders: cellBorders,
+    margins: { top: 120, bottom: 120, left: 140, right: 140 },
+    verticalAlign: VerticalAlign.CENTER,
+    children: [new Paragraph({ alignment: c.align || AlignmentType.LEFT, children: [new TextRun({ text: c.label, size: 20, bold: true, color: WHITE, font: FONT_HEAD })] })],
+  }));
+
+  const dataRows = rows.map((row, ri) => new TableRow({
+    cantSplit: true,
+    children: row.map((cell, i) => {
+      const cellObj = typeof cell === 'string' ? { text: cell } : cell;
+      const fill = zebra && ri % 2 === 1 ? OFF_WHITE : WHITE;
+      return new TableCell({
+        width: { size: colWidths[i], type: WidthType.DXA },
+        shading: { fill, type: ShadingType.CLEAR },
+        borders: cellBorders,
+        margins: { top: 100, bottom: 100, left: 140, right: 140 },
+        verticalAlign: VerticalAlign.CENTER,
+        children: [new Paragraph({
+          alignment: columns[i].align || AlignmentType.LEFT,
+          children: [new TextRun({ text: cellObj.text || '', size: 20, color: cellObj.color || BRAND_GREY, bold: cellObj.bold || false, font: FONT_BODY })],
+        })],
+      });
+    }),
+  }));
+
+  return new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: colWidths,
+    rows: [new TableRow({ cantSplit: true, tableHeader: true, children: headerCells }), ...dataRows],
+  });
+}
+
+function colorBanner(color, height = 200) {
+  return new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: [CONTENT_W],
+    borders: noBorders,
+    rows: [new TableRow({ children: [new TableCell({ width: { size: CONTENT_W, type: WidthType.DXA }, shading: { fill: color, type: ShadingType.CLEAR }, borders: noBorders, children: [new Paragraph({ spacing: { before: height, after: 0 }, children: [new TextRun('')] })] })] })],
+  });
+}
+
+// ---------- Architecture layer card + connector ----------
+function layerCard(tag, title, desc, color) {
+  return new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: [2200, CONTENT_W - 2200],
+    rows: [new TableRow({ cantSplit: true, children: [
+      new TableCell({
+        width: { size: 2200, type: WidthType.DXA },
+        shading: { fill: color, type: ShadingType.CLEAR },
+        borders: noBorders,
+        margins: { top: 140, bottom: 140, left: 160, right: 120 },
+        verticalAlign: VerticalAlign.CENTER,
+        children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: tag, size: 22, bold: true, color: WHITE, font: FONT_HEAD })] })],
+      }),
+      new TableCell({
+        width: { size: CONTENT_W - 2200, type: WidthType.DXA },
+        shading: { fill: OFF_WHITE, type: ShadingType.CLEAR },
+        borders: noBorders,
+        margins: { top: 120, bottom: 120, left: 200, right: 200 },
+        verticalAlign: VerticalAlign.CENTER,
+        children: [
+          new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: title, size: 22, bold: true, color: DARK_CHARCOAL, font: FONT_HEAD })] }),
+          new Paragraph({ children: [new TextRun({ text: desc, size: 19, color: BRAND_GREY, font: FONT_BODY })] }),
+        ],
+      }),
+    ]})],
+  });
+}
+function connector(label) {
+  return new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { before: 40, after: 40 },
+    children: [new TextRun({ text: '▼  ' + label, size: 16, bold: true, color: BRAND_GREY, font: FONT_BODY })],
+  });
+}
+
+// ---------- Sign-off block ----------
+function signRow(roleLabel) {
+  const cell = (children, w) => new TableCell({
+    width: { size: w, type: WidthType.DXA }, borders: cellBorders,
+    margins: { top: 220, bottom: 120, left: 140, right: 140 }, verticalAlign: VerticalAlign.BOTTOM, children,
+  });
+  const line = (lbl) => [
+    new Paragraph({ spacing: { after: 0 }, border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: BRAND_GREY } }, children: [new TextRun({ text: ' ', size: 20 })] }),
+    new Paragraph({ spacing: { before: 40 }, children: [new TextRun({ text: lbl, size: 16, color: BRAND_GREY, font: FONT_BODY })] }),
+  ];
+  return new TableRow({ cantSplit: true, children: [
+    new TableCell({ width: { size: 2600, type: WidthType.DXA }, shading: { fill: OFF_WHITE, type: ShadingType.CLEAR }, borders: cellBorders, margins: { top: 160, bottom: 160, left: 140, right: 140 }, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ children: [new TextRun({ text: roleLabel, size: 20, bold: true, color: DARK_CHARCOAL, font: FONT_HEAD })] })] }),
+    cell(line('Name & Signature'), 4360),
+    cell(line('Date'), CONTENT_W - 2600 - 4360),
+  ]});
+}
+
+// ---------- Header / Footer ----------
+function makeHeader() {
+  return new Header({ children: [new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: [2400, CONTENT_W - 2400],
+    borders: noBorders,
+    rows: [new TableRow({ children: [
+      new TableCell({ borders: noBorders, children: [new Paragraph({ children: [new ImageRun({ type: 'png', data: LOGO_BUF, transformation: { width: 160, height: 34 } })] })] }),
+      new TableCell({
+        borders: { ...noBorders, bottom: { style: BorderStyle.SINGLE, size: 6, color: CORE_BLUE } },
+        verticalAlign: VerticalAlign.BOTTOM,
+        children: [new Paragraph({ alignment: AlignmentType.RIGHT, children: [new TextRun({ text: 'OXP Live MCP Server — Solution & Approval', size: 16, color: BRAND_GREY, font: FONT_BODY })] })],
+      }),
+    ]})],
+  })] });
+}
+function makeFooter() {
+  return new Footer({ children: [new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { before: 80 },
+    children: [
+      new TextRun({ text: 'Technijian  |  18 Technology Dr., Ste 141, Irvine, CA 92618  |  949.379.8500  |  technijian.com  |  CONFIDENTIAL  |  Page ', size: 16, color: BRAND_GREY, font: FONT_BODY }),
+      new TextRun({ children: [PageNumber.CURRENT], size: 16, color: BRAND_GREY, font: FONT_BODY }),
+      new TextRun({ text: ' of ', size: 16, color: BRAND_GREY, font: FONT_BODY }),
+      new TextRun({ children: [PageNumber.TOTAL_PAGES], size: 16, color: BRAND_GREY, font: FONT_BODY }),
+    ],
+  })] });
+}
+
+// =====================================================================
+// DOCUMENT BODY
+// =====================================================================
+const docChildren = [];
+
+// ---------- COVER ----------
+docChildren.push(
+  colorBanner(CORE_BLUE),
+  spacer(800),
+  new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ type: 'png', data: LOGO_BUF, transformation: { width: 260, height: 54 } })] }),
+  spacer(400),
+  new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: [2000, 5360, 2000],
+    borders: noBorders,
+    rows: [new TableRow({ children: [
+      new TableCell({ borders: noBorders, children: [new Paragraph('')] }),
+      new TableCell({ borders: { bottom: { style: BorderStyle.SINGLE, size: 12, color: CORE_ORANGE } }, children: [new Paragraph('')] }),
+      new TableCell({ borders: noBorders, children: [new Paragraph('')] }),
+    ]})],
+  }),
+  spacer(300),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 60 }, children: [new TextRun({ text: 'OXP LIVE MCP SERVER', size: 56, bold: true, color: DARK_CHARCOAL, font: FONT_HEAD })] }),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 80 }, children: [new TextRun({ text: 'Solution Overview & Approval', size: 36, bold: false, color: CORE_BLUE, font: FONT_HEAD })] }),
+  spacer(120),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 40 }, children: [new TextRun({ text: 'Prepared for OrthoKinetix', size: 26, bold: true, color: DARK_CHARCOAL, font: FONT_HEAD })] }),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 40 }, children: [new TextRun({ text: 'powered by OrthoXpress', size: 22, color: BRAND_GREY, font: FONT_HEAD })] }),
+  spacer(80),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 40 }, children: [new TextRun({ text: 'Secure AI Access to the OXP Live Claims Platform (OrthoXpressDB)', size: 24, italics: true, color: BRAND_GREY, font: FONT_BODY })] }),
+  spacer(60),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 40 }, children: [new TextRun({ text: 'Prepared by Technijian  |  ' + TODAY, size: 22, color: BRAND_GREY, font: FONT_BODY })] }),
+  spacer(600),
+  colorBanner(CORE_ORANGE, 160),
+  spacer(120),
+  new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'CONFIDENTIAL — Prepared exclusively for OrthoKinetix / OrthoXpress', size: 18, color: BRAND_GREY, italics: true, font: FONT_BODY })] }),
+  pageBreak(),
+);
+
+// ---------- TOC ----------
+docChildren.push(
+  new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
+);
+
+// ---------- 01 EXECUTIVE SUMMARY ----------
+docChildren.push(
+  ...sectionHeader('Executive Summary', CORE_BLUE, '01'),
+  spacer(200),
+  kpiRow([
+    { number: '205', label: 'Tables in the OrthoXpressDB platform', color: CORE_BLUE },
+    { number: '194', label: 'Reporting views to expose safely', color: TEAL },
+    { number: '1', label: 'Governed path: SP → API → MCP', color: CORE_ORANGE },
+    { number: 'HIPAA', label: 'PHI-safe & fully audited by design', color: DARK_CHARCOAL },
+  ]),
+  spacer(300),
+  p('OrthoKinetix runs its claims, accounts-receivable, EDI and patient operations on the OXP Live platform — a large, mature SQL Server database (OrthoXpressDB) with roughly 205 tables, 194 reporting views and 34 functions. Technijian proposes to make that data safely available to AI assistants (such as Claude) through a Model Context Protocol (MCP) server, so your team can ask plain-language questions — "show me open claims for this payer," "what is the AR balance for this patient" — and get governed, audited answers in seconds.'),
+  p('The work is built on one firm rule that protects the platform: every request travels a single, governed path. AI assistants talk only to a documented API; the API talks to the database only through stored procedures; and a management portal lets your team control exactly what is exposed — with no developer and no code changes. Nothing is hardcoded; every setting lives in the database where it can be changed safely and tracked.'),
+  p('This document explains what we found, what we will build, how it stays HIPAA-safe, the delivery plan, and the approval we are requesting to begin. It is a business-level overview; the full engineering specification is available on request.'),
+  spacer(100),
+  calloutBox(
+    'What We Are Asking You to Approve',
+    [
+      'Approval to build the OXP Live MCP Server on the four-layer architecture described in Section 3 — delivered in phases, read-only first, with full create/update/delete added once the read layer is proven.',
+      'A short discovery session to confirm which views, data, and operations matter most, and to close the security gaps we found (hardcoded plaintext credentials in the application code, and data reached through un-parameterized inline SQL).',
+      'Agreement on the phase plan and timeline in Section 7 so Technijian can schedule the work.',
+    ],
+    CORE_ORANGE
+  ),
+);
+
+// ---------- 02 WHY NOW — CURRENT STATE ----------
+docChildren.push(
+  ...sectionHeader('Why Now — The Current-State Gap', TEAL, '02'),
+  spacer(100),
+  p('Technijian reviewed the OrthoXpressDB database and the OXP Live application directly on May 22, 2026. The platform is solid and feature-rich, but the way the application reaches the data today is not ready for safe AI access. The findings below are the reason this project exists — and each one is addressed by the proposed design.'),
+  spacer(140),
+  buildTable(
+    [
+      { label: 'What We Found', weight: 3 },
+      { label: 'Why It Matters', weight: 3.4 },
+      { label: 'How the MCP Solution Fixes It', weight: 3.6 },
+    ],
+    [
+      ['The application does not go through stored procedures. It reaches data through roughly 311 inline SQL statements spread across ~118 application components.', 'There is no single, controllable gate for data access — and no safe surface to expose to AI. Rules and logic are scattered, not centralized or auditable.', 'We build a governed stored-procedure layer that becomes the only way in (Section 4) — one route to audit and control.'],
+      [{ text: 'Data is fetched with un-parameterized, dynamically-assembled SQL (two generic helpers build queries by string concatenation).', color: CRITICAL }, 'This is a SQL-injection and data-integrity risk on a system holding patient data (PHI).', 'Every operation becomes a purpose-built, parameterized procedure — no dynamic string SQL is exposed.'],
+      [{ text: 'Hardcoded plaintext credentials exist in the application code (e.g., data-exchange and file-transfer passwords).', color: CRITICAL }, 'This is a security and compliance exposure for a PHI system.', 'Replaced with a least-privilege login whose secret is stored in a secure vault — never in code (Section 5).'],
+      ['194 reporting/business views and 34 functions hold valuable, ready-to-use information (claims, 835/837 EDI remittances, AR balances, payer data, patient and job records).', 'This is exactly the data AI should surface — but only through a safe, read-controlled channel.', 'Each in-use view/function is wrapped in a procedure, exposed as an API endpoint, and offered as an AI tool.'],
+      ['The database also carries experimental, versioned and backup objects, plus system/tooling procedures.', 'Direct access risks exposing the wrong or stale data to users and AI.', 'The API surface is a curated allow-list; clutter is excluded by design.'],
+    ],
+  ),
+);
+
+// ---------- 03 THE SOLUTION — ARCHITECTURE ----------
+docChildren.push(
+  ...sectionHeader('The Solution — A Four-Layer Governed Architecture', CORE_BLUE, '03'),
+  spacer(100),
+  p('Every AI request follows the same one-way path, top to bottom. Each layer has one job and can only talk to the next — so there is exactly one controllable, auditable route to your data. This is the same proven architecture Technijian already runs in production for other ORX systems.'),
+  spacer(160),
+  layerCard('AI ASSISTANT', 'Claude (or another MCP client)', 'Your team asks questions in plain language. The assistant never sees the database — only the approved tools.', DARK_CHARCOAL),
+  connector('asks via Model Context Protocol'),
+  layerCard('MCP SERVER', 'The governed AI gateway', 'Translates each question into an approved tool call. Holds no database connection. Tools are turned on or off from the portal.', TEAL),
+  connector('calls the documented REST API (HTTPS)'),
+  layerCard('SWAGGER API', 'The single documented gateway', 'A secured, versioned REST API. The only thing it is allowed to do against the database is run approved stored procedures.', CORE_ORANGE),
+  connector('executes stored procedures only'),
+  layerCard('STORED PROCEDURES', 'The only door into the data', 'Purpose-built procedures wrap each view, function, and table operation. No direct table or view access from outside is permitted.', CORE_BLUE),
+  connector('reads / writes'),
+  layerCard('OXP LIVE  (OrthoXpressDB)', 'Your claims, AR, EDI & patient data', 'The existing ColdFusion platform — untouched. We add a new procedure layer on top; nothing existing is altered.', BRAND_GREY),
+  spacer(200),
+  calloutBox(
+    'The Admin Portal — You Stay in Control',
+    [
+      'A separate management portal lets your team operate the MCP server with no developer: enable or disable tools, manage who can access what, review a full audit trail, schedule jobs, set data-retention rules, and test any tool safely.',
+      'Because every setting lives in the database, changes are immediate, tracked, and reversible — there is no code to edit and no redeployment to wait for.',
+    ],
+    CORE_ORANGE
+  ),
+);
+
+// ---------- 04 WHAT GETS BUILT ----------
+docChildren.push(
+  ...sectionHeader('What Gets Built', TEAL, '04'),
+  spacer(100),
+  p('Four components make up the delivery. Each is a discrete, testable piece, and each maps directly to a layer in Section 3.'),
+  spacer(140),
+  subHeader('1 — The Stored-Procedure Layer (in OrthoXpressDB)'),
+  bullet('Read procedures that wrap the in-use business and reporting views (drawn from the 194 available) and the key reporting functions (e.g., AR balance, patient age, claim formatting).'),
+  bullet('Full create / read / update / delete procedures for the core entities — claims, claim services, patients, insurance, jobs/orders and claim status notes — generated from the database so the set grows by configuration, not custom code.'),
+  bullet('A self-describing catalog: small tables that list every exposed procedure, its inputs, and its outputs — so the API and AI tools are generated from the database, never hand-maintained.'),
+  spacer(140),
+  subHeader('2 — The Swagger / OpenAPI REST API'),
+  bullet('A secured .NET 8 API that exposes one endpoint per approved procedure, fully documented in Swagger.'),
+  bullet('Sign-in with Microsoft Entra ID (Azure AD), role-based permissions, input validation, paging, and standardized error messages.'),
+  bullet('Patient-data fields are flagged and hidden from anyone without explicit clearance.'),
+  spacer(140),
+  subHeader('3 — The MCP Server'),
+  bullet('Connects to AI assistants two ways: directly in Claude Desktop/Code, and over the web for remote use.'),
+  bullet('Exposes each approved API endpoint as an AI tool, plus ready-made prompts for common questions (find claims by patient, AR summary by payer, add a claim status note).'),
+  bullet('Talks only to the API — it has no path to the database — and every tool call is logged.'),
+  spacer(140),
+  subHeader('4 — The MCP Admin Portal'),
+  bullet('A web dashboard for your team to manage tools, connections, users and roles, the audit log, schedules, notifications, data retention, and a built-in test runner.'),
+  bullet('All controlled through the database, so the people who run the platform do not need a developer to make changes.'),
+);
+
+// ---------- 05 SECURITY, HIPAA & GOVERNANCE ----------
+docChildren.push(
+  ...sectionHeader('Security, HIPAA & Governance', CORE_ORANGE, '05'),
+  spacer(100),
+  p('OrthoXpressDB contains protected health information — patients, insurance, and EDI 835/837 claims data. Security is therefore designed into every layer, not added afterward. The controls below are standard in this architecture.'),
+  spacer(140),
+  buildTable(
+    [
+      { label: 'Control', weight: 2.6 },
+      { label: 'What It Means for OrthoKinetix', weight: 6.4 },
+    ],
+    [
+      [{ text: 'One governed path', bold: true }, 'AI and applications can reach data only through approved stored procedures behind the API — there is exactly one route to audit and control.'],
+      [{ text: 'Least privilege', bold: true }, 'The API signs in with an account that can only run approved procedures — it cannot read or change tables directly.'],
+      [{ text: 'No hardcoded secrets', bold: true }, 'Passwords and keys live in a secure vault and are referenced, never stored in code or config. The plaintext credentials found in the current code are retired.'],
+      [{ text: 'Parameterized only', bold: true }, 'Procedures use typed parameters — the dynamically-assembled inline SQL in the current app is eliminated, closing the SQL-injection risk.'],
+      [{ text: 'Minimum necessary (PHI)', bold: true }, 'Patient-data fields are tagged; users and AI tools without clearance never receive them.'],
+      [{ text: 'Full audit trail', bold: true }, 'Every tool call, API call, and procedure run is logged with who, what, when, and a correlation id — with patient data redacted in the logs.'],
+      [{ text: 'Deny by default', bold: true }, 'Nothing is exposed unless explicitly enabled and permitted for that role. Write operations are off until you turn them on.'],
+      [{ text: 'Encrypted everywhere', bold: true }, 'All connections use TLS; database connections are encrypted.'],
+    ],
+  ),
+  spacer(120),
+  p('This design supports your HIPAA compliance posture; it does not replace your organization’s policies, business-associate agreements, or staff training, which remain in place.', { italics: true, size: 20 }),
+);
+
+// ---------- 06 CONFIG-DRIVEN ----------
+docChildren.push(
+  ...sectionHeader('Configuration-Driven by Design — Nothing Hardcoded', CORE_BLUE, '06'),
+  spacer(100),
+  p('A specific requirement of this project is that the system is driven entirely from the database — not from code or configuration files. This is what keeps OrthoKinetix in control and the system easy to operate over time.'),
+  spacer(120),
+  buildTable(
+    [
+      { label: 'Stored in the database (changeable any time)', weight: 5 },
+      { label: 'The benefit', weight: 5 },
+    ],
+    [
+      ['Which procedures, endpoints, and AI tools exist and are enabled', 'Add or retire a capability by changing data — no code release.'],
+      ['API addresses, connection settings, and timeouts', 'Re-point or tune the system without touching code.'],
+      ['Users, roles, and permissions', 'Manage access centrally with a full change history.'],
+      ['Dropdown / lookup values used across screens', 'Business users maintain their own option lists — no developer needed.'],
+      ['Schedules, notification rules, and data-retention policy', 'Operations teams adjust behavior themselves.'],
+      ['Secret references (not the secrets themselves)', 'Sensitive values stay in a vault; the database only points to them.'],
+    ],
+  ),
+  spacer(120),
+  calloutBox(
+    'Why This Matters',
+    'When everything that changes lives in data, your team can adapt the system safely and instantly — and every change is tracked. There are no hidden settings buried in code, and no waiting on a developer to flip a switch.',
+    CORE_ORANGE
+  ),
+);
+
+// ---------- 07 DELIVERY PLAN ----------
+docChildren.push(
+  ...sectionHeader('Delivery Plan & Phases', TEAL, '07'),
+  spacer(100),
+  p('The work is delivered in six phases. Read-only access is proven first, which lets your team see value early and with the lowest possible risk; full create/update/delete is added only once the read layer is solid. Each phase ends with a clear, demonstrable result.'),
+  spacer(140),
+  buildTable(
+    [
+      { label: 'Phase', weight: 0.9, align: AlignmentType.CENTER },
+      { label: 'Deliverable', weight: 4.4 },
+      { label: 'You Will See', weight: 3.7 },
+    ],
+    [
+      [{ text: '0', bold: true }, 'Foundations — project setup, secure login, configuration tables, move database credentials to a vault with a least-privilege login', 'A clean, secure footing; the hardcoded credentials gone'],
+      [{ text: '1', bold: true }, 'Read procedure layer over the in-use views (of 194) and key functions', 'Every report view reachable through the governed layer'],
+      [{ text: '2', bold: true }, 'Swagger API for all read operations', 'A live, documented API your team can explore'],
+      [{ text: '3', bold: true }, 'MCP server (read) + Admin Portal first release', 'Claude answering real questions; the portal toggling tools'],
+      [{ text: '4', bold: true }, 'Full create / update / delete for core entities', 'AI and apps can safely update data through procedures'],
+      [{ text: '5', bold: true }, 'Hardening — retention, alerts, testing, HIPAA review', 'Production-ready, reviewed, and signed off'],
+    ],
+  ),
+  spacer(120),
+  p('Detailed timeline and effort estimates are confirmed during discovery (Section 8) and provided in a companion Statement of Work upon approval.', { italics: true, size: 20 }),
+);
+
+// ---------- 08 WHAT WE NEED FROM YOU ----------
+docChildren.push(
+  ...sectionHeader('What We Need From You', CORE_ORANGE, '08'),
+  spacer(100),
+  p('To begin, Technijian needs a short discovery session and a few decisions. None of these block approval — they shape the detailed plan.'),
+  spacer(120),
+  bullet('Priority data: which views, reports, and operations matter most to surface first.'),
+  bullet('Write scope: confirm the core entities that should support create/update/delete in Phase 4.'),
+  bullet('Access & roles: who should use the AI tools, and at what permission level (including who may see patient data).'),
+  bullet('Environment: confirmation to use the existing test database for build-and-test before production.'),
+  bullet('Security: approval to retire the hardcoded credentials and move secrets into a vault.'),
+  bullet('Hosting & SSO: confirm Microsoft Entra ID (Azure AD) for sign-in and the preferred hosting (on-premises IIS or container).'),
+);
+
+// ---------- 09 APPROVAL & SIGN-OFF ----------
+docChildren.push(
+  ...sectionHeader('Approval & Sign-Off', CORE_BLUE, '09'),
+  spacer(100),
+  p('By signing below, OrthoKinetix authorizes Technijian to proceed with the OXP Live MCP Server as described in this document, beginning with Phase 0 and the discovery session. This approval covers the approach and phase plan; specific scope, timeline, and fees are confirmed in a companion Statement of Work.'),
+  spacer(200),
+  new Table({
+    width: { size: CONTENT_W, type: WidthType.DXA },
+    columnWidths: [2600, 4360, CONTENT_W - 2600 - 4360],
+    rows: [
+      new TableRow({ tableHeader: true, cantSplit: true, children: [
+        new TableCell({ shading: { fill: CORE_BLUE, type: ShadingType.CLEAR }, borders: cellBorders, margins: { top: 100, bottom: 100, left: 140, right: 140 }, children: [new Paragraph({ children: [new TextRun({ text: 'Role', size: 20, bold: true, color: WHITE, font: FONT_HEAD })] })] }),
+        new TableCell({ shading: { fill: CORE_BLUE, type: ShadingType.CLEAR }, borders: cellBorders, margins: { top: 100, bottom: 100, left: 140, right: 140 }, children: [new Paragraph({ children: [new TextRun({ text: 'Name & Signature', size: 20, bold: true, color: WHITE, font: FONT_HEAD })] })] }),
+        new TableCell({ shading: { fill: CORE_BLUE, type: ShadingType.CLEAR }, borders: cellBorders, margins: { top: 100, bottom: 100, left: 140, right: 140 }, children: [new Paragraph({ children: [new TextRun({ text: 'Date', size: 20, bold: true, color: WHITE, font: FONT_HEAD })] })] }),
+      ]}),
+      signRow('OrthoKinetix — Authorized Approver'),
+      signRow('OrthoKinetix — Technical / Security'),
+      signRow('Technijian — Engagement Lead'),
+    ],
+  }),
+  spacer(240),
+  calloutBox(
+    'Next Step',
+    'On approval, Technijian schedules the discovery session, issues the Statement of Work with timeline and fees, and begins Phase 0. Questions in the meantime: your Technijian engagement lead, or 949.379.8500.',
+    CORE_ORANGE
+  ),
+);
+
+// ---------- APPENDIX A — SCOPE SNAPSHOT ----------
+docChildren.push(
+  ...sectionHeader('Appendix A — OrthoXpressDB Scope Snapshot', BRAND_GREY, 'A'),
+  spacer(100),
+  p('Captured live from the OrthoXpressDB database on May 22, 2026 (see the companion engineering specification and database-contract baseline). Provided for transparency; final scope is confirmed during discovery.', { italics: true }),
+  spacer(120),
+  buildTable(
+    [
+      { label: 'Object Type', weight: 3 },
+      { label: 'Count', weight: 1.4, align: AlignmentType.CENTER },
+      { label: 'Role in This Project', weight: 5.6 },
+    ],
+    [
+      ['Reporting & business views', '194', 'Primary read targets — in-use views wrapped in procedures and exposed as AI tools'],
+      ['Functions', '34', 'Reporting logic (AR balance, patient age, claim/territory formatting) used inside procedures'],
+      ['Tables', '~205', 'The data estate; core entities receive full CRUD, clutter is excluded'],
+      ['Existing stored procedures', '~90', 'Present (billing/EDI/claims) but NOT used as the application interface today'],
+      [{ text: 'Inline SQL queries in the app', bold: true }, { text: '~311', bold: true, color: CRITICAL }, 'How the app reaches data today — replaced by the governed procedure layer'],
+    ],
+  ),
+  spacer(160),
+  subHeader('Representative Views to Be Exposed'),
+  p('vw_835ClaimsLatest, vw_835TransactionData_OXP2, vw_Claims, vw_ClaimServices, vw_CombinedEOB, vw_Billing_Queue, vw_AccountDashboard_OXP2, vw_Waystar_Claims_Response, vw_PatientInfo, vw_PatientInsurance, qry_Jobs and qry_TimeRecords — among the full set of 194 views.', { size: 20 }),
+  spacer(140),
+  calloutBox(
+    'A Note on Legacy Report Procedures',
+    'A small number of stored procedures referenced by older code are not present in the live database and are not in active use (the platform runs without them). At your direction these are treated as deferred — Technijian has documented a build-ready specification for each so any can be re-created later if a need arises, with no rework.',
+    TEAL
+  ),
+  spacer(160),
+  calloutBox(
+    'About Technijian',
+    'Technijian is an Irvine, California IT and AI services firm delivering managed IT, cybersecurity, custom application development, and AI/agent integration. This MCP architecture is already in production for other ORX systems — OrthoKinetix benefits from a proven pattern, not an experiment.',
+    CORE_BLUE
+  ),
+);
+
+// =====================================================================
+// DOCUMENT ASSEMBLY
+// =====================================================================
+const doc = new Document({
+  numbering: { config: [{
+    reference: NUM_BULLETS,
+    levels: [{
+      level: 0, format: 'bullet', text: '•', alignment: AlignmentType.LEFT,
+      style: { paragraph: { indent: { left: 360, hanging: 360 } }, run: { font: 'Symbol', size: 22, color: CORE_BLUE } },
+    }],
+  }]},
+  styles: {
+    default: { document: { run: { font: FONT_BODY, size: 22, color: BRAND_GREY } } },
+    paragraphStyles: [
+      { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal',
+        run: { size: 2, bold: true, color: 'FFFFFF', font: FONT_HEAD },
+        paragraph: { spacing: { before: 480, after: 120 }, outlineLevel: 0 } },
+      { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal',
+        run: { size: 26, bold: true, color: CORE_BLUE, font: FONT_HEAD },
+        paragraph: { spacing: { before: 280, after: 120 }, outlineLevel: 1 } },
+      { id: 'Heading3', name: 'Heading 3', basedOn: 'Normal', next: 'Normal',
+        run: { size: 24, bold: true, color: DARK_CHARCOAL, font: FONT_HEAD },
+        paragraph: { spacing: { before: 220, after: 80 }, outlineLevel: 2 } },
+    ],
+  },
+  sections: [{
+    properties: { titlePage: true, page: { size: { width: PAGE_W, height: 15840 }, margin: { top: MARGIN, right: MARGIN, bottom: MARGIN, left: MARGIN } } },
+    headers: { default: makeHeader(), first: new Header({ children: [new Paragraph({ children: [new TextRun('')] })] }) },
+    footers: { default: makeFooter(), first: new Footer({ children: [new Paragraph({ children: [new TextRun('')] })] }) },
+    children: docChildren,
+  }],
+});
+
+const OUT_PATH = path.join(__dirname, 'OXP-Live-MCP-Server-Approval-Report.docx');
+Packer.toBuffer(doc).then(buf => {
+  fs.writeFileSync(OUT_PATH, buf);
+  console.log(`\nDOCX written: ${OUT_PATH}`);
+  console.log(`   Size: ${(buf.length / 1024).toFixed(1)} KB`);
+}).catch(err => {
+  console.error('Build failed:', err.message);
+  process.exit(1);
+});
