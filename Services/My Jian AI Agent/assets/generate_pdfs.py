@@ -24,6 +24,15 @@ FILES = [
         'width': '8.5in', 'height': '11in',
         'viewport': (816, 1056),
     },
+    {
+        'html': 'My Jian AI Agent Price Sheet.html',
+        'pdf': 'My Jian AI Agent Price Sheet.pdf',
+        'screenshot': '_verify_pricesheet.png',
+        'page_prefix': '_ps_pg',
+        'pages': 3,
+        'width': '8.5in', 'height': '11in',
+        'viewport': (816, 1056),
+    },
 ]
 
 

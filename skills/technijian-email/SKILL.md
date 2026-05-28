@@ -128,6 +128,27 @@ Use the hosted logo URL in all email templates:
 
 Recommended source file: `assets/logos/png/technijian-logo-full-color-600x125.png`
 
+## Personal Outreach (Ravi's voice) — CTA Closing Pattern
+
+**This section governs personal outreach emails (cold and warm-expansion), NOT marketing newsletters or announcements.** Newsletter/announcement templates above are unaffected.
+
+**Encoded after Algro International, 2026-05-28.** When Ravi sends a personal outreach email (biz-dev intro, blueprint follow-up, expansion to an existing client), the closing CTA must:
+
+1. **Route to the Book-a-Meeting button in his signature**, not "reply with a date." The signature already has the button — one click books a slot, zero round-trips.
+2. **Broaden the meeting topic beyond the single client** so it positions Ravi as a cross-client strategist with broader thought leadership.
+
+### Default closing template
+
+> *"I'd love [N] minutes to walk you through it. Use book a meeting in my signature line to setup a time to discuss this and all the [AI Strategies / managed IT / cybersecurity / hosting / topic-relevant work] Technijian is putting into place for itself and its clients."*
+
+Adapt the bracketed clause to match the topic of the email body. Always use lowercase "book a meeting" — Ravi writes it conversationally, not as a proper noun.
+
+### Reference
+
+This is enforced in the global `send-email` skill at `~/.claude/skills/send-email/SKILL.md` (CTA Closing Pattern section). It is also enforced in `technijian-biz-dev-blueprint/SKILL.md` (Phase 11) for outreach following a generated blueprint deliverable.
+
 ## Related Skills
 
 - **technijian-brand** — Master brand reference (colors, typography, voice, UI specs). Consult for any values not covered here.
+- **send-email** (global) — Personal-outreach email send pipeline (Aptos format, signature, sender Python script). The CTA Closing Pattern lives there too.
+- **technijian-biz-dev-blueprint** — Generates the AI-Driven Growth Blueprint plus the Executive Summary hook artifact attached on first-touch outreach.

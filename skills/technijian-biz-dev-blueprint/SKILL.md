@@ -344,6 +344,91 @@ Each Quick Win must be:
 
 ---
 
+## Phase 10: Executive Summary Hook Artifact (CRITICAL — always build this)
+
+**Encoded after ALG / Algro International, 2026-05-28.** Ravi's instinct: *"why don't you attach the plan? should we give like an executive summary of what the plan is hoping to do? and attach that?"*
+
+**Never attach the full 30–40-page plan to the first-touch outreach email.** It overwhelms; recipients open it once, see "PDF, 38 pages," and put it aside. Instead, build a SECOND, shorter artifact — the **Executive Summary** — and attach that. Hold the full plan in reserve for the meeting itself, or send on explicit request.
+
+### What the Executive Summary contains (typically 4–7 pages)
+
+A distilled, branded PDF that mirrors the full plan's narrative arc but at one-tenth the length. Same brand tokens, same helpers, same diagrams — just fewer sections and tighter copy. Pull from the full plan, don't rewrite from scratch.
+
+| Page | Section | Source from full plan |
+|---|---|---|
+| 1 | Cover band + logo + title + KPI cards (the 4 headline numbers) + opening framing | Section 01 distilled |
+| 2 | The Opportunity — the 3 forces / market reality, plus the compliance-boundary callout | Sections 01 + 03 distilled |
+| 3 | How AI Transforms [Client]'s Growth Engine — architecture diagram + 1-paragraph intro | Section 10 with architecture diagram |
+| 4 | The three motions — one callout per motion (Get Cited / Win Doc Race / Hold & Expand for ABM; Get Found / Lease Faster / Keep & Grow for demand-gen) | Section 10 distilled |
+| 5 | The Program — entry investment table (Phase 1 only, NOT the full engine) + ROI table modeled vs the entry | Section 11 distilled |
+| 6 | Roadmap diagram + Next Step CTA card | Section 12 timeline diagram + CTA |
+
+Reuse the already-rendered `architecture.png` and `timeline.png` from the full plan. No new diagrams.
+
+### File structure
+
+```
+Clients/[ClientCode]/
+  build-[clientcode]-summary.js          ← shorter docx-js builder (4–7 pages)
+  docx-to-pdf-summary.py                 ← Word COM PDF converter for the summary
+  [ClientCode]-AI-Growth-Summary.docx
+  [ClientCode]-AI-Growth-Summary.pdf     ← THIS is what the first-touch email attaches
+```
+
+### Build pattern
+
+Reuse the SAME helper functions (`sectionHeader`, `calloutBox`, `kpiRow`, `buildTable`, `diagramImage`, `colorBanner`, etc.) from the full-plan builder. Reuse the SAME brand tokens. Reuse the SAME diagram PNGs. Only the `docChildren` content array shortens. The summary should feel like the same document — same fonts, same color, same header/footer — just abridged.
+
+**Pricing in the summary:** show ONLY the **ENTRY program** table (the $30–35K easy-yes). Do NOT show the expansion / full-engine pricing — that creates sticker shock at first touch. The summary ends on the entry program + ROI vs entry + CTA card. The expansion is mentioned in passing in body copy ("the bigger build comes later, once the entry proves the lift") but never tabled. Reserve the full Service Investment Map for the discovery call.
+
+### How the outreach email uses it
+
+The first-touch email body **acknowledges the attached Executive Summary** explicitly and offers the full plan on request. Example phrasing (adapt to client):
+
+> *"I've attached a short Executive Summary that walks through the gap, the engine, the [roadmap], and the entry program. The entry is small on purpose, about $XX K for the first year, and it pays for itself on [the two highest-conviction levers] alone, with no large build to begin. The bigger build comes later, once the entry proves the lift. The full XX-page plan is ready if you want to read further before we meet."*
+
+That paragraph does four jobs at once: (a) tells the recipient there's a quick summary they can read in 5 minutes; (b) drops the headline price up front so there's no sticker shock when they open the PDF; (c) frames the expansion as future-tense, not the ask; (d) signals depth (a full plan exists) without forcing it on them.
+
+### CTA closing (Phase 11 encodes the rule)
+
+End the email with the signature-button CTA pattern (see Phase 11). Do NOT ask for a "reply with a date" — route the recipient to the Book-a-Meeting button already in Ravi's HTML signature.
+
+---
+
+## Phase 11: Outreach Email CTA — Use the Signature Button (CRITICAL)
+
+**Encoded after ALG / Algro International, 2026-05-28**, after Ravi edited the draft's closing line before sending.
+
+**My draft closing:** *"I'd love 30 minutes to walk you through it. Reply with a day that works and I'll send a calendar invite."*
+
+**Ravi's sent closing:** *"I'd love 30 minutes to walk you through it. Use book a meeting in my signature line to setup a time to discuss this and all the AI Strategies Technijian is putting into place for itself and its clients."*
+
+Two things are better about Ravi's version:
+
+1. **Route the CTA to the existing Book-a-Meeting button in the signature**, not "reply with a date." The signature already has the button (`https://outlook.office.com/bookwithme/...`). One click books a slot; an email reply with a date requires Ravi to send a calendar invite back. Lower friction beats higher-effort every time.
+2. **Broaden the meeting topic beyond the single client.** Adding *"...all the AI Strategies Technijian is putting into place for itself and its clients"* positions Ravi as a cross-client AI strategist with broader thought leadership, not a single-account pitch. It makes the meeting feel more valuable to the recipient.
+
+### The pattern to encode
+
+For any outreach email (cold or warm-expansion) closing a biz-dev blueprint, use this two-sentence structure:
+
+> *"I'd love [N] minutes to walk you through it. Use book a meeting in my signature line to setup a time to discuss this and all the AI Strategies Technijian is putting into place for itself and its clients."*
+
+Variations are fine; the two non-negotiables are:
+- The CTA points to the signature's booking button, not an email reply.
+- The meeting topic extends beyond the single client to Technijian's broader AI work.
+
+For non-AI topics (cybersecurity, IT, hosting), adapt the second clause to match the topic: *"...all the [cybersecurity / managed IT / hosting] work Technijian is doing for itself and its clients."*
+
+### When NOT to use the signature-button CTA
+
+- Replies to an active thread where a date has already been proposed.
+- Recipients who explicitly prefer email scheduling (rare).
+- Internal Technijian emails (no booking button needed).
+- Hyper-cold first-touch where there's no existing relationship signal at all (here, lead with the booking button only if the email itself has earned the click — make sure the body is strong).
+
+---
+
 ## Playwright Render Setup
 
 ```python

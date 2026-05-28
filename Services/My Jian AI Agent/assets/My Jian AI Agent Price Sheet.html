@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Jian AI Agent — Comprehensive Price Sheet — Technijian</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue:   #006DB6;
+    --orange: #F67D4B;
+    --dark:   #1A1A2E;
+    --teal:   #1EAAC8;
+    --light:  #F4F8FC;
+    --gray:   #6B7280;
+    --border: #E5EAF0;
+    --jian:   #7C3AED;
+    --jian-light: #EDE9FE;
+    --green:  #15803D;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #cdd4dc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 32px;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  .ps-header {
+    background: linear-gradient(135deg, var(--dark) 0%, #2D1B69 100%);
+    padding: 24px 40px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .ps-header::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.30) 0%, transparent 70%);
+    top: -200px; right: -100px;
+  }
+  .ps-header::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--jian), var(--teal), var(--orange));
+  }
+  .ps-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+  .ps-header-left { display: flex; align-items: center; gap: 18px; }
+  .ps-header img { height: 32px; display: block; }
+  .ps-header-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.2); }
+  .ps-header-title {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .ps-header-sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .ps-header-tag {
+    color: #A78BFA;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── CONTENT ── */
+  .ps-body {
+    flex: 1;
+    padding: 22px 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .ps-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--jian);
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--jian-light);
+  }
+  .ps-section-title.brown { color: #B45309; border-bottom-color: #FED7AA; }
+  .ps-section-title.blue { color: var(--blue); border-bottom-color: #BFDBFE; }
+  .ps-section-title.teal { color: #0E7490; border-bottom-color: #A5F3FC; }
+  .ps-section-title.dark { color: var(--dark); border-bottom-color: var(--border); }
+
+  /* ── TABLE ── */
+  .ps-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  .ps-table th {
+    background: var(--dark);
+    color: rgba(255,255,255,0.85);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 7px 9px;
+    text-align: left;
+  }
+  .ps-table td {
+    padding: 7px 9px;
+    border-bottom: 1px solid var(--border);
+    color: #374151;
+    vertical-align: middle;
+    line-height: 1.35;
+  }
+  .ps-table tr:nth-child(even) td { background: var(--light); }
+  .ps-table tr.popular td {
+    background: #F5F3FF;
+    font-weight: 600;
+  }
+  .ps-table td.price {
+    font-weight: 800;
+    color: var(--jian);
+  }
+  .ps-table td.comp {
+    color: var(--gray);
+  }
+  .ps-table td.pct {
+    color: var(--green);
+    font-weight: 700;
+    text-align: right;
+  }
+  .ps-pop-badge {
+    display: inline-block;
+    background: var(--jian);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    margin-left: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ── DISCOUNT GRID ── */
+  .disc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .disc-card {
+    background: var(--light);
+    border-left: 3px solid var(--jian);
+    border-radius: 6px;
+    padding: 10px 14px;
+  }
+  .disc-card .dc-val {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--jian);
+    line-height: 1;
+  }
+  .disc-card .dc-lbl {
+    font-size: 10px;
+    color: var(--gray);
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  /* ── EXAMPLE STRIP ── */
+  .example-strip {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .example-cell {
+    padding: 0 12px;
+    border-left: 1px solid rgba(255,255,255,0.1);
+  }
+  .example-cell:first-child { border-left: none; padding-left: 0; }
+  .example-cell .ec-title {
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .example-cell .ec-jian {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+  }
+  .example-cell .ec-vs {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .example-cell .ec-pct {
+    display: inline-block;
+    background: rgba(124,58,237,0.4);
+    color: #C4B5FD;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-top: 4px;
+  }
+
+  /* ── FOOTER ── */
+  .ps-footer {
+    background: linear-gradient(135deg, var(--jian) 0%, var(--blue) 100%);
+    padding: 16px 40px;
+    flex-shrink: 0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .ps-footer::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    right: -60px; top: -80px;
+  }
+  .ps-footer-left {
+    font-size: 14px;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
+  }
+  .ps-footer-tag {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+  .ps-footer-right {
+    text-align: right;
+    font-size: 11px;
+    position: relative;
+    z-index: 2;
+  }
+  .ps-footer-right strong { font-size: 12px; }
+
+  .promise-row {
+    background: var(--jian-light);
+    border: 1px solid #C4B5FD;
+    border-radius: 8px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .promise-text {
+    font-size: 12px;
+    color: var(--dark);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .promise-text strong { color: var(--jian); font-weight: 800; }
+
+  .footnote {
+    font-size: 10px;
+    color: var(--gray);
+    line-height: 1.4;
+    margin-top: -4px;
+  }
+
+  /* Column width utilities */
+  .col-tier { width: 24%; }
+  .col-price { width: 18%; }
+  .col-annual { width: 18%; }
+  .col-bundle { width: 22%; }
+  .col-bundle-price { width: 16%; }
+  .col-svc { width: 36%; }
+  .col-svc-price { width: 14%; }
+  .col-svc-annual { width: 13%; }
+  .col-svc-pct { width: 11%; }
+  .col-disc-mech { width: 22%; }
+  .col-disc-pct { width: 24%; }
+  .col-gloss-term { width: 22%; }
+  .col-grand-sit { width: 35%; }
+
+  @media print {
+    html, body { margin: 0; padding: 0; background: #fff; display: block; }
+    .page { box-shadow: none; break-after: page; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     PAGE 1 — COMPREHENSIVE PRICE SHEET
+═══════════════════════════════ -->
+<div class="page">
+
+  <div class="ps-header">
+    <div class="ps-header-row">
+      <div class="ps-header-left">
+        <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
+        <div class="ps-header-divider"></div>
+        <div>
+          <div class="ps-header-title">My Jian AI Agent — Price Sheet</div>
+          <div class="ps-header-sub">V3.0 · 40% of Name-Brand · Effective 2026-05-28</div>
+        </div>
+      </div>
+      <div class="ps-header-tag">Hybrid Pricing</div>
+    </div>
+  </div>
+
+  <div class="ps-body">
+
+    <!-- Promise -->
+    <div class="promise-row">
+      <div class="promise-text">
+        <strong>Brand promise:</strong> 40% of name-brand price. Same protection. One platform. Every line item is anchored at ~40% (or less) of the equivalent name-brand competitor, mirroring the Technijian private-cloud pricing playbook against AWS/Azure.
+      </div>
+    </div>
+
+    <!-- Per-User -->
+    <div>
+      <div class="ps-section-title">Per-User Pricing — Jian for M365 (the people layer)</div>
+      <table class="ps-table">
+        <thead>
+          <tr>
+            <th class="col-tier">Tier</th>
+            <th class="col-price">Price</th>
+            <th class="col-annual">Annual (2 mo free)</th>
+            <th>Includes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="popular">
+            <td>Jian for M365 — <strong>Standard</strong> <span class="ps-pop-badge">Most Popular</span></td>
+            <td class="price">$9/user/mo</td>
+            <td>$90/user/yr</td>
+            <td>Full platform: M365 monitoring, license waste audit, @Jian Microsoft Teams Self-Service bot for all seats, HIPAA + SOC 2 + PCI compliance evidence (31 evaluators), branded monthly M365 report, SIEM correlation, MITRE-tagged events, channel-per-ticket Teams workflow, shift-aware ticket routing</td>
+          </tr>
+          <tr>
+            <td>Jian for M365 — <strong>Compliance Pro</strong></td>
+            <td class="price">$24/user/mo</td>
+            <td>$240/user/yr</td>
+            <td>Everything in Standard PLUS: CMMC + custom compliance frameworks (SOX/GLBA/FINRA/NIST 800-171/FedRAMP), dedicated CISSP-certified Customer Success Manager, cross-client correlator (gated, opt-in), learning consolidator, morning summary briefing, quarterly executive briefing, custom @Jian skills deployed to your Microsoft Teams workspace, Service Level Agreement on bot availability (terms in MSA), on-demand reports, CISSP-led audit-firm liaison</td>
+          </tr>
+          <tr>
+            <td><strong>Jian Teams Bot Only</strong> (no platform)</td>
+            <td class="price">$99/mo flat</td>
+            <td>$990/yr</td>
+            <td>Up to 25 users — @Jian Microsoft Teams Self-Service bot only. No platform monitoring, no compliance, no reports. Above 25 users, must upgrade to Standard.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="footnote"><strong>Minimum:</strong> 25 seats on Standard ($225/mo floor). Two parallel tiers, not "tier + upgrade" — both are complete products at their price point. Bot-Only SKU replaces the V1 $49 IT Self-Service Agent for new buyers (existing $49 customers grandfathering policy available — contact for terms).</p>
+    </div>
+
+    <!-- Per-Resource -->
+    <div>
+      <div class="ps-section-title brown">Per-Resource Pricing — Jian for [Infrastructure]</div>
+      <table class="ps-table">
+        <thead>
+          <tr>
+            <th class="col-svc">Jian Service</th>
+            <th class="col-svc-price">Jian Price</th>
+            <th class="col-svc-annual">Annual</th>
+            <th>Name-Brand Comp</th>
+            <th class="col-svc-pct">% of Comp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Jian for Firewall</strong> (per Sophos / Meraki firewall)</td>
+            <td class="price">$99/firewall/mo</td>
+            <td>$990/yr</td>
+            <td class="comp">Arctic Wolf MDR $300–$500/site; Sophos My Sophos $99–$299</td>
+            <td class="pct">20–33%</td>
+          </tr>
+          <tr>
+            <td><strong>Jian for Meraki Network</strong> (per Meraki organization)</td>
+            <td class="price">$79/org/mo</td>
+            <td>$790/yr</td>
+            <td class="comp">Auvik $250/site</td>
+            <td class="pct">32%</td>
+          </tr>
+          <tr class="popular">
+            <td><strong>Jian for Backup</strong> (Veeam VBR + 365 + ONE <strong>+ NAKIVO</strong> — vendor-agnostic)</td>
+            <td class="price">$59/env/mo</td>
+            <td>$590/yr</td>
+            <td class="comp">Liongard $50–$100 (no NAKIVO coverage)</td>
+            <td class="pct">59–118%</td>
+          </tr>
+          <tr>
+            <td><strong>Jian for DNS</strong> (per Cisco Umbrella tenant)</td>
+            <td class="price">$39/tenant/mo</td>
+            <td>$390/yr</td>
+            <td class="comp">Cisco Umbrella reporting add-ons $80+</td>
+            <td class="pct">49%</td>
+          </tr>
+          <tr>
+            <td><strong>Jian for Endpoint EDR — Workstation</strong> (overlay your EDR vendor)</td>
+            <td class="price">$1.50/workstation/mo</td>
+            <td>$15/yr</td>
+            <td class="comp">Huntress $6/desktop</td>
+            <td class="pct">25%</td>
+          </tr>
+          <tr>
+            <td><strong>Jian for Endpoint EDR — Server</strong> (overlay your EDR vendor)</td>
+            <td class="price">$3.50/server/mo</td>
+            <td>$35/yr</td>
+            <td class="comp">Huntress $6/server, CrowdStrike $10–$15</td>
+            <td class="pct">23–58%</td>
+          </tr>
+          <tr>
+            <td><strong>Jian for vCenter</strong> (per vCenter Server instance)</td>
+            <td class="price">$99/vCenter/mo</td>
+            <td>$990/yr</td>
+            <td class="comp">VMware vROps Premium $150+</td>
+            <td class="pct">66%</td>
+          </tr>
+          <tr>
+            <td><strong>Jian for Web / Cloudflare</strong> (per Cloudflare zone)</td>
+            <td class="price">$29/zone/mo</td>
+            <td>$290/yr</td>
+            <td class="comp">Cloudflare paid + manual labor</td>
+            <td class="pct">~40%</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="footnote"><strong>Backup vendor agnosticism:</strong> Jian for Backup covers Veeam (VBR + 365 + ONE) AND NAKIVO at the same per-environment rate. Liongard doesn't cover NAKIVO. Veeam ONE Reporter only covers Veeam. Jian bridges any mix at one price and one report format.</p>
+    </div>
+
+  </div>
+
+  <div class="ps-footer">
+    <div class="ps-footer-left">
+      Page 1 of 2 — Per-User &amp; Per-Resource Prices
+      <div class="ps-footer-tag">Bundles · Discounts · Glossary · Worked Examples · Grandfathering on Page 2.</div>
+    </div>
+    <div class="ps-footer-right">
+      <strong>sales@technijian.com</strong><br>
+      (949) 379-8499<br>
+      technijian.com
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE 2 — BUNDLES, DISCOUNTS, REFERENCE
+═══════════════════════════════ -->
+<div class="page">
+
+  <div class="ps-header">
+    <div class="ps-header-row">
+      <div class="ps-header-left">
+        <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
+        <div class="ps-header-divider"></div>
+        <div>
+          <div class="ps-header-title">My Jian AI Agent — Price Sheet (Page 2)</div>
+          <div class="ps-header-sub">Bundles · Discounts · Glossary · Worked Examples · Grandfathering</div>
+        </div>
+      </div>
+      <div class="ps-header-tag">Reference</div>
+    </div>
+  </div>
+
+  <div class="ps-body">
+
+    <!-- Starter Bundles -->
+    <div>
+      <div class="ps-section-title blue">Starter Bundles — Flat-Price Alternative to Itemized</div>
+      <table class="ps-table">
+        <thead>
+          <tr>
+            <th class="col-bundle">Bundle</th>
+            <th>Includes</th>
+            <th class="col-bundle-price">Flat Price</th>
+            <th class="col-bundle-price">vs. Itemized</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Jian Starter</strong></td>
+            <td>Standard 25 seats + 1 firewall + 1 backup environment</td>
+            <td class="price">$349/mo</td>
+            <td>itemized $383 (saves $34)</td>
+          </tr>
+          <tr class="popular">
+            <td><strong>Jian Pro Bundle</strong> <span class="ps-pop-badge">Most Common</span></td>
+            <td>Compliance Pro 50 seats + 2 firewalls + 1 backup + 1 Meraki org</td>
+            <td class="price">$1,495/mo</td>
+            <td>itemized $1,615 (saves $120)</td>
+          </tr>
+          <tr>
+            <td><strong>Jian Enterprise Bundle</strong></td>
+            <td>Compliance Pro 100 seats + 3 firewalls + 1 backup + 2 Meraki + 1 DNS tenant</td>
+            <td class="price">$2,695/mo</td>
+            <td>itemized $2,953 (saves $258)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="footnote">Bundles are an alternative path for the buyer who wants one number. Sales rep offers either: "Quote line-by-line, or pick a bundle."</p>
+    </div>
+
+    <!-- Discounts — simplified to TWO -->
+    <div>
+      <div class="ps-section-title teal">Discounts — Just Two Mechanics (Stack Multiplicatively)</div>
+      <div class="disc-grid">
+        <div class="disc-card">
+          <div class="dc-val">17% off</div>
+          <div class="dc-lbl"><strong>Annual prepay</strong> — 2 months free; any service, tier, or bundle</div>
+        </div>
+        <div class="disc-card">
+          <div class="dc-val">10–25% off</div>
+          <div class="dc-lbl"><strong>Volume tier</strong> auto-applied — 10% at $1k–$5k/mo · 15% at $5k–$15k · 20% at $15k–$50k · 25% at $50k+</div>
+        </div>
+        <div class="disc-card">
+          <div class="dc-val">Note</div>
+          <div class="dc-lbl"><strong>Backup line exception</strong> — Jian for Backup is 59-118% of Liongard (not 40%) because Liongard is already cheap AND doesn't cover NAKIVO. Disclosed up-front.</div>
+        </div>
+      </div>
+      <p class="footnote">V3.1 simplified from four discount mechanics to two. Worked example: $5,000/mo client with annual prepay pays $5,000 × 0.85 × 0.83 = <strong>$3,528/mo effective</strong>. CFO verifies in 10 seconds.</p>
+    </div>
+
+  </div>
+
+  <div class="ps-footer">
+    <div class="ps-footer-left">
+      Page 2 of 3 — Bundles &amp; Discounts
+      <div class="ps-footer-tag">Glossary · Worked Examples · Grandfathering on Page 3.</div>
+    </div>
+    <div class="ps-footer-right">
+      <strong>sales@technijian.com</strong><br>
+      (949) 379-8499<br>
+      technijian.com
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE 3 — REFERENCE
+═══════════════════════════════ -->
+<div class="page">
+
+  <div class="ps-header">
+    <div class="ps-header-row">
+      <div class="ps-header-left">
+        <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
+        <div class="ps-header-divider"></div>
+        <div>
+          <div class="ps-header-title">My Jian AI Agent — Price Sheet (Page 3)</div>
+          <div class="ps-header-sub">Glossary · Worked Examples · Grandfathering</div>
+        </div>
+      </div>
+      <div class="ps-header-tag">Reference</div>
+    </div>
+  </div>
+
+  <div class="ps-body">
+
+    <!-- Glossary -->
+    <div>
+      <div class="ps-section-title dark">Resource Definitions (Glossary)</div>
+      <table class="ps-table">
+        <thead>
+          <tr>
+            <th class="col-gloss-term">Term</th>
+            <th>Definition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Firewall</strong></td><td>One managed Sophos or Meraki firewall appliance. HA pair = 1 unit. Multi-WAN on one appliance = 1 unit.</td></tr>
+          <tr><td><strong>Meraki organization</strong></td><td>One Meraki dashboard org, regardless of network or device count.</td></tr>
+          <tr><td><strong>Backup environment</strong></td><td>One Veeam VBR / 365 / ONE instance OR one NAKIVO Director. Mix and match at $59 each.</td></tr>
+          <tr><td><strong>Cloudflare zone</strong></td><td>One apex domain (e.g., example.com). All subdomains included free.</td></tr>
+          <tr><td><strong>vCenter</strong></td><td>One vCenter Server instance. Enhanced Linked Mode counts as 1 per PSC.</td></tr>
+          <tr><td><strong>Licensed user</strong></td><td>One Microsoft 365 paid license (excludes shared mailboxes, room accounts, guests).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Worked Examples -->
+    <div>
+      <div class="ps-section-title dark">Worked Examples — Three Real Client Quotes</div>
+      <div class="example-strip">
+        <div class="example-cell">
+          <div class="ec-title">Small SMB · 20-user law firm</div>
+          <div class="ec-jian">$383/mo</div>
+          <div class="ec-vs">25 × $9 ($225) + 1 firewall ($99) + 1 backup ($59)<br>vs. ~$960 name-brand stack</div>
+          <div class="ec-pct">Jian at 40%</div>
+        </div>
+        <div class="example-cell">
+          <div class="ec-title">Medium · 50-user dental, HIPAA</div>
+          <div class="ec-jian">$1,453/mo</div>
+          <div class="ec-vs">Compliance Pro 50 × $24 + 2 FW + 2 Meraki + 1 backup = $1,615, –10% volume tier<br><em>OR Jian Pro Bundle $1,495 flat</em><br>vs. ~$5,550 name-brand stack</div>
+          <div class="ec-pct">Jian at 26%</div>
+        </div>
+        <div class="example-cell">
+          <div class="ec-title">Mid-market · 250-user multi-site</div>
+          <div class="ec-jian">$5,822/mo</div>
+          <div class="ec-vs">Compliance Pro 250 × $24 + 5 FW + 3 Meraki + 2 backups = $6,850, –15% volume tier<br>vs. ~$28,350 name-brand stack</div>
+          <div class="ec-pct">Jian at 21%</div>
+        </div>
+      </div>
+      <p class="footnote">All examples are <strong>monthly</strong>. Annual prepay saves another 17%. Labor savings (not shown above): 14–22 hrs/mo at Small, 27–45 at Medium, 45–90 at Large — worth $1,050–$9,000/mo at $75–$100/hr blended labor cost.</p>
+    </div>
+
+    <!-- Grandfathering + Standalone -->
+    <div>
+      <div class="ps-section-title blue">Grandfathering &amp; Legacy SKUs</div>
+      <table class="ps-table">
+        <thead>
+          <tr>
+            <th class="col-grand-sit">Situation</th>
+            <th>Policy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Existing $49/mo IT Self-Service Agent customers</strong></td>
+            <td>Grandfathering policy available — existing $49/mo customers continue to receive the original bot-only feature set at $49 under terms specified at contract renewal. Any upgrade to platform monitoring moves to per-user V3 pricing.</td>
+          </tr>
+          <tr>
+            <td><strong>Report-only buyers (no platform)</strong></td>
+            <td>Legacy standalone SKUs remain: My M365 Report $15–$129/tenant/mo (5 bands), My Meraki Report $150/org/mo, My Sophos Report $99/$199/$299/tenant/mo (3 tiers). Platform subscribers get equivalent reports auto-included.</td>
+          </tr>
+          <tr>
+            <td><strong>V2 add-ons (when shipped)</strong></td>
+            <td>Auto-remediation tentatively +$10/user or new top tier. Jian Voice tentatively +$5/user/mo. Jian Remote Agent tentatively $99/agent or +$3/endpoint. Finalized at V2 production launch.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="ps-footer">
+    <div class="ps-footer-left">
+      Tell us your stack. We&rsquo;ll quote within one business hour. Every line ~40% of name-brand.
+      <div class="ps-footer-tag">Pilot and trial terms available &mdash; contact sales for details.</div>
+    </div>
+    <div class="ps-footer-right">
+      <strong>sales@technijian.com</strong><br>
+      (949) 379-8499<br>
+      technijian.com
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

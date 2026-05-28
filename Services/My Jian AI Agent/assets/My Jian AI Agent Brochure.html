@@ -1095,7 +1095,17 @@
   .section-label-blue  { color: var(--blue); }
   .section-label-teal  { color: #0E7490; }
   .section-label-brown { color: #B45309; }
+  .section-label-jian  { color: var(--jian); }
   .section-label-mb12  { margin-bottom: 12px; }
+  .section-label-mt14  { margin-top: 14px; }
+  .pricing-footnote {
+    margin-top: 0;
+    padding-top: 0;
+    border: none;
+    color: var(--gray);
+    font-size: 11px;
+    line-height: 1.4;
+  }
 
   .jian-tag {
     background: #EDE9FE;
@@ -1249,6 +1259,149 @@
     letter-spacing: 1px;
   }
 
+  /* ── SELF-SERVICE TIER CARDS (Page 2) ── */
+  .p5-price-cards-self { margin-top: 14px; }
+
+  /* ── SENTINEL INCLUSION BADGE (Pages 3–5) ── */
+  .sentinel-incl-badge {
+    display: inline-block;
+    background: rgba(124,58,237,0.18);
+    border: 1px solid rgba(167,139,250,0.6);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+
+  /* ── PAGE 6: SENTINEL TIER CARDS ── */
+  .sentinel-tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .sentinel-tier-card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    background: var(--light);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .sentinel-tier-card.is-popular {
+    background: #F5F3FF;
+    border-color: var(--jian);
+    box-shadow: 0 4px 12px rgba(124,58,237,0.12);
+  }
+  .st-popular-flag {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    background: var(--jian);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+  }
+  .st-tier-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--jian);
+    margin-bottom: 4px;
+  }
+  .st-tier-label {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .st-tier-price {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--jian);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .st-tier-period {
+    font-size: 10px;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+  .st-tier-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 10px;
+  }
+  .st-tier-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+  .st-tier-features li {
+    font-size: 11px;
+    color: #374151;
+    line-height: 1.4;
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+  }
+  .st-tier-features li::before {
+    content: '\2713';
+    color: var(--jian);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 10px;
+    margin-top: 1px;
+  }
+  .st-tier-foot {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+    font-size: 10px;
+    color: var(--gray);
+    line-height: 1.3;
+  }
+
+  /* ── PAGE 6: LABOR ROI TABLE ── */
+  .labor-roi-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+  .labor-roi-table th {
+    background: var(--dark);
+    color: rgba(255,255,255,0.85);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    text-align: left;
+  }
+  .labor-roi-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    color: #374151;
+    vertical-align: middle;
+  }
+  .labor-roi-table tr:nth-child(even) td { background: var(--light); }
+  .labor-roi-table td.savings { color: #15803D; font-weight: 700; }
+  .labor-roi-table td.roi { color: var(--jian); font-weight: 700; }
+
   @media print {
     html, body { margin: 0; padding: 0; background: #fff; display: block; }
     .page { box-shadow: none; break-after: page; }
@@ -1274,59 +1427,59 @@
   </div>
 
   <div class="cover-content">
-    <div class="cover-eyebrow">Technijian My Jian Suite</div>
+    <div class="cover-eyebrow">Technijian My Jian — Autonomous IT Operations Platform</div>
     <div class="cover-title"><span class="my">My </span><span class="jian">Jian</span><br>the AI Agent</div>
-    <div class="cover-subtitle">Complete IT Operations Suite</div>
+    <div class="cover-subtitle">40% of Name-Brand Price. Same Protection. One Platform.</div>
     <div class="cover-tagline">
-      Four AI-powered services working together to <strong>automate your IT support, monitor your infrastructure, and deliver professional reports</strong> — all without lifting a finger.
+      Jian replaces a stack of name-brand security, monitoring, compliance and ITSM tools with one AI-driven platform — <strong>priced at ~40% of what the name brands charge</strong>. MITRE-tagged, cross-platform correlated, branded-report ready. <strong>~45% of proactive IT hours, eliminated.</strong>
     </div>
 
     <div class="cover-modules">
       <div class="cover-module">
-        <div class="mod-icon mod-icon-jian">🤖</div>
-        <div class="mod-name">IT Self-Service Agent</div>
-        <div class="mod-price">$49 / month</div>
+        <div class="mod-icon mod-icon-jian">👥</div>
+        <div class="mod-name">Jian for M365 — Core</div>
+        <div class="mod-price">$9 / user / mo</div>
       </div>
       <div class="cover-module">
-        <div class="mod-icon mod-icon-m365">📊</div>
-        <div class="mod-name">My M365 Report</div>
-        <div class="mod-price">$15–$129 / tenant / mo</div>
+        <div class="mod-icon mod-icon-m365">🛡️</div>
+        <div class="mod-name">Jian for Firewall</div>
+        <div class="mod-price">$99 / firewall / mo</div>
       </div>
       <div class="cover-module">
         <div class="mod-icon mod-icon-meraki">🌐</div>
-        <div class="mod-name">My Meraki Report</div>
-        <div class="mod-price">$150 / org / month</div>
+        <div class="mod-name">Jian for Meraki</div>
+        <div class="mod-price">$79 / org / mo</div>
       </div>
       <div class="cover-module">
-        <div class="mod-icon mod-icon-sophos">🛡️</div>
-        <div class="mod-name">My Sophos Report</div>
-        <div class="mod-price">$99–$299 / tenant / mo</div>
+        <div class="mod-icon mod-icon-sophos">💾</div>
+        <div class="mod-name">Jian for Backup (Veeam + NAKIVO)</div>
+        <div class="mod-price">$59 / env / mo</div>
       </div>
     </div>
 
     <div class="cover-stats">
       <div class="cstat">
-        <div class="cval">4</div>
-        <div class="clbl">AI-Powered Services</div>
+        <div class="cval">40+</div>
+        <div class="clbl">Monitored Platforms</div>
       </div>
       <div class="cstat">
-        <div class="cval">$0</div>
-        <div class="clbl">Agent Installation Required</div>
+        <div class="cval">858</div>
+        <div class="clbl">MITRE Techniques Tagged</div>
       </div>
       <div class="cstat">
-        <div class="cval">24/7</div>
-        <div class="clbl">Automated Monitoring</div>
+        <div class="cval">~45%</div>
+        <div class="clbl">IT Hours Cut</div>
       </div>
       <div class="cstat">
-        <div class="cval">15%</div>
-        <div class="clbl">Off All 4 Services Bundled</div>
+        <div class="cval">40%</div>
+        <div class="clbl">Of Name-Brand Price</div>
       </div>
     </div>
   </div>
 
   <div class="cover-footer">
     <span class="cover-footer-left">technijian.com</span>
-    <span class="cover-footer-right">sales@technijian.com &nbsp;|&nbsp; (888) 505-8249</span>
+    <span class="cover-footer-right">sales@technijian.com &nbsp;|&nbsp; (949) 379-8499</span>
   </div>
 </div>
 
@@ -1335,13 +1488,25 @@
 ═══════════════════════════════ -->
 <div class="page">
   <div class="p2-hero">
-    <span class="p2-hero-badge">Module 1 — Jian IT Agent</span>
-    <div class="p2-hero-title">Instant IT support, right inside<br>Microsoft Teams</div>
-    <div class="p2-hero-sub">Your always-available AI IT support assistant, embedded directly into your Microsoft Teams workspace.</div>
-    <div class="p2-hero-price">
-      <div class="price-amt">$49</div>
-      <div class="price-period">per month</div>
-      <div class="price-label">IT Self-Service Agent</div>
+    <span class="p2-hero-badge">Jian for M365 — The People Layer</span>
+    <div class="p2-hero-title">M365 monitoring + compliance +<br>@Jian Teams bot, all per-user.</div>
+    <div class="p2-hero-sub">One per-user price covers M365 monitoring, license waste audit, HIPAA/SOC 2/PCI compliance evidence, branded monthly M365 report, the @Jian Microsoft Teams Self-Service bot for every user, and cross-platform SIEM correlation. Upgrade to Enterprise for CMMC + custom frameworks + dedicated CISSP-certified CSM.</div>
+    <div class="p5-price-cards p5-price-cards-self">
+      <div class="p5-price-card popular">
+        <div class="pc-tier">Standard ★</div>
+        <div class="pc-amt">$9<span class="price-suffix">/user/mo</span></div>
+        <div class="pc-api">25-seat minimum · annual $90/user/yr · full platform</div>
+      </div>
+      <div class="p5-price-card">
+        <div class="pc-tier">Compliance Pro</div>
+        <div class="pc-amt">$24<span class="price-suffix">/user/mo</span></div>
+        <div class="pc-api">annual $240/user/yr · regulated / DoD / multi-site / + CMMC + dedicated CISSP-certified CSM</div>
+      </div>
+      <div class="p5-price-card">
+        <div class="pc-tier">Bot-Only SKU</div>
+        <div class="pc-amt">$99<span class="price-suffix">/mo flat</span></div>
+        <div class="pc-api">≤25 users · @Jian Teams bot only, no platform</div>
+      </div>
     </div>
   </div>
 
@@ -1430,65 +1595,16 @@
 ═══════════════════════════════ -->
 <div class="page">
   <div class="p3-hero">
-    <span class="p3-hero-badge">Module 2 — Reporting</span>
-    <div class="p3-hero-title">My M365 Report</div>
-    <div class="p3-hero-sub">Know exactly what's happening in every Microsoft 365 tenant. Every month. Automatically.</div>
+    <span class="p3-hero-badge">What's In Your Monthly M365 Report</span>
+    <div class="p3-hero-title">M365 Monthly Report</div>
+    <div class="p3-hero-sub">Branded Word document covering license waste, security posture, compliance status, and storage utilization for every tenant. <span class="sentinel-incl-badge">Included with Jian for M365 ($9/user/mo) — no additional charge</span></div>
     <div class="p3-hero-pricing">
-      <div class="price-range">$15–$129</div>
-      <div class="price-detail">per tenant / month<br>by user count</div>
+      <div class="price-range">Included</div>
+      <div class="price-detail">with Jian for M365<br>pricing on Page 6</div>
     </div>
   </div>
 
   <div class="p3-body">
-
-    <table class="pricing-table pricing-table-spaced">
-      <thead>
-        <tr>
-          <th>Band</th>
-          <th>Users</th>
-          <th>Monthly</th>
-          <th>Annual</th>
-          <th>Includes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="band-name">XS</td>
-          <td>1–10</td>
-          <td><strong>$15/mo</strong></td>
-          <td>$150/yr</td>
-          <td>Core 6 sections</td>
-        </tr>
-        <tr>
-          <td class="band-name">S</td>
-          <td>11–25</td>
-          <td><strong>$29/mo</strong></td>
-          <td>$290/yr</td>
-          <td>+ Conditional Access, Defender O365, on-demand</td>
-        </tr>
-        <tr class="popular-row">
-          <td class="band-name">M <span class="popular-badge">Most Popular</span></td>
-          <td>26–50</td>
-          <td><strong>$49/mo</strong></td>
-          <td>$490/yr</td>
-          <td>+ Compliance pack (DLP, labels), eDiscovery readiness</td>
-        </tr>
-        <tr>
-          <td class="band-name">L</td>
-          <td>51–100</td>
-          <td><strong>$79/mo</strong></td>
-          <td>$790/yr</td>
-          <td>+ API export, HIPAA/SOC 2/PCI mapping</td>
-        </tr>
-        <tr>
-          <td class="band-name">XL</td>
-          <td>101+</td>
-          <td><strong>$129/mo</strong></td>
-          <td>$1,290/yr</td>
-          <td>+ 7-yr retention, dedicated CSM, 9 AM SLA, GCC</td>
-        </tr>
-      </tbody>
-    </table>
 
     <div class="section-label section-label-blue">8 Sections Delivered Every Month</div>
     <div class="m365-sections-grid">
@@ -1546,7 +1662,7 @@
       </div>
       <div class="roi-divider"></div>
       <div class="roi-text">
-        A 30-user tenant at the M-band finds <strong>$300/mo in license waste</strong> — covering the $49 fee 6× over in month one. Read-only Graph API — no admin credentials stored, no agent required.
+        A 30-user tenant on Jian for M365 ($9/user × 30 = <strong>$270/mo</strong>) typically finds <strong>$300+/mo in license waste alone</strong> — the platform pays for itself month one, before counting the SOC, Teams bot, and compliance evidence. Read-only Graph API — no admin credentials stored, no agent required.
       </div>
     </div>
 
@@ -1558,12 +1674,12 @@
 ═══════════════════════════════ -->
 <div class="page">
   <div class="p4-hero">
-    <span class="p4-hero-badge">Module 3 — Reporting</span>
-    <div class="p4-hero-title">My Meraki Report</div>
-    <div class="p4-hero-sub">Stop spending 4 hours per client on manual Meraki reports. Get a fully branded Word document delivered on the 1st — every month.</div>
+    <span class="p4-hero-badge">What's In Your Monthly Meraki Report</span>
+    <div class="p4-hero-title">Meraki Monthly Report</div>
+    <div class="p4-hero-sub">Branded Word document covering IDS/IPS events, full config snapshot, change audit log, and device health — delivered on the 1st of every month. <span class="sentinel-incl-badge">Included with Jian for Meraki Network ($79/org/mo) — no additional charge</span></div>
     <div class="p4-hero-pricing">
-      <div class="price-flat">$150</div>
-      <div class="price-detail">per Meraki org / month<br>all features included</div>
+      <div class="price-flat">Included</div>
+      <div class="price-detail">with Jian for Meraki Network<br>pricing on Page 6</div>
     </div>
   </div>
 
@@ -1595,55 +1711,17 @@
 
     <div class="meraki-savings-bar">
       <div class="msb-item">
-        <div class="msb-val">$150/mo</div>
-        <div class="msb-lbl">flat per org — no tiers</div>
+        <div class="msb-val">$79/mo</div>
+        <div class="msb-lbl">Jian for Meraki Network (per org)</div>
       </div>
       <div class="msb-item">
-        <div class="msb-val">50%</div>
-        <div class="msb-lbl">vs. $300/mo manual labor cost</div>
+        <div class="msb-val">32%</div>
+        <div class="msb-lbl">of Auvik $250/site comp price</div>
       </div>
       <div class="msb-item">
-        <div class="msb-val">$90K/yr</div>
-        <div class="msb-lbl">savings at 50 Meraki orgs</div>
+        <div class="msb-val">Free</div>
+        <div class="msb-lbl">monthly Meraki report — included</div>
       </div>
-    </div>
-
-    <div class="meraki-savings-section">
-      <div class="section-label section-label-teal">MSP Savings at Scale</div>
-      <table class="pricing-table">
-        <thead>
-          <tr>
-            <th>MSP Scale</th>
-            <th>Manual Labor Cost</th>
-            <th>My Meraki Report</th>
-            <th>Monthly Savings</th>
-            <th>Annual Savings</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>5 Meraki orgs</td>
-            <td>$1,500/mo</td>
-            <td><strong>$750/mo</strong></td>
-            <td class="savings-cell">$750/mo saved</td>
-            <td class="savings-cell">$9,000/yr</td>
-          </tr>
-          <tr>
-            <td>15 Meraki orgs</td>
-            <td>$4,500/mo</td>
-            <td><strong>$2,250/mo</strong></td>
-            <td class="savings-cell">$2,250/mo saved</td>
-            <td class="savings-cell">$27,000/yr</td>
-          </tr>
-          <tr>
-            <td>50 Meraki orgs</td>
-            <td>$15,000/mo</td>
-            <td><strong>$7,500/mo</strong></td>
-            <td class="savings-cell">$7,500/mo saved</td>
-            <td class="savings-cell">$90,000/yr</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
   </div>
@@ -1654,24 +1732,24 @@
 ═══════════════════════════════ -->
 <div class="page">
   <div class="p5-hero">
-    <span class="p5-hero-badge">Module 4 — Security Reporting</span>
-    <div class="p5-hero-title">My Sophos Report</div>
-    <div class="p5-hero-sub">Full firewall visibility. Automatic CP tickets. Monthly report on the 1st. IPS &middot; ATP &middot; Web Filter &middot; Traffic Analytics — all delivered automatically.</div>
+    <span class="p5-hero-badge">What's In Your Monthly Firewall Report</span>
+    <div class="p5-hero-title">Sophos / Meraki Firewall Report</div>
+    <div class="p5-hero-sub">Full firewall visibility — IPS · ATP · Web Filter · Traffic Analytics. Automatic CP ticket on every alert. Branded monthly report on the 1st. <span class="sentinel-incl-badge">Included with Jian for Firewall ($99/firewall/mo) — no additional charge</span></div>
     <div class="p5-price-cards">
-      <div class="p5-price-card">
-        <div class="pc-tier">Essentials</div>
-        <div class="pc-amt">$99<span class="price-suffix">/mo</span></div>
-        <div class="pc-api">Central Partner API · 1–5 firewalls</div>
-      </div>
       <div class="p5-price-card popular">
-        <div class="pc-tier">Advanced ★</div>
-        <div class="pc-amt">$199<span class="price-suffix">/mo</span></div>
-        <div class="pc-api">Central + XGS REST API · 1–5 firewalls</div>
+        <div class="pc-tier">Per Firewall</div>
+        <div class="pc-amt">$99<span class="price-suffix">/mo</span></div>
+        <div class="pc-api">Sophos OR Meraki firewall · all features included</div>
       </div>
       <div class="p5-price-card">
-        <div class="pc-tier">Enterprise</div>
-        <div class="pc-amt">$299<span class="price-suffix">/mo</span></div>
-        <div class="pc-api">Central + XGS REST API · 6+ firewalls</div>
+        <div class="pc-tier">vs. Arctic Wolf</div>
+        <div class="pc-amt">$300+<span class="price-suffix">/site</span></div>
+        <div class="pc-api">Jian for Firewall is 20–33% of Arctic Wolf price</div>
+      </div>
+      <div class="p5-price-card">
+        <div class="pc-tier">vs. Sophos Own</div>
+        <div class="pc-amt">$99–$299<span class="price-suffix">/tenant</span></div>
+        <div class="pc-api">Sophos My Sophos report SKU — covered for less</div>
       </div>
     </div>
   </div>
@@ -1761,117 +1839,135 @@
 </div>
 
 <!-- ═══════════════════════════════
-     PAGE 6 — BUNDLE PRICING
+     PAGE 6 — HYBRID PRICING MATRIX
 ═══════════════════════════════ -->
 <div class="page">
   <div class="bundle-header">
-    <div class="bh-eyebrow">My Jian Suite — Pricing Overview</div>
-    <div class="bh-title">One Suite. Every Price Point.</div>
-    <div class="bh-sub">Start with one module and add more as you grow. Bundle all four and save 15%.</div>
+    <div class="bh-eyebrow">Jian Pricing — 40% of Name-Brand, Every Line</div>
+    <div class="bh-title">Pay per user. Pay per resource.</div>
+    <div class="bh-sub">Per-user for the people layer. Per-resource for everything you have. Every line item is approximately 40% of the equivalent name-brand competitor.</div>
   </div>
 
   <div class="bundle-body">
 
-    <div class="products-grid">
-      <div class="product-card card-jian">
-        <div class="pc-label">IT Self-Service Agent</div>
-        <div class="pc-name">Jian IT Agent</div>
-        <div class="pc-price">$49</div>
-        <div class="pc-unit">per month · flat</div>
-        <ul class="pc-features">
-          <li>Microsoft Teams integration</li>
-          <li>24/7 instant IT answers</li>
-          <li>One-command ticket creation</li>
-          <li>Intelligent escalation</li>
-          <li>Organization-specific learning</li>
-          <li>No installation required</li>
-        </ul>
-        <div class="pc-bottom-note">Always-on in Microsoft Teams<br>Free trial &mdash; no credit card required</div>
-      </div>
-      <div class="product-card card-m365">
-        <div class="pc-label">M365 Reporting</div>
-        <div class="pc-name">My M365 Report</div>
-        <div class="pc-price">$15–$129</div>
-        <div class="pc-unit">per tenant / month · 5 bands</div>
-        <ul class="pc-features">
-          <li>8-section Word report monthly</li>
-          <li>License utilization &amp; optimization</li>
-          <li>P1/P2/P3 monthly recommendations</li>
-          <li>Security posture scoring</li>
-          <li>Compliance pack (M-band+)</li>
-          <li>HIPAA/SOC2/PCI (L-band+)</li>
-          <li>Read-only Graph API</li>
-        </ul>
-        <div class="pc-bottom-note">Delivered 1st business day / month<br>Finds $8&ndash;$25/user in waste &mdash; month one</div>
-      </div>
-      <div class="product-card card-meraki">
-        <div class="pc-label">Meraki Reporting</div>
-        <div class="pc-name">My Meraki Report</div>
-        <div class="pc-price">$150</div>
-        <div class="pc-unit">per Meraki org / month · flat</div>
-        <ul class="pc-features">
-          <li>10-section Word report monthly</li>
-          <li>IDS/IPS event roll-up</li>
-          <li>Full config snapshot</li>
-          <li>Change audit log</li>
-          <li>Weekly + on-demand reports</li>
-          <li>Unlimited admin users</li>
-        </ul>
-        <div class="pc-bottom-note">Delivered 1st business day / month<br>Saves 50% vs. $300/mo manual labor</div>
-      </div>
-      <div class="product-card card-sophos">
-        <div class="pc-label">Sophos Reporting</div>
-        <div class="pc-name">My Sophos Report</div>
-        <div class="pc-price">$99–$299</div>
-        <div class="pc-unit">per tenant / month · 3 tiers</div>
-        <ul class="pc-features">
-          <li>12-section Word report monthly</li>
-          <li>Automatic CP ticket creation</li>
-          <li>IPS/ATP threat intelligence (Adv+)</li>
-          <li>MITRE ATT&amp;CK mapping (Adv+)</li>
-          <li>Traffic anomaly detection (Adv+)</li>
-          <li>Annual saves 17%</li>
-        </ul>
-        <div class="pc-bottom-note">Delivered 1st business day / month<br>Auto CP ticket on every alert &mdash; zero missed billing</div>
-      </div>
-    </div>
+    <div class="section-label section-label-mb12 section-label-jian">Per-User — Jian for M365 (two parallel tiers)</div>
+    <table class="pricing-table pricing-table-spaced">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Price</th>
+          <th>Annual (2 mo free)</th>
+          <th>Includes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="popular-row">
+          <td class="band-name">Standard <span class="popular-badge">Most Popular</span></td>
+          <td><strong>$9/user/mo</strong></td>
+          <td>$90/user/yr</td>
+          <td>Full platform: M365 monitoring + license audit + @Jian Teams bot + HIPAA/SOC 2/PCI compliance + branded M365 report + SIEM correlation + MITRE</td>
+        </tr>
+        <tr>
+          <td class="band-name">Compliance Pro</td>
+          <td><strong>$24/user/mo</strong></td>
+          <td>$240/user/yr</td>
+          <td>Everything in Standard + CMMC + custom frameworks (SOX/GLBA/FINRA/NIST 800-171/FedRAMP) + dedicated CISSP-certified Customer Success Manager + cross-client correlator (gated) + Service Level Agreement (terms in MSA) + CISSP-led audit-firm liaison + custom @Jian skills deployed to your Microsoft Teams workspace</td>
+        </tr>
+        <tr>
+          <td class="band-name">Jian Teams Bot Only</td>
+          <td><strong>$99/mo flat</strong></td>
+          <td>$990/yr</td>
+          <td>≤25 users · @Jian Teams bot only — no platform monitoring, no compliance, no reports. Above 25 users, upgrade to Standard.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pricing-footnote">25-seat minimum on Standard ($225/mo floor). Two tiers, not "upgrade" — both are complete products at their price point.</p>
+
+    <div class="section-label section-label-mb12 section-label-brown section-label-mt14">Per-Resource — Jian for [Infrastructure]</div>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Jian Service</th>
+          <th>Jian Price</th>
+          <th>Annual</th>
+          <th>Name-Brand Comp</th>
+          <th>% of Comp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jian for Firewall (per Sophos/Meraki firewall)</td>
+          <td><strong>$99/firewall/mo</strong></td>
+          <td>$990/yr</td>
+          <td>Arctic Wolf $300–$500/site</td>
+          <td class="savings">20–33%</td>
+        </tr>
+        <tr>
+          <td>Jian for Meraki Network (per Meraki org)</td>
+          <td><strong>$79/org/mo</strong></td>
+          <td>$790/yr</td>
+          <td>Auvik $250/site</td>
+          <td class="savings">32%</td>
+        </tr>
+        <tr class="popular-row">
+          <td>Jian for Backup (Veeam + <strong>NAKIVO</strong> — vendor-agnostic)</td>
+          <td><strong>$59/env/mo</strong></td>
+          <td>$590/yr</td>
+          <td>Liongard $50–$100 (no NAKIVO!)</td>
+          <td class="savings">59–118%</td>
+        </tr>
+        <tr>
+          <td>Jian for DNS (per Umbrella tenant)</td>
+          <td><strong>$39/tenant/mo</strong></td>
+          <td>$390/yr</td>
+          <td>Cisco Umbrella add-ons $80+</td>
+          <td class="savings">49%</td>
+        </tr>
+        <tr>
+          <td>Jian for Endpoint EDR — Workstation</td>
+          <td><strong>$1.50/desktop/mo</strong></td>
+          <td>$15/yr</td>
+          <td>Huntress $6/desktop</td>
+          <td class="savings">25%</td>
+        </tr>
+        <tr>
+          <td>Jian for Endpoint EDR — Server</td>
+          <td><strong>$3.50/server/mo</strong></td>
+          <td>$35/yr</td>
+          <td>Huntress $6 / CrowdStrike $10–$15</td>
+          <td class="savings">23–58%</td>
+        </tr>
+        <tr>
+          <td>Jian for vCenter (per vCenter Server)</td>
+          <td><strong>$99/vCenter/mo</strong></td>
+          <td>$990/yr</td>
+          <td>VMware vROps Premium $150+</td>
+          <td class="savings">66%</td>
+        </tr>
+        <tr>
+          <td>Jian for Web / Cloudflare (per zone)</td>
+          <td><strong>$29/zone/mo</strong></td>
+          <td>$290/yr</td>
+          <td>Cloudflare paid + labor</td>
+          <td class="savings">~40%</td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="bundle-discounts">
-      <div class="bd-title">Bundle Discounts — Combine Any Modules</div>
+      <div class="bd-title">Discounts — Just Two Mechanics (stack multiplicatively)</div>
       <div class="bd-grid">
         <div class="bd-item">
-          <div class="bd-val">10% off</div>
-          <div class="bd-desc">Any 2 reporting modules combined<br>(e.g., My Meraki + My M365)</div>
+          <div class="bd-val">17% off</div>
+          <div class="bd-desc">Annual prepay (2 months free)<br>any service, tier, or bundle</div>
         </div>
         <div class="bd-item">
-          <div class="bd-val">10% off</div>
-          <div class="bd-desc">Any reporting module + Jian IT Agent<br>combined on one agreement</div>
+          <div class="bd-val">10–25%</div>
+          <div class="bd-desc">Volume tier (auto-applied)<br>10% at $1k/mo, 15% at $5k, 20% at $15k, 25% at $50k+</div>
         </div>
         <div class="bd-item">
-          <div class="bd-val">15% off</div>
-          <div class="bd-desc">All 4 My Jian Suite modules together<br>— deepest discount, single invoice</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="volume-row">
-      <div class="vr-title">Volume Discounts — For MSPs at Scale</div>
-      <div class="vr-bands">
-        <div class="vr-band">
-          <div class="vb-pct">10%</div>
-          <div class="vb-lbl">10–24 tenants</div>
-        </div>
-        <div class="vr-band">
-          <div class="vb-pct">15%</div>
-          <div class="vb-lbl">25–49 tenants</div>
-        </div>
-        <div class="vr-band">
-          <div class="vb-pct">20–25%</div>
-          <div class="vb-lbl">50+ tenants</div>
-        </div>
-        <div class="vr-band">
-          <div class="vb-pct">17%</div>
-          <div class="vb-lbl">annual (any module)</div>
+          <div class="bd-val">Backup Exception</div>
+          <div class="bd-desc">Backup line is 59-118% of Liongard (not 40%) — because Liongard is already cheap AND doesn't cover NAKIVO. We do.</div>
         </div>
       </div>
     </div>
@@ -1880,55 +1976,99 @@
 </div>
 
 <!-- ═══════════════════════════════
+     PAGE 7 — LABOR ROI + WHY + CTA
+═══════════════════════════════ -->
+
+<!-- ═══════════════════════════════
      PAGE 7 — WHY TECHNIJIAN + CTA
 ═══════════════════════════════ -->
 <div class="page">
   <div class="p7-header">
-    <div class="ph-eyebrow">Why Technijian</div>
-    <div class="ph-title">Built for MSPs.<br>Delivered like clockwork.</div>
+    <div class="ph-eyebrow">Worked Examples &amp; Why Technijian</div>
+    <div class="ph-title">Three real clients. Three real quotes.<br>~40% of name-brand. Every time.</div>
   </div>
 
   <div class="inner-content inner-content-p7">
 
+    <table class="labor-roi-table">
+      <thead>
+        <tr>
+          <th>Client profile</th>
+          <th>Jian setup</th>
+          <th>Jian monthly</th>
+          <th>Annual prepay</th>
+          <th>Name-brand comp</th>
+          <th>Jian as % of comp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Small SMB</strong><br>20-user law firm, 1 site, 1 firewall, 1 backup</td>
+          <td>Standard 25-min × $9 + 1 firewall + 1 backup <em>OR Jian Starter bundle $349</em></td>
+          <td class="roi">$383<br><em>or $349</em></td>
+          <td class="roi">$3,830</td>
+          <td class="savings">~$960</td>
+          <td class="savings">40%</td>
+        </tr>
+        <tr>
+          <td><strong>Medium regulated</strong><br>50-user dental, HIPAA, 2 sites, 2 firewalls, 2 Meraki, 1 backup</td>
+          <td>Compliance Pro 50 × $24 + 2 FW + 2 Meraki + 1 backup ($1,615), –10% volume tier <em>OR Pro Bundle $1,495</em></td>
+          <td class="roi">$1,453<br><em>or $1,495</em></td>
+          <td class="roi">$14,530</td>
+          <td class="savings">~$5,550</td>
+          <td class="savings">26%</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-market</strong><br>250 users multi-site, 5 firewalls, 3 Meraki, 2 backups, regulated</td>
+          <td>Compliance Pro 250 × $24 + 5 FW + 3 Meraki + 2 backups = $6,850, –15% volume tier</td>
+          <td class="roi">$5,822</td>
+          <td class="roi">$58,220</td>
+          <td class="savings">~$28,350</td>
+          <td class="savings">21%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pricing-footnote">Plus ~45% reduction in proactive IT support hours — 14–22 hrs/mo saved at Small, 27–45 at Medium, 45–90 at Large (worth $1,050–$9,000/mo at $75–$100/hr blended labor rate).</p>
+
     <div class="why-grid">
       <div class="why-card">
-        <div class="wc-title">MSP-Native Design</div>
-        <div class="wc-text">Every My Jian module is built specifically for managed service providers — multi-tenant, white-label ready, and priced for recurring MSP economics.</div>
+        <div class="wc-title">40% of Name-Brand Price</div>
+        <div class="wc-text">Same playbook as our private cloud: list every line at ~40% of the equivalent name-brand. Arctic Wolf, Vanta, Moveworks, Auvik, Huntress — beat all of them on price-per-line.</div>
       </div>
       <div class="why-card">
-        <div class="wc-title">Zero Agent Installation</div>
-        <div class="wc-text">No software deployed to client endpoints. Jian IT Agent lives in Teams. Reporting modules use read-only APIs. Nothing to maintain.</div>
+        <div class="wc-title">Built for MSPs</div>
+        <div class="wc-text">Per-user + per-resource pricing mirrors the existing Pax8 / Sophos Central model. Multi-tenant, white-label reports, MSP volume pricing 10/15/20–25% at 10/25/50+ clients.</div>
       </div>
       <div class="why-card">
-        <div class="wc-title">US-Based Support</div>
-        <div class="wc-text">Every ticket, every question, every onboarding call — handled by Technijian's US-based team. No offshore routing, no chatbot runaround.</div>
+        <div class="wc-title">Vendor-Agnostic Backup</div>
+        <div class="wc-text">Jian for Backup covers Veeam (VBR + 365 + ONE) AND <strong>NAKIVO</strong> — one price, one report, one MITRE-tagged audit trail. Liongard doesn't do NAKIVO. Veeam ONE doesn't either.</div>
       </div>
       <div class="why-card">
-        <div class="wc-title">Pays for Itself</div>
-        <div class="wc-text">My M365 Report finds $8–$25/user in waste in month one. My Meraki Report costs half the labor it replaces. Jian IT Agent deflects tier-1 tickets before they reach your engineers.</div>
+        <div class="wc-title">Defensible Audit Trail</div>
+        <div class="wc-text">Every alert maps to MITRE ATT&amp;CK (858 techniques). Every decision writes to an append-only event log. Every compliance evaluator returns evidence — not assumptions.</div>
       </div>
       <div class="why-card">
-        <div class="wc-title">Compliance-Ready</div>
-        <div class="wc-text">HIPAA, SOC 2, PCI, and GDPR coverage built into the reporting stack. Audit trails, retention, and compliance mapping are included at the appropriate tiers.</div>
+        <div class="wc-title">Detect Microsoft Outages First</div>
+        <div class="wc-text">M365 Apps Service Health watches 22 workloads — Exchange, OneDrive, SharePoint, Teams, Power BI, Intune, Defender. You hear from Microsoft's feed before the user opens a ticket.</div>
       </div>
       <div class="why-card">
-        <div class="wc-title">Your Brand, Not Ours</div>
-        <div class="wc-text">All Word report deliverables are fully white-labeled with your MSP branding. Your clients see your name on every document delivered on the 1st.</div>
+        <div class="wc-title">Land Small, Grow Fast</div>
+        <div class="wc-text">Start at Core (25 seats × $9 = $225) + 1 firewall ($99) = $324/mo. Add resources as the client grows. No long contract on monthly plans.</div>
       </div>
     </div>
 
     <div class="cta-block">
       <div class="cta-left">
-        <div class="cta-title">Start Your Free Trial Today</div>
+        <div class="cta-title">Quote Jian for your stack in 60 seconds</div>
         <div class="cta-sub">
-          Every My Jian module includes a free trial — no credit card required. Start with IT Self-Service Agent in Teams or one monthly report. Add modules as you grow.
+          Tell us how many users, how many firewalls, how many sites — we'll send a custom quote within one business hour, every line at ~40% of name-brand. Pilot and trial terms available — contact sales.
         </div>
-        <div class="cta-badge">Free Trial — No Credit Card</div>
+        <div class="cta-badge">Custom Quote in One Business Hour</div>
       </div>
       <div class="cta-right">
         <div class="cta-contact">sales@technijian.com</div>
-        <div class="cta-url">(888) 505-8249</div>
-        <div class="cta-url cta-url-mt">technijian.com/jian</div>
+        <div class="cta-url">(949) 379-8499</div>
+        <div class="cta-url cta-url-mt">technijian.com</div>
       </div>
     </div>
 
