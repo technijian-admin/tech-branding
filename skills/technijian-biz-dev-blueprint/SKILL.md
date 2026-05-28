@@ -249,6 +249,19 @@ Rows = as many AI tools as are relevant to this client. Don't pad; don't cut too
 
 ## Phase 7: Business Impact & Service Investment
 
+### Price to win the meeting — land-and-expand (CRITICAL)
+
+**The Year-1 total must not price Technijian out of the first meeting. Lead with a small, low-commitment ENTRY program, and show the full program + custom build as a clearly-labeled later EXPANSION (the upsell).** Ravi's standing direction (2026-05-27, on the AAVA/Aventine blueprint): *"you might be pricing us out from getting a meeting; be more conservative with our prices and then we can upsell."*
+
+Apply this on every blueprint:
+
+- **Phase 1 — ENTRY ("the land"):** the recurring quick-win services that pay for themselves fast and need **no large up-front build** — typically My SEO (local/reputation/GEO), My AI Lead Gen (capture/nurture, Starter tier), and a low-cost My AI Workshop / Readiness Assessment. Aim for an entry that is an easy "yes" (often **~$30k–$45k Y1** for an SMB/single-site; calibrate up only for a true enterprise). This is the headline number the client sees first.
+- **Phase 2 — EXPANSION (the upsell):** the custom My Dev build (assistant / portal / app), Managed App Services, and the Fractional AI Advisor — explicitly framed as *"once the entry proves the lift."* Show the **full-engine** total too, but as the expansion, not the ask.
+- **Phase 3 — SCALE:** multi-site / portfolio / additional-location roll-out as further upside (a callout, not a hard ROI table — the one-time build amortizes across sites).
+- **Model the headline ROI against the ENTRY price, not the full program.** A small denominator yields a strong, honest ratio (e.g., AAVA entry ≈ $32k → 1.6x/2.6x/3.5x), which makes the entry the easy yes. Note that the expansion unlocks larger gains the entry ratio does not count.
+- **Sequence the roadmap entry-first** (Phase 8): quick-win recurring services in the first phase; the custom build in the second phase (after the entry proves out); retention + scale in the third. Keep the implementation timeline diagram consistent with this order.
+- Discovery (the Questions section) still calibrates everything; present all numbers as estimated/conservative.
+
 ### KPI lift table
 
 Build KPI rows from what THIS client actually cares about. Do not copy the RKE row set. Typical rows for different client types:
@@ -261,12 +274,14 @@ Always use the client's current state as the baseline where known. If unknown, s
 
 ### Y1 ROI model
 
+Model the headline ratio against the **ENTRY program** (small denominator → strong, honest ratio), and note that the expansion unlocks larger gains the entry ratio does not count.
+
 | Row | Value |
 |-----|-------|
-| Technijian Service Investment (Y1) | $X–$Y range |
-| Projected revenue attributed to AI program | $A–$B |
-| ROI ratio | Nx–Mx |
-| Payback period | Q quarter |
+| Technijian ENTRY-program investment (Y1) | $X (the conservative "land" — keep this modest) |
+| Projected value attributed to the entry program | conservative / target / aggressive |
+| Modeled ROI ratio (vs. entry) | Nx / Mx / Px |
+| Full-engine investment (entry + expansion) | $Y (shown as the upsell, not the ask) |
 
 Use real pricing from:
 - `services/My SEO/assets/my-seo-content.txt`
@@ -276,6 +291,8 @@ Use real pricing from:
 ### Service Investment Map
 
 Table: Technijian Service | Tier / Description | Monthly Investment | Y1 Total
+
+**Structure it land-and-expand** (see the CRITICAL note above): list the Phase-1 ENTRY services first with a bold **ENTRY PROGRAM** subtotal row, then the Phase-2 EXPANSION services with a bold **FULL ENGINE (entry + expansion)** total row. Label expansion line items "(Phase 2)" so it is unmistakable the build is the upsell, not the ask.
 
 Include every product that genuinely applies. Skip products that don't fit this client — don't include My Dev just to look comprehensive if there's no dev scope.
 
@@ -485,9 +502,11 @@ Use these as starting points; adjust for client size and scope.
 | My Dev | Custom App Build (scoped) | — | $40,000–$120,000 |
 | My Dev | Managed App Services | $800/mo | $9,600 |
 
-**Y1 range framing**: Use a low (conservative) and high (full engagement) number.
-- Conservative: SEO + Fractional AI Advisor + 1 scoped build
-- Full: SEO + AI Workshop + 2 AI builds + Dev + Managed Services
+**Y1 framing — land-and-expand (lead with the entry, not the full number):**
+- **ENTRY ("the land," the headline ask):** quick-win recurring services + a low-cost workshop, **no large build** — e.g., My SEO + My AI Lead Gen (Starter) + My AI Workshop/Readiness. Target an easy-yes ~$30k–$45k Y1 for an SMB/single-site.
+- **EXPANSION (the upsell, "once it proves out"):** add the My Dev custom build + Managed App Services + Fractional AI Advisor → full-engine Y1.
+- **SCALE:** multi-site / portfolio roll-out as further upside (build amortizes across sites).
+- Do NOT lead with the full-engine number; it can price Technijian out of the first meeting (Ravi, 2026-05-27).
 
 ---
 
