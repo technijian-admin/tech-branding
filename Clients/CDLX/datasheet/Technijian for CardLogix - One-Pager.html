@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technijian for CardLogix &mdash; One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#006DB6;--orange:#F67D4B;--teal:#1EAAC8;--chartreuse:#CBDB2D;
+    --dark:#1A1A2E;--near-black:#2D2D2D;--grey:#59595B;--light:#E9ECEF;
+    --off:#F8F9FA;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  @page{size:letter;margin:0;}
+  html,body{font-family:'Open Sans',sans-serif;color:#222;background:#fff;}
+  body{font-size:9.5px;line-height:1.45;}
+
+  .page{
+    width:8.5in;height:11in;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+
+  /* ── HERO STRIP ── */
+  .hero{
+    background:linear-gradient(135deg,var(--dark) 0%,#0a1628 55%,#0d2847 100%);
+    padding:14px 38px;color:#fff;position:relative;overflow:hidden;
+    display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;
+  }
+  .hero::before{content:'';position:absolute;top:-60px;right:-40px;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(30,170,200,0.15) 0%,transparent 70%);border-radius:50%;}
+  .hero::after{content:'';position:absolute;bottom:-80px;left:5%;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(246,125,75,0.10) 0%,transparent 70%);border-radius:50%;}
+  .hero-left{display:flex;flex-direction:column;gap:6px;position:relative;z-index:1;}
+  .hero-logo{display:flex;align-items:center;gap:9px;}
+  .hero-logo .mark{
+    display:grid;grid-template-columns:repeat(4,7px);grid-template-rows:repeat(3,7px);gap:1.5px;
+  }
+  .hero-logo .mark span{border-radius:1px;display:block;width:7px;height:7px;}
+  .hero-logo .mark span:nth-child(1){background:#64748B;}
+  .hero-logo .mark span:nth-child(2){background:var(--blue);}
+  .hero-logo .mark span:nth-child(3){background:var(--orange);}
+  .hero-logo .mark span:nth-child(4){background:#64748B;}
+  .hero-logo .mark span:nth-child(5){background:#64748B;}
+  .hero-logo .mark span:nth-child(6){background:var(--teal);}
+  .hero-logo .mark span:nth-child(7){background:#64748B;}
+  .hero-logo .mark span:nth-child(8){background:var(--teal);}
+  .hero-logo .mark span:nth-child(9){background:#94A3AF;}
+  .hero-logo .mark span:nth-child(10){background:var(--blue);}
+  .hero-logo .mark span:nth-child(11){background:var(--teal);}
+  .hero-logo .mark span:nth-child(12){background:#64748B;}
+  .hero-logo .name{font-size:15px;font-weight:800;color:#fff;letter-spacing:1.5px;}
+  .hero-badge{
+    align-self:flex-start;font-size:8px;color:var(--teal);
+    border:1px solid rgba(30,170,200,0.5);background:rgba(30,170,200,0.18);
+    padding:2px 10px;border-radius:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;
+    margin-top:1px;
+  }
+  .hero-center{position:relative;z-index:1;}
+  .hero-center h1{font-size:24px;font-weight:800;line-height:1.05;letter-spacing:-0.3px;}
+  .hero-center h1 .o{color:var(--orange);}
+  .hero-center .sub{font-size:10.5px;color:rgba(255,255,255,0.72);margin-top:3px;font-weight:300;}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,auto);gap:18px;
+    border-left:1px solid rgba(255,255,255,0.18);padding-left:22px;position:relative;z-index:1;}
+  .hero-stats .stat{text-align:center;}
+  .hero-stats .n{display:block;font-size:18px;font-weight:800;color:var(--orange);line-height:1;}
+  .hero-stats .l{display:block;font-size:7.5px;color:rgba(255,255,255,0.55);
+    text-transform:uppercase;letter-spacing:0.6px;margin-top:3px;font-weight:600;}
+
+  /* ── VALUE PROP BAR ── */
+  .vprop{
+    background:linear-gradient(90deg,var(--blue) 0%,#005a98 100%);
+    color:#fff;padding:8px 38px;font-size:11px;font-weight:600;
+    display:flex;align-items:center;gap:14px;
+  }
+  .vprop .pin{font-size:9px;background:rgba(255,255,255,0.18);padding:2px 8px;
+    border-radius:8px;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+  .vprop em{font-style:normal;color:var(--chartreuse);font-weight:800;}
+
+  /* ── BODY ── */
+  .body{flex:1;padding:14px 38px 0;display:grid;grid-template-columns:1.05fr 0.95fr;gap:22px;}
+
+  .sh{font-size:9.5px;font-weight:800;color:var(--blue);text-transform:uppercase;
+    letter-spacing:1.2px;margin-bottom:6px;padding-bottom:3px;
+    border-bottom:1.5px solid var(--blue);}
+  .sh.orange{color:var(--orange);border-color:var(--orange);}
+  .sh.teal{color:var(--teal);border-color:var(--teal);}
+
+  /* Track cards */
+  .track{
+    background:#fff;border:1px solid var(--light);border-radius:8px;padding:10px 12px;
+    border-left:4px solid var(--blue);box-shadow:0 1px 4px rgba(0,0,0,0.04);
+    margin-bottom:8px;
+  }
+  .track.b{border-left-color:var(--orange);}
+  .track .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
+  .track .head .tag{font-size:7.5px;font-weight:800;color:#fff;background:var(--blue);
+    padding:2px 7px;border-radius:8px;text-transform:uppercase;letter-spacing:0.8px;}
+  .track.b .head .tag{background:var(--orange);}
+  .track .head .who{font-size:8.5px;color:var(--grey);font-weight:600;}
+  .track h3{font-size:11.5px;font-weight:800;color:var(--dark);margin-bottom:4px;line-height:1.2;}
+  .track p{font-size:9px;color:#333;line-height:1.45;}
+  .track ul{margin:4px 0 0 0;list-style:none;}
+  .track li{font-size:8.5px;color:#333;padding:1px 0 1px 11px;position:relative;line-height:1.4;}
+  .track li::before{content:'\2713';color:var(--teal);font-weight:800;font-size:9px;
+    position:absolute;left:0;top:1px;}
+
+  /* CJIS callout */
+  .cjis{
+    background:linear-gradient(135deg,var(--dark) 0%,#0d2847 100%);
+    color:#fff;border-radius:8px;padding:10px 12px;margin-top:6px;position:relative;overflow:hidden;
+  }
+  .cjis::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;
+    background:radial-gradient(circle,rgba(246,125,75,0.18) 0%,transparent 70%);border-radius:50%;}
+  .cjis .tag{font-size:7.5px;font-weight:800;color:var(--orange);
+    text-transform:uppercase;letter-spacing:1.2px;position:relative;z-index:1;}
+  .cjis h4{font-size:11px;font-weight:800;color:#fff;margin:2px 0 4px;position:relative;z-index:1;line-height:1.2;}
+  .cjis p{font-size:8.5px;color:rgba(255,255,255,0.85);line-height:1.45;position:relative;z-index:1;}
+  .cjis p em{font-style:normal;color:var(--chartreuse);font-weight:700;}
+  .cjis .nb{margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.12);
+    font-size:7.5px;color:rgba(255,255,255,0.65);font-style:italic;}
+
+  /* RIGHT COL */
+  .stack-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .svc{
+    background:#fff;border:1px solid var(--light);border-radius:6px;padding:7px 9px;
+    border-top:2.5px solid var(--blue);box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  }
+  .svc:nth-child(2){border-top-color:var(--orange);}
+  .svc:nth-child(3){border-top-color:var(--teal);}
+  .svc:nth-child(4){border-top-color:var(--chartreuse);}
+  .svc h4{font-size:9.5px;font-weight:800;color:var(--dark);margin-bottom:2px;}
+  .svc p{font-size:8px;color:var(--grey);line-height:1.4;}
+
+  /* Jian highlight */
+  .jian{
+    background:#fff;border:1px solid var(--light);border-radius:8px;padding:9px 11px;
+    border-left:3px solid var(--chartreuse);margin-top:6px;
+  }
+  .jian .h{display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+  .jian .h .tag{font-size:7px;background:var(--chartreuse);color:#3a4d00;padding:1.5px 6px;
+    border-radius:6px;font-weight:800;text-transform:uppercase;letter-spacing:0.8px;}
+  .jian .h h4{font-size:10.5px;font-weight:800;color:var(--dark);}
+  .jian p{font-size:8px;color:#333;line-height:1.45;}
+  .jian .ingest{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;}
+  .jian .ingest span{font-size:7px;background:var(--off);color:var(--dark);
+    padding:1px 6px;border-radius:8px;font-weight:700;border:1px solid var(--light);}
+
+  /* Frameworks strip */
+  .fw{
+    margin-top:6px;padding:7px 10px;background:var(--off);border-radius:6px;
+    border-left:3px solid var(--teal);
+  }
+  .fw .lbl{font-size:7.5px;font-weight:800;color:var(--teal);text-transform:uppercase;
+    letter-spacing:1px;margin-bottom:3px;}
+  .fw .chips{display:flex;flex-wrap:wrap;gap:3px;}
+  .fw .chip{font-size:8px;font-weight:700;color:var(--dark);background:#fff;
+    padding:2px 7px;border-radius:8px;border:1px solid var(--light);}
+  .fw .chip.x{color:#fff;background:var(--orange);border-color:var(--orange);
+    position:relative;}
+  .fw .chip.x::before{content:'+ ';font-weight:900;}
+  .fw .note{font-size:7px;color:var(--grey);margin-top:3px;font-style:italic;}
+
+  /* Proof points */
+  .proof{
+    margin-top:6px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;
+  }
+  .pp{background:var(--dark);color:#fff;border-radius:6px;padding:7px 4px;text-align:center;}
+  .pp .n{display:block;font-size:13px;font-weight:800;color:var(--orange);line-height:1;}
+  .pp .l{display:block;font-size:6.5px;color:rgba(255,255,255,0.6);
+    text-transform:uppercase;letter-spacing:0.4px;margin-top:3px;font-weight:600;}
+
+  /* CTA BAR */
+  .cta{
+    background:linear-gradient(135deg,var(--blue) 0%,#004d80 100%);
+    color:#fff;padding:11px 38px;display:grid;grid-template-columns:1fr auto;
+    align-items:center;gap:14px;position:relative;overflow:hidden;
+  }
+  .cta::before{content:'';position:absolute;top:-50px;right:10%;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(246,125,75,0.12) 0%,transparent 70%);border-radius:50%;}
+  .cta .l{position:relative;z-index:1;}
+  .cta h3{font-size:13.5px;font-weight:800;color:#fff;line-height:1.15;}
+  .cta h3 .o{color:var(--orange);}
+  .cta p{font-size:9px;color:rgba(255,255,255,0.78);margin-top:2px;}
+  .cta .r{display:flex;align-items:center;gap:8px;position:relative;z-index:1;}
+  .cta .btn{
+    background:linear-gradient(135deg,var(--orange),#e8643a);color:#fff;
+    padding:7px 14px;border-radius:6px;font-size:9.5px;font-weight:800;text-decoration:none;
+    box-shadow:0 2px 8px rgba(246,125,75,0.4);text-transform:uppercase;letter-spacing:0.5px;
+  }
+  .cta .contact{display:flex;flex-direction:column;align-items:flex-end;font-size:8.5px;
+    color:rgba(255,255,255,0.85);line-height:1.4;}
+  .cta .contact b{color:#fff;font-weight:700;}
+
+  /* FOOTER */
+  .foot{
+    background:var(--near-black);color:rgba(255,255,255,0.45);
+    padding:6px 38px;font-size:7.5px;display:flex;justify-content:space-between;align-items:center;
+  }
+  .foot b{color:rgba(255,255,255,0.78);font-weight:700;}
+
+  @media print{
+    @page{size:letter;margin:0;}
+    body{print-color-adjust:exact;-webkit-print-color-adjust:exact;}
+    .page{page-break-after:always;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── HERO STRIP ── -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-logo">
+        <div class="mark"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="name">TECHNIJIAN</div>
+      </div>
+      <div class="hero-badge">Custom for CardLogix &middot; Irvine, CA 92618</div>
+    </div>
+    <div class="hero-center">
+      <h1>Technijian <span class="o">for CardLogix</span></h1>
+      <div class="sub">Two conversations worth having today &mdash; for your shop, and for your law-enforcement customers.</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="n">25+</span><span class="l">Years OC MSP</span></div>
+      <div class="stat"><span class="n">1000+</span><span class="l">Networks</span></div>
+      <div class="stat"><span class="n">24/7</span><span class="l">SOC &amp; Help Desk</span></div>
+      <div class="stat"><span class="n">92+</span><span class="l">CSAT</span></div>
+    </div>
+  </div>
+
+  <!-- ── VALUE PROP BAR ── -->
+  <div class="vprop">
+    <div class="pin">Same Business Park</div>
+    <div>18 Technology Dr. is <em>five minutes</em> from 16 Hughes. We&rsquo;re the local managed-IT partner that&rsquo;s been here as long as you have &mdash; and we run the platform CardLogix needs to scale into CJIS-grade law-enforcement deals.</div>
+  </div>
+
+  <!-- ── BODY ── -->
+  <div class="body">
+
+    <!-- ── LEFT COLUMN ── -->
+    <div class="col">
+      <div class="sh">Two Conversations</div>
+
+      <div class="track">
+        <div class="head">
+          <span class="tag">Track A &middot; Your Shop</span>
+          <span class="who">Nick decides</span>
+        </div>
+        <h3>Co-Managed IT for your 5&ndash;6 workstations + 2 servers</h3>
+        <p>You keep strategic control. We absorb the toil &mdash; 24/7 monitoring, patching, after-hours coverage, M365 hardening, the second pair of eyes on incidents. The model is purpose-built for owner-operator IT shops that have outgrown the solo run.</p>
+        <ul>
+          <li>After-hours &amp; overflow help desk; ITIL ticketing</li>
+          <li>Shared RMM, patch management, asset inventory</li>
+          <li>Senior architects on demand for projects</li>
+          <li>Security &amp; compliance co-ownership built in</li>
+        </ul>
+      </div>
+
+      <div class="track b">
+        <div class="head">
+          <span class="tag">Track B &middot; LE Customers</span>
+          <span class="who">Goulet + Hope approve</span>
+        </div>
+        <h3>CJIS / MFA partnership for your law-enforcement deals</h3>
+        <p>You make the credentials. We make the agency&rsquo;s environment CJIS-ready around them. A channel-style partnership where Technijian wraps managed-IT + MSSP + CJIS compliance around your PIV / FIDO2 / FRAC hardware &mdash; so you don&rsquo;t lose deals to HID&rsquo;s tighter ecosystem.</p>
+        <ul>
+          <li>Card lifecycle &amp; Entra ID / AD integration at the agency</li>
+          <li>24/7 SOC with 15-minute critical SLA on the wrap</li>
+          <li>Audit-evidence packs an LE-agency CSO can hand to a state auditor</li>
+          <li>Co-sell motion designed for your existing channel</li>
+        </ul>
+      </div>
+
+      <div class="cjis">
+        <div class="tag">Why now &middot; CJIS market timing</div>
+        <h4>Phishing-resistant MFA has been mandatory since Oct&nbsp;1,&nbsp;2024.</h4>
+        <p><strong>CJIS Security Policy 5.9.5</strong> (Jul 2024) made multi-factor authentication non-negotiable for every account that touches CJI; <strong>6.0</strong> (Dec 2024) tightened password &amp; MFA further. SMS-MFA is out. <em>PIV-class smart cards and FIDO2 keys are explicitly what satisfies it</em> &mdash; which is exactly what CardLogix already sells.</p>
+        <div class="nb">The hardware solves §5.6 Identification &amp; Authentication. The other twelve policy areas are what Technijian wraps.</div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT COLUMN ── -->
+    <div class="col">
+      <div class="sh orange">The Technijian Stack</div>
+
+      <div class="stack-grid">
+        <div class="svc">
+          <h4>My IT</h4>
+          <p>Managed &amp; co-managed. 24/7 NOC + U.S.-based help desk. vCIO leadership for the strategic layer.</p>
+        </div>
+        <div class="svc">
+          <h4>My Security</h4>
+          <p>24/7 SOC, 15-min critical SLA. EDR + SIEM + email security + MFA-everywhere + conditional access.</p>
+        </div>
+        <div class="svc">
+          <h4>My Compliance</h4>
+          <p>Eight frameworks supported today; vCCO / vCISO; audit-prep sherpa; evidence collection automation.</p>
+        </div>
+        <div class="svc">
+          <h4>My Dev / My AI</h4>
+          <p>Custom builds, AI Document Intelligence, knowledge graphs, agent &amp; workflow automation.</p>
+        </div>
+      </div>
+
+      <!-- Jian platform -->
+      <div class="jian">
+        <div class="h">
+          <span class="tag">Differentiator</span>
+          <h4>My Jian &mdash; our own cross-vendor SIEM &amp; compliance platform</h4>
+        </div>
+        <p>Built and operated by Technijian. Ingests across every layer of the stack we run for ourselves and our clients &mdash; correlated in real time, MITRE&nbsp;ATT&amp;CK-tagged, with 31 continuous compliance evaluators and a branded monthly DOCX report per environment.</p>
+        <div class="ingest">
+          <span>Sophos syslog</span><span>INKY email</span><span>CrowdStrike</span>
+          <span>Huntress</span><span>Meraki</span><span>Veeam / NAKIVO</span>
+          <span>Cisco Umbrella DNS</span><span>vCenter</span><span>Cloudflare</span>
+          <span>M365 &times; 22 workloads</span>
+        </div>
+      </div>
+
+      <!-- Frameworks -->
+      <div class="fw">
+        <div class="lbl">My Compliance &mdash; Framework Coverage</div>
+        <div class="chips">
+          <span class="chip">HIPAA</span><span class="chip">SOC 2</span>
+          <span class="chip">PCI-DSS</span><span class="chip">CMMC / DFARS</span>
+          <span class="chip">GDPR / CCPA</span><span class="chip">NIST CSF</span>
+          <span class="chip">CIS Controls</span><span class="chip">ISO 27001</span>
+          <span class="chip x">CJIS</span>
+        </div>
+        <div class="note">CJIS is the natural ninth &mdash; same NIST 800-53 control families as our CMMC practice. ~90-day stand-up path from a real partnership trigger; we have not delivered CJIS engagements yet, so we frame it honestly as a near-term build, not a track record.</div>
+      </div>
+
+      <!-- Proof points -->
+      <div class="proof">
+        <div class="pp"><span class="n">25+</span><span class="l">Years</span></div>
+        <div class="pp"><span class="n">1000+</span><span class="l">Networks</span></div>
+        <div class="pp"><span class="n">8</span><span class="l">Frameworks</span></div>
+        <div class="pp"><span class="n">15&nbsp;min</span><span class="l">Critical SLA</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CTA BAR ── -->
+  <div class="cta">
+    <div class="l">
+      <h3>Two next steps. <span class="o">No commitment.</span></h3>
+      <p>A free 30-minute IT assessment for your shop &mdash; and a concept conversation on the CJIS partnership for your law-enforcement customers.</p>
+    </div>
+    <div class="r">
+      <a class="btn" href="https://outlook.office.com/bookwithme/">Book a 30-Min Meeting</a>
+      <div class="contact">
+        <span><b>rjain@technijian.com</b></span>
+        <span><b>949.379.8499 x201</b> &middot; technijian.com</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="foot">
+    <div>&copy; 2026 Technijian Corporation &middot; <b>18 Technology Dr. Ste 141, Irvine CA 92618</b> &middot; technijian.com</div>
+    <div>Prepared for CardLogix &middot; 2026-05-29</div>
+  </div>
+
+</div>
+
+</body>
+</html>

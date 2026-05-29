@@ -1,0 +1,12 @@
+{
+  "name": "cdlx-meeting-deck",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Technijian for CardLogix — meeting deck (10 slides)",
+  "scripts": {
+    "generate": "node generate_presentation.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  }
+}
