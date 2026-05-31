@@ -117,13 +117,13 @@ c.push(
   new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 80 }, children: [new TextRun({ text: 'Executive Summary', size: 26, bold: true, color: CORE_ORANGE, font: FONT_HEAD })] }),
   spacer(200),
   kpiRow([
-    { number: '2', label: 'Tracks: your IT + a CJIS partnership', color: CORE_BLUE },
-    { number: 'Oct 2024', label: 'CJIS phishing-resistant MFA went mandatory', color: CORE_ORANGE },
+    { number: '2', label: 'Tracks: your own IT + a channel partnership', color: CORE_BLUE },
+    { number: '3 waves', label: 'MFA mandates: federal → state/local → private (insurance)', color: CORE_ORANGE },
     { number: '~$31K', label: 'Entry program, Year 1', color: TEAL },
     { number: '5 min', label: 'Apart in the Irvine Spectrum', color: DARK_CHARCOAL },
   ]),
   spacer(260),
-  p('CardLogix makes the credentials that secure identity — PIV, FIDO2, FRAC, and BIOSID. This summary distils a two-track plan: a small co-managed IT engagement for CardLogix’s own team now, and a CJIS-MFA channel partnership where Technijian wraps managed services around CardLogix’s cards for law-enforcement agencies. The full plan is ready on request.', { align: AlignmentType.CENTER }),
+  p('CardLogix makes the credentials that secure identity — PIV, FIDO2, FRAC, and BIOSID. This summary distils a two-track plan: a small co-managed IT engagement for CardLogix’s own team now, and a phishing-resistant-MFA channel partnership where Technijian wraps managed services — including the certificate authority — around CardLogix’s cards for the customers now required to adopt them. Grounded in our May 29 conversation; the full plan is ready on request.', { align: AlignmentType.CENTER }),
   spacer(200),
   new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Prepared for CardLogix Corporation  |  Technijian  |  ' + TODAY, size: 20, color: BRAND_GREY, font: FONT_BODY })] }),
   pageBreak(),
@@ -136,17 +136,18 @@ c.push(
   p('Two distinct openings sit in front of CardLogix, and the plan treats them as parallel tracks — one fast and close to home, one strategic.'),
   spacer(60),
   buildTable(
-    [{ label: '', weight: 1.4 }, { label: 'Track A — Your Own IT', weight: 3.4 }, { label: 'Track B — CJIS / MFA Partnership', weight: 3.4 }],
+    [{ label: '', weight: 1.4 }, { label: 'Track A — Your Own IT', weight: 3.4 }, { label: 'Track B — MFA / CA Partnership', weight: 3.4 }],
     [
-      [{ text: 'What', bold: true }, 'Co-managed IT for a lean internal team', 'CardLogix supplies the credentials; Technijian wraps managed IT, SOC, and CJIS compliance for agencies'],
-      [{ text: 'Confidence', bold: true }, 'High — this is what co-managed IT is for', 'Real but unproven — the CJIS mandate is the catalyst'],
+      [{ text: 'What', bold: true }, 'Co-managed IT for a lean internal team', 'CardLogix supplies the credentials; Technijian wraps managed IT, SOC, compliance, and the certificate authority for end customers'],
+      [{ text: 'Confidence', bold: true }, 'High — this is what co-managed IT is for', 'Validated on our May 29 call — Nick confirmed it as a joint, customer-facing service'],
       [{ text: 'Time', bold: true }, 'Weeks once scoped', 'A few quarters — needs one joint pilot'],
     ],
   ),
   spacer(160),
-  calloutBox('Why Now — The CJIS Shift', [
-    'CJIS Security Policy 5.9.5 made phishing-resistant MFA mandatory for law-enforcement access to criminal-justice information as of October 1, 2024; version 6.0 tightened it further.',
-    'CardLogix’s PIV and FIDO2 cards satisfy that mandate. What agencies still need is a partner to deploy and operate them — the managed-services wrap CardLogix does not bring today.',
+  calloutBox('Why Now — MFA Went From Recommended to Required, in Three Waves', [
+    'Federal first (≈3 years ago), then state and local — including law enforcement under CJIS 5.9.5, mandatory as of October 1, 2024 — and now private companies, pushed by cyber-insurance renewals that require MFA to be in place.',
+    'And the kind of MFA matters: phone-based codes (Cisco Duo, Okta) are being displaced because phones get compromised. CardLogix’s PIV and FIDO2 cards are the phishing-resistant answer — riding the badge people already carry.',
+    'What customers still need is a partner to deploy and operate it — the managed-services + certificate-authority wrap CardLogix does not bring today.',
     'Honest note: Technijian runs eight compliance frameworks but not yet CJIS. We treat CJIS as a near-term build adjacent to our existing CMMC practice — triggered by exactly this partnership, never claimed as completed work.',
   ], CORE_ORANGE),
   pageBreak(),
@@ -156,16 +157,15 @@ c.push(
 c.push(
   sectionHeader('How AI Powers Both Tracks', CORE_BLUE),
   spacer(140),
-  p('This is account-based, not broad lead generation. AI sits underneath the relationship layer — it surfaces the right agencies, arms the conversation, and automates the compliance evidence. The human trust between CardLogix, Technijian, and an agency still closes the deal.'),
+  p('This is account-based, not broad lead generation. AI sits underneath the relationship layer — it surfaces the right accounts, arms the conversation, and automates the compliance evidence. The human trust between CardLogix, Technijian, and a customer still closes the deal.'),
   diagramImage(DIAGRAM_ARCH_BUF, 'CardLogix AI Growth Engine', 600, 1.42),
   diagramCaption('Inbound authority · Outbound account intelligence · Internal evidence — feeding one joint pipeline'),
   spacer(120),
   calloutBox('Three Motions', [
-    'Get cited: authority content answering the exact CJIS and smart-card questions agency IT teams ask.',
-    'Reach the right accounts: AI account intelligence and trigger monitoring on named agencies and the integrators that serve them.',
-    'Remove the drag: AI-assisted CJIS audit-evidence packs and card-lifecycle automation.',
+    'Get cited: authority content answering the exact MFA, CJIS, and smart-card questions buyers ask.',
+    'Reach the right accounts: AI account intelligence and trigger monitoring on named agencies, private targets, and the integrators that serve them.',
+    'Remove the drag: AI-assisted compliance audit-evidence packs and card-lifecycle automation.',
   ], CORE_BLUE),
-  pageBreak(),
 );
 
 // THE PROGRAM (entry only)
@@ -177,14 +177,29 @@ c.push(
   buildTable(
     [{ label: 'Service', weight: 3 }, { label: 'Scope', weight: 4.2 }, { label: 'Est. Y1', weight: 1.8, align: AlignmentType.RIGHT }],
     [
-      ['My IT — Co-Managed', 'Coverage, monitoring, patching, senior support for a lean team', { text: '~$14,400', align: AlignmentType.RIGHT }],
-      ['My SEO — Authority Starter', 'Foundation content on CJIS + smart-card questions', { text: '~$12,000', align: AlignmentType.RIGHT }],
+      ['My IT — Co-Managed', 'Coverage, monitoring, patching, senior support for a lean team (per the 2026 rate card)', { text: '~$14,400', align: AlignmentType.RIGHT }],
+      ['My SEO — Tier 3', 'Authority content on the MFA, CJIS + smart-card questions buyers ask', { text: '$12,000', align: AlignmentType.RIGHT }],
       ['My AI — Readiness Workshop', 'One-time: map the joint go-to-market + CJIS build path', { text: '~$5,000', align: AlignmentType.RIGHT }],
       [{ text: 'ENTRY PROGRAM (Y1)', bold: true }, { text: 'The land — no large build', bold: true }, { text: '~$31,400', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
     ],
   ),
-  spacer(140),
-  p('The entry is small on purpose. Its return is partly recovered internal IT time and a stronger posture — but mostly the trust that makes the partnership (Track B) credible. The bigger build comes later, once the entry proves the lift.'),
+  spacer(120),
+  p('We model the return as a range, not a single optimistic number. The Very Conservative floor assumes the partnership lands nothing in Year 1 (the entry pays back in recovered time and a stronger posture); the Likely case counts one joint managed-MFA/CA win, which Nick confirmed CardLogix wants to offer:'),
+  spacer(60),
+  buildTable(
+    [{ label: 'Year-1 ROI vs. entry', weight: 3 }, { label: 'Very Conservative', weight: 2, align: AlignmentType.RIGHT }, { label: 'Likely', weight: 2, align: AlignmentType.RIGHT }, { label: 'Upside', weight: 2, align: AlignmentType.RIGHT }],
+    [
+      ['Estimated Y1 value', { text: '+$15,000', align: AlignmentType.RIGHT }, { text: '+$55,000', align: AlignmentType.RIGHT }, { text: '+$95,000', align: AlignmentType.RIGHT }],
+      [{ text: 'Modeled ROI', bold: true }, { text: '~0.5×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }, { text: '~1.8×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }, { text: '~3.0×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
+    ],
+  ),
+  spacer(120),
+  p('The entry is small on purpose. The real economics live in the expansion — the managed CA on cloud HSM, the CJIS practice, the account-intelligence engine — against a market widening from federal and law enforcement into private companies. The bigger build comes later, once the entry proves the lift.'),
+  spacer(120),
+  calloutBox('Start Free — Nexus Assess', [
+    'Before any commitment, Technijian runs a free Nexus Assess security assessment: internal vulnerabilities (devices, Active Directory, patches, EOL systems), external exposure (perimeter scan + dark-web credential check), and a Microsoft 365 review (MFA coverage, risky sign-ins, admin roles, sharing).',
+    'It returns a prioritized remediation roadmap and maps to CJIS, HIPAA, SOC 2, PCI, and NIST — so the free run doubles as a head start on the CJIS gap map. No contract, no spend.',
+  ], TEAL),
   spacer(160),
   sectionHeader('The Roadmap', CORE_ORANGE),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'Implementation Roadmap', 600, 1.74),
