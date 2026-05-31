@@ -4,7 +4,7 @@ These skills enable Technijian team members to generate brand-compliant material
 
 All skills read from a single source of truth: [`assets/brand-tokens.json`](../assets/brand-tokens.json) (DTCG-format design tokens). When you change a brand value there, every skill picks it up automatically.
 
-## Available Skills (23 total)
+## Available Skills (24 total)
 
 ### Foundation (1)
 
@@ -12,11 +12,12 @@ All skills read from a single source of truth: [`assets/brand-tokens.json`](../a
 |---|---|
 | `technijian-brand` | Master brand reference — colors, typography, voice, UI specs, two-office data |
 
-### Business development (1)
+### Business development (2)
 
 | Skill                          | What It Generates                                                                          |
 | ------------------------------ | ------------------------------------------------------------------------------------------ |
-| `technijian-biz-dev-blueprint` | DOCX+PDF AI growth blueprint — personas, competitors, capability proof, ROI model, roadmap |
+| `technijian-biz-dev-blueprint` | DOCX+PDF AI growth blueprint — personas, competitors, capability proof, ROI range, roadmap |
+| `technijian-first-meeting-deck`| PPTX first-meeting conversion deck — short, discovery-led: hook, proof, 2–3 seeds, questions, free Nexus Assess next step |
 
 ### Document generation (10)
 

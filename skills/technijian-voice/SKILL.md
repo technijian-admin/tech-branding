@@ -47,6 +47,9 @@ The following words are banned; flag every occurrence and suggest the replacemen
 | utilize | use |
 | prior to | before |
 | in order to | to |
+| Technology Support, Your Way. (RETIRED tagline) | technology as a solution (lowercase, no period) |
+
+The retired tagline `Technology Support, Your Way.` must NEVER appear — flag every occurrence as a hard violation. The only current tagline is `technology as a solution` (lowercase, no trailing period).
 
 ### V2 — Compliance overpromise
 
@@ -74,6 +77,32 @@ Per `feedback_no_client_names.md`, the following names cannot be used as complet
 
 Flag every literal occurrence. They may appear in cover letters TO those prospects, but never in marketing collateral as proof.
 
+### V4b — Fabricated proof / undelivered capability
+
+The service is launching — there are NO completed client projects. Flag any of the following as hard violations (no fabricated proof allowed):
+- Invented outcome metrics presented as fact ("reduced downtime 47%", "saved $200K", "improved uptime to 99.99%") with no real source. Case studies may describe scope + effort only — never fabricated result numbers.
+- Made-up customer quotes, testimonials, star ratings, or review counts.
+- Statistics presented as Technijian's track record that aren't grounded in a real source.
+- A not-yet-built capability described as already delivered. Reframe as a dated near-term build ("launching Q3 2026"), never as live/shipped.
+
+Rule of thumb: any figure that isn't grounded should be flagged "confirm at discovery" or relabeled as an estimate. Real anonymized industry profiles (e.g. "a 40-attorney firm") are fine; fabricated specifics are not.
+
+### V4c — Wrong contact / CTA phone number
+
+The MAIN contact and CTA number is the switchboard **949.379.8499** (reaches USA + India). Flag these as hard violations:
+- `949.379.8500` used as the general contact / CTA number — that line is **Sales-direct only**.
+- `949.379.8501` used as the general contact / CTA number — that line is **Billing-direct only**.
+
+8500 and 8501 are valid ONLY when the context is explicitly sales-direct or billing-direct, respectively. On letterhead, business cards, generic "contact us" / "book a call" CTAs, the number must be 949.379.8499. (Source: `assets/brand-tokens.json` — read the number from there; hardcoded copies are a cached convenience and must stay in sync.)
+
+### V4d — Channel / referral overpromise
+
+When prose describes partner / channel / referral economics, flag open-ended or inflated commitments as hard violations:
+- "10–20%", "up to 20%", or any open-ended "ongoing %" referral share.
+- Referral share applied to hardware or one-time fees.
+
+Correct framing: a referral pays the partner a MAX of **10% of the gross monthly SERVICE invoice only** (not hardware, not one-time). The alternative is a resale markup the partner sets themselves. Flag anything exceeding or vaguer than that cap.
+
 ## Soft gates (warn)
 
 ### V5 — Weak CTAs
@@ -86,6 +115,9 @@ Flag and suggest stronger alternatives:
 | Learn more | See how it works (with specific outcome) |
 | Contact us | Talk to a Technijian engineer |
 | Get started | Book a 30-minute consultation |
+| Get started (high-friction first ask) | Claim your free Nexus Assess (internal + external vulnerability + M365 review) |
+
+Prefer the free **Nexus Assess** assessment as the low-friction first-step CTA on-ramp when the artifact is trying to convert a cold/new prospect — it's an easier "yes" than a paid engagement. Also flag CTAs that point at a signature widget (e.g. "use the Book-a-Meeting button in my signature"); the CTA should be one explicit, in-document action with the main number 949.379.8499 or a named link.
 
 ### V6 — Passive voice in marketing copy
 
@@ -152,7 +184,19 @@ def audit(text):
     for name in forbidden_clients:
         for m in re.finditer(re.escape(name), text):
             findings.append({'gate': 'V4', 'severity': 'hard', 'pos': m.start(), 'word': name})
-    # ... add V5–V13 similarly
+    # V1/V4b: retired tagline
+    for m in re.finditer(r'Technology Support,?\s*Your Way\.?', text, re.I):
+        findings.append({'gate': 'V1', 'severity': 'hard', 'pos': m.start(),
+                         'note': 'retired tagline -> "technology as a solution"'})
+    # V4c: wrong CTA phone (8500=sales-direct, 8501=billing-direct; main is 8499)
+    for m in re.finditer(r'949[.\- ]?379[.\- ]?850[01]\b', text):
+        findings.append({'gate': 'V4c', 'severity': 'hard', 'pos': m.start(),
+                         'note': 'use main 949.379.8499 unless context is explicitly sales/billing-direct'})
+    # V4d: referral overpromise
+    for m in re.finditer(r'(1\d\s*[-–]\s*20\s*%|up to\s*20\s*%|ongoing\s*%)', text, re.I):
+        findings.append({'gate': 'V4d', 'severity': 'hard', 'pos': m.start(),
+                         'note': 'referral cap = 10% of gross monthly service invoice'})
+    # ... add V4b (fabricated proof — judgment-based), V5–V13 similarly
     return findings
 ```
 
@@ -188,6 +232,10 @@ def audit(text):
 - Compliance-outcome guarantees
 - Three-buzzword chains
 - Real client names as case studies
+- The retired tagline "Technology Support, Your Way."
+- 949.379.8500 / 8501 as the generic contact/CTA number (use 949.379.8499)
+- Fabricated metrics, quotes, ratings, or stats; undelivered capability framed as already shipped
+- "10–20%" / open-ended referral share (cap is 10% of gross monthly service invoice)
 
 ## Related skills
 

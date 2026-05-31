@@ -39,6 +39,8 @@ npm install docx
 
 ## Brand Colors (no # prefix in docx-js)
 
+> **Single source of truth = `assets/brand-tokens.json`.** The hex values below are a cached convenience for docx-js (which wants no `#` prefix). Before a build, read/sync them from `brand-tokens.json` so a brand-token change can never silently drift this skill. Never invent or eyeball a color.
+
 ```javascript
 const CORE_BLUE = "006DB6";
 const CORE_ORANGE = "F67D4B";
@@ -135,7 +137,7 @@ const LIGHT_GREY = "E9ECEF";
 |---|---|---|
 | Office identifier in header | "United States Headquarters" | "India Delivery Center" + IN country badge |
 | Address block | Irvine, CA, USA | Panchkula, Haryana, India |
-| Phone | +1 949.379.8500 | +91 [Panchkula direct] |
+| Phone | +1 949.379.8499 (main switchboard) | +91 [Panchkula direct] |
 | Date format | "March 7, 2026" | "7 March 2026" |
 | Recipient PIN/ZIP | "City, State ZIP" | "City, State PIN, Country" |
 | Footer extra field | — | `GSTIN [Panchkula entity GSTIN]` |
@@ -160,8 +162,10 @@ const LIGHT_GREY = "E9ECEF";
 
 ```
 ────────────────────────────────────────────── (1px Light Grey line)
-Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8500 | technijian.com
+Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8499 | technijian.com
 ```
+
+> **Phone discipline.** The number on letterhead, signature blocks, and any CTA is the **main switchboard 949.379.8499** (reaches USA + India). `949.379.8500` is Sales-direct only and `949.379.8501` is Billing-direct only — use those two ONLY when the letter is specifically a sales or billing piece for that contact, never as the default footer/header number.
 
 - Line: 1px, Light Grey `E9ECEF`
 - Text: 9pt, Brand Grey `59595B`, centered
@@ -211,6 +215,26 @@ page: {
 7. **Date format**: "March 7, 2026" (spell out month, no leading zeros)
 8. **Never use ALL CAPS** except for "NOTICE:" or "CONFIDENTIAL" labels
 9. **Signature block order**: Name (bold), Title (blue), then optional direct phone/email
+10. **Tagline (when one appears)**: "technology as a solution" — lowercase, no period. The old "Technology Support, Your Way." is **RETIRED**; never use it.
+11. **No fabrication** — never invent a recipient name, title, contract date, metric, quote, or commitment. Any figure that is not yet confirmed must be framed as an estimate "to be confirmed at discovery," and any not-yet-delivered capability described as a dated near-term build, never as already delivered.
+
+## Brand Compliance (non-negotiable)
+
+These apply to every letterhead variant and must be checked before rendering:
+
+- **Tagline**: only "technology as a solution" (lowercase, no period). "Technology Support, Your Way." is retired.
+- **Contact / CTA number**: main switchboard **949.379.8499** (USA + India). 8500 = Sales-direct, 8501 = Billing-direct — never the default.
+- **Logos**: use the real Technijian logos only — full-color logo on light backgrounds, reverse-white logo on dark — centered/aligned per the header spec. Never recolor, stretch, or substitute.
+- **Brand values**: colors, fonts, and addresses derive from `assets/brand-tokens.json` (single source of truth). Sync before build.
+- **Two offices**: Irvine HQ — 18 Technology Dr., Ste 141, Irvine, CA 92618; Panchkula, India delivery center. Pick the variant by the sender's billing entity (see Office Selection Rules).
+
+## Build & Verify (do not skip)
+
+**docx-js gotcha:** if a helper returns an array of paragraphs/children (e.g. a `sectionHeader()` or `signatureBlock()` helper), you MUST **spread** it into the `children` array (`...signatureBlock()`), never pass the bare function/array. Passing it un-spread makes docx emit an invalid `<0/>` token and Word silently refuses to open the file. After every DOCX build, validate `word/document.xml` is well-formed and contains no `<0/>`.
+
+**DOCX → PDF:** convert via `py -3.12 assets/print/templates/generate-letterhead-pdfs.py` (Playwright, HTML route) or, for the DOCX route, `docx2pdf` — run conversions **sequentially, never in parallel** (parallel Word COM wedges; if it locks, clear `Normal.dotm`).
+
+**Verify before declaring done:** render every output page to an image and visually proofread it at display size. A page that passes a height check can still strand the signature/footer or leave a short whitespace tail — confirm the body region (header/footer excluded) reads correctly and nothing is clipped. Never ship an unrendered letter.
 
 ## Visual Design Elements
 

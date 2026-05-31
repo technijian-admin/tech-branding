@@ -76,9 +76,26 @@ languages: ["en-US"]
 **SAY:** Resolution time drops by half. Trust goes up. Your team stops doing IT triage in their heads.
 
 ## [CTA — 65-75s]
-**Visual:** Avatar. Lower-third: "949.379.8500 · technijian.com"
+**Visual:** Avatar. Lower-third: "949.379.8499 · technijian.com"
 **SAY:** If you're tired of explaining your environment every time, let's talk. Thirty minutes. No pitch. Just a conversation about your team.
 ```
+
+## Brand assets, tagline & contact (single source of truth)
+
+- **Tagline:** **"technology as a solution"** (lowercase, no period) — used on the closer bumper / brand sign-off. The old **"Technology Support, Your Way."** is RETIRED — never use it.
+- **Single source of truth:** `assets/brand-tokens.json` holds the canonical colors, tagline, phone, and logo paths. Read/sync from it for any intro/outro graphic, lower-third color, or end card — do not hardcode (hardcoded values are only a cached convenience and will drift).
+- **Logos:** use the REAL logos — full-color on light backgrounds, reverse-white on dark — centered (e.g. in opener/closer bumpers and end cards).
+- **Main contact / CTA number is the switchboard 949.379.8499** (reaches US + India). Do NOT use 949.379.8500 (Sales-direct only) or 949.379.8501 (Billing-direct only) as a general CTA. Spoken digit-by-digit: "nine-four-nine, three-seven-nine, eight-four-nine-nine."
+- **On-ramp CTA:** the strongest low-friction next step is the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + Microsoft 365 review) — pitch it as the easy first step before "call us."
+- **Two offices** if a script needs them: Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula India delivery center.
+
+## Honesty discipline
+
+The service is launching — there are NO completed client projects. Do NOT fabricate proof, metrics, testimonials, quotes, or stats in any script. For customer-story / "proof" beats use anonymized industry profiles (scope + effort only, no invented outcome numbers). Frame any not-yet-built capability as a dated near-term build, never as already delivered. Flag any figure as an estimate "confirmed at discovery."
+
+## Verify before done
+
+If the deliverable includes rendered storyboard frames, end cards, bumpers, or on-screen-text mockups, render EVERY frame to an image and visually proofread it at display size before declaring done — confirm the tagline, phone number, and logo are correct and legible, and that no caption or lower-third text is clipped or stranded. Never declare done unverified.
 
 ## HeyGen voice direction tips
 
@@ -108,7 +125,7 @@ languages: ["en-US"]
 | Resolution | 1920×1080 minimum |
 | Color palette | Brand tokens (intro/outro graphics) |
 | Lower-third style | Off-white card, Core Blue text, Core Orange accent strip |
-| Bumpers | 2-3s opener with logo + tagline; 3-5s closer with CTA |
+| Bumpers | 2-3s opener with logo + tagline ("technology as a solution"); 3-5s closer with CTA (949.379.8499 / Nexus Assess) |
 | Captions | Always on; Open Sans Bold, white with 30% black drop, sentence case |
 | Music | Royalty-free, bed at -28dB; no music during dialogue if unfamiliar voice |
 | Logo | Bottom-right corner watermark, 80px wide, 40% opacity |
@@ -121,7 +138,7 @@ languages: ["en-US"]
 4. **Specific numbers > vague claims.** "Resolution time drops by half" not "improves dramatically."
 5. **Direct address.** "You" not "businesses." "We" not "Technijian."
 6. **No buzzword stacking** (per `technijian-voice`).
-7. **Phone number spoken digit-by-digit** for clarity: "nine-four-nine, three-seven-nine, eight-five-zero-zero."
+7. **Phone number spoken digit-by-digit** for clarity: "nine-four-nine, three-seven-nine, eight-four-nine-nine." (Main line 949.379.8499 — not 8500/8501.)
 
 ## Distribution metadata
 

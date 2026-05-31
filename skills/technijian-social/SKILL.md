@@ -13,11 +13,20 @@ Generates brand-compliant social media content for Technijian including post gra
 
 ## Brand Colors
 
+> **Single source of truth:** `assets/brand-tokens.json`. The hex values below are a cached convenience — read/sync from the JSON before generating, and update them here if they ever drift. Never hardcode a brand color that contradicts the token file.
+
 ```
 Core Orange: #F67D4B   Core Blue: #006DB6     Teal: #1EAAC8
 Chartreuse: #CBDB2D    Brand Grey: #59595B    Dark Charcoal: #1A1A2E
 Off White: #F8F9FA     White: #FFFFFF         Light Grey: #E9ECEF
 ```
+
+## Brand Essentials (always apply)
+
+- **Tagline**: `technology as a solution` — lowercase, no period. The old **"Technology Support, Your Way."** is RETIRED; never use it on a graphic or in copy.
+- **Logos**: use the REAL Technijian logo files (full-color logo on light backgrounds, reverse-white logo on dark backgrounds), centered. Don't recreate or recolor the mark.
+- **Contact / CTA number**: the main switchboard is **949.379.8499** (reaches USA + India). Use this anywhere a phone CTA appears. `949.379.8500` is Sales-direct only and `949.379.8501` is Billing-direct only — do not use them as the general social CTA.
+- **Two offices**: Irvine HQ (18 Technology Dr, Ste 141, Irvine, CA 92618) + Panchkula, India delivery center. Reference only if a post calls for location/contact detail.
 
 ## Post Template Types
 
@@ -156,6 +165,12 @@ Want similar results? Let's talk: technijian.com
 5. **Never use stock photo cliches** (handshake, lightbulb, puzzle pieces)
 6. **Always get permission before naming clients** in testimonials
 7. **Proofread** - social posts represent the brand to thousands
+8. **No fabricated proof.** The service is launching — there are no completed client projects yet. Do NOT invent metrics, percentages, quotes, named testimonials, or case-study outcomes. For "Client Win" / testimonial posts use anonymized industry profiles (scope + effort only, no results numbers) and only attribute real, permissioned quotes. Frame any not-yet-shipped capability as a dated near-term build, never as already delivered. Flag any figure as an estimate ("confirmed at discovery") rather than a claim.
+9. **Verify before done.** Render every generated graphic to an image and proofread it at the size it will actually display (mobile feed thumbnail + full view). Check text isn't clipped, the logo is the correct variant for the background, and nothing overflows the safe area — never declare a post done unverified.
+
+## Quick-Win CTA: Nexus Assess
+
+For lead-gen / "let's talk" posts, the lowest-friction on-ramp is the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + Microsoft 365 review). Use it as the CTA when a post invites action — it's an easier "yes" than booking a sales call. Pair it with the main number 949.379.8499 or `technijian.com` and keep the ask to one clear next step.
 
 ## Related Skills
 

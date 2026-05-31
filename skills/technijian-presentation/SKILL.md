@@ -19,6 +19,8 @@ npm install pptxgenjs
 
 ## Brand Colors (no # prefix)
 
+> **Single source of truth**: `assets/brand-tokens.json` holds all canonical brand values. Read/sync color hexes from it; the constants below are a cached convenience for quick reference (pptxgenjs needs hex with no `#`). If the JSON and these ever disagree, the JSON wins.
+
 ```javascript
 const CORE_ORANGE = "F67D4B";
 const CORE_BLUE = "006DB6";
@@ -40,7 +42,7 @@ Every presentation MUST use these approved layouts. Never create plain white sli
 - **Title**: White, Open Sans Bold, 40pt
 - **Subtitle**: Light Grey `E9ECEF`, Open Sans Regular, 18pt
 - **Accent**: Orange line at bottom (full width, 0.08" tall)
-- **Tagline**: Teal, right-aligned, "technology as a solution" with letter-spacing
+- **Tagline**: Teal, right-aligned, "technology as a solution" (lowercase, no period — this is the ONLY approved tagline; the old "Technology Support, Your Way." is RETIRED, never use it) with letter-spacing
 
 ### 2. Section Divider
 - **Background**: Core Blue `006DB6`
@@ -79,8 +81,9 @@ Every presentation MUST use these approved layouts. Never create plain white sli
 - **Background**: Dark Charcoal `1A1A2E`
 - **Logo**: White/reverse, centered, 4" wide
 - **Heading**: White, 40pt, "Let's Talk"
-- **CTA button**: Orange rectangle, white text "949.379.8500"
-- **Contact**: Teal text for email/website, grey for address
+- **CTA button**: Orange rectangle, white text "949.379.8499" (this is the MAIN switchboard — always use it for a general CTA. `949.379.8500` is Sales-direct only and `949.379.8501` is Billing-direct only; never use those as the headline contact number)
+- **Contact**: Teal text for email/website, grey for address. Two offices: Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula, India delivery center
+- **Optional low-friction on-ramp**: where the deck pitches a service, offer the free **"Nexus Assess"** assessment (Network Detective: internal + external vulnerability + M365 review) as the easy first-step CTA alongside the phone number
 
 ## Slide Design Rules
 
@@ -106,6 +109,8 @@ Every presentation MUST use these approved layouts. Never create plain white sli
 
 ## Logo Paths
 
+Always use the REAL logo files (never recreate the mark). Reverse-white on dark backgrounds, full-color on light backgrounds, centered/aligned per the layout spec.
+
 ```
 // White/reverse for dark backgrounds:
 assets/logos/png/technijian-logo-reverse-white-5000x1667.png
@@ -113,6 +118,18 @@ assets/logos/png/technijian-logo-reverse-white-5000x1667.png
 // Full-color for light backgrounds:
 assets/logos/png/technijian-logo-full-color-1200x251.png
 ```
+
+## Content Honesty
+
+The service is launching — there are no completed client projects. Do not fabricate proof, metrics, case-study outcomes, quotes, or stats. If a slide needs a case study, use an anonymized industry profile (scope + effort only, no invented results). Frame any not-yet-built capability as a dated NEAR-TERM BUILD, never as already delivered. Flag any figures as estimates to be "confirmed at discovery."
+
+## Verify Before Done
+
+Never declare a deck finished unverified. After building the `.pptx`:
+
+1. Render EVERY slide to an image (e.g. export/convert to PNG) and visually proofread each at display size — check for overflow, clipped text, stranded captions, and short/empty slides.
+2. Use a body-region fill check (exclude the header bar and footer line) to catch whitespace and under-filled slides.
+3. Confirm logos, tagline, and the `949.379.8499` CTA render correctly. Only then declare done.
 
 ## Related Skills
 

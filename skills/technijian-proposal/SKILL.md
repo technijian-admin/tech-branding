@@ -62,6 +62,8 @@ npm install -g docx
 
 ### Colors (no # prefix in docx-js)
 
+> **Source of truth:** `assets/brand-tokens.json` is the single source of truth for every brand value. The hex values below are a cached convenience — read/sync from `brand-tokens.json` rather than trusting these literals, which can drift.
+
 ```javascript
 const CORE_BLUE = "006DB6";
 const CORE_ORANGE = "F67D4B";
@@ -95,7 +97,9 @@ const TEAL = "1EAAC8";
 ### Header/Footer
 
 - **Header**: Full-color logo (left-aligned, 160px wide), blue underline
-- **Footer**: "Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8500 | technijian.com" + page number, centered, grey text
+- **Footer**: "Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8499 | technijian.com" + page number, centered, grey text
+  - Use the MAIN switchboard **949.379.8499** (reaches USA + India) for contact/CTA. 949.379.8500 is Sales-direct only; 949.379.8501 is Billing-direct only — use those two only when that specific desk is the intended recipient.
+  - Technijian runs two offices: Irvine HQ (above) + a Panchkula, India delivery center.
 
 ### Page Setup
 
@@ -118,6 +122,34 @@ page: {
 8. **Include specific SLA commitments** - response times, uptime guarantees
 9. **Avoid jargon** unless the audience is technical
 10. **End with clear next steps** - make it easy for the client to say yes
+
+## Pricing, ROI & Channel Economics
+
+- **Ground every number in the real 2026 rate card** — never invent pricing. Flag any not-yet-confirmed figures as estimates "confirmed at discovery."
+- **Do NOT expose the offshore/India cost basis** on a client-facing page. Present a single blended US-led rate.
+- **Show ROI as a RANGE** — a downside-protected floor, a likely/expected case, and an upside. Never lead the reader with a sub-1x floor optic: relabel the floor "Downside-Protected" and lead the prose and any callout with the expected (~likely) case.
+- **Channel/referral economics:** a REFERRAL pays the partner a MAX of 10% of the GROSS MONTHLY SERVICE INVOICE only (recurring services — NOT hardware, NOT one-time/project fees). The alternative is a RESALE markup the partner sets on top of our rate. Never write "10-20%" or any open-ended/"ongoing %" arrangement.
+
+## Conversion Mechanics
+
+Structure the ask so a champion can say yes:
+
+- **Split the ask**: separate a small, priced "easy yes" track (low-risk first step) from the larger strategic track, bracketed separately so the approver knows exactly what they are signing off on now vs. later.
+- **One dated, in-document CTA** with explicit risk-reversal. Put the date and the call to action in the proposal itself — never "use the Book-a-Meeting button in my signature."
+- **Quick-win on-ramp**: offer the free **Nexus Assess** assessment (Network Detective — internal + external vulnerability scan + Microsoft 365 review) as the low-friction first step / CTA on-ramp.
+- **Right-size the comparison anchors**: an inflated vendor-stack or savings number REDUCES credibility. Keep cost/savings comparisons defensible.
+- **Proactively rebut the known prior objection** and **quantify the cost of inaction** so doing nothing has a visible price.
+- Use real, anonymized case studies — scope and effort only. NO fabricated outcome metrics, quotes, or stats.
+
+## Honesty Discipline
+
+- The service is launching — there are NO completed client projects. Use anonymized industry profiles, not named clients (also applies to the Case Study document type above).
+- Frame any not-yet-built capability as a dated NEAR-TERM BUILD, never as already delivered.
+- No fabricated proof, metrics, case-study outcomes, quotes, or stats. Flag any soft figures as estimates "confirmed at discovery."
+
+## Executive Concept Brief (companion artifact)
+
+For longer proposals/SOWs, also produce a forwardable 1-page **concept brief** for executives: a self-contained HTML page rendered via Playwright to a single Letter page. It lets a champion forward the gist internally without sending the full document.
 
 ## Visual Design Elements
 
@@ -163,10 +195,25 @@ End documents with a full-width Core Blue banner containing contact information 
 
 ## Logo Path
 
-Use the full-color logo for document headers:
+Use the REAL logo assets — never recreate or approximate the mark. Full-color logo on light backgrounds; reverse-white logo on dark backgrounds (e.g. the CTA banner). Center the logo on cover pages.
 ```
 assets/logos/png/technijian-logo-full-color-600x125.png
 ```
+
+## Tagline
+
+The official tagline is **"technology as a solution"** (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it.
+
+## Build Pipeline Gotchas
+
+- **docx-js spread**: SPREAD helper functions into the `children` array (`...sectionHeader()`, `...numberedSteps()`). Calling them un-spread makes docx emit an invalid `<0/>` token and Word refuses to open the file. After every build, validate `word/document.xml` is well-formed (no `<0/>`).
+- **DOCX -> PDF**: convert with docx2pdf (`py -3.12 docx-to-pdf.py`). Convert files SEQUENTIALLY, never in parallel — parallel Word COM wedges. If it locks up, clear `Normal.dotm`.
+- **Diagrams** (HTML + Playwright PNG -> embed): auto-crop each PNG to its content plus a small uniform margin; DERIVE each figure's aspect ratio from the REAL PNG pixel dimensions — never hardcode an AR (it drifts and distorts/strands figures). For long y-axis labels, use a fixed-width bar rotated about its own center so the label cannot overflow the plot.
+
+## Verification (before declaring done)
+
+- Build the PDF/DOCX, then render EVERY page to an image and visually proofread at display size. Never declare done unverified.
+- Use a body-region fill metric (header/footer excluded) to catch whitespace, short pages, and stranded captions — a page can pass a raw height check while content silently clips or strands.
 
 ## Related Skills
 

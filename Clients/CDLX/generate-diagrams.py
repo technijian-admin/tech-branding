@@ -11,6 +11,7 @@ Usage:  py -3.12 Clients/CDLX/generate-diagrams.py
 """
 import os
 from playwright.sync_api import sync_playwright
+from PIL import Image, ImageChops
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "diagrams")
@@ -82,7 +83,16 @@ def render(html, path, w, h):
         pg.wait_for_timeout(650)
         pg.screenshot(path=path, clip={"x": 0, "y": 0, "width": w, "height": h})
         b.close()
-    print(f"  wrote {os.path.relpath(path, HERE)}")
+    # Auto-crop to content + a uniform margin so no diagram ever carries trailing
+    # whitespace (canvas height is generous on purpose; this trims it to fit).
+    im = Image.open(path).convert("RGB")
+    bbox = ImageChops.difference(im, Image.new("RGB", im.size, (255, 255, 255))).getbbox()
+    if bbox:
+        m = 26
+        l, t, r, bo = bbox
+        im.crop((max(0, l - m), max(0, t - m),
+                 min(im.width, r + m), min(im.height, bo + m))).save(path)
+    print(f"  wrote {os.path.relpath(path, HERE)} ({im.size[0]}x{im.size[1]} -> cropped)")
 
 
 # ---------------------------------------------------------------- 1. PERSONAS
@@ -185,8 +195,9 @@ def competitive():
     </div>
     <style>
     .chart {{ position:relative; margin-top:30px; height:640px; padding-left:42px; padding-bottom:38px; }}
-    .yaxis {{ position:absolute; left:-2px; top:50%; transform:rotate(-90deg) translateX(50%);
-      transform-origin:left center; font-weight:700; color:{BLUE}; font-size:15px; white-space:nowrap; }}
+    .yaxis {{ position:absolute; left:-280px; top:290px; width:600px; text-align:center;
+      transform:rotate(-90deg); transform-origin:center center;
+      font-weight:700; color:{BLUE}; font-size:15px; white-space:nowrap; }}
     .xaxis {{ position:absolute; bottom:0; left:50%; transform:translateX(-50%);
       font-weight:700; color:{BLUE}; font-size:15px; }}
     .grid {{ position:relative; height:600px; margin-left:42px;
@@ -263,7 +274,7 @@ def architecture():
 
 # --------------------------------------------------------------- 4. TIMELINE
 def timeline():
-    W, H = 1320, 760
+    W, H = 1320, 560
     phases = [
         ("PHASE 1", "Foundation", "0&ndash;90 days", BLUE, "shield", [
             "Free IT assessment of CardLogix's own environment",

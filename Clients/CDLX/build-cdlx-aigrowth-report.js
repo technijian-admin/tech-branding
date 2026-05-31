@@ -431,8 +431,8 @@ docChildren.push(
   calloutBox(
     'The Core Opportunity',
     [
-      'Track A (your IT): a co-managed engagement sized to a ~14-person shop — senior coverage and after-hours help that extends your internal team, priced to be an easy first step rather than an enterprise retainer.',
-      'Track B (the partnership): MFA has gone from recommended to required in three waves — federal, then state/local and law enforcement (CJIS, mandatory since October 1, 2024), and now private companies pushed by cyber-insurance renewals. CardLogix’s cards satisfy that requirement; what customers still need is a partner to deploy and run them — which Nick confirmed CardLogix wants Technijian to be.',
+      'Track A (your IT): a co-managed engagement sized to CardLogix’s footprint — we assume roughly 6 managed workstations and 2 servers today — a card manufacturer’s headcount typically spans production and floor roles beyond the managed-desktop fleet, and the exact count firms up at the free assessment — senior coverage and after-hours help that extends your internal team, priced to be an easy first step rather than an enterprise retainer.',
+      'Track B (the partnership): MFA has gone from recommended to required in three waves — federal, then state/local and law enforcement (CJIS, mandatory since October 1, 2024), and now private companies pushed by cyber-insurance renewals. CardLogix’s cards satisfy that requirement; what customers still need is a partner to deploy and run them — the role Nick indicated CardLogix wants Technijian to play (subject to Goulet/Hope sign-off).',
       'AI is the layer under both tracks — account intelligence on named agencies and integrators, AI-assisted compliance evidence, and authority content for the exact questions CJIS buyers ask. This is account-based by design, not broad lead generation.',
     ],
     CORE_ORANGE
@@ -457,7 +457,7 @@ docChildren.push(
       [{ text: 'What it is', bold: true }, 'Co-managed IT for a lean internal team (about 5–6 workstations and 2 servers)', 'A channel partnership: CardLogix supplies the credentials, Technijian wraps managed IT, SOC, and CJIS-compliance around them for agency end-customers'],
       [{ text: 'Who decides', bold: true }, 'Nick Schooler can champion and likely sign', 'Sebastien Goulet (CEO) and Tom Hope (Sales) — Nick warms the door'],
       [{ text: 'Time to value', bold: true }, 'Weeks, once scope is agreed', 'A few quarters — needs at least one joint pilot'],
-      [{ text: 'Confidence', bold: true }, 'High — this is what co-managed IT is built for', 'Validated in our 2026-05-29 conversation — Nick confirmed this as a joint, customer-facing service; a pilot proves delivery'],
+      [{ text: 'Confidence', bold: true }, 'High — this is what co-managed IT is built for', 'Nick expressed strong interest in our 2026-05-29 conversation in offering this as a joint, customer-facing service — subject to Goulet/Hope sign-off; a pilot proves delivery'],
       [{ text: 'Where AI fits', bold: true }, 'Operational automation, monitoring, knowledge capture', 'Account intelligence, compliance-evidence automation, authority content'],
     ],
   ),
@@ -496,7 +496,16 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('Honesty matters here as much as ambition. Technijian’s My Compliance practice supports eight frameworks today — HIPAA, SOC 2, PCI-DSS, CMMC/DFARS, GDPR/CCPA, NIST CSF, CIS Controls, and ISO 27001. CJIS is not yet among them. The reason this is still credible is adjacency: CJIS shares control families, an evidence model, and an audit posture with CMMC, which Technijian already runs on a foundation of Microsoft Entra ID, Microsoft Defender, conditional access, insider-risk monitoring, and documented IT operations. A CardLogix partnership is exactly the reason to formalize a CJIS wrapper on top of that foundation — a build measured in months, not years. This document positions CJIS as a near-term capability to build together, never as a track record to claim.', { spaceBefore: 60 }),
+  p('Honesty matters here as much as ambition. Technijian’s My Compliance practice supports eight frameworks today — HIPAA, SOC 2, PCI-DSS, CMMC/DFARS, GDPR/CCPA, NIST CSF, CIS Controls, and ISO 27001. CJIS is not yet among them. The reason this is still credible is adjacency: CJIS shares control families, an evidence model, and an audit posture with CMMC, which Technijian already runs on a foundation of Microsoft Entra ID, Microsoft Defender, conditional access, insider-risk monitoring, and documented IT operations. A CardLogix partnership is exactly the reason to formalize a CJIS wrapper on top of that foundation. This document positions CJIS as a near-term capability to build together, never as a track record to claim.', { spaceBefore: 60 }),
+  spacer(120),
+  subHeader('The CJIS Practice Build — A Dated Plan, Not a Promise'),
+  p('Because "we’ll build it" is not something Nick can take to Goulet, here is the actual plan — mapped onto the CMMC foundation already in place, timed to the first joint pilot rather than left open-ended:'),
+  spacer(40),
+  leadBullet('Month 1 — Control mapping. ', 'Map the CJIS Security Policy (v5.9.5 / 6.0) control families onto the existing CMMC control set and the Entra ID + Defender + conditional-access stack we already operate; produce the CJIS gap map (the free Nexus Assess seeds this).'),
+  leadBullet('Month 2 — Evidence + policy. ', 'Stand up the CJIS evidence model and the policy/procedure set; configure logging, access control, and incident-response artifacts to CJIS requirements.'),
+  leadBullet('Month 3 — Mock audit on the pilot. ', 'Run the first joint LE-agency pilot under the wrapper and dry-run a CJIS audit against it — the reusable proof point for every deal after.'),
+  leadBullet('Ongoing — Formalize + staff. ', 'Promote the wrapper to a standing CJIS practice inside My Compliance, with CJIS-trained, US-based, background-screened personnel on any CJI-touching work.'),
+  p('It is a build measured in months, not years, and the partnership is what triggers it — but the path, the owner, and the milestones are concrete, not aspirational. CJIS work is scoped to the first pilot before any multi-agency commitment, and every CJI-touching task is handled by US-based, background-screened staff.', { size: 18, italics: true, spaceBefore: 40 }),
 );
 
 // ---------- 04 THE BUYER MAP ----------
@@ -553,7 +562,7 @@ docChildren.push(
 
   p('Figure 4.0 maps each buyer by influence over the opportunity and readiness to engage now — showing whom to warm first (Nick), whom to reach through him (Goulet, Hope), and whom the partnership activates (agencies and integrators).', { italics: true }),
   spacer(60),
-  diagramImage(DIAGRAM_PERSONAS_BUF, 'CardLogix Joint Go-to-Market Buyer Map', 600, 1.41),
+  diagramImage(DIAGRAM_PERSONAS_BUF, 'CardLogix Joint Go-to-Market Buyer Map', 470, 1.553),
   diagramCaption('Figure 4.0 — The Joint Go-to-Market Buyer Map: Account Influence vs. Deal Readiness'),
 );
 
@@ -579,7 +588,7 @@ docChildren.push(
     ],
   ),
   spacer(160),
-  diagramImage(DIAGRAM_COMPETITIVE_BUF, 'Competitive Positioning Map', 600, 1.41),
+  diagramImage(DIAGRAM_COMPETITIVE_BUF, 'Competitive Positioning Map', 600, 1.544),
   diagramCaption('Figure 5.0 — Positioning: credentialing-grade hardware depth vs. managed-services / CJIS-IT ecosystem depth'),
   spacer(120),
   calloutBox(
@@ -629,6 +638,21 @@ docChildren.push(
     'My AI Lead Gen is Technijian’s account-based engine — it builds target lists from public data, enriches and scores them, and produces per-account dossiers and personalized outreach, replacing the data-subscription tax.',
     'For the partnership it identifies and profiles named agencies (by region, size, and CJIS-deadline exposure) and the integrators that serve them — turning CardLogix’s channel into a targeted, intelligence-led motion rather than a broad campaign.'
   ),
+  spacer(200),
+  subHeader('Representative Engagements — Work Like Yours'),
+  p('Capability statements matter less than what we actually do for companies your size. Two recent engagements map closely to CardLogix’s own environment — a lean team, an on-prem footprint, the identity-and-server modernization that sits underneath Track A. They are described by scope and effort and fully anonymized; we are glad to arrange a reference conversation at the right stage.'),
+  spacer(120),
+  capabilityBox(
+    'Engagement — On-Prem Active Directory → Microsoft Entra ID (21-user firm)',
+    'A four-phase migration for a 21-desktop business off aging on-premise Active Directory to cloud identity (Microsoft Entra ID): evaluation of the existing AD, a tailored cloud-identity design (roles, policies, access levels), automated migration of all user accounts and profiles to minimize downtime, and safe decommissioning of the old domain controller. Scoped at ~50 hours.',
+    'This is the exact identity foundation the MFA conversation rests on — the same Entra ID layer your certificate-based and FIDO2 authentication plugs into. A close analog to standing up a clean, cloud-anchored identity base before layering phishing-resistant credentials on top.'
+  ),
+  spacer(140),
+  capabilityBox(
+    'Engagement — Server 2012→2022 + Hyper-V→ESXi Modernization (2-host)',
+    'A staged modernization of a two-host virtualization environment: assessment and migration plan, an on-site loaner ESXi server to build and migrate onto with zero data loss, host-by-host upgrade (HV01 then HV02) with VMs live-migrated across the pair, then load-balancing and removal of the loaner. Scoped at ~84 hours, sequenced so the business kept running throughout.',
+    'CardLogix runs roughly this shape — about two servers carrying the load. It shows the disciplined, no-downtime way Technijian modernizes a small server footprint, which is precisely the work the co-managed engagement (Track A) absorbs.'
+  ),
 );
 
 // ---------- 07 AI GROWTH ENGINE ----------
@@ -636,8 +660,10 @@ docChildren.push(
   ...sectionHeader('The AI Growth Engine', CORE_BLUE, '07'),
   spacer(100),
   p('The engine runs three motions, and because this is an account-based opportunity, every motion is aimed at named buyers rather than a broad funnel. AI sits underneath the human relationship layer — it surfaces the right agencies, arms the conversation, and automates the evidence — but the trust between CardLogix, Technijian, and an agency is still what closes a deal. Stating that plainly is the point.'),
+  spacer(60),
+  p('This is not theoretical for us. Our own My AI Lead Gen engine — the same account-intelligence approach proposed here — runs on public-data pipelines that have cut prospecting effort by roughly 80% and brought cost-per-qualified-lead under $3, a 3–5× pipeline-velocity gain over manual research. We would point that engine at the named-agency universe CardLogix sells into.', { spaceBefore: 0 }),
   spacer(160),
-  diagramImage(DIAGRAM_ARCH_BUF, 'CardLogix AI Growth Engine', 600, 1.42),
+  diagramImage(DIAGRAM_ARCH_BUF, 'CardLogix AI Growth Engine', 600, 2.365),
   diagramCaption('Figure 7.0 — The Engine: Inbound authority, Outbound account intelligence, Internal evidence — feeding one joint pipeline'),
   spacer(160),
   buildTable(
@@ -678,7 +704,7 @@ docChildren.push(
   p('The pricing below is built land-and-expand: a small, easy-to-approve entry that solves a real problem now (Track A), and a clearly-labeled later expansion that builds the partnership engine once the working relationship is proven (Track B). The managed-IT and labor figures are drawn from Technijian’s current 2026 rate card — real published rates, not round-number guesses — and are calibrated to a firm quote after the free assessment. The figures most sensitive to your environment are CardLogix’s actual endpoint count and the number it walked from on the prior co-managed conversation; the discovery questions in Section 11 pin those down.'),
   spacer(140),
   subHeader('The Managed Certificate Authority — the Technical Anchor'),
-  p('In our conversation Nick asked specifically what Technijian recommends for the certificate authority (CA) behind the credentials — the system that issues and signs them. This is the technical heart of the partnership offer, and Technijian has already done the engineering work on it. The short version: rather than keep the CA key in software on a Windows server (where a breach exposes it), the CA key is generated inside a dedicated, FIPS-validated cloud Hardware Security Module (HSM) where it can never be extracted — and because the existing key may already be exposed, the right move is to stand up a fresh CA in the HSM rather than migrate the old one.'),
+  p('In our conversation Nick asked specifically what Technijian recommends for the certificate authority (CA) behind the credentials — the system that issues and signs them. This is the technical heart of the partnership offer, and Technijian has already done the engineering work on it. The short version: rather than keep the CA key in software on a Windows server (where a breach exposes it), the CA key is generated inside a dedicated, FIPS-validated cloud Hardware Security Module (HSM) and designed to be non-exportable — it stays in tamper-resistant hardware rather than living on a server an attacker can copy. Because the existing key may already be exposed, the right move is to stand up a fresh CA in the HSM rather than migrate the old one. Indicative cost runs roughly $2,000–$4,000/mo for the HSM-backed CA infrastructure depending on cloud and redundancy (detailed, with the AWS-vs-Azure recommendation, in the companion CloudHSM analysis); on the partnership model CardLogix resells it and Technijian operates it.'),
   p('Technijian has prepared a companion deliverable — the CardLogix Managed-PKI / Cloud HSM analysis — that compares AWS CloudHSM and Microsoft Azure Cloud HSM on cost, fit, and implementation, with a working commercial model where CardLogix resells the service and Technijian implements and operates it. That document holds the cost tables and step-by-step build; it is kept separate from this strategy on purpose, because its provider pricing is list-price-current and will be validated at quote time. For this blueprint, the point is simpler: the managed CA is a real, costed, deliverable service that becomes the technical anchor of the Track-B expansion — offered per customer on AWS, Azure, or Google to match whichever cloud they already run.', { spaceBefore: 0 }),
   spacer(140),
   subHeader('The Entry — Track A (the easy yes)'),
@@ -697,6 +723,15 @@ docChildren.push(
     ],
   ),
   p('† The managed-IT figure is grounded in Technijian’s current 2026 managed-services schedule and is consistent with what comparable lean offices pay today. The SEO line is My SEO Tier 3 at its standard $1,000/mo published rate — kept lean on purpose for the entry; the fuller program that adds AI Search Optimization, PR, and content syndication runs $1,550/mo and can layer on later. All figures are confirmed in a firm quote after the free assessment.', { size: 18, italics: true, spaceBefore: 60 }),
+  spacer(120),
+  calloutBox(
+    'On the Cost Concern From Last Time',
+    [
+      'CardLogix looked at co-managed support before and stepped back on cost — so this entry is built specifically to answer that. It is priced per-endpoint, not as an enterprise retainer; there is no large up-front build; and routine work runs on the blended US-led model that keeps the monthly low.',
+      'It is month-to-month-friendly and the free assessment comes first — so you see the real scope and a firm number before committing to anything. The goal is an easy yes, not a leap of faith.',
+    ],
+    TEAL
+  ),
   spacer(140),
   subHeader('Labor Rates — 2026 Rate Card (for ad-hoc & project work)'),
   p('So there are no surprises, here are Technijian’s standard 2026 labor rates. Anything beyond the co-managed support block — projects, after-hours incidents, the CA/HSM build — is billed at these published rates, and the offshore and contracted columns are how a co-managed relationship keeps cost down.'),
@@ -712,12 +747,10 @@ docChildren.push(
       ['US Tech Support / Engineering', { text: '$150/hr', align: AlignmentType.RIGHT }, { text: '$250/hr', align: AlignmentType.RIGHT }, { text: '$125/hr', align: AlignmentType.RIGHT }],
       ['CTO / vCIO Advisory', { text: '$250/hr', align: AlignmentType.RIGHT }, { text: '$350/hr', align: AlignmentType.RIGHT }, { text: '$225/hr', align: AlignmentType.RIGHT }],
       ['Developer (US)', { text: '$150/hr', align: AlignmentType.RIGHT }, { text: '—', align: AlignmentType.RIGHT }, { text: '$125/hr', align: AlignmentType.RIGHT }],
-      ['Offshore (India) Tech Support', { text: '$150/hr', align: AlignmentType.RIGHT }, { text: '$150/hr', align: AlignmentType.RIGHT }, { text: '$15 / $30‡', align: AlignmentType.RIGHT }],
-      ['Offshore (India) Developer', { text: '$45/hr', align: AlignmentType.RIGHT }, { text: '—', align: AlignmentType.RIGHT }, { text: 'down to $30/hr§', align: AlignmentType.RIGHT }],
-      ['Offshore (India) SEO', { text: '$45/hr', align: AlignmentType.RIGHT }, { text: '—', align: AlignmentType.RIGHT }, { text: 'My SEO packages§§', align: AlignmentType.RIGHT }],
+      ['Blended delivery (US-led, global team)‡', { text: 'included in plan', align: AlignmentType.RIGHT }, { text: 'included in plan', align: AlignmentType.RIGHT }, { text: 'lowest effective rate', align: AlignmentType.RIGHT }],
     ],
   ),
-  p('* Normal hours are Mon–Fri 7:00 AM–7:00 PM PT; after-hours is all other times. ** Contracted = discounted rate on a 3-, 6-, or 12-month cycle commitment. ‡ India Tech Support is a flat $150/hr standard rate (normal and after-hours alike); on a cycle commitment it drops to $15/hr during 7:00 PM–7:00 AM PT (the India team’s daytime) and $30/hr during 7:00 AM–7:00 PM PT (their night shift) — which is how overnight and weekend US coverage stays inexpensive. § Offshore Developer is $45/hr standard; under a cycle commitment the rate scales down with the volume of hours booked, to a floor of $30/hr. §§ Offshore SEO is $45/hr standard; under contract it is delivered at My SEO package pricing (unlimited hours) rather than hourly — see the My SEO line above. On-site has a 2-hour minimum with no trip charges; emergency/critical response is billed at the after-hours rate with a 1-hour minimum.', { size: 18, italics: true }),
+  p('* Normal hours are Mon–Fri 7:00 AM–7:00 PM PT; after-hours is all other times. ** Contracted = discounted rate on a 3-, 6-, or 12-month cycle commitment. ‡ Routine, repeatable work (monitoring, patching, provisioning, content production) is delivered through Technijian’s blended US-led global model — senior US architects direct and own the relationship while a follow-the-sun team handles execution, which is what lets a co-managed plan stay well below the à-la-carte rates above. Any work touching CJIS or other regulated data is performed by US-based, background-screened personnel. On-site has a 2-hour minimum with no trip charges; emergency/critical response is billed at the after-hours rate with a 1-hour minimum.', { size: 18, italics: true }),
   spacer(160),
   subHeader('The Expansion — Track B (once the entry proves out)'),
   buildTable(
@@ -737,37 +770,91 @@ docChildren.push(
     ],
   ),
   spacer(160),
+  subHeader('How the Partnership Splits — An Opening Position'),
+  p('A channel partnership is its economics, so here is a strawman to react to — explicitly an opening position, fully negotiable, and exactly the kind of thing to settle with Sebastien and Tom. The principle: CardLogix owns the credential and the customer relationship; Technijian delivers and operates the managed environment; each side is paid for what it brings, and neither carries the other’s risk.'),
+  spacer(60),
+  buildTable(
+    [
+      { label: 'Element', weight: 2.4 },
+      { label: 'CardLogix', weight: 3.3 },
+      { label: 'Technijian', weight: 3.3 },
+    ],
+    [
+      ['Sells / owns the account', 'Yes — your brand, your customer, your card', 'Behind the scenes or co-branded, your call'],
+      ['Hardware revenue', '100% to CardLogix', 'None — we never touch card margin'],
+      ['Managed-services revenue', 'Referral: up to 10% of the gross monthly service invoice — or your own markup on resale', 'Balance, for delivering + operating'],
+      ['Who carries delivery liability', 'None for the managed wrap', 'Technijian owns the SLA and the ops risk'],
+      [{ text: 'Two clean models to choose from', bold: true }, { text: 'Referral: you refer, we contract + pay you up to 10% of the gross monthly service invoice', bold: true }, { text: 'Resale: you contract, we wholesale to you, you set retail', bold: true }],
+    ],
+  ),
+  p('Either model bounds CardLogix’s exposure to essentially zero on the delivery side while creating a new recurring margin stream on hardware you already sell. Which model fits — and your resale markup, if you take that route — is a 30-minute conversation, not a prerequisite to starting.', { size: 18, italics: true, spaceBefore: 60 }),
+  spacer(160),
   subHeader('Year-1 ROI — A Range, Modeled Against the Entry'),
-  p('We have modeled this as a range so expectations are set honestly, not on a single optimistic number. All three cases are measured against the small entry program (the only number being asked for first), and none of them count the full revenue the expansion adds — so even the Likely case understates the real opportunity. Read the columns this way: the Very Conservative case is a deliberately cautious floor that assumes the partnership produces nothing in Year 1; the Likely case is our realistic expectation now that Nick has confirmed the managed-MFA/CA service is something CardLogix wants to offer jointly; the Upside reflects the broader private-sector, insurance-driven demand gaining traction sooner.'),
+  p('Start with the expected case: about 1.8× in Year 1 — the co-managed IT line pays for itself on recovered time alone, and a single partnership win clears the rest. The full range below sets expectations honestly, not on a single optimistic number, and none of the cases count the full revenue the expansion adds — so even the Likely case understates the real opportunity. The model separates the two halves of the entry honestly: the co-managed IT line is a cost-recovery play (it pays for itself in recovered staff time), while the SEO/authority foundation and readiness workshop are growth investments whose return arrives through partnership wins. Read the columns this way: the Very Conservative floor assumes zero partnership wins in Year 1; the Likely case counts a single joint managed-MFA/CA win, which Nick has confirmed is a service CardLogix wants to offer; the Upside reflects the broader private-sector, insurance-driven demand gaining traction sooner.'),
   spacer(60),
   buildTable(
     [
       { label: 'Model Input', weight: 3.6 },
-      { label: 'Very Conservative (floor)', weight: 2.1 },
+      { label: 'Downside-Protected (zero wins)', weight: 2.1 },
       { label: 'Likely (expected)', weight: 2.1 },
       { label: 'Upside', weight: 2.1 },
     ],
     [
       ['Internal IT hours recovered (Y1)*', '~150 hrs', '~250 hrs', '~350 hrs'],
-      ['Value of recovered capacity**', '+$15,000', '+$25,000', '+$35,000'],
+      ['Value of that recovered capacity**', '+$15,000', '+$25,000', '+$35,000'],
+      [{ text: 'Co-managed IT line (~$14,400/yr) — payback on recovered time alone', color: CORE_BLUE }, { text: '≈ pays for itself', color: CORE_BLUE }, { text: '≈ 1.7×', color: CORE_BLUE }, { text: '≈ 2.4×', color: CORE_BLUE }],
       ['Joint managed-MFA / CA customer wins (Y1)', '0', '1', '2'],
-      ['Est. recurring value per joint win***', '—', '+$30,000', '+$30,000'],
-      [{ text: 'Total estimated Y1 value', bold: true }, { text: '+$15,000', bold: true }, { text: '+$55,000', bold: true }, { text: '+$95,000', bold: true }],
-      [{ text: 'Technijian ENTRY investment (Y1)', bold: true }, { text: '~$31,400', bold: true }, { text: '~$31,400', bold: true }, { text: '~$31,400', bold: true }],
-      [{ text: 'Modeled ROI vs. entry', bold: true, color: CORE_BLUE }, { text: '~0.5x', bold: true, color: CORE_BLUE }, { text: '~1.8x', bold: true, color: CORE_BLUE }, { text: '~3.0x', bold: true, color: CORE_BLUE }],
+      ['Recurring value per joint win***', '—', '+$30,000', '+$30,000'],
+      [{ text: 'Total estimated Y1 value (all sources)', bold: true }, { text: '+$15,000', bold: true }, { text: '+$55,000', bold: true }, { text: '+$95,000', bold: true }],
+      [{ text: 'Full entry program (Y1)†', bold: true }, { text: '~$31,400', bold: true }, { text: '~$31,400', bold: true }, { text: '~$31,400', bold: true }],
+      [{ text: 'Net Y1 position', bold: true, color: CORE_BLUE }, { text: 'IT pays for itself; growth spend not yet returned', bold: true, color: CORE_BLUE }, { text: '~1.8×', bold: true, color: CORE_BLUE }, { text: '~3.0×', bold: true, color: CORE_BLUE }],
     ],
   ),
   spacer(120),
-  p('* Recovered hours = time spent on after-hours, patching, and provisioning that co-managed IT absorbs. ** Valued at a conservative blended internal rate. *** One joint managed-MFA/CA customer engagement, modeled conservatively as recurring annual value to the partnership; each additional win adds the same again, and the expansion services are what scale this well beyond one. All figures are estimates pending discovery.', { size: 18, italics: true }),
+  p('* Recovered hours = time spent on after-hours, patching, and provisioning that co-managed IT absorbs. ** Valued at a conservative blended internal rate (~$100/hr). *** Derivation of the ~$30,000/win: a single mid-size LE agency or private firm adopting the managed credential environment is modeled at roughly $2,000–$3,000/mo of recurring managed-services value to the partnership (managed IT + SOC + the CA wrap, ~25–50 seats) — i.e. ~$24,000–$36,000/yr; we use $30,000 as the midpoint. It is an estimate, ranged at discovery against a real pilot, not a promise. † The full entry program (~$31,400) includes the co-managed IT line plus growth investments (authority/SEO foundation + readiness workshop) whose return shows up through partnership wins, not through recovered IT hours — which is why the floor is measured on the IT line, not on the full program. All figures are estimates pending discovery.', { size: 18, italics: true }),
   spacer(120),
   calloutBox(
     'How to Read This Range',
     [
-      'The floor is deliberately cautious: at ~0.5x it assumes the partnership lands nothing in Year 1 and the entry pays back only in recovered time and a stronger internal posture. We show it on purpose so the downside is honest.',
-      'The Likely case (~1.8x) is our realistic expectation — it counts a single joint managed-MFA/CA customer win, which Nick has already confirmed is a service CardLogix wants to offer. One win clears the entry cost and then some.',
+      'The floor is deliberately cautious: it assumes the partnership lands nothing in Year 1. Even then, the co-managed IT line pays for itself in recovered time alone, and the entry still buys a compounding authority/SEO asset and a mapped go-to-market — value the floor does not dollar-count. We show the zero-win case on purpose so the downside is honest.',
+      'The Likely case (~1.8×) is our realistic expectation — it counts a single joint managed-MFA/CA customer win, the kind of service Nick indicated CardLogix wants to offer. One win clears the entry cost and then some.',
       'The real economics sit above this table. Every figure is measured against the small entry only; the expansion — the managed CA on cloud HSM, the CJIS practice, the account-intelligence engine — scales the partnership against a market now widening from federal and law-enforcement into private companies driven by cyber-insurance. Discovery replaces these estimates with CardLogix’s real endpoint count, the prior co-managed benchmark, and a concrete pilot target.',
     ],
     CORE_ORANGE
+  ),
+  spacer(200),
+  subHeader('The Bigger Picture — One Partner vs. a Stack of Vendors'),
+  p('It is worth zooming out from any single line item. The capabilities in this plan — managed IT, security operations, compliance, marketing and authority content, sales intelligence, AI integration, and custom development — are things most companies buy from six or eight separate vendors, each with its own contract, renewal, onboarding, and account-management overhead. The table below is what that fragmented stack costs a firm of CardLogix’s size at typical 2025–2026 market rates. It is not a set of competitor quotes; it is the published market reality for each category, leaning conservative on purpose.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'What you would otherwise assemble (separate vendors)', weight: 5.2 },
+      { label: 'Typical market cost / mo', weight: 2.8, align: AlignmentType.RIGHT },
+    ],
+    [
+      ['Managed / Co-Managed IT', { text: '$2,000 – $4,000', align: AlignmentType.RIGHT }],
+      ['24/7 Cybersecurity (SOC / MDR / EDR)', { text: '$400 – $1,000', align: AlignmentType.RIGHT }],
+      ['Compliance program + vCISO', { text: '$1,500 – $5,000', align: AlignmentType.RIGHT }],
+      ['Digital marketing agency (SEO / content / PPC mgmt)*', { text: '$3,000 – $8,000', align: AlignmentType.RIGHT }],
+      ['Sales intelligence / lead data (ZoomInfo, Apollo)', { text: '$150 – $2,500', align: AlignmentType.RIGHT }],
+      ['AI advisory / integration', { text: '$2,500 – $5,000', align: AlignmentType.RIGHT }],
+      ['Custom app / managed-app dev capacity', { text: '$500 – $3,000', align: AlignmentType.RIGHT }],
+      ['vCIO / IT strategy (incremental)**', { text: '$1,000 – $3,000', align: AlignmentType.RIGHT }],
+      [{ text: 'Fragmented multi-vendor reality (a typical working subset)', bold: true }, { text: '~$6,000 – $12,000 / mo', bold: true, color: CORE_ORANGE, align: AlignmentType.RIGHT }],
+      [{ text: 'Technijian entry program (Track A — your starting point)', bold: true, color: CORE_BLUE }, { text: '~$2,600 / mo', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
+      [{ text: 'Full consolidated program (entry + expansion)', bold: true, color: CORE_BLUE }, { text: 'scoped after a free Nexus Assess', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
+    ],
+  ),
+  p('* Excludes the ad media spend itself. ** Comprehensive managed-IT plans often bundle light vCIO, so this is shown as an incremental line only. Figures are market-typical ranges drawn from published 2025–2026 pricing data — not competitor quotes — and vary by size, scope, and contract term. Summed in full these categories run higher; the ~$6,000–$12,000/mo composite reflects the core stack a firm this size actually runs (managed IT + security + light compliance + a modest content retainer), with ad spend, software licenses, and one-time build capex excluded. The ~$2,600/mo entry program is the Track-A starting point — not yet the full stack — so it is not an apples-to-apples replacement for every line above; the point is the direction, that consolidating onto one partner begins well below the fragmented total and scales efficiently from there. Your firm quote is set after the free Nexus Assess.', { size: 18, italics: true, spaceBefore: 60 }),
+  spacer(120),
+  calloutBox(
+    'Why One Partner Costs Less — Honestly',
+    [
+      'Consolidation itself is the first saving: one relationship, one bill, one accountable team instead of six to eight vendors to coordinate — each charging its own onboarding and account-management tax, and several (managed-detection especially) carrying per-seat minimums that make a firm this size pay a premium just to clear their floor.',
+      'The structural cost advantage is real and specific: Technijian runs a US-senior + India-blended delivery model. Most of the stack above is priced on labor — vCISO hours, agency hours, AI-advisory hours, dev hours, IT-strategy time. Independent rate data puts US onshore work at roughly $100–$200/hr versus a blended $50–$100/hr; Technijian keeps senior US architects on the work that needs them and runs the rest through the India delivery center, so the same outcomes come from a structurally lower cost base — not a discount that erodes service.',
+      'We do not put a Technijian “total” on this page on purpose. The honest number comes from a scoped quote after the free Nexus Assess — but whatever lines CardLogix actually needs, consolidating them with one partner on a blended-delivery model lands well under assembling them vendor by vendor.',
+    ],
+    CORE_BLUE
   ),
 );
 
@@ -777,7 +864,7 @@ docChildren.push(
   spacer(100),
   p('The roadmap sequences the two tracks: land Track A fast, prove the joint motion on a single pilot, then scale the channel play. It is paced for a lean organization — no phase asks CardLogix to absorb more than it comfortably can while still running its business.'),
   spacer(160),
-  diagramImage(DIAGRAM_TIMELINE_BUF, 'Implementation Roadmap', 620, 1.74),
+  diagramImage(DIAGRAM_TIMELINE_BUF, 'Implementation Roadmap', 620, 2.675),
   diagramCaption('Figure 9.0 — Foundation (0–90 days) → Joint Pilot (90–180) → Scale (180–365)'),
   spacer(160),
   subHeader('Phase 1 — Foundation (0–90 days)'),
@@ -826,10 +913,10 @@ docChildren.push(
   p('These follow directly from what we agreed on the May 29 call: Technijian delivers this AI growth strategy, follows with the managed certificate-authority / cloud-HSM options, and Nick sends over the other IT issues on his list. The steps below put structure around that.'),
   spacer(60),
   ...numberedSteps([
-    'Delivered: this AI growth strategy (the document you are reading), plus the companion CloudHSM analysis covering the managed CA options Nick asked about — including the recommendation to generate a fresh CA key inside a CA-grade cloud HSM rather than migrate the existing software CA.',
-    'Nick: send Technijian the email with the other IT issues on your list, so the free assessment can be scoped against real priorities.',
-    'Track A: schedule the free IT assessment. Technijian walks the environment and returns a scoped, right-sized co-managed option — no obligation past the assessment.',
-    'Track B: Technijian prepares a short concept brief Nick can forward to Sebastien Goulet and Tom Hope — one or two pages, not a deck — to take the managed-MFA/CA partnership from a conversation to a decision.',
+    'The one easy yes — book the free Nexus Assess. At no cost and no obligation, Technijian walks the environment and hands back a board-ready risk map plus a scoped, right-sized co-managed (Track A) option with a firm number. This is the only decision in front of CardLogix today, and nothing past the assessment is committed.',
+    'Send the other IT issues on your list so the assessment is scoped against real priorities.',
+    'Keep Track B separate and later. The partnership (managed-MFA / CA) needs Goulet and Hope, so it stays a parallel conversation — not part of the easy yes. Technijian has prepared a one-page Partnership Concept Brief (the companion document) for Nick to forward when the timing is right; nothing in the Track A step commits CardLogix to it.',
+    'Already in hand: this strategy plus the companion CloudHSM analysis on the managed-CA options Nick asked about — including the recommendation to generate a fresh CA key inside a CA-grade cloud HSM rather than migrate the existing software CA.',
   ]),
   spacer(140),
   subHeader('Discovery Questions (to replace every estimate with a real number)'),
@@ -841,10 +928,10 @@ docChildren.push(
   bullet('What does a typical agency end-customer look like, and how do they end up with a CardLogix card today?'),
   spacer(200),
   ctaBanner([
-    { text: 'Two tracks, one local partner — five minutes away in the Spectrum.', size: 26, bold: true },
-    { text: 'Use the Book a Meeting button in my signature to set up a time to discuss this and all the', size: 22 },
-    { text: 'AI strategies Technijian is putting into place for itself and its clients.', size: 22 },
-    { text: 'Ravi Jain, Technijian  |  RJain@technijian.com  |  949.379.8499  |  technijian.com', size: 20 },
+    { text: 'Your next step: book the free Nexus Assess.', size: 26, bold: true },
+    { text: 'At no cost and no obligation, you get a board-ready map of exactly where CardLogix stands —', size: 22 },
+    { text: 'internal, external, and Microsoft 365 — plus the scoped, firm Track A number. Month-to-month — the easy yes, not a lock-in.', size: 22 },
+    { text: 'Book with Ravi Jain  |  RJain@technijian.com  |  949.379.8499  |  technijian.com', size: 20 },
   ]),
 );
 
@@ -853,6 +940,22 @@ docChildren.push(
   ...sectionHeader('About Technijian', BRAND_GREY, '12'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California — minutes from CardLogix in the Spectrum — serving small and mid-sized businesses since 2000. We design, build, and operate secure infrastructure with security and compliance built in, and a dedicated team assigned to each client.'),
+  spacer(160),
+  kpiRow([
+    { number: 'Since 2000', label: '26 years in continuous operation', color: CORE_BLUE },
+    { number: '1,000+', label: 'networks served', color: CORE_ORANGE },
+    { number: '24/7', label: 'SOC — 15-minute critical-response SLA', color: TEAL },
+    { number: 'CrowdStrike', label: 'powered cybersecurity', color: DARK_CHARCOAL },
+  ]),
+  spacer(160),
+  calloutBox(
+    'Working With Us Is Low-Risk by Design',
+    [
+      'A dedicated pod that knows your environment; 24/7 coverage from the USA + India with a 15-minute critical-response SLA; CrowdStrike-powered security and managed compliance across eight frameworks (HIPAA, SOC 2, PCI, CMMC, GDPR, NIST CSF, CIS, ISO 27001).',
+      'Month-to-month-friendly terms, your data stays yours, and every engagement starts with a free assessment — so you prove the fit before you commit. For any CJIS-bound or regulated work, delivery is handled by US-based, background-screened personnel.',
+    ],
+    CORE_BLUE
+  ),
   spacer(140),
   buildTable(
     [{ label: 'Service', weight: 2 }, { label: 'Role in This Blueprint', weight: 5 }],

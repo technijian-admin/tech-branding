@@ -90,6 +90,41 @@ Slides: per `technijian-presentation` (Open Sans, dark cover, blue section divid
 
 Appendix DOCX: per `technijian-report` (Open Sans, Core Blue H1, severity-color cells, alternating row tables).
 
+### Brand single source of truth (do not hardcode)
+
+- All brand values — colors, fonts, logo paths, contact lines, tagline, offices — live in `assets/brand-tokens.json`. Read/sync from it at build time; the hex codes in the color table below are a cached convenience, not the source of truth.
+- **Tagline:** "technology as a solution" (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it on a slide, footer, or appendix.
+- **Contact / CTA number:** the MAIN switchboard **949.379.8499** (reaches USA + India). 949.379.8500 is Sales-direct only and 949.379.8501 is Billing-direct only — do not use either as the QBR contact/next-steps number.
+- **Logos:** use the REAL logo files — full-color on light backgrounds, reverse-white on the dark cover/divider/close slides — centered. Do not recolor or stretch.
+- **Two offices:** Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula India delivery center.
+
+## Build & verification mechanics
+
+### Diagrams / trend charts (HTML + Playwright PNG → PPTX/DOCX)
+
+When rendering the trailing-4-quarter trend charts or any custom figure:
+- **Auto-crop** each exported PNG to its content plus a small uniform margin, so charts don't carry dead whitespace into the slide/appendix.
+- **Derive each figure's aspect ratio from the REAL PNG pixel dimensions** — never hardcode an AR. A hardcoded AR drifts as the chart changes and distorts or strands the figure.
+- For long y-axis category labels (e.g. ticket-category names), put the label in a **fixed-width bar rotated about its own center** so it can't overflow the plot area.
+
+### DOCX appendix build (docx-js)
+
+- **SPREAD helper functions into the children array** — `...sectionHeader(...)`, `...numberedSteps(...)` — not bare calls. A bare call makes docx emit an invalid `<0/>` token and Word refuses to open the file.
+- After every build, **validate `word/document.xml` is well-formed (contains no `<0/>`)** before declaring the appendix done.
+
+### DOCX → PDF
+
+- Convert via `docx2pdf` (`py -3.12 docx-to-pdf.py`), **sequentially — never in parallel**. Parallel Word COM calls wedge; if it locks, clear `Normal.dotm` and retry one at a time.
+
+### Verify before done (every output)
+
+- Render **every** slide and every appendix page to an image and visually proofread at display size before sending — this is part of "done," not optional.
+- Use a **body-region fill metric** (header/footer excluded) to catch whitespace, short pages, and stranded captions/charts. A page that passes on height can still be half-empty.
+
+### Forwardable concept brief (companion artifact)
+
+- Offer a **1-page executive concept brief** that distills the QBR's headline result + top risk + the recommended next play onto a single self-contained Letter page (HTML → Playwright → one page). It's what a sponsor forwards up the chain when they can't forward the full deck.
+
 ## Color discipline for QBR
 
 | Color | Means |
@@ -109,6 +144,20 @@ NEVER soften red/orange to teal to make a quarter look better. Reality reports b
 4. **No marketing speak.** This is a service review, not a sales pitch. Save the upsell for slide 11.
 5. **Honor commitments tracking.** Every prior-quarter commitment gets a status: Done / In Progress / Deferred (with reason).
 6. **No client name in third person.** Address the client directly: "Your environment" not "[Client]'s environment."
+7. **No fabrication.** Never invent metrics, quotes, case-study outcomes, or proof points to dress up a quarter. If a figure isn't confirmed, label it an estimate "confirmed at discovery." Any capability you haven't built yet (a new monitoring view, an AI rollout) is framed as a dated **near-term build**, never as already delivered. The service-uplift pieces are launching — there are no completed-client outcome metrics to cite; use anonymized industry profiles (scope + effort only).
+
+## Strategic recommendations & CTA (slides 11–12) — conversion discipline
+
+Slide 11 is the one place the QBR turns forward-looking and priced. Apply these so the recommendation lands without eroding the trust the prior 10 slides earned:
+
+- **Split the ask.** Bracket a small, priced "easy yes" (e.g. the next-quarter quick win) separately from the larger strategic play, so the sponsor knows exactly what they're approving now vs. later.
+- **ROI as a range, not a point.** Show very-conservative floor → likely → upside. NEVER lead with a sub-1× floor optic — relabel the floor "Downside-Protected" and lead the prose/callout with the **expected (~likely) case**.
+- **Pricing from the real 2026 rate card.** Never invent numbers. Present a blended US-led rate; do NOT expose the offshore/India cost basis on a client-facing slide.
+- **Right-size the comparison anchor.** An inflated "vendor stack you'd otherwise pay" or savings number REDUCES credibility — keep anchors defensible.
+- **Quantify the cost of inaction** and **proactively rebut the known prior objection** rather than waiting for it in the room.
+- **One dated, in-document CTA + explicit risk-reversal** on slide 12 — a real next-QBR/kickoff date and what the client risks nothing by doing, not "use the Book-a-Meeting button in my signature."
+- **Quick-win on-ramp:** for clients not ready for the strategic play, the low-friction first step is a free **"Nexus Assess"** assessment (Network Detective: internal + external vulnerability scan + M365 review). Use it as the slide-12 fallback CTA.
+- **Channel/referral economics (if a partner or referral appears in recs):** a referral pays the partner a MAX of **10% of the gross monthly service invoice** only (not hardware, not one-time); the alternative is a resale markup the partner sets. Never write "10–20%" or an open-ended ongoing %.
 
 ## Workflow
 

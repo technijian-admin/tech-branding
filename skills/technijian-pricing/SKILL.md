@@ -127,12 +127,21 @@ Always include "Out of Scope" section. Common exclusions:
 |---|---|---|
 | New-logo | 5% off first 12 months | Account for first-year acquisition cost |
 | Education / non-profit | 10% off list | Verify 501(c)(3) status |
-| Partner referral | 5% off first 6 months | Track in CRM |
+| Partner referral | 5% off first 6 months | Client-side discount when a partner referred the deal. Distinct from what the partner is PAID — see R9. |
 | Multi-bundle | per R5 | Stacked with volume tier |
 
 **Maximum stacked discount: 25%.** Beyond that, escalate to Ravi.
 
+### R9 — Channel / referral economics (what the PARTNER is paid)
+Do not confuse a client-side discount (R8) with partner compensation. Two models only:
+- **Referral:** partner is paid a MAX of **10% of the GROSS MONTHLY SERVICE INVOICE** — recurring services only. NOT on hardware/license passthrough, NOT on one-time/setup/project fees. Cap is 10%; lower is fine.
+- **Resale:** partner buys at a wholesale rate and sets their own markup; Technijian invoices the partner, the partner invoices the end client.
+
+Never write "10–20%", "up to 20%", or an open-ended "ongoing %" — those over-commit margin and are not policy. A deal uses one model, not both. Why: the 10%-of-gross-monthly cap is what keeps a referred account profitable after delivery cost.
+
 ## Output formats
+
+> **Brand values are not hardcoded here.** Every color/font/contact value named below (Blue, Off White, Dark Charcoal, Core Orange) is a convenience label — read the actual hex/value from `assets/brand-tokens.json`, the single source of truth, at build time. If a token name and a cached value disagree, the JSON wins.
 
 ### A — Proposal pricing table (DOCX)
 
@@ -174,6 +183,9 @@ Per-client recurring revenue, grouped by service pillar; trailing-13-month chart
 6. **Total cost over term.** A 3-year SOW shows year-by-year and TCV. No surprises later.
 7. **Attribution for benchmarks.** If comparing to "industry average," cite the Gartner/IDC/Forrester source.
 8. **Currency explicit.** "USD" or "INR" suffix on all numbers; avoid "$" alone for international clients.
+9. **Numbers are real, never invented.** Every line item ties to the 2026 rate card / catalog SKU. Do not fabricate a rate to fill a cell. Where a quantity or scope is not yet confirmed, label the figure an estimate "confirmed at discovery" rather than presenting it as final.
+10. **Present a blended US-led rate; never expose the offshore/India cost basis** on a client-facing page. The India delivery center lowers our cost — that is internal margin, not a client line item. Show one US-led blended rate.
+11. **ROI shown alongside pricing is a RANGE, not a single number.** Give a downside-protected floor + likely + upside. Never lead the reader with a sub-1× floor optic — relabel the floor "Downside-Protected" and lead the prose/callout with the expected (~likely) case. (Full method: `technijian-roi`.)
 
 ## Anti-patterns
 
@@ -182,6 +194,10 @@ Per-client recurring revenue, grouped by service pillar; trailing-13-month chart
 - Mixing list and discounted in the same table without showing the math
 - Discount > 25% without escalation
 - Multi-bundle quote without specifying which discount stacks (R5+R8 conflict)
+- Quoting partner pay as "10–20%" or an open-ended "ongoing %" (violates R9 — 10%-of-gross-monthly cap, recurring only)
+- Exposing the India/offshore cost basis on a client-facing page (show one US-led blended rate)
+- Inventing a rate to fill a cell, or presenting an unconfirmed scope figure as final (label estimates "confirmed at discovery")
+- Declaring a generated XLSX/DOCX done without rendering and visually proofreading it (see Workflow step 7)
 
 ## Workflow
 
@@ -192,8 +208,9 @@ Per-client recurring revenue, grouped by service pillar; trailing-13-month chart
 4. Add escalator + payment terms (R4, R7)
 5. Generate output format (A/B/C/D above)
 6. Run technijian-voice over prose sections
-7. Run technijian-design-review on rendered artifact
-8. Internal review (Ravi for >$50K MRR or >25% discount)
+7. Verify before done: render the finished XLSX/DOCX to images and visually proofread every page at display size — check totals/subtotals add up, no truncated cells or stranded rows, currency suffixes present, no India cost basis leaked. Never declare done unverified.
+8. Run technijian-design-review on rendered artifact
+9. Internal review (Ravi for >$50K MRR or >25% discount)
 ```
 
 ## Related skills

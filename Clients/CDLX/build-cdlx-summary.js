@@ -158,7 +158,7 @@ c.push(
   sectionHeader('How AI Powers Both Tracks', CORE_BLUE),
   spacer(140),
   p('This is account-based, not broad lead generation. AI sits underneath the relationship layer — it surfaces the right accounts, arms the conversation, and automates the compliance evidence. The human trust between CardLogix, Technijian, and a customer still closes the deal.'),
-  diagramImage(DIAGRAM_ARCH_BUF, 'CardLogix AI Growth Engine', 600, 1.42),
+  diagramImage(DIAGRAM_ARCH_BUF, 'CardLogix AI Growth Engine', 600, 2.365),
   diagramCaption('Inbound authority · Outbound account intelligence · Internal evidence — feeding one joint pipeline'),
   spacer(120),
   calloutBox('Three Motions', [
@@ -190,7 +190,7 @@ c.push(
     [{ label: 'Year-1 ROI vs. entry', weight: 3 }, { label: 'Very Conservative', weight: 2, align: AlignmentType.RIGHT }, { label: 'Likely', weight: 2, align: AlignmentType.RIGHT }, { label: 'Upside', weight: 2, align: AlignmentType.RIGHT }],
     [
       ['Estimated Y1 value', { text: '+$15,000', align: AlignmentType.RIGHT }, { text: '+$55,000', align: AlignmentType.RIGHT }, { text: '+$95,000', align: AlignmentType.RIGHT }],
-      [{ text: 'Modeled ROI', bold: true }, { text: '~0.5×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }, { text: '~1.8×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }, { text: '~3.0×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
+      [{ text: 'Modeled ROI', bold: true }, { text: 'Cost-recovered', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }, { text: '~1.8×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }, { text: '~3.0×', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
     ],
   ),
   spacer(120),
@@ -202,7 +202,7 @@ c.push(
   ], TEAL),
   spacer(160),
   sectionHeader('The Roadmap', CORE_ORANGE),
-  diagramImage(DIAGRAM_TIMELINE_BUF, 'Implementation Roadmap', 600, 1.74),
+  diagramImage(DIAGRAM_TIMELINE_BUF, 'Implementation Roadmap', 600, 2.675),
   diagramCaption('Foundation (0–90 days) → Joint Pilot (90–180) → Scale (180–365)'),
   spacer(120),
   new Table({ width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: [CONTENT_W], rows: [new TableRow({ children: [new TableCell({

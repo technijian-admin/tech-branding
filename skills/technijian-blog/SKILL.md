@@ -119,14 +119,36 @@ Total: ~1900-3000 words. Target reading time 7-10 minutes.
 7. **Banned blog clichés:** "In today's fast-paced digital landscape," "It's no secret that," "Now more than ever," "Game-changer," "Revolutionary."
 8. **No moralizing.** Don't lecture readers about why they should care.
 
+## Brand essentials (non-negotiable)
+
+These come from the canonical brand layer — keep them correct in body, frontmatter, author bio, and any CTA:
+- **Tagline:** "technology as a solution" — lowercase, no period. The old "Technology Support, Your Way." is RETIRED; never use it.
+- **Main contact / CTA number:** the switchboard **949.379.8499** (reaches USA + India). Use this for any "call us" / contact line in a post or its FAQ. 949.379.8500 is Sales-direct ONLY; 949.379.8501 is Billing-direct ONLY — do not use either as the general CTA.
+- **Logos:** use the REAL logos — full-color on light backgrounds, reverse-white on dark — centered. Never recolor or stretch.
+- **Brand tokens are the single source of truth.** All colors, fonts, and contact values live in `assets/brand-tokens.json`. Read/sync from it; any hardcoded value here is a cached convenience that can drift. If a token conflicts with this file, the token wins.
+- **Two offices:** Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula India delivery center. Reference correctly if a post mentions location/coverage.
+
+## Honesty discipline (no fabrication)
+
+The service is launching — there are no completed client projects to cite.
+- **No fabricated proof.** No invented metrics, outcome numbers, quotes, stats, or named-client results. Real anonymized industry profiles only (see `technijian-case-study`).
+- **In-text source cites must be REAL.** The `[Per Verizon DBIR 2024]` pattern only works if the figure is genuinely from that source — never attach a real source name to an invented number.
+- **Frame not-yet-built capabilities as a dated near-term build,** never as already delivered. If a product feature is on the roadmap, say so with a target window.
+- **Flag soft figures as estimates** ("confirmed at discovery") rather than presenting them as measured fact.
+
+## Soft-pitch CTA (when a post ends with a next step)
+
+When a post invites action, the lowest-friction on-ramp is the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability + M365 review). Make it the default CTA / first step rather than "book a sales call." Pair it with the main number 949.379.8499.
+
 ## Hero image
 
 Every post needs a hero. Use `technijian-infographic` or `technijian-diagram` to generate it. Specs:
 - 1600×900px (Open Graph friendly)
-- Brand colors only
-- Hero number or single key visual that summarises the post
-- Logo bottom-right
+- Brand colors only — pulled from `assets/brand-tokens.json`, not hardcoded
+- Hero number or single key visual that summarises the post (no fabricated stat — must be real/sourced)
+- Real logo, reverse-white if on a dark hero, full-color if on light; bottom-right
 - Saved to `/blog/[slug]/hero.png`
+- Render and view the final PNG at display size before publishing — confirm no clipped text, no dead whitespace, logo crisp
 
 ## Internal linking strategy
 
@@ -147,8 +169,12 @@ External links: only to authoritative sources (NIST, ISO, CISA, vendor docs, pee
 - [ ] At least 2 external authoritative links
 - [ ] FAQ section present
 - [ ] Author bio present
-- [ ] technijian-voice run over draft (no banned words)
-- [ ] technijian-design-review on hero image
+- [ ] technijian-voice run over draft (no banned words; retired tagline absent)
+- [ ] Every in-text stat/quote is REAL and sourced (no fabricated metrics or client outcomes)
+- [ ] Any not-yet-shipped capability framed as a dated near-term build, not as delivered
+- [ ] Contact/CTA number is 949.379.8499 (not 8500/8501); tagline is "technology as a solution"
+- [ ] Brand values (colors/fonts/contact) synced from assets/brand-tokens.json
+- [ ] technijian-design-review on hero image — render it at display size and visually proofread (check for whitespace, clipped text, stranded caption) before declaring done
 - [ ] Reading time calculated (~265 words/min)
 - [ ] Schema.org markup added in CMS
 
