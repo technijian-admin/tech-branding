@@ -96,7 +96,7 @@ Each case study is exactly two fixed 8.5×11in pages.
 ├─────────────────────────────────────────┤
 │  WHO THIS APPLIES TO (white)             │  Bullet list of profiles where this approach fits
 ├─────────────────────────────────────────┤
-│  CTA BAR (Core Blue)                     │  "Talk to us about [theme]" + 949.379.8500 + technijian.com
+│  CTA BAR (Core Blue)                     │  "Talk to us about [theme]" + 949.379.8499 + technijian.com
 ├─────────────────────────────────────────┤
 │  FOOTER (near-black)                     │  Address, page number
 └─────────────────────────────────────────┘
@@ -111,8 +111,12 @@ Each case study is exactly two fixed 8.5×11in pages.
 5. **Quote attribution is role+scale, not name.** "Operations Director, 200-employee precision manufacturer."
 6. **Cite the source layer.** Internal `source-notes.md` records which `kb/` files were pulled (for future regeneration).
 7. **No future-tense ROI promises.** Case studies report outcomes; promises go in proposals.
+8. **Low-friction CTA on-ramp.** Where the CTA invites a next step, offer the free **"Nexus Assess"** assessment (Network Detective: internal + external vulnerability scan + M365 review) as the easy first move — lower commitment than "talk to sales."
+9. **Honesty discipline (service is launching).** No fabricated proof, metrics, outcomes, quotes, or stats. Any not-yet-built capability is framed as a dated near-term build, never as already delivered. Flag any figure not in source as an estimate "confirmed at discovery." Reinforces the source-data and anonymization rules above.
 
 ## Brand spec (same as datasheet/brochure)
+
+**Single source of truth:** `assets/brand-tokens.json` is canonical for all brand values (colors, fonts, tagline, phone, addresses, logos). Read/sync from it at build time. The CSS below is a cached convenience copy — if it drifts from `brand-tokens.json`, the JSON wins.
 
 ```css
 --blue: #006DB6;        --orange: #F67D4B;       --teal: #1EAAC8;
@@ -121,6 +125,14 @@ Each case study is exactly two fixed 8.5×11in pages.
 font-display: 'Plus Jakarta Sans';
 font-body:    'DM Sans';
 ```
+
+**Tagline:** "technology as a solution" (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it.
+
+**Logos:** use the real logos centered — full-color on light backgrounds, reverse-white on dark (e.g., the dark HERO and near-black footer). Never recolor or stretch.
+
+**Contact / CTA number:** the main switchboard **949.379.8499** (reaches USA + India). 949.379.8500 is Sales-direct only; 949.379.8501 is Billing-direct only — do not put those on a case-study CTA.
+
+**Two offices:** Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula India delivery center. Use the HQ address in the footer unless the piece is India-led.
 
 Page setup: `width: 8.5in; height: 11in; overflow: hidden; position: relative` per page (per `feedback_page_breaks.md`).
 

@@ -87,6 +87,10 @@ Req ID,Section,Mandatory,Requirement Text,Our Response,Evidence Reference,Risk
 
 Severity-rate each "Comply with explanation" or "Does not comply" — these are bid-risk items.
 
+**Honesty discipline (mandatory).** The service line is *launching* — there are no completed client projects. Map only capabilities Technijian actually has today. Any not-yet-built capability must be answered "Comply with explanation" and framed as a **dated near-term build** ("operational by [date]"), never as already delivered. Never fabricate certifications, metrics, customer outcomes, quotes, or stats to win a "Comply." Figures that aren't yet confirmed get flagged as estimates "confirmed at discovery / contract award."
+
+**Channel / teaming economics (when the RFP allows subcontractors or a prime/teaming arrangement).** If a partner refers the opportunity, the referral pays the partner a MAX of 10% of the GROSS MONTHLY SERVICE INVOICE only (not hardware, not one-time/onboarding fees). The alternative is a RESALE markup the partner sets on top of Technijian's rate. Never write "10–20%" or an open-ended "ongoing %." State it explicitly in any teaming/subcontract exhibit.
+
 ## Stage 3 — Draft sections
 
 Standard RFP response structure (adapt to RFP-specified TOC):
@@ -117,6 +121,25 @@ Run every section through `technijian-voice`. RFP-specific extra gates:
 | RFP3 | Every claim has evidence (case study, certification, customer reference) — flag unsupported assertions |
 | RFP4 | Pricing assumptions explicit ("assumes 50 users; +$X per user above 50") |
 | RFP5 | No copy-paste from prior RFPs without re-validation against current RFP requirements |
+| RFP6 | Pricing grounded in the real 2026 rate card — never invent numbers; present a blended US-led rate and do NOT expose the offshore/India cost basis on any client-facing page |
+| RFP7 | No fabricated proof — no invented certifications, metrics, customer outcomes, quotes, or stats; unconfirmed figures flagged "confirmed at discovery" |
+| RFP8 | Capability honesty — not-yet-built items framed as a dated near-term build, never as delivered |
+| RFP9 | Past performance uses real anonymized industry profiles (scope + effort only, NO fabricated outcome metrics) |
+
+### Conversion mechanics (executive summary + pricing narrative)
+
+Even an RFP response is a sell. When the format allows narrative (cover letter, executive summary, pricing approach):
+
+- **Right-size comparison anchors.** An inflated vendor-stack or "savings" number REDUCES credibility with a procurement evaluator. Keep anchors defensible.
+- **Proactively rebut the known prior objection** (e.g., "single-vendor risk," "offshore concern") instead of letting the evaluator score it against you.
+- **Quantify the cost of inaction** the procurement is trying to solve, in their terms.
+- **One dated CTA + explicit risk-reversal** where the format permits a call to action (e.g., a free Nexus Assess, below). Never "use the Book-a-Meeting button in my signature."
+- **Quick-win on-ramp:** offer a free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + M365 review) as the low-friction next step / pilot on-ramp.
+
+### ROI / value framing (if the RFP asks for a value or savings narrative)
+
+- Show ROI as a **range** (very-conservative floor + likely + upside), not a single number.
+- NEVER lead with a sub-1× floor optic. Relabel the floor "Downside-Protected" and lead the prose/callout with the **expected (~likely) case**.
 
 ## Stage 5 — Compliance validation
 
@@ -127,6 +150,8 @@ Before render, validate:
 - All RFP-required attachments included (per Stage 1 checklist)
 - Pricing math correct (total = sum of line items)
 - Submission method confirmed (email vs portal vs hardcopy)
+
+**Verify-before-done (mandatory — never declare a section "done" unverified).** Render EVERY output page to an image and visually proofread at display size. Use a **body-region fill metric** (header/footer excluded) to catch whitespace, short pages, and stranded captions before the response goes out. A page that "passes" overall height can still have clipped or stranded content — check the body region, not just the page box.
 
 ## Stage 6 — Assemble
 
@@ -152,6 +177,16 @@ RFP-Responses/
 
 Combined PDF assembly: use `pdf` skill to concatenate sections in order.
 
+### Build mechanics (DOCX / diagram / PDF)
+
+- **docx-js spread gotcha:** SPREAD helper functions into the children array (`...sectionHeader()`, `...numberedSteps()`) — if you push the function result un-spread, docx emits an invalid `<0/>` token and Word won't open the file. After every build, validate `word/document.xml` is well-formed (no `<0/>`).
+- **DOCX→PDF:** convert via `docx2pdf` (`py -3.12 docx-to-pdf.py`). Convert files **SEQUENTIALLY, never in parallel** — Word COM wedges under concurrency. If it locks, clear `Normal.dotm` and retry.
+- **Diagrams (HTML + Playwright PNG → docx/PDF):** auto-crop each PNG to its content plus a small uniform margin; DERIVE each figure's aspect ratio from the REAL PNG pixel dimensions (never hardcode AR — it drifts and distorts/strands figures); for long y-axis labels use a fixed-width bar rotated about its center so the label can't overflow the plot.
+
+### Companion concept brief (optional but recommended)
+
+Alongside the full response, produce a forwardable **1-page concept brief** for the evaluator's executive sponsor: a self-contained HTML page → Playwright → single Letter page. It distills the win themes and ask so a champion can forward it internally without sending the whole package.
+
 ## Brand specs
 
 Same as proposal/report (Open Sans, Core Blue headings, Brand Grey body). Add an RFP-specific cover page:
@@ -161,6 +196,12 @@ Same as proposal/report (Open Sans, Core Blue headings, Brand Grey body). Add an
 - RFP title + RFP number
 - "Submitted by: Technijian" + date
 - Confidentiality notice (per RFP requirements)
+
+**Brand canon (single source of truth = `assets/brand-tokens.json` — read/sync values from it; any hardcoded colors here are a cached convenience, not the authority):**
+- **Tagline:** "technology as a solution" (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it.
+- **Main contact / CTA number:** the switchboard **949.379.8499** (reaches USA + India). Use this on the cover, contact block, and any CTA. 949.379.8500 is Sales-direct only; 949.379.8501 is Billing-direct only — do not use either as the general contact.
+- **Logos:** use the REAL logos — full-color on light backgrounds, reverse-white on dark — centered.
+- **Offices:** two — Irvine HQ (18 Technology Dr Ste 141, Irvine, CA 92618) + Panchkula, India delivery center.
 
 ## Win-rate discipline
 

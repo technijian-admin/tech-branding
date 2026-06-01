@@ -21,6 +21,8 @@ npm install docx
 
 ## Brand Colors (no # prefix in docx-js)
 
+**Single source of truth**: `assets/brand-tokens.json`. Read/sync colors from it at build time and strip the leading `#` for docx-js. The hardcoded hex values below are a cached convenience for quick reference — if they ever disagree with `brand-tokens.json`, the JSON wins.
+
 ```javascript
 const CORE_BLUE = "006DB6";
 const CORE_ORANGE = "F67D4B";
@@ -181,7 +183,7 @@ Date:                                      Date:
 ### Header/Footer
 
 - **Header**: Full-color logo (left-aligned, 140px wide), blue underline, "CONFIDENTIAL" right-aligned (if applicable)
-- **Footer**: "Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8500" + "Page X of Y", grey text
+- **Footer**: "Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8499" + "Page X of Y", grey text. Use the MAIN switchboard 949.379.8499 on legal documents — NOT 949.379.8500 (that is Sales-direct only) and NOT 949.379.8501 (Billing-direct only).
 
 ### Page Setup
 
@@ -248,14 +250,28 @@ Every agreement cover page should include:
 
 End the document with a full-width Core Blue banner containing contact information in white text.
 
+## Brand & Honesty Constraints
+
+These apply to every generated agreement (item J + H):
+
+1. **Tagline**: "technology as a solution" — lowercase, no period. The old "Technology Support, Your Way." is RETIRED; never use it anywhere (cover, footer, CTA banner).
+2. **Main contact number**: 949.379.8499 (the switchboard, reaches USA + India). Use it on the footer, cover, and CTA banner. 949.379.8500 is Sales-direct ONLY; 949.379.8501 is Billing-direct ONLY — do not put those on a legal document.
+3. **Logos**: use the REAL Technijian logos — full-color on light backgrounds (cover, header), reverse-white on dark/blue backgrounds (blue CTA banner) — and center them. Do not recolor or substitute.
+4. **Brand colors**: read from `assets/brand-tokens.json` (single source of truth); the hex constants above are a cached convenience.
+5. **Two offices**: Irvine HQ — 18 Technology Dr., Ste 141, Irvine, CA 92618; plus the Panchkula, India delivery center. The footer address is the Irvine HQ; reference the India delivery center only where the agreement's notices/operations clauses call for it.
+6. **No fabrication**: do not insert invented facts, party details, dates, dollar amounts, metrics, certifications, or "case study" outcomes into a legal template. Leave bracketed placeholders (e.g. `[Client Name]`, `[Effective Date]`, `[Fee]`) for anything not provided. Frame any not-yet-built capability honestly — never represent a planned service as already delivered. Compliance language stays "support compliance posture", never "ensure compliance".
+
 ## Disclaimer
 
 All generated legal documents are templates. They MUST be reviewed and approved by qualified legal counsel before being sent to clients or used in business transactions. Technijian assumes no liability for the use of template documents without proper legal review.
 
 ## Logo Path
 
+Use the full-color logo on light backgrounds (cover, header) and the reverse-white logo on dark/blue backgrounds (the Core Blue CTA banner). Confirm exact filenames against `assets/logos/` — do not hardcode a path that may have drifted.
+
 ```
-assets/logos/png/technijian-logo-full-color-600x125.png
+assets/logos/png/technijian-logo-full-color-600x125.png   # light backgrounds
+assets/logos/png/  (reverse-white variant)                # dark / blue CTA banner
 ```
 
 ## Related Skills

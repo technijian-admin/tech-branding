@@ -45,6 +45,15 @@ Same palette as technijian-datasheet:
 --grey: #59595B;  --light-grey: #E9ECEF;  --off-white: #F8F9FA;
 ```
 
+> **Single source of truth:** these hex values are a cached convenience. The authoritative brand values live in `assets/brand-tokens.json` — read/sync colors, fonts, tagline, logos, phone numbers, and office addresses from it before each build so the brochure never drifts from canon.
+
+## Brand Essentials (read brand-tokens.json, do not hardcode from memory)
+
+- **Tagline:** `technology as a solution` (lowercase, no trailing period). The old "Technology Support, Your Way." is RETIRED — never use it on a cover, back cover, or anywhere.
+- **Primary contact / CTA number:** the main switchboard **949.379.8499** (reaches USA + India). Do NOT put 949.379.8500 (Sales-direct only) or 949.379.8501 (Billing-direct only) on the brochure CTA/contact block.
+- **Logos:** use the REAL logo files — full-color logo on light pages, reverse-white logo on dark pages (cover/back) — centered. Never recreate the wordmark in CSS text.
+- **Two offices:** Irvine HQ (18 Technology Dr, Ste 141, Irvine, CA 92618) + Panchkula, India delivery center. Reference both where addresses appear.
+
 ## Typography
 
 Same as technijian-datasheet: Plus Jakarta Sans (display) + DM Sans (body).
@@ -105,6 +114,7 @@ Same as technijian-datasheet: Plus Jakarta Sans (display) + DM Sans (body).
 - Title: "Proven" + orange "Results"
 - 5 case study cards (stacked): off-white/white alternating
 - Each card: tag badge, title, description, 3 metric pills
+- **Honesty discipline (this service is launching — no completed client projects):** use ANONYMIZED industry profiles (e.g. "Regional Healthcare Group", "Mid-Market Manufacturer"), never real client names. Describe SCOPE and EFFORT only. Do NOT fabricate outcome metrics, percentages, ROI, quotes, or stats for the "metric pills." If a number is genuinely directional, label it an estimate "confirmed at discovery," or drop the metric pills entirely and let scope speak. Frame any not-yet-built capability as a dated NEAR-TERM BUILD, never as already delivered.
 
 ### Page 5: Engagement Models + Industries (White + Dark)
 - White top: 4 engagement model cards (2x2 grid)
@@ -115,6 +125,8 @@ Same as technijian-datasheet: Plus Jakarta Sans (display) + DM Sans (body).
 - Blue top half: large CTA heading, two buttons (solid orange + outlined white), contact info
 - Dark bottom half: accent line, "What You Get" bullet list, company name + tagline
 - Footer bar
+- **CTA contact block:** use the main switchboard **949.379.8499** + website (from brand-tokens.json). Both office addresses (Irvine HQ + Panchkula). Reverse-white logo, centered. Tagline `technology as a solution` (lowercase, no period).
+- **Low-friction on-ramp (the easy yes):** lead the primary CTA with the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + Microsoft 365 review). It is the lowest-commitment first step — make it the prominent solid-orange button, with the strategic engagement as the secondary ask. Give the reader ONE clear next action, not a wall of options.
 
 ## Dark vs Light Page Alternation
 
@@ -184,13 +196,14 @@ Mix dark and light pages to create visual rhythm:
 ## Verification Workflow
 
 After generating the PDF, ALWAYS:
-1. Take screenshots of EACH page (crop to page boundaries)
-2. Read each screenshot image to visually verify
+1. Take screenshots of EACH page (crop to page boundaries) — render EVERY page, not a sample
+2. Read each screenshot image to visually verify at its intended display size
 3. Check for: text overflow, clipping, alignment, readability, visual hierarchy
 4. Check dark pages for contrast and legibility
 5. Check card spacing and grid alignment
-6. If issues found, edit the HTML and regenerate
-7. Only declare complete when ALL pages are visually verified as professional
+6. **Body-region fill check:** measure how much of each page's content area (header/footer excluded) is actually filled. A page that passes a fixed-height test can still be half-empty or have a stranded caption/short last column. Catch whitespace, short pages, and stranded captions before declaring done.
+7. If issues found, edit the HTML and regenerate
+8. Only declare complete when ALL pages are visually verified as professional — never declare done unverified
 
 ## PDF Generation
 

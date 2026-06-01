@@ -123,7 +123,7 @@ Single 8.5×11in page with:
 - 3-card row: investment / annual return / 5-year NPV
 - Assumptions block (light grey, citations in 9pt)
 - Sensitivity table: ROI at low/expected/high adoption
-- CTA: "30-min ROI workshop with our solutions architect — 949.379.8500"
+- CTA: "30-min ROI workshop with our solutions architect — 949.379.8499" (main switchboard; 949.379.8500 is Sales-direct only, 949.379.8501 Billing-direct only). Even better low-friction on-ramp: offer a free **Nexus Assess** (Network Detective: internal + external vulnerability scan + M365 review) as the dated first step — it gives the prospect a concrete reason to say yes before committing to the full engagement.
 
 ### C — Slide for proposal/QBR
 A single slide with the payback hero number + 3 supporting stats + assumption footer.
@@ -137,6 +137,10 @@ A single slide with the payback hero number + 3 supporting stats + assumption fo
 5. **Ranges over precision.** "$180K–$240K avoided" beats "$209,847.00 avoided" — shows you understand uncertainty.
 6. **Include break-even sensitivity.** What if adoption is 50%? 25%? Buyers respect honest scenarios.
 7. **No 10x/100x claims** without a pilot. AI ROI especially — ground in observed data, not vendor marketing.
+8. **ROI as a three-point RANGE, but never lead with the floor.** Present very-conservative floor + likely + upside. NEVER open the reader with a sub-1× floor optic — it kills the deal before they reach the expected case. Relabel the floor "Downside-Protected" and lead the prose, the hero number, and any callout with the **expected (~likely) case**. Why: buyers anchor on the first number they see; a sub-1× anchor reads as "this might not pay back."
+9. **Ground pricing in the real 2026 rate card — never invent numbers.** The investment side traces to the actual rate card (see technijian-pricing); flag any input not yet confirmed as an estimate "confirmed at discovery." Do NOT expose the offshore/India cost basis on a client-facing page — present a single blended US-led rate.
+10. **Honesty discipline.** No fabricated proof, metrics, case-study outcomes, quotes, or stats. The service is launching — there are no completed client projects, so use anonymized industry profiles (scope + effort only, no invented outcome numbers). Frame any not-yet-built capability as a dated NEAR-TERM BUILD, never as already delivered.
+11. **Right-size comparison anchors.** An inflated vendor-stack or savings number REDUCES credibility — a defensible mid-range number that survives scrutiny wins more deals than a flashy one that doesn't. Always quantify the cost-of-inaction (status-quo bleed) as the honest counterweight.
 
 ## Anti-patterns (do not produce)
 
@@ -145,6 +149,11 @@ A single slide with the payback hero number + 3 supporting stats + assumption fo
 - ROI driven entirely by avoided breach (over-reliance on tail risk)
 - 5-year NPV using a discount rate you can't justify
 - ROI summary without a sources block
+- Leading the reader with a sub-1× "floor" number (relabel "Downside-Protected"; lead with the expected case)
+- A single false-precision point estimate ("$209,847 ROI") instead of a floor / likely / upside range
+- Fabricated case-study outcomes or pilot metrics — model with anonymized scope/effort only; flag unconfirmed inputs as "confirmed at discovery"
+- Exposing the offshore/India cost basis on a client-facing page — present a blended US-led rate
+- Channel/referral ROI that promises a partner an open-ended "ongoing %" or "10–20%" — a client/channel REFERRAL pays the partner a MAX of 10% of the GROSS MONTHLY SERVICE INVOICE only (not hardware, not one-time); the alternative is a resale markup the partner sets. Model channel economics within that cap.
 
 ## Workflow
 
@@ -155,7 +164,8 @@ A single slide with the payback hero number + 3 supporting stats + assumption fo
 4. Generate the one-page HTML summary
 5. Run technijian-voice over the summary
 6. Run technijian-design-review on the PDF
-7. Send the XLSX (so they can stress-test) + PDF (the headline)
+7. **Verify before done:** render EVERY output page/slide to an image and visually proofread it at display size. Use a body-region fill metric (header/footer excluded) to catch whitespace, short pages, or a stranded sensitivity table. Confirm the hero number leads with the expected case (not the floor) and the contact line shows 949.379.8499. Never declare done unverified.
+8. Send the XLSX (so they can stress-test) + PDF (the headline)
 ```
 
 ## Related skills

@@ -47,7 +47,20 @@ For embedding in brochures/datasheets, also export a PNG via Playwright:
 page.set_content(html_fragment); page.locator('.tj-diagram').screenshot(path='diagram.png')
 ```
 
+### PNG export discipline (crop + aspect ratio)
+
+When the diagram PNG is placed into a docx/PDF, two failures distort or strand figures. Avoid both:
+
+1. **Auto-crop each PNG to its content plus a small uniform margin.** Screenshotting the `.tj-diagram` locator (not the whole viewport) gets you most of the way, but trim residual whitespace so the figure does not float in a sea of padding when scaled into a column. Pillow `Image.getbbox()` on the inverted image gives the content box; pad it by an equal margin on all sides before saving.
+2. **DERIVE each figure's aspect ratio from the REAL PNG pixel dimensions — never hardcode AR.** Read `width, height = Image.open(png).size` at embed time and size the docx/PDF picture from that ratio. A hardcoded AR drifts as you tweak the SVG `viewBox` and silently distorts the figure or strands it in the wrong slot. Compute the placed width, then set height = width × (h_px / w_px).
+
+### Long y-axis / category labels (overflow fix)
+
+For bar/quadrant/timeline diagrams with long left-side labels, do NOT let the label run into the plot. Reserve a **fixed-width label column (a bar of constant width) and rotate the text about its own center** inside that column, so a long label cannot overflow the plot area regardless of length. Truncating or wrapping is acceptable only inside that reserved width.
+
 ## Brand tokens (read from brand-tokens.json)
+
+`assets/brand-tokens.json` is the SINGLE SOURCE OF TRUTH for color/typography. READ it at build time and sync these hex values from it — the constants below are a cached convenience for reference, not authority. If a token drifts in the JSON, the diagram must follow the JSON, not this snippet.
 
 ```js
 const C = {
@@ -163,10 +176,19 @@ Vertical layered diagram: Orchestrator → Agents → Tools → Models → Data.
 1. Pick the closest template type from the 14 above
 2. Sketch the structure in plain text first (nodes + edges)
 3. Compute coordinates on a 4px grid
-4. Build the SVG with brand tokens
-5. Render via Playwright to PNG; embed in target artifact
-6. Run technijian-design-review on the host artifact
+4. Build the SVG with brand tokens (synced from brand-tokens.json)
+5. Render via Playwright to PNG; auto-crop + derive AR from real pixels; embed in target artifact
+6. VERIFY before done: open the rendered PNG and proofread it at its display size in the host artifact
+7. Run technijian-design-review on the host artifact
 ```
+
+## Verify before done (never declare done unverified)
+
+A diagram that looks fine in the SVG can still fail once rasterized and scaled into a doc. Always:
+- **Open the final PNG and read every label at its display size.** Sub-12px or clipped text that survived the SVG check shows up here.
+- **Check for stranded captions and dead whitespace** — a figure that scaled smaller than its allotted box leaves a gap; re-crop or re-fit rather than shipping the gap.
+- **Confirm the figure aspect ratio in the host doc matches the source** (no horizontal/vertical squish from a wrong AR).
+- Do not declare the diagram done until you have visually inspected the embedded result, not just the source SVG.
 
 ## Related skills
 

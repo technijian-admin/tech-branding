@@ -19,6 +19,10 @@ Dark Charcoal: #1A1A2E  Brand Grey: #59595B    Off White: #F8F9FA
 Light Grey: #E9ECEF     White: #FFFFFF
 ```
 
+> **Single source of truth**: `assets/brand-tokens.json` holds the authoritative colors, tagline, logos, phone lines, and addresses. The hex values above are a cached convenience for inline-CSS speed — if anything looks off or you're unsure, read/sync from `brand-tokens.json` rather than trusting a pasted value, because hardcoded copies drift.
+
+> **Tagline**: "technology as a solution" — lowercase, no period. The old **"Technology Support, Your Way."** is RETIRED — never use it in subject lines, body, alt text, or footers.
+
 ## Email Template Types
 
 ### 1. Monthly Newsletter
@@ -92,10 +96,17 @@ Light Grey: #E9ECEF     White: #FFFFFF
 <strong>Technijian</strong><br>
 18 Technology Dr., Ste 141<br>
 Irvine, CA 92618<br>
-949.379.8500 | technijian.com
+949.379.8499 | technijian.com
 ```
 
 Always include: Social links (LinkedIn, X, Facebook), Unsubscribe link, Manage Preferences link.
+
+**Phone lines** — pick by purpose; default to the main line for footers and CTAs:
+- **949.379.8499** — MAIN switchboard (reaches USA + India). Use on footers, contact lines, and any general CTA.
+- **949.379.8500** — Sales DIRECT only.
+- **949.379.8501** — Billing DIRECT only.
+
+**Two offices** (pull exact strings from `assets/brand-tokens.json`): Irvine HQ — 18 Technology Dr., Ste 141, Irvine, CA 92618; Panchkula, India delivery center.
 
 ## Email Copy Guidelines
 
@@ -110,7 +121,13 @@ Always include: Social links (LinkedIn, X, Facebook), Unsubscribe link, Manage P
 - **One CTA per email section** - don't overwhelm with choices
 - **Lead with benefit** - what does the reader gain?
 - **Short paragraphs** - 2-3 sentences max per paragraph
-- **Clear CTA** - "Schedule a Call" beats "Click Here"
+- **Clear CTA** - "Schedule a Call" beats "Click Here"; make the contact actionable in the body (949.379.8499 or a real scheduling link)
+- **Low-friction on-ramp** - the easiest first "yes" is the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + M365 review). Offer it as the lead CTA in cold/expansion outreach.
+
+### Honesty Discipline (applies to all email copy)
+- **No fabricated proof** - never invent metrics, case-study outcomes, customer quotes, or stats. The service is launching, so there are no completed client projects to cite; use anonymized industry profiles (scope/effort only).
+- **Dated near-term builds** - frame any not-yet-shipped capability as a dated near-term build, never as already delivered.
+- **Estimates are estimates** - flag any number as an estimate to be "confirmed at discovery."
 
 ### Newsletter Specific
 - **2-3 articles per newsletter** - not more
@@ -118,12 +135,18 @@ Always include: Social links (LinkedIn, X, Facebook), Unsubscribe link, Manage P
 - **Include a "Quick Tips" section** for practical value
 - **End with a call-to-action banner** (contact us, schedule a review)
 
+### Verify Before Sending
+Never declare an email done unverified. Preview the **rendered** message (not the raw HTML source) at send size and confirm:
+- The signature/footer shows the correct phone line (default 949.379.8499) and the current tagline; **no** retired "Technology Support, Your Way." string anywhere.
+- All merge fields (`[First Name]`, `[Company]`, dates) are filled — no placeholder leaks.
+- Every link resolves and the logo loads with correct alt text.
+
 ## Logo for Email
 
 Use the hosted logo URL in all email templates:
 ```
 <!-- Replace with actual hosted URL -->
-<img src="https://technijian.com/assets/technijian-logo.png" alt="Technijian - Technology as a Solution" width="200">
+<img src="https://technijian.com/assets/technijian-logo.png" alt="Technijian - technology as a solution" width="200">
 ```
 
 Recommended source file: `assets/logos/png/technijian-logo-full-color-600x125.png`

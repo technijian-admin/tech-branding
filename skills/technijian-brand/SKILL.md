@@ -20,11 +20,26 @@ Use this skill to apply Technijian's official brand identity to any content. Thi
 - **Tagline**: "technology as a solution" (lowercase, no period — the official Technijian tagline as of 2026-05-06)
 - **Retired tagline (do NOT use):** "Technology Support, Your Way."
 - **HQ**: 18 Technology Dr., Ste 141, Irvine, CA 92618
-- **Phone**: 949.379.8500
+- **Delivery Center**: Panchkula, India (second office — staffs the 24/7 global support)
+- **Phone (main / CTA)**: 949.379.8499 — the MAIN switchboard (reaches USA + India). Use this on letterhead, business cards, contact blocks, and any call-to-action.
+  - 949.379.8500 = **Sales direct** only (use only when the context is explicitly "call our sales line")
+  - 949.379.8501 = **Billing direct** only (use only for billing/AR contexts)
 - **Website**: technijian.com
 - **Contact**: rjain@technijian.com
 
+> **Single source of truth:** All brand values (colors, tagline, phone, addresses, logo paths) live in `assets/brand-tokens.json`. Read/sync from it rather than relying on values hardcoded in this file — the hardcoded values below are a cached convenience and can drift. If a value here disagrees with `brand-tokens.json`, `brand-tokens.json` wins.
+
+### Logos
+
+- Use the **real, approved logos** — never recreate, restyle, or substitute the wordmark.
+  - **Full-color logo** on light backgrounds.
+  - **Reverse-white logo** on dark backgrounds (e.g. Dark Charcoal hero sections).
+- **Center** the logo (CSS-centered); do not stretch, recolor, add effects, or crowd it.
+- Logo file paths are tracked in `assets/brand-tokens.json` — resolve them from there.
+
 ### Color Palette
+
+> These hex values are a cached copy. The authoritative palette lives in `assets/brand-tokens.json` — read/sync from it; never hardcode a color that isn't in the token file.
 
 **Primary Colors:**
 
@@ -161,3 +176,7 @@ When creating any Technijian-branded content:
 8. **Never guarantee compliance outcomes** - Say "navigate" not "guarantee"
 9. **Lead with client challenges**, then present solutions
 10. **Avoid buzzword stacking** - No "synergistic end-to-end digital transformation"
+11. **Use the main number for contact/CTA** - 949.379.8499 on letterhead, cards, contact blocks, and CTAs. Reserve 8500 (Sales) and 8501 (Billing) for those specific contexts only.
+12. **Honesty discipline (no fabrication)** - Never invent proof, metrics, case-study outcomes, customer quotes, or stats. The AI/SEO/Dev offerings are launching, so there are no completed client projects — use anonymized industry profiles (scope + effort only). Frame any not-yet-built capability as a dated near-term build, never as already delivered. Flag projected figures as estimates "confirmed at discovery."
+13. **Verify before done** - Render every output page/slide to an image and visually proofread it at display size before declaring it finished. Check the body region (excluding header/footer) for fill: catch whitespace, short pages, and stranded captions. Never declare an artifact done unverified.
+14. **CTA on-ramp** - Where a call-to-action fits, offer the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + Microsoft 365 review) as the low-friction first step. Pair any CTA with one dated, in-document next step — never "use the button in my signature."

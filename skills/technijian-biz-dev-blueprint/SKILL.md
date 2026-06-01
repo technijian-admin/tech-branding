@@ -3,13 +3,18 @@ name: technijian-biz-dev-blueprint
 description: Generate an AI-Driven Digital Business Development Blueprint for a Technijian prospect or client. A research-driven, client-specific branded DOCX + PDF report that shows exactly how AI transforms their business development function — with Technijian products named and priced as the implementation partner. Section count, persona count, and diagrams are determined by research, not fixed in advance.
 ---
 
-# Technijian AI-Driven Business Development Blueprint
+# Technijian AI Growth & Integration Strategy (AI-Driven Business Development Blueprint)
 
 ## Overview
 
-Generates a premium branded consulting deliverable (typically 40–70 pages depending on client complexity) that shows a prospect or client *exactly* how AI transforms their business development function — with Technijian products named and priced as the implementation partner.
+Generates a premium branded consulting deliverable (typically 20–70 pages depending on client complexity) that shows a prospect or client *exactly* how Technijian helps them on two fronts at once — with Technijian products named and priced as the implementation partner:
 
-**Keywords**: business development, AI blueprint, growth strategy, personas, competitive landscape, ROI, roadmap, DOCX, biz dev, digital transformation
+- **Growth** — get found, capture demand, and win more deals (AEO/SEO, account intelligence, RFP automation, reputation, the right outbound motion for their GTM).
+- **Integration & efficiency** — weave AI into how the business actually runs (knowledge retention, document/RFP automation, booking/scheduling, quality control, audit-evidence) so the team does more with less and revenue-per-head climbs.
+
+This works for **any company in any industry** — engineering firms, DME suppliers, fuel distributors, smart-card manufacturers, professional services, local consumer businesses. The research drives which growth and which integration plays matter for *this* client; never copy another client's mix.
+
+**Keywords**: AI growth strategy, AI growth and integration study, business development, AI blueprint, growth roadmap, AI efficiency, personas, competitive landscape, ROI, roadmap, DOCX, biz dev, digital transformation
 
 **Canonical example**: `Clients/RKE/build-rke-report.js` — first full implementation (RK Engineering Group, Newport Beach, 2026-05-18).
 
@@ -189,6 +194,12 @@ Do not default to the RKE three-diagram set. For each potential diagram, ask: *d
 
 **Skip a diagram if**: the same information reads better as a table or bullet list. A diagram earns its page — if it doesn't add clarity, cut it.
 
+### Diagram build discipline (PNG → docx) — prevents stranded / distorted figures
+
+- **Auto-crop every rendered PNG** to its content plus a small uniform margin before embedding. Uncropped screenshots carry stray whitespace that strands the figure or shrinks the live content; crop kills it.
+- **DERIVE each figure's aspect ratio from the REAL PNG pixel dimensions** (read width/height off the cropped file), then size the docx image to that AR. Never hardcode an aspect ratio — a hardcoded AR drifts as content changes and distorts the figure or leaves a gap.
+- **Long y-axis labels:** render the label inside a fixed-width bar rotated about its own center, so a long label can never overflow the plot area or collide with the bars.
+
 ---
 
 ## Phase 5: Technijian Capability Proof
@@ -283,6 +294,10 @@ Model the headline ratio against the **ENTRY program** (small denominator → st
 | Modeled ROI ratio (vs. entry) | Nx / Mx / Px |
 | Full-engine investment (entry + expansion) | $Y (shown as the upsell, not the ask) |
 
+**ROI as a range — never lead with a sub-1× optic.** Show three scenarios (very-conservative floor, likely, upside). If the very-conservative floor lands below 1×, do NOT lead the reader with it — relabel that row **"Downside-Protected"** and lead the prose, the callout, and the headline ratio with the *expected (~likely)* case. A floor that reads as "you lose money" tanks the easy-yes even when the likely case is strong.
+
+**Do not expose the offshore/India cost basis on a client-facing page.** Present a single blended **US-led** rate. The India rate card (and any per-component cost stack) is internal margin math — citing it client-side invites rate-shopping and erodes the price. Bundled price + a transparent *US* labor-rate table is the professional norm.
+
 Use real pricing from:
 - `services/My SEO/assets/my-seo-content.txt`
 - `services/My AI/assets/my-ai-content.txt`
@@ -364,6 +379,8 @@ A distilled, branded PDF that mirrors the full plan's narrative arc but at one-t
 | 6 | Roadmap diagram + Next Step CTA card | Section 12 timeline diagram + CTA |
 
 Reuse the already-rendered `architecture.png` and `timeline.png` from the full plan. No new diagrams.
+
+**Even lighter option — a 1-page Concept Brief.** When the recipient is a busy executive who won't open a 4–7-page summary either, build a single self-contained Letter page (HTML → Playwright → one PNG/PDF) that a champion can forward as-is: the gap, the engine in one diagram, the entry program + ROI-vs-entry, and the dated CTA. Same brand tokens. This is the most forwardable artifact in the set — use it as the attachment when even the Executive Summary is too long.
 
 ### File structure
 
@@ -462,7 +479,7 @@ Embed Lucide icons as inline SVG (MIT license). No external CDN — embed SVG pa
 
 ```
 Clients/[ClientCode]/
-  build-[clientcode]-report.js    ← docx-js builder (single file, reads brand-tokens.json)
+  build-[clientcode]-report.js    ← docx-js builder (single file, reads brand-tokens.json — see Brand anchors below)
   generate-diagrams.py            ← Playwright HTML → PNG renderer
   diagrams/
     architecture.png              ← Figure 9.0
@@ -523,6 +540,17 @@ page: {
 
 Remove `pageBreakBefore: true` from Heading1 style. Use `spacing.before: 480` + `keepNext: true` instead. This prevents orphan pages when a section ends mid-page. Cover and TOC are the only forced page breaks.
 
+### Brand anchors (read from `assets/brand-tokens.json` — single source of truth)
+
+`assets/brand-tokens.json` is the SINGLE SOURCE OF TRUTH for every brand value; read/sync from it and never hardcode. Any hex literals in this skill or in templates are a cached convenience only — if they disagree with brand-tokens.json, brand-tokens.json wins. Non-negotiables for this deliverable:
+
+- **Tagline:** "technology as a solution" (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it.
+- **Contact / CTA number:** the main switchboard **949.379.8499** (reaches USA + India). 949.379.8500 is Sales-direct only; 949.379.8501 is Billing-direct only — do not put those on the cover/About/contact table.
+- **Logos:** use the REAL logos — full-color on light backgrounds, reverse-white on dark — centered.
+- **Two offices:** Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula India delivery center.
+
+(Master reference: `technijian-brand`.)
+
 ---
 
 ## PDF Generation (Word COM)
@@ -572,6 +600,10 @@ Run `technijian-voice` skill on the full draft text before inserting into docx-j
 - [ ] Persona dots in quadrant: numbered, no overlap
 - [ ] Architecture columns: headers not crashing, icon circles aligned
 
+### Gate 5: Render-every-page + body-region fill check (never declare done unverified)
+- [ ] Render EVERY page of the PDF (and the Executive Summary / concept brief) to an image and actually look at it at display size — page-height-only checks pass while content silently clips or strands.
+- [ ] Compute a **body-region fill metric** per page — the filled area within the body region, with the header/footer band EXCLUDED. Flag any page whose body region is mostly empty: it's a short page, a stray page break, or a stranded callout/caption. A full *page* height can hide a half-empty *body*.
+
 ---
 
 ## Service Investment Defaults
@@ -609,6 +641,38 @@ This is a **business development consulting document**, not a marketing brochure
 8. **Match the growth framing to the GTM motion**: For account-based (ABM) clients — AEC, government, professional services, niche B2B — never use "lead generation", "fill your funnel", or "shotgun" language. Frame AI as account intelligence + RFP automation + targeted per-account outreach *under* their existing named-account strategy. See Phase 0.2.
 
 ---
+
+## Field-tested refinements (CDLX / CardLogix, 2026-05)
+
+These are hard-won lessons from running the skill end-to-end on a real engagement that went through a live first meeting. Fold them in by default.
+
+### Fold in the real meeting transcript when one exists
+The blueprint is far stronger built *after* the first meeting than before. When a transcript or notes exist:
+- **Trace every claim to something the prospect actually said.** Quote them in your reasoning. An opportunity the client confirmed out loud ("this is a service you'd help us with") is *validated* — say so, and upgrade that row's confidence from "concept" to "validated in our [date] conversation." Don't leave it framed as a cold hypothesis when the client already warmed it.
+- **Let the prospect's own framing reshape the market section.** CDLX's Nick described a three-wave MFA-adoption story (federal → state/local → private via cyber-insurance) far wider than our cold research had it. His framing was more accurate and more expansive than ours — use the client's lens.
+- **Name the real incumbent to displace** from what they tell you (CDLX: phone-based MFA — Duo/Okta — not just the obvious hardware competitors).
+- **Rewrite "Next Steps" to mirror what was actually agreed**, not generic boilerplate.
+
+If the meeting hasn't happened, build from research but keep claims conservative and don't invent outcomes — then revise after.
+
+### Grounding pricing (do not fabricate rates)
+A wrong or invented number destroys trust faster than a missing one. Discipline:
+- **Managed-IT and labor rates come from the legal repo rate card** (`C:\VSCode\tech-legal\`, current standard = the latest MSA + Schedule C). Cite it as the basis. Real US rates (2026): Tech Support $150 normal / $250 after-hours / $125 contracted; CTO/vCIO $250/$350/$225. India Tech Support is a flat $150/hr standard, dropping to $15/$30 only under a cycle commitment — and its hour bands are **inverted** vs US ($15 = 7 PM–7 AM PT India daytime, $30 = 7 AM–7 PM PT night shift). US normal hours are Mon–Fri 7 AM–7 PM PT. See the `reference_technijian_labor_rates` memory; these are easy to get backwards.
+- **Productized "My X" services**: only **My SEO** has published tiers (`services/My SEO/assets/my-seo-content.txt`: Tier 1 $500 → Tier 5 $1,500/mo; add-ons AI Search Opt $200 / PR $150 / Content Syndication $200). **My AI, My Dev, My Security, My Compliance, My Cloud have NO published price** — use the Service Investment Defaults and label them "estimated, confirmed at quote." Never present an invented precise figure as fact.
+- Show a transparent **Labor Rates table** in the investment section so ad-hoc/project/CA-build work has no surprises. Do **not** expose the internal per-component cost stack (CrowdStrike $/endpoint, etc.) — bundled price + transparent labor rates is the professional norm and protects margin.
+- If you don't have a source for a number, **ask or omit** — do not fill the gap with a plausible-looking rate.
+
+### Lead the Quick Wins with a free Nexus Assess
+The strongest Quick Win is a concrete, branded, no-cost assessment — it converts "free advice" into a real first engagement. **Nexus Assess** is Technijian's brand for a Network-Detective-style IT risk assessment (the platform is "Nexus Assess + Pulse"; **Nexus Pulse** is the AI-pentest sibling — never call it "Technijian Nexus"). Feature language lives in `services/Nexus Assess Pulse-pre-release/`. Frame it as one free run covering internal vulnerability, external vulnerability (+ dark-web credential check), and a Microsoft 365 review, delivered as a prioritized remediation roadmap — and note it maps to the client's compliance frameworks so it doubles as a head start on their gap map. No pricing (it's the no-commitment hook).
+
+### Keep deep technical companion docs SEPARATE, cross-referenced
+When the engagement also needs a heavy technical/commercial analysis (e.g. the CDLX CloudHSM cost study), do **not** merge it into the blueprint. Different audience (BD-persuasion vs engineering), different shelf life (the blueprint is durable; technical list-pricing goes stale), different POV. Instead, add a short non-technical subsection in the blueprint that names it as a **companion deliverable** and points to it. The "complete strategy" is the *set* of documents, not one bloated PDF.
+
+### Build-pattern gotchas (these will bite you)
+- **Always spread helper calls that return arrays** into `docChildren`: `...sectionHeader(...)`, `...numberedSteps(...)`. A bare un-spread array (or a stray scalar) serializes as the invalid XML token `<0/>`, and **Word silently refuses to open the file** ("Word experienced an error trying to open the file") even though `node` built it without complaint. Diagnose any won't-open docx with `python -c "import zipfile,xml.dom.minidom as M; M.parseString(zipfile.ZipFile('...docx').read('word/document.xml'))"` — a stray `<0/>` is the tell.
+- **Convert DOCX→PDF sequentially, never in a parallel tool batch.** Parallel Word COM calls wedge Word so it fails to open *every* file. If it wedges: kill WINWORD, delete `%APPDATA%\Microsoft\Templates\Normal.dotm` (Word rebuilds it), clear `HKCU:\...\Word\Resiliency`.
+- **Watch for blank pages** from an explicit `pageBreak()` landing on an already-full boundary — render every page and check for empties; remove the redundant break and let content flow.
+- **Verify visually, and don't trust a flaky shell.** Render the PDF/diagram pages to PNG and actually look (cover logo real? tables not overlapping? no blank pages?). When the shell's text output is unreliable, trust the image reads and Word's own success/failure over echoed text.
 
 ## Related Skills
 

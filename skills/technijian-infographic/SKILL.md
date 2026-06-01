@@ -69,6 +69,13 @@ Top node = problem; tree branches down to multiple outcome leaves. Color leaves 
 
 ## Brand application
 
+`assets/brand-tokens.json` is the **single source of truth** for all brand values. Read/sync from it at build time — the CSS variables below are a cached convenience and can drift. Brand essentials an infographic must respect:
+
+- **Tagline (if shown):** `technology as a solution` — lowercase, no period. The old "Technology Support, Your Way." is **RETIRED — never use it**.
+- **Contact / CTA number:** the main switchboard **949.379.8499** (reaches USA + India). `949.379.8500` is Sales-direct only and `949.379.8501` is Billing-direct only — do not use either as a generic CTA.
+- **Logos:** use the REAL logo files (full-color on light, reverse-white on dark), centered — never recolor or recreate the wordmark.
+- **Two offices:** Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula India delivery center.
+
 Read tokens from `assets/brand-tokens.json`:
 
 ```css
@@ -112,6 +119,11 @@ Read tokens from `assets/brand-tokens.json`:
 5. **One typeface family per infographic.** Don't mix Plus Jakarta + Open Sans + serif.
 6. **Sources cited.** If a stat is from a 3rd party (Verizon DBIR, IBM Cost of Breach), credit at the bottom in 11px grey.
 7. **Logo placement:** bottom-right corner, 80–120px wide, full-color on light, white on dark.
+8. **No fabricated numbers or proof.** Never invent a stat, outcome metric, ROI figure, client result, or quote to fill a visual. The service is launching — there are no completed client projects, so do NOT present client names or "results"; use anonymized industry profiles (scope only). Frame any not-yet-built capability as a dated near-term build, never as delivered. Flag internal estimates as "confirmed at discovery".
+
+## Call to action
+
+If the infographic carries a CTA (social, blog hero, brochure filler), the low-friction on-ramp is the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + M365 review). Pair it with the main switchboard **949.379.8499**. Keep it to one clear ask — never a sales-direct/billing-direct number for a general CTA.
 
 ## Workflow
 
@@ -127,6 +139,13 @@ Read tokens from `assets/brand-tokens.json`:
 6. Embed in host (or use standalone for social/blog)
 7. Run technijian-design-review on the host artifact
 ```
+
+## Verify before done
+
+Never declare an infographic finished unverified:
+- **Render the actual output** (PNG/PDF) and visually proofread it at its real display size — check that every number, label, and source line is legible and on-brand.
+- For embedded page fillers, use a **body-region fill metric** (exclude header/footer) to catch whitespace, short pages, or stranded captions — a figure that passes a page-height check can still leave the content area sparse or clip a caption.
+- Confirm logo, tagline (if shown), and any CTA number match the brand essentials above.
 
 ## NotebookLM fallback
 

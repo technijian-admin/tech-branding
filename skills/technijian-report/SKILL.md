@@ -17,7 +17,23 @@ Generates Technijian-branded reports as DOCX files. All output follows the Techn
 npm install docx
 ```
 
+## DOCX Build Safety (must-follow)
+
+These two gotchas silently produce files Word refuses to open — bake them into every build:
+
+1. **SPREAD helper functions into `children`.** When a helper returns an array of paragraphs/tables (e.g. `sectionHeader()`, `numberedSteps()`, `metricCards()`), splat it: `children: [ ...sectionHeader("Findings"), ...riskTable(rows) ]`. Pushing the function or array un-spread makes docx emit an invalid `<0/>` token and Word won't open the document.
+2. **Validate the XML after every build.** Unzip the `.docx` and confirm `word/document.xml` is well-formed and contains no `<0/>` token before declaring the report done. A clean build that won't open is not done.
+
+## DOCX -> PDF Conversion
+
+When a PDF is also required, convert via **docx2pdf**: `py -3.12 docx-to-pdf.py`.
+
+- Convert files **sequentially, never in parallel** — Word COM wedges under concurrent conversions.
+- If conversion locks up, clear `Normal.dotm` (a corrupt/locked global template is the usual culprit) and retry.
+
 ## Brand Colors (no # prefix in docx-js)
+
+**Source of truth:** `assets/brand-tokens.json` holds the canonical brand values (colors, tagline, contact, logos). Read/sync from it at build time. The constants below are a cached convenience for docx-js (which needs hex without the `#`) — if they ever disagree with brand-tokens.json, brand-tokens.json wins.
 
 ```javascript
 const CORE_BLUE = "006DB6";
@@ -140,7 +156,10 @@ For key statistics (uptime, ticket counts, response times), use a large number f
 ### Header/Footer
 
 - **Header**: Full-color logo (left-aligned, 160px wide), blue underline
-- **Footer**: "Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8500 | technijian.com" + page number, centered, grey text
+- **Footer**: "Technijian | 18 Technology Dr., Ste 141, Irvine, CA 92618 | 949.379.8499 | technijian.com" + page number, centered, grey text
+  - Use the MAIN switchboard **949.379.8499** for any contact/CTA line (reaches USA + India). 949.379.8500 is Sales-direct ONLY and 949.379.8501 is Billing-direct ONLY — do not put those on a general report footer.
+  - **Tagline:** the only approved tagline is **"technology as a solution"** (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it. Place the tagline under the logo on the cover and/or in the footer.
+  - **Two offices:** Irvine HQ (18 Technology Dr., Ste 141, Irvine, CA 92618) is the default report address; Technijian also operates a **Panchkula, India delivery center** — include the India office in the About/contact block (or footer) when the engagement calls for showing the global footprint.
 
 ### Page Setup
 
@@ -163,6 +182,28 @@ page: {
 8. **Include "Next Steps" or "Recommendations"** — every report should end with clear actions
 9. **Mark confidential documents** — include "CONFIDENTIAL" on cover page and footer where appropriate
 10. **Date everything** — assessment period, report date, and recommendation timelines
+11. **No fabricated proof** — never invent metrics, case-study outcomes, customer quotes, or stats. If a number isn't measured, flag it as an estimate "to be confirmed at discovery." The service is launching, so cite anonymized industry profiles (scope + effort only), not named client outcomes.
+12. **Frame not-yet-built capability as a dated near-term build** — never describe a planned capability as already delivered.
+
+## Recommendation, Pricing & ROI Sections (when the report proposes work)
+
+QBRs, assessment recommendations, remediation roadmaps, and blueprint-style reports often recommend paid work. When they do, apply these rules so the report converts without overselling:
+
+- **Pricing from the real rate card.** Ground every estimate in the actual 2026 rate card — never invent numbers. Present a **blended US-led rate**; do NOT expose the offshore/India cost basis on a client-facing page.
+- **ROI as a range, never a sub-1x lead optic.** Show very-conservative floor / likely / upside. Relabel the floor **"Downside-Protected"** and lead the prose and any callout with the **expected (~likely)** case — never anchor the reader on a below-1x floor.
+- **Split the ask.** Separate a small, priced **"easy yes"** track (e.g. the free or low-cost first step) from the strategic later track, bracketed separately so the approver knows exactly what they're signing off on.
+- **One dated, in-document CTA + explicit risk-reversal.** Put a single dated call-to-action and a clear risk-reversal in the document itself; never "use the Book-a-Meeting button in my signature."
+- **Right-size comparison anchors.** An inflated vendor-stack or savings number REDUCES credibility — keep anchors realistic.
+- **Quantify the cost of inaction** and **proactively rebut the known prior objection** rather than waiting for it.
+- **Channel/referral economics (only if the report covers partnerships):** a client/channel REFERRAL pays the partner a MAX of **10% of the GROSS MONTHLY SERVICE INVOICE** only (not hardware, not one-time fees); the alternative is a RESALE markup the partner sets. Never write "10-20%" or an open-ended ongoing %.
+
+### Quick-win on-ramp (CTA)
+
+The lowest-friction first step / CTA is a free **"Nexus Assess"** assessment (Network Detective: internal + external vulnerability scan + M365 review). Use it as the "easy yes" track and the on-ramp to deeper engagements.
+
+### Forwardable Concept Brief (companion artifact)
+
+For a long report or blueprint, also produce a **1-page Concept Brief** an executive can forward: a self-contained HTML page rendered to a **single Letter page via Playwright**. It distills the recommendation, the expected-case ROI, the dated CTA, and the Nexus Assess on-ramp into one shareable page.
 
 ## Visual Design Elements
 
@@ -227,9 +268,19 @@ Every report cover page should include:
 6. Orange accent bar at bottom
 7. "CONFIDENTIAL" notice below
 
+## Verify Before Done (mandatory)
+
+A report is not done until it has been visually proofread, not just generated:
+
+1. Render **every page** of the final PDF to an image and view each at display size — catch overflow, clipped tables, stranded captions, and short/half-empty pages.
+2. Use a **body-region fill metric** (header/footer excluded) to flag pages that are mostly whitespace or where content silently clipped — page-height passing is not enough; check the content region itself.
+3. Confirm the cover, TOC page numbers, tables, and metric callouts all render correctly. Iterate until professional. Never declare done unverified.
+
 ## Logo Path
 
-Use the full-color logo for report headers:
+Use the REAL logos, centered (full-color on light backgrounds, reverse-white on dark backgrounds). Paths and the canonical color/contact values live in `assets/brand-tokens.json` — read from it rather than hardcoding.
+
+Full-color logo for report headers (light background):
 ```
 assets/logos/png/technijian-logo-full-color-600x125.png
 ```

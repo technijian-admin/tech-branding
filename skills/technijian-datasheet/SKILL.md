@@ -36,7 +36,14 @@ Services/[Service Name]/
 
 **Rule**: Only final deliverable PDFs go in the service root. All source files, scripts, screenshots, and intermediary assets go in `assets/`.
 
+## Honesty Discipline
+
+- No fabricated proof, metrics, SLAs, logos, quotes, or capabilities. Every spec must be real — confirm numbers against source, and flag any unconfirmed figure as an estimate "confirmed at discovery".
+- The service may be launching with no completed client projects — frame any not-yet-shipped capability as a dated NEAR-TERM BUILD, never as delivered. Use anonymized industry profiles (scope + effort only), never named-client claims with invented outcome metrics.
+
 ## Brand Colors
+
+`assets/brand-tokens.json` is the SINGLE SOURCE OF TRUTH for brand values — read it and sync colors/fonts/logos/tagline from it. The values below are a cached convenience that can drift; if they disagree with `brand-tokens.json`, the JSON wins.
 
 ```css
 --blue: #006DB6;        /* Primary brand, section headers, CTAs */
@@ -58,6 +65,12 @@ Services/[Service Name]/
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 ```
+
+## Brand Voice & Identity
+
+- **Tagline**: "technology as a solution" (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it.
+- **Logo**: use the REAL logo files in `assets/logos/` — reverse-white on the dark hero/footer, full-color on any light background; center it.
+- **Two offices**: Irvine HQ (18 Technology Dr Ste 141, Irvine CA 92618) + Panchkula India delivery center.
 
 ## Page Layout (US Letter: 8.5in x 11in)
 
@@ -128,19 +141,22 @@ Services/[Service Name]/
 ### CTA Bar
 - Blue gradient background with darker overlay on right 40%
 - White bold centered text with orange accent on key phrase
+- Offer the free **Nexus Assess** assessment (Network Detective: internal + external vulnerability scan + M365 review) as the low-friction first step / on-ramp CTA where a CTA fits.
+- Contact number on any CTA/contact line is the MAIN switchboard **949.379.8499** (reaches USA + India). Do NOT use 949.379.8500 (Sales-direct only) or 949.379.8501 (Billing-direct only).
 
 ### Footer
 - Near-black background
-- Small grey text: copyright, address, website
+- Small grey text: copyright, address, website, main line 949.379.8499
 
 ## Verification Workflow
 
 After generating the PDF, ALWAYS:
 1. Take a full-page screenshot of the PDF or HTML
-2. Read the screenshot image to visually verify
+2. Read the screenshot image to visually verify at display size
 3. Check for: text overflow, clipping, alignment, readability, color accuracy
-4. If issues found, edit the HTML and regenerate
-5. Only declare complete when visually verified as professional
+4. Compute a body-region fill metric (exclude the hero/header and footer bands) to catch a short page, dead whitespace, or stranded captions — a passing page height alone can hide a half-empty body
+5. If issues found, edit the HTML and regenerate
+6. Only declare complete when visually verified as professional — never declare done unverified
 
 ## PDF Generation Script (generate_pdfs.py)
 
