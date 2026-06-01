@@ -197,12 +197,14 @@ Cover · TOC · 01 Executive Summary · 02 The Market Position (47-yr family ind
 - **Fig 10.0 — AI growth engine** (Get Found / Account Intelligence & Outbound / Internal Automation)
 - **Fig 12.0 — 90/180/365 timeline**
 
-### Capability Proof (5 builds, built-vs-service)
+### Capability Proof (5 builds, built-vs-service) + REAL case studies (added in build)
 1. **Multi-Agent SEO + AEO Platform** → local/location search + AI-answer authority across 26 yards.
 2. **AI Document Intelligence (FINRA, days→minutes, 60–80% less review)** → dedicated-contract / lease / municipal RFP auto-response.
-3. **My AI account-intelligence (account-based outbound)** → named fleets/shippers + **WAIRE-obligated warehouse** targeting + per-account dossiers. (Delivered via My AI; scoped in discovery.)
+3. **AI Lead Generation (luxury home builder)** → REAL, market-matched case study folded into Build 3: multi-agent public-records harvesting, 7 signal layers, 10 permit jurisdictions, 60+ committees, **24 enriched Tier-1 leads in a single 75-min run**, replaced 15–20 hrs/wk. Same motion = TCI's WAIRE-warehouse + named-fleet prospecting. Source: `Case Studies/Construction/...AI Lead Generation for Luxury Home Builder.html`.
 4. **AI-Native Custom App Delivery (My Dev, 3–5× faster)** → quote/spec-to-lease assistant + **WAIRE/EV ROI tool** + customer portal/chatbot + used-truck merchandising.
 5. **Local SEO + Review/Reputation engine** → Google Business Profiles + reviews across all yards.
+
+**Added "Representative Engagements — Work Like Yours" table to §09** (per the DAS precedent + `feedback_capability_proof_built_vs_service`): 2 real anonymized engagements — the AI lead-gen build above + a **multi-location SEO program** (restaurant group: 4-person team, 213 entries / 340 hrs / 4 mo). Both scope+effort only, no client names, per `Case Studies/README.md` authoring rules. Report grew 32pp → 34pp.
 
 ### Investment & ROI — TRUTHFUL (per §00D)
 **Phase 1 — ENTRY (the one firm, published number):**

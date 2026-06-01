@@ -730,8 +730,8 @@ docChildren.push(
   spacer(140),
   capabilityBox(
     'Proven Build 3 — Account-Based Intelligence & Outbound',
-    'Technijian builds AI account-intelligence engines that harvest high-fit targets from public data, enrich and score them, and assemble per-account dossiers — so a sales team spends its time on the right accounts, not on list-building.',
-    'For TCI it builds the named lists of private fleets, shippers, and — the wedge — WAIRE-obligated warehouses by truck-trip volume, with a dossier for each rep conversation. Depth on the accounts TCI already wants, not a broad blast.'
+    'Technijian operates a multi-agent AI lead-generation system for a luxury home builder that watches seven layers of public-records signals across ten permit jurisdictions and 60-plus review committees — replacing 15–20 hours a week of manual portal-reading and producing 24 enriched, scored, contact-ready leads in a single 75-minute production run, months before a competitor sees the same opportunity.',
+    'The same public-records-harvesting motion points straight at TCI’s growth: identify WAIRE-obligated warehouses by facility and truck-trip data, fleets at a lease-versus-own inflection, expiring contracts, and new distribution-center permits — each enriched into a scored, dossier-ready target for the rep who owns the relationship.'
   ),
   spacer(140),
   capabilityBox(
@@ -745,6 +745,23 @@ docChildren.push(
     'Technijian built an AI system that manages Google Business Profiles and requests, monitors, and responds to reviews across the local directories that search ranking depends on.',
     'Across TCI’s 26-plus yards, complete and consistent Business Profiles and active reviews lift the local rankings that capture "[service] + [city]" demand — and they are exactly the third-party signals AI assistants weigh when deciding whom to cite.'
   ),
+  spacer(200),
+  subHeader('Representative Engagements — Work Like Yours'),
+  p('These are not hypotheticals. Two recent Technijian engagements — anonymized to the industry — show the exact two motions this program runs for TCI already delivered for real clients: public-records account intelligence, and a multi-location local-SEO program.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Engagement (anonymized)', weight: 2.7 },
+      { label: 'What We Did', weight: 4.3 },
+      { label: 'Effort / Result', weight: 3 },
+    ],
+    [
+      ['AI lead generation — a luxury home builder', 'A multi-agent system harvesting seven public-records signal layers across 10 permit jurisdictions and 60+ review committees, with enrichment and tiered scoring', '24 contact-ready Tier-1 leads in one 75-minute run; replaced 15–20 hrs/week of manual portal-reading'],
+      ['Multi-location SEO program — a restaurant group', 'A monthly local-SEO, content, and WordPress program across a multi-property portfolio: technical-SEO resolution, a content pipeline, keyword tracking, and weekly reporting', 'A 4-person specialist team; 213 work entries / 340 hours over four months; local rankings tracked and defended'],
+    ],
+  ),
+  spacer(60),
+  p('Engagements are described by industry and scope only; client-identifying details are withheld. Hours and counts trace to Technijian’s own engagement records.', { italics: true, size: 18 }),
 );
 
 // ---------- 10 HOW AI TRANSFORMS THE GROWTH ENGINE ----------
