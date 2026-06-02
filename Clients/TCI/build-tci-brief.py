@@ -72,13 +72,14 @@ ul {{ margin:2px 0 0 15px; }} li {{ margin-bottom:2px; }}
   </div>
 
   <div class="sec t">
-    <h2>The program &mdash; land and expand, priced honestly</h2>
+    <h2>The program &mdash; two published engines, then a scoped build</h2>
     <table>
-      <tr><th>Entry (published — the easy yes)</th><th>Scope</th><th class="r">Y1</th></tr>
-      <tr><td><b>My SEO — Tier 5 + AEO / PR / Syndication</b></td><td>Multi-location local + answer-engine search foundation; 12-month, unlimited service hours</td><td class="r">~$24,600</td></tr>
-      <tr><td><b>ENTRY PROGRAM (Y1)</b></td><td><b>Prove the search + capture lift, no large build to start</b></td><td class="r"><b>$2,050/mo</b></td></tr>
+      <tr><th>Published recurring (firm pricing)</th><th>Scope</th><th class="r">Monthly</th><th class="r">Y1</th></tr>
+      <tr><td><b>My SEO — Tier 5 + AEO / PR / Syndication</b></td><td>Multi-location local + answer-engine search foundation; 12-mo, unlimited hours</td><td class="r">$2,050</td><td class="r">~$24,600</td></tr>
+      <tr><td><b>My AI Lead Gen — Professional</b></td><td>3 vertical pipelines (fleets, shippers, WAIRE warehouses), 2,500 leads/mo (+$5,000 setup)</td><td class="r">$3,499</td><td class="r">~$46,988</td></tr>
+      <tr><td><b>PUBLISHED RECURRING</b></td><td><b>Both engines &middot; annual plans save 17% + waive setup (&asymp;$59,590)</b></td><td class="r"><b>$5,549</b></td><td class="r"><b>~$71,588</b></td></tr>
     </table>
-    <p style="margin-top:5px;">The expansion — the custom build (quote-to-lease assistant, WAIRE/EV ROI tool, AI-assisted portal, used-truck merchandising), account intelligence, and a Fractional AI Advisor — is priced from the published 2026 rate card (AI engineering $185&ndash;$275/hr; advisor $1,500&ndash;$3,500/mo) and scoped into a fixed-price Statement of Work at discovery. We don't quote numbers we can't ground: the calibrated ROI model comes back within five business days of a discovery call, built on TCI's real per-deal economics.</p>
+    <p style="margin-top:5px;">The custom build — quote-to-lease assistant, WAIRE/EV ROI tool, AI-assisted portal, used-truck merchandising — plus a Fractional AI Advisor (est. ~$2,000/mo) and Executive Workshop (est. ~$5,000) are priced from the real 2026 US-led rates (development <b>$150/hr</b>, <b>$125/hr</b> on a contract cycle) and scoped into a fixed-price Statement of Work at discovery. We don't quote numbers we can't ground: the calibrated ROI model comes back within five business days of a discovery call, built on TCI's real per-deal economics.</p>
   </div>
 
   <div class="ask">

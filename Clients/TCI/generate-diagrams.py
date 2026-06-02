@@ -308,9 +308,9 @@ def build_arch_svg():
     )
     core = (
         arch_card(320, 136, 256, 88, ORANGE, "Named-Account Prospecting",
-                  "Private fleets, shippers & carriers by territory and fleet size.", "My AI", ORANGE)
+                  "Private fleets, shippers & carriers by territory and fleet size.", "Lead Gen", ORANGE)
         + arch_card(320, 236, 256, 88, ORANGE, "WAIRE Warehouse Targeting",
-                    "Find 100k+ sq ft warehouses by truck-trip volume - the EV wedge.", "My AI", TEAL)
+                    "Find 100k+ sq ft warehouses by truck-trip volume - the EV wedge.", "Lead Gen", ORANGE)
         + arch_card(320, 336, 256, 88, ORANGE, "RFP / Lease Proposal Auto-Draft",
                     "Dedicated-contract & lease bids drafted in hours, not days.", "My AI", TEAL)
         + arch_card(320, 436, 256, 88, ORANGE, "Account Dossiers + Churn",
@@ -330,7 +330,7 @@ def build_arch_svg():
   <text x="16" y="34" font-family="Segoe UI,Arial" font-size="18" font-weight="700" fill="{DARK}">TCI AI Growth Engine - Get Found, Win Named Accounts, Run Leaner</text>
   <text x="16" y="56" font-family="Segoe UI,Arial" font-size="12" fill="{GREY}">Searchable demand on the left; account-based outbound to named fleets, shippers &amp; WAIRE warehouses in the center; capture &amp; service on the right.</text>"""
     note = f"""
-  <text x="16" y="552" font-family="Segoe UI,Arial" font-size="11" fill="{GREY}" font-style="italic">* My SEO - My AI - My Dev. AI gets TCI found and arms the field team - it does not replace the relationship, the yards, or the lease that closes the deal. TCI already runs the operational AI; this adds the commercial layer.</text>"""
+  <text x="16" y="552" font-family="Segoe UI,Arial" font-size="11" fill="{GREY}" font-style="italic">* My SEO - My AI Lead Gen - My AI - My Dev. AI gets TCI found and arms the field team - it does not replace the relationship, the yards, or the lease that closes the deal. TCI already runs the operational AI; this adds the commercial layer.</text>"""
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560" role="img">
   {title}{headers}{bg}{inbound}{core}{outbound}{note}
 </svg>"""

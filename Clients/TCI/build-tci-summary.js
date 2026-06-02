@@ -182,7 +182,7 @@ docChildren.push(
   spacer(120),
   calloutBox('Get found', 'Local and answer-engine search across 26+ yards: a page per facility and service, and authority content that owns the WAIRE, EV-truck, leasing, and used-truck questions buyers ask in Google and AI answers.', TEAL),
   spacer(120),
-  calloutBox('Win named accounts', 'The same public-records account-intelligence motion already in production for a Technijian client — 24 contact-ready leads in a single 75-minute run — pointed at WAIRE-obligated warehouses and named fleets, with RFP and lease-proposal automation behind it.', CORE_ORANGE),
+  calloutBox('Win named accounts', 'The same public-records account-intelligence motion already in production for a Technijian client — 24 contact-ready leads in a single 75-minute run — pointed at WAIRE-obligated warehouses and named fleets. Delivered as My AI Lead Gen (published tiers), with RFP and lease-proposal automation behind it.', CORE_ORANGE),
   spacer(120),
   calloutBox('Run leaner', 'A quote / spec-to-lease assistant, a WAIRE/EV ROI tool that turns the regulation into a sales conversation, used-truck merchandising, and an AI-assisted portal across leasing, maintenance, factoring, and roadside.', CORE_BLUE),
 );
@@ -191,29 +191,31 @@ docChildren.push(
 docChildren.push(
   ...sectionHeader('The Program', CORE_BLUE, '03'),
   spacer(120),
-  p('The program is built land-and-expand: a small, published entry that proves the lift, then an expansion scoped at discovery once it does. We are deliberate about money — only the published price is stated as firm; the build is priced from the rate card and scoped into a fixed-price Statement of Work, never an invented number.'),
+  p('The program is built land-and-expand on two published engines, then a custom build scoped at discovery. We are deliberate about money — only published prices are stated as firm (My SEO and My AI Lead Gen); the build is priced from the real 2026 US-led rates and scoped into a fixed-price Statement of Work, never an invented number.'),
   spacer(80),
   buildTable(
     [
-      { label: 'Entry Program (published)', weight: 3.2 },
-      { label: 'Scope', weight: 4.2 },
-      { label: 'Y1', weight: 1.6, align: AlignmentType.RIGHT },
+      { label: 'Published Recurring Program', weight: 3.2 },
+      { label: 'Scope', weight: 4.0 },
+      { label: 'Monthly', weight: 1.4, align: AlignmentType.RIGHT },
+      { label: 'Y1', weight: 1.4, align: AlignmentType.RIGHT },
     ],
     [
-      ['My SEO — Tier 5 + AEO / PR / Syndication', 'Multi-location local + answer-engine search foundation; 12-mo, unlimited hours', { text: '~$24,600', align: AlignmentType.RIGHT }],
-      [{ text: 'ENTRY PROGRAM (Y1)', bold: true }, { text: 'Prove the search + capture lift, no large build to start', bold: true }, { text: '$2,050/mo', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
+      ['My SEO — Tier 5 + AEO / PR / Syndication', 'Multi-location local + answer-engine search foundation; 12-mo, unlimited hours', { text: '$2,050', align: AlignmentType.RIGHT }, { text: '~$24,600', align: AlignmentType.RIGHT }],
+      ['My AI Lead Gen — Professional', '3 vertical pipelines (fleets, shippers, WAIRE warehouses), 2,500 leads/mo (+$5,000 setup)', { text: '$3,499', align: AlignmentType.RIGHT }, { text: '~$46,988', align: AlignmentType.RIGHT }],
+      [{ text: 'PUBLISHED RECURRING (Y1)', bold: true }, { text: 'Annual plans save 17% + waive setup (≈ $59,590)', bold: true }, { text: '$5,549', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }, { text: '~$71,588', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
     ],
   ),
   spacer(120),
   buildTable(
     [
-      { label: 'Expansion (scoped in discovery)', weight: 3.4 },
-      { label: 'Basis — 2026 rate card', weight: 3.6 },
+      { label: 'Custom Build & Advisory (scoped in discovery)', weight: 3.6 },
+      { label: 'Basis — 2026 US-led rate', weight: 3.4 },
       { label: 'Investment', weight: 2.4, align: AlignmentType.RIGHT },
     ],
     [
-      ['Custom AI & app build (quote-to-lease, WAIRE/EV ROI tool, portal, used-truck)', 'AI eng $185–$275/hr; full-stack $145–$210/hr', { text: 'Fixed-scope SOW', color: CORE_ORANGE, align: AlignmentType.RIGHT }],
-      ['Account intelligence & outbound + Fractional AI Advisor', 'My AI engagement; advisor $1,500–$3,500/mo', { text: 'Set at discovery', color: CORE_ORANGE, align: AlignmentType.RIGHT }],
+      ['Custom AI & app build (quote-to-lease, WAIRE/EV ROI tool, portal, used-truck)', 'US development $150/hr ($125/hr contracted)', { text: 'Fixed-scope SOW', color: CORE_ORANGE, align: AlignmentType.RIGHT }],
+      ['Fractional AI Advisor + Executive Workshop', 'Estimates: ~$2,000/mo + ~$5,000 one-time', { text: 'Confirmed at discovery', color: CORE_ORANGE, align: AlignmentType.RIGHT }],
     ],
   ),
   spacer(120),
