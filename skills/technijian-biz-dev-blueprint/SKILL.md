@@ -122,6 +122,8 @@ This file is the foundation. Sections are written from it, not invented during w
 
 ## Phase 2: Persona Development
 
+> **NO FIXED COUNTS — derive every count from deep research on THIS company. (Ravi, 2026-06-02.)** The number of personas — and of sections, diagrams, and capability proofs — is determined by what deep research reveals about *this specific company's* actual buyers, **never copied from RKE, ACU, or any prior report.** RKE having 7 personas does NOT mean the next client gets 7. Do the research first — who does this company actually sell to? — then build exactly that many personas, whether that is 3, 4, 5, 6, or 8, each backed by real evidence. Forcing a count to match a previous client (e.g. "RKE-caliber = 7 personas") is the exact error this rule exists to prevent. "RKE caliber" means DEPTH and the right SECTION MENU for this client, **not** a persona/section/diagram quota.
+
 ### Persona count: research-driven
 
 Do not target a fixed number. Build as many personas as you can support with evidence:
