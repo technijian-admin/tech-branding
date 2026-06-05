@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OXPLive MCP Server — Client Approval Report</title>
+<style>
+@page {
+  size: A4 portrait;
+  margin: 20mm 18mm 22mm 18mm;
+  @bottom-center {
+    content: "Technijian · OXPLive Modernization · Confidential";
+    font-size: 7pt; color: #718096;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  @bottom-right {
+    content: counter(page) " of " counter(pages);
+    font-size: 7pt; color: #718096;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+}
+
+@page cover { margin: 0; @bottom-center { content: none; } @bottom-right { content: none; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 9.5pt;
+  color: #2D3748;
+  line-height: 1.55;
+  margin: 0; padding: 0;
+}
+
+/* ── Cover ────────────────────────────────────── */
+.cover {
+  page: cover;
+  width: 210mm; height: 297mm;
+  display: flex; flex-direction: column;
+  background: #1A2B3C;
+  page-break-after: always;
+  overflow: hidden;
+  position: relative;
+}
+
+.cover-top-bar {
+  background: #F67D4B;
+  height: 6px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.cover-header {
+  padding: 36px 48px 0;
+  flex-shrink: 0;
+}
+
+.cover-logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.cover-logo-text {
+  font-size: 16pt;
+  font-weight: 800;
+  color: #F67D4B;
+  letter-spacing: 2px;
+  display: block;
+}
+
+.cover-body {
+  padding: 60px 48px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.cover-eyebrow {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: #1EAAC8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.cover h1 {
+  font-size: 32pt;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 6px;
+  line-height: 1.15;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 600;
+  color: #1EAAC8;
+  margin: 0 0 40px;
+}
+
+.cover-meta-table {
+  border-collapse: collapse;
+  margin-bottom: 40px;
+}
+.cover-meta-table td {
+  padding: 5px 40px 5px 0;
+  font-size: 9pt;
+  color: #aabbcc;
+  border: none;
+  background: transparent;
+  vertical-align: top;
+}
+.cover-meta-table td:first-child {
+  color: #FFFFFF;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.cover-meta-table tr:nth-child(even) td {
+  background: transparent !important;
+  color: #aabbcc;
+}
+.cover h1 {
+  border-bottom: none !important;
+}
+
+.cover-kpis {
+  display: flex;
+  gap: 14px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.kpi {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 8px;
+  padding: 14px 20px;
+  text-align: center;
+  min-width: 90px;
+}
+.kpi .num {
+  font-size: 22pt;
+  font-weight: 700;
+  color: #1EAAC8;
+  display: block;
+  line-height: 1.1;
+}
+.kpi .lbl {
+  font-size: 7pt;
+  color: #aabbcc;
+  margin-top: 3px;
+  display: block;
+}
+
+.cover-footer {
+  padding: 24px 48px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.cover-footer span {
+  font-size: 7.5pt;
+  color: #778899;
+}
+
+/* ── Body sections ────────────────────────────── */
+.section {
+  page-break-before: always;
+}
+
+.section:first-child {
+  page-break-before: avoid;
+}
+
+h1 {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #006DB6;
+  border-bottom: 2.5px solid #006DB6;
+  padding-bottom: 6px;
+  margin: 0 0 14px;
+}
+
+h2 {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #1A2B3C;
+  margin: 20px 0 8px;
+}
+
+h3 {
+  font-size: 9.5pt;
+  font-weight: 600;
+  color: #006DB6;
+  margin: 14px 0 6px;
+}
+
+p { margin: 6px 0 10px; }
+
+ul, ol { margin: 4px 0 10px; padding-left: 22px; }
+li { margin-bottom: 4px; }
+
+/* ── Info box ─────────────────────────────────── */
+.infobox {
+  background: #F5F7FA;
+  border-left: 3.5px solid #1EAAC8;
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 9pt;
+  color: #2D3748;
+}
+
+.callout {
+  background: #EBF5FF;
+  border: 1px solid #BEE0F7;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 9pt;
+}
+
+/* ── Architecture diagram ─────────────────────── */
+.arch-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  margin: 16px 0 20px;
+}
+.arch-layer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.arch-box {
+  background: #006DB6;
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 9pt;
+  padding: 10px 20px;
+  border-radius: 6px;
+  min-width: 200px;
+  text-align: center;
+}
+.arch-box.orange { background: #F67D4B; }
+.arch-box.teal { background: #1EAAC8; }
+.arch-box.dark { background: #1A2B3C; }
+.arch-label {
+  font-size: 8pt;
+  color: #718096;
+  font-style: italic;
+}
+.arch-arrow {
+  font-size: 14pt;
+  color: #1EAAC8;
+  line-height: 1;
+  margin: 2px 0 2px 30px;
+}
+
+/* ── Tables ───────────────────────────────────── */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0 16px;
+  font-size: 8.5pt;
+}
+thead tr {
+  background: #006DB6;
+  color: #FFFFFF;
+}
+th {
+  padding: 7px 10px;
+  font-weight: 600;
+  text-align: left;
+  border: 1px solid #006DB6;
+}
+td {
+  padding: 6px 10px;
+  border: 1px solid #D0D7E2;
+  vertical-align: top;
+}
+tr:nth-child(even) td { background: #F5F7FA; }
+
+/* ── Domain table column widths ───────────────── */
+.domain-table th:nth-child(1), .domain-table td:nth-child(1) { width: 3%; text-align: center; }
+.domain-table th:nth-child(2), .domain-table td:nth-child(2) { width: 21%; font-weight: 600; }
+.domain-table th:nth-child(3), .domain-table td:nth-child(3) { width: 5%; text-align: center; }
+.domain-table th:nth-child(4), .domain-table td:nth-child(4) { width: 5%; text-align: center; }
+.domain-table th:nth-child(5), .domain-table td:nth-child(5) { width: 5%; text-align: center; }
+.domain-table th:nth-child(6), .domain-table td:nth-child(6) { width: 61%; }
+
+/* ── Signature block ──────────────────────────── */
+.sig-block {
+  border: 1.5px solid #D0D7E2;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 16px 0;
+}
+.sig-block h3 {
+  margin-top: 0;
+  color: #1A2B3C;
+}
+.sig-line {
+  border-top: 1.5px solid #1A2B3C;
+  margin-top: 36px;
+  padding-top: 4px;
+  font-size: 8.5pt;
+  color: #718096;
+  display: flex;
+  justify-content: space-between;
+}
+.sig-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+/* ── Phase table ──────────────────────────────── */
+.phase-table th:nth-child(1) { width: 10%; }
+.phase-table th:nth-child(2) { width: 22%; }
+.phase-table th:nth-child(3) { width: 48%; }
+.phase-table th:nth-child(4) { width: 20%; }
+
+/* ── Badge ────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 7.5pt;
+  font-weight: 600;
+}
+.badge-blue   { background: #DBEEFF; color: #004F8A; }
+.badge-teal   { background: #D0F4FA; color: #0B7A91; }
+.badge-orange { background: #FEEBD9; color: #B3521E; }
+.badge-green  { background: #C6F6D5; color: #276749; }
+
+/* ── Security table ───────────────────────────── */
+.sec-table th:nth-child(1) { width: 22%; }
+.sec-table th:nth-child(2) { width: 78%; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-top-bar"></div>
+  <div class="cover-header">
+    <span class="cover-logo-text">TECHNIJIAN</span>
+  </div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">Client Approval Report</div>
+    <h1>OXPLive<br>MCP Server</h1>
+    <div class="cover-subtitle">Secure AI Access to the OXPLive Platform</div>
+    <table class="cover-meta-table">
+      <tr><td>Prepared for</td><td>OrthoKinetix (ORX)</td></tr>
+      <tr><td>Prepared by</td><td>Technijian</td></tr>
+      <tr><td>Project</td><td>OXPLive Modernization — Phase B Deliverable</td></tr>
+      <tr><td>Date</td><td>June 2026</td></tr>
+      <tr><td>Status</td><td>Pending Client Approval — Phase F (Build)</td></tr>
+      <tr><td>Classification</td><td>Confidential — OrthoKinetix / Technijian Use Only</td></tr>
+    </table>
+    <div class="cover-kpis">
+      <div class="kpi"><span class="num">116</span><span class="lbl">Stored Procedures</span></div>
+      <div class="kpi"><span class="num">110</span><span class="lbl">API Endpoints</span></div>
+      <div class="kpi"><span class="num">94</span><span class="lbl">MCP Tools</span></div>
+      <div class="kpi"><span class="num">20</span><span class="lbl">Functional Domains</span></div>
+      <div class="kpi"><span class="num">100%</span><span class="lbl">DB Call Coverage</span></div>
+    </div>
+  </div>
+  <div style="flex:1;"></div>
+  <div style="padding:0 48px 32px;">
+    <div style="border-left:3px solid #F67D4B;padding:12px 18px;background:rgba(255,255,255,.04);border-radius:0 6px 6px 0;">
+      <div style="font-size:8pt;color:#aabbcc;line-height:1.7;">
+        <span style="color:#1EAAC8;font-weight:600;">Companion document:</span>
+        STP-API-MCP Coverage Matrix (A3 landscape) — all 116 stored procedures, API endpoints,
+        and MCP tool definitions. Available on request.
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <span>Technijian · technology as a solution</span>
+    <span>949.379.8499 · technijian.com</span>
+    <span>Confidential — OrthoKinetix / Technijian Only</span>
+  </div>
+</div>
+
+<div class="section">
+  <h1>01 &nbsp; Executive Summary</h1>
+
+  <p>OrthoKinetix operates the <strong>OXPLive</strong> practice management platform — a mature SQL Server system
+  running the full DME order lifecycle: intake, benefits verification, insurance authorization, shipping,
+  billing, re-billing, and collections across 13 workflow queues.</p>
+
+  <p>Technijian proposes to make that data safely available to AI assistants (Claude) through a purpose-built
+  <strong>Model Context Protocol (MCP) server</strong>. The server connects Claude directly to the OXPLive
+  database via a set of 116 curated stored procedures across 20 functional domains —
+  without granting the AI any direct table access.</p>
+
+  <div class="infobox">
+    <strong>The governing rule:</strong> every AI request follows a single, auditable path —
+    Claude calls a documented MCP tool → the tool executes an approved stored procedure →
+    the stored procedure reads or writes the database. No exceptions. No inline SQL.
+    No table-level permissions for the AI service account.
+  </div>
+
+  <p>This document presents the complete scope of what will be built, the 116-procedure coverage matrix,
+  the security and HIPAA controls in place, the delivery plan, and the approval request to begin
+  Phase F (Build).</p>
+
+  <p>The full engineering specification — including every stored procedure, its parameters, return schema,
+  API endpoint, and MCP tool definition — is documented in the companion
+  <em>STP-API-MCP Coverage Matrix</em>, provided as a separate deliverable.</p>
+</div>
+
+<div class="section">
+  <h1>02 &nbsp; Why Now — The Current-State Gap</h1>
+
+  <p>Technijian has been the active IT and development partner for OrthoKinetix since approximately 2015.
+  As part of the ongoing <strong>OXPLive Modernization</strong> project (migrating from ColdFusion to
+  .NET 8 / React 18 under Technijian SDLC v6.0), a complete database-call inventory was conducted in
+  early 2026.</p>
+
+  <h2>What Was Found</h2>
+  <p>The legacy OXPLive ColdFusion frontend makes hundreds of direct database calls across 13 workflow queues.
+  These calls are not governed — they bypass stored procedures in many places, embed business logic in the UI
+  layer, and contain hardcoded credentials. This creates three gaps that block safe AI access today:</p>
+
+  <ul>
+    <li><strong>No single governed access path.</strong> The application reaches the database through
+    a mix of stored procedures, inline SQL, and direct table reads. An AI assistant granted the same
+    access would have uncontrolled write access to production data.</li>
+    <li><strong>No audit trail by design.</strong> Direct database calls leave no application-level
+    record of who accessed what, when, or why — a HIPAA audit requirement.</li>
+    <li><strong>No semantic boundary.</strong> Without a procedure layer, there is no clean way to expose
+    only what the AI should see while hiding raw PHI fields, financial data, and operational tables.</li>
+  </ul>
+
+  <h2>The Solution</h2>
+  <p>The OXPLive Modernization addresses all three gaps by establishing a complete, SP-Only database access
+  pattern. Every frontend interaction — and every AI tool call — must go through a named, documented,
+  version-controlled stored procedure. This is both a modernization best practice and the prerequisite for
+  safe AI integration.</p>
+</div>
+
+<div class="section">
+  <h1>03 &nbsp; Architecture — DB-Direct Design</h1>
+
+  <p>The OXPLive MCP server uses a <strong>DB-Direct</strong> architecture: Claude connects to the MCP server
+  via Streamable HTTP, and the server executes stored procedures directly against SQL Server via a secure
+  connection pool. There is no intermediate REST API layer for MCP access.</p>
+
+  <div class="arch-diagram">
+    <div class="arch-layer">
+      <div class="arch-box orange">Claude (Desktop / Code / API)</div>
+      <span class="arch-label">AI assistant — your staff or automated workflows</span>
+    </div>
+    <div class="arch-arrow">&#8595;</div>
+    <div class="arch-layer">
+      <div class="arch-box">Streamable HTTP &nbsp;<span style="font-weight:400;font-size:8pt">POST /mcp</span></div>
+      <span class="arch-label">MCP 2025-03-26 spec · session-keyed · optional API-key auth</span>
+    </div>
+    <div class="arch-arrow">&#8595;</div>
+    <div class="arch-layer">
+      <div class="arch-box teal">OXPLive MCP Server &nbsp;<span style="font-weight:400;font-size:8pt">Node.js + mssql</span></div>
+      <span class="arch-label">94 MCP tools · dispatches to named stored procedures</span>
+    </div>
+    <div class="arch-arrow">&#8595;</div>
+    <div class="arch-layer">
+      <div class="arch-box dark">SQL Server — oxadmin schema &nbsp;<span style="font-weight:400;font-size:8pt">oxadmin.usp_*</span></div>
+      <span class="arch-label">Service account with EXECUTE-only on oxadmin schema · no table permissions</span>
+    </div>
+    <div class="arch-arrow">&#8595;</div>
+    <div class="arch-layer">
+      <div class="arch-box" style="background:#718096">OXPLive Tables · Views · Functions</div>
+      <span class="arch-label">Production OrthoXpressDB — never directly accessible to the MCP service account</span>
+    </div>
+  </div>
+
+  <h2>Why DB-Direct</h2>
+  <p>The OXPLive Modernization Phase F will build a .NET 8 REST API, but the stored procedures are being
+  designed now as part of Phase B. DB-Direct lets the MCP server go live the moment the stored procedures
+  are tested — before the full API layer is complete — giving OrthoKinetix early AI access while the
+  broader modernization continues.</p>
+
+  <div class="callout">
+    <strong>Security posture is unchanged</strong> from an API-first design. The SQL Server service account
+    (<code>oxplive_mcp_svc</code>) holds only <code>EXECUTE</code> on the <code>oxadmin</code> schema.
+    It cannot read tables directly, run dynamic SQL, or access any object outside the curated procedure set.
+  </div>
+
+  <h2>Transport — Streamable HTTP</h2>
+  <p>The server implements the <strong>MCP 2025-03-26 Streamable HTTP</strong> transport specification:</p>
+  <ul>
+    <li><strong>POST /mcp</strong> — creates or resumes a session; handles all JSON-RPC tool calls</li>
+    <li><strong>GET /mcp</strong> — SSE stream for server-initiated messages (session-keyed)</li>
+    <li><strong>DELETE /mcp</strong> — gracefully closes a session</li>
+    <li><strong>GET /health</strong> — returns <code>&#123; status: "ok", sessions: N &#125;</code></li>
+  </ul>
+  <p>Sessions are identified by the <code>mcp-session-id</code> header, enabling multiple concurrent
+  Claude sessions against the same server without interference.</p>
+</div>
+
+<div class="section">
+  <h1>04 &nbsp; Domain Coverage Matrix</h1>
+
+  <p>The table below summarises the complete stored-procedure coverage across all 20 functional
+  domains of the OXPLive system. Every domain corresponds to a distinct area of the OXPLive workflow UI.
+  The full 116-row matrix — with individual SP parameters, return schemas, API endpoint definitions,
+  and MCP tool specifications — is provided in the companion <em>STP-API-MCP Coverage Matrix</em> document.</p>
+
+  <table class="domain-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Domain</th>
+        <th>STPs</th>
+        <th>API<br>Endpoints</th>
+        <th>MCP<br>Tools</th>
+        <th>Business Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>1</td>
+          <td>Auth & Session</td>
+          <td>5</td>
+          <td>4</td>
+          <td>2</td>
+          <td>User authentication, token lifecycle, session management. Most SPs are internal; one tool surfaces current-user context to AI assistants.</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Patient / Account</td>
+          <td>18</td>
+          <td>16</td>
+          <td>16</td>
+          <td>Core patient record — demographics, insurance, job creation, medical history, diagnosis updates, status, and cancellation. Largest domain in the system.</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Insurance Authorization</td>
+          <td>5</td>
+          <td>5</td>
+          <td>5</td>
+          <td>Auth request creation, line-item management, status tracking, and approval workflow for DME insurance authorizations.</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Queue & Workflow</td>
+          <td>7</td>
+          <td>7</td>
+          <td>6</td>
+          <td>13-stage workflow queue (Intake → Billing → Collections). Job transitions, queue-level counts, and routing rules for DME order progression.</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Billing & Claims</td>
+          <td>5</td>
+          <td>5</td>
+          <td>5</td>
+          <td>Fee schedule lookup, billing search, claims processing, and remittance management for OrthoKinetix revenue cycle.</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Scheduling</td>
+          <td>10</td>
+          <td>9</td>
+          <td>9</td>
+          <td>Appointment creation, calendar search, therapist scheduling, and 48-hour delivery alert monitoring for field operations.</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Patient Experience</td>
+          <td>7</td>
+          <td>6</td>
+          <td>5</td>
+          <td>PSAT surveys, post-delivery call-back tracking, satisfaction scores, and patient-outcome follow-up.</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Collector Actions</td>
+          <td>5</td>
+          <td>5</td>
+          <td>4</td>
+          <td>Daily collector call logs, AR action tracking, daily-total summaries, and collection queue management.</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Products & Inventory</td>
+          <td>10</td>
+          <td>10</td>
+          <td>9</td>
+          <td>Equipment catalog, SKU management, inventory levels, and assignment of equipment to specific patients at delivery.</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Orders & Purchasing</td>
+          <td>3</td>
+          <td>3</td>
+          <td>3</td>
+          <td>Purchase-order listing, vendor ordering, and reorder tracking to maintain equipment supply.</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Documents / Files</td>
+          <td>4</td>
+          <td>4</td>
+          <td>3</td>
+          <td>Document metadata lookup and HIPAA-compliant signed download URLs for CMN, EDF, and other PHI-attached files.</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Directory, Users & Reps</td>
+          <td>9</td>
+          <td>8</td>
+          <td>6</td>
+          <td>Doctor and facility directory, sales representative management, referring physician lookup, and staff-user directory.</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Time Records (HR)</td>
+          <td>9</td>
+          <td>9</td>
+          <td>6</td>
+          <td>Timecard entry, manager approval workflow, and payroll-ready time export for field and office staff.</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Lookups (Generic)</td>
+          <td>4</td>
+          <td>4</td>
+          <td>2</td>
+          <td>Shared reference data — insurance payer names, territories, status codes, and all system dropdown values.</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>Config</td>
+          <td>3</td>
+          <td>3</td>
+          <td>2</td>
+          <td>System-wide configuration and company-settings retrieval for runtime behavior and multi-tenant configuration.</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>Reporting</td>
+          <td>4</td>
+          <td>4</td>
+          <td>4</td>
+          <td>Billing collections report, PSR (physician summary), variance analysis, and KPI dashboard data.</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>Audit & Activity Logs</td>
+          <td>4</td>
+          <td>4</td>
+          <td>3</td>
+          <td>HIPAA-compliant audit trail — user access log, data-change history, and compliance event recording.</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>Compliance / Scheduled</td>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td>Mass job-move operations and compliance batch processing for regulatory workflows.</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>Yes/No Module (PA/CMN/EDF)</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>Three compliance gates that block queue progression: Prior Authorization status, CMN receipt confirmation, and EDF sign-off.</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Dashboard</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>Real-time territory and user activity dashboard — session-aware, role-filtered activity feed.</td>
+        </tr>
+      
+        <tr style="background:#1A2B3C;color:#FFFFFF;font-weight:700;">
+          <td colspan="2">TOTAL</td>
+          <td>116</td>
+          <td>110</td>
+          <td>94</td>
+          <td style="color:#aabbcc;font-weight:400;">100% of OXPLive database calls covered</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:8pt;color:#718096">
+    STPs = Stored Procedures. API Endpoints = planned .NET 8 REST endpoints (Phase F).
+    MCP Tools = tools exposed to Claude today via the DB-Direct MCP server.
+    Some STPs are INTERNAL (called by other SPs) and are not exposed as MCP tools.
+  </p>
+</div>
+
+<div class="section">
+  <h1>05 &nbsp; Detailed Capability Reference</h1>
+  <p>Every stored procedure the OXPLive MCP server exposes is listed below, grouped by functional domain.
+  Each row shows whether the operation <strong>reads</strong> data or <strong>writes / updates</strong> it,
+  the API endpoint that will map to this procedure in Phase F, and a plain-English description of what
+  OrthoKinetix staff and AI assistants can do with it.</p>
+
+  <div style="display:flex;gap:20px;margin:12px 0 20px;flex-wrap:wrap">
+    <div style="background:#F5F7FA;border:1px solid #D0D7E2;border-radius:6px;padding:10px 18px;text-align:center">
+      <div style="font-size:18pt;font-weight:700;color:#006DB6">73</div>
+      <div style="font-size:8pt;color:#718096">Read Operations</div>
+    </div>
+    <div style="background:#F5F7FA;border:1px solid #D0D7E2;border-radius:6px;padding:10px 18px;text-align:center">
+      <div style="font-size:18pt;font-weight:700;color:#F67D4B">34</div>
+      <div style="font-size:8pt;color:#718096">Write / Update Operations</div>
+    </div>
+    <div style="background:#F5F7FA;border:1px solid #D0D7E2;border-radius:6px;padding:10px 18px;text-align:center">
+      <div style="font-size:18pt;font-weight:700;color:#718096">9</div>
+      <div style="font-size:8pt;color:#718096">Internal (not exposed)</div>
+    </div>
+  </div>
+
+  
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 1 — Auth & Session
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">1.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_EnsureUser</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — confirms/creates the Azure AD user on first login; called by API middleware only</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">1.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_GetCurrentUser</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/me</span></td>
+              <td style="width:45%;font-size:8pt">Returns the logged-in user's name, email, roles, division, and territory to populate the app shell</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">1.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_GetIdpConfig</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — returns MSAL configuration for the SPA; agents use client_credentials instead</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">1.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_LogSessionHistory</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — records every page navigation for the Admin activity log; called by request pipeline</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">1.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_RefreshToken</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — silently rotates access/refresh token pair when the SPA token expires; MSAL-managed</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 2 — Patient / Account
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_Search</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/search</span></td>
+              <td style="width:45%;font-size:8pt">Find patients by name, account number, DOB, SSN-last-4, or phone — powers the global search bar</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_GetDetail</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}</span></td>
+              <td style="width:45%;font-size:8pt">Pull the complete patient record: demographics, insurance, medical info, referring doctor, current status, assigned reps</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/patients</span></td>
+              <td style="width:45%;font-size:8pt">Create a new patient account with demographics, insurance, and medical intake data in a single transaction</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/patients/{jobId}</span></td>
+              <td style="width:45%;font-size:8pt">Save edits to an existing patient record; changes are audited before/after</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_GetSnapshot</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/snapshot</span></td>
+              <td style="width:45%;font-size:8pt">Retrieve a complete printable snapshot: all products, billing codes, insurance, clinical notes in one call</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.6</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_GetCoverage</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/coverage</span></td>
+              <td style="width:45%;font-size:8pt">Get payer name, policy number, group number, coverage type, and current auth numbers</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.7</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_UpdateCoverage</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/patients/{jobId}/coverage</span></td>
+              <td style="width:45%;font-size:8pt">Update primary or secondary insurance coverage without touching demographics</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.8</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_GetOrigRep</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/orig-rep</span></td>
+              <td style="width:45%;font-size:8pt">Get the original rep assigned at intake — used to preserve commission origination credit</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.9</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_SetOrigRep</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/patients/{jobId}/orig-rep</span></td>
+              <td style="width:45%;font-size:8pt">Set or update the originating rep when first assigned during intake</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.10</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_ListProducts</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/products</span></td>
+              <td style="width:45%;font-size:8pt">List all product/equipment line items on the account with HCPCS codes, billing status, and auth notes</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.11</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_AddProduct</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/patients/{jobId}/products</span></td>
+              <td style="width:45%;font-size:8pt">Add a new product line item to the account; validates HCPCS code mapping</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.12</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_UpdateProduct</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/patients/{jobId}/products/{id}</span></td>
+              <td style="width:45%;font-size:8pt">Update quantity or notes on a product line item</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.13</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_RemoveProduct</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">DELETE&nbsp;/api/patients/{jobId}/products/{id}</span></td>
+              <td style="width:45%;font-size:8pt">Remove a product line item; blocked if a claim has already been submitted for it</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.14</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_ListNotes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/notes</span></td>
+              <td style="width:45%;font-size:8pt">Read all free-text notes on the account in chronological order</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.15</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_AddNote</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/patients/{jobId}/notes</span></td>
+              <td style="width:45%;font-size:8pt">Append a note to the account; notes are immutable once created</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.16</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_GetAgreement</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/agreement</span></td>
+              <td style="width:45%;font-size:8pt">Check whether the patient has accepted the service agreement and on what date</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.17</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Medical_UpdateDiagnosis</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/patients/{jobId}/medical/diagnosis</span></td>
+              <td style="width:45%;font-size:8pt">Update ICD-10 diagnosis codes, referring doctor, body part, and procedure code</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">2.18</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Patient_Cancel</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/patients/{jobId}/cancel</span></td>
+              <td style="width:45%;font-size:8pt">Cancel the account with a required reason code and notes; writes a final status history entry</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 3 — Insurance Authorization
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">3.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_ListByPatient</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/authorizations</span></td>
+              <td style="width:45%;font-size:8pt">List all insurance authorizations on the account: auth numbers, dates, payer, status, and linked products</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">3.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/patients/{jobId}/authorizations</span></td>
+              <td style="width:45%;font-size:8pt">Create a new insurance authorization record with auth number, dates, payer, and notes</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">3.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/authorizations/{authId}</span></td>
+              <td style="width:45%;font-size:8pt">Update an existing authorization — correct dates, extend, or change status</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">3.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_AddItem</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/authorizations/{authId}/items</span></td>
+              <td style="width:45%;font-size:8pt">Link a product line item to an authorization; required for billing to confirm each line is covered</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">3.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Auth_RemoveItem</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">DELETE&nbsp;/api/authorizations/{authId}/items/{id}</span></td>
+              <td style="width:45%;font-size:8pt">Remove a product from an authorization; blocked if the claim has been submitted</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 4 — Queue & Workflow
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">4.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Queue_List</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/queues</span></td>
+              <td style="width:45%;font-size:8pt">List all 13 workflow queues visible to the current user with current job counts</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">4.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Queue_GetJobs</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/queues/{queueId}/jobs</span></td>
+              <td style="width:45%;font-size:8pt">Get all patient accounts currently in a specific queue — paged, with name, status age, and rep</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">4.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Queue_TransitionJob</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/queues/transition</span></td>
+              <td style="width:45%;font-size:8pt">Move a patient account from one queue to another; validates the transition is permitted, writes status history</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">4.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Queue_GetStatusHistory</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/status-history</span></td>
+              <td style="width:45%;font-size:8pt">Get the complete queue-transition history for an account — every move ever made with user and timestamp</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">4.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Queue_GetActions</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/queues/{queueId}/actions</span></td>
+              <td style="width:45%;font-size:8pt">List the permitted moves out of a queue — used to render the correct action buttons</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">4.6</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Queue_GetBillingStatus</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/billing-status</span></td>
+              <td style="width:45%;font-size:8pt">Get the billing status badge for an account: Unbilled / Partially Billed / Fully Billed / Cash</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">4.7</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Queue_GetCounts</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/queues/counts</span></td>
+              <td style="width:45%;font-size:8pt">Get the count of accounts in each of the 13 queues in one call — powers the sidebar badges and dashboard</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 5 — Billing & Claims
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">5.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Billing_ListEntities</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/billing/entities</span></td>
+              <td style="width:45%;font-size:8pt">List all billing entities (insurance companies, payers) — used in billing forms and patient intake</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">5.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Billing_Search</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/billing/search</span></td>
+              <td style="width:45%;font-size:8pt">Search billable records by account number, payer, or status — returns line items with charge and collection data</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">5.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Billing_GetFeeSchedules</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/billing/fee-schedules</span></td>
+              <td style="width:45%;font-size:8pt">Get contracted fee schedule amounts for a HCPCS code and billing entity — used to calculate expected reimbursement</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">5.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Billing_GetProductValuation</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/billing/valuations/{productId}</span></td>
+              <td style="width:45%;font-size:8pt">Get pricing and rental term options (capped rental, rent-to-own, purchase) for a product</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">5.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Billing_GetReBillData</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/rebill</span></td>
+              <td style="width:45%;font-size:8pt">Get previously billed line items flagged for re-billing due to denial, partial payment, or correction</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 6 — Scheduling
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_GetByRange</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/schedules</span></td>
+              <td style="width:45%;font-size:8pt">List scheduled appointments filtered by date range, territory, or rep — powers the calendar view</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/schedules</span></td>
+              <td style="width:45%;font-size:8pt">Create a new appointment for a patient — type, date/time, assigned rep, and notes</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/schedules/{scheduleId}</span></td>
+              <td style="width:45%;font-size:8pt">Reschedule an appointment or update its type or notes</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_Delete</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">DELETE&nbsp;/api/schedules/{scheduleId}</span></td>
+              <td style="width:45%;font-size:8pt">Cancel and remove a scheduled appointment; also removes the Exchange calendar sync record</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_GetUnscheduled</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/schedules/unscheduled</span></td>
+              <td style="width:45%;font-size:8pt">Find accounts in the scheduling queue with no upcoming appointment — lets dispatchers fill the calendar</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.6</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_GetTypes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/schedule-types</span></td>
+              <td style="width:45%;font-size:8pt">Get appointment type dropdown (delivery, follow-up, fitting, re-evaluation, etc.)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.7</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_GetExchangeSync</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/schedules/{scheduleId}/exchange-sync</span></td>
+              <td style="width:45%;font-size:8pt">Get the Outlook calendar sync status for an appointment — shows whether it has been pushed to Exchange</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.8</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_SetExchangeSync</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/schedules/{scheduleId}/exchange-sync</span></td>
+              <td style="width:45%;font-size:8pt">Link an appointment to an Outlook calendar event after it has been pushed to Exchange</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.9</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Schedule_DeleteExchangeSync</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">DELETE&nbsp;/api/schedules/{scheduleId}/exchange-sync</span></td>
+              <td style="width:45%;font-size:8pt">Remove the Exchange calendar link when an appointment is cancelled or the sync breaks</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">6.10</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Scheduler_Get48HourAlerts</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/schedules/alerts</span></td>
+              <td style="width:45%;font-size:8pt">Get all deliveries and follow-ups due within the next 48 hours for the user's territory — same-day alert panel</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 7 — Patient Experience (PSR)
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">7.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_PatientExperience_List</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/experiences</span></td>
+              <td style="width:45%;font-size:8pt">List all patient contacts on the account — calls, inquiries, complaints — in chronological order</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">7.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_PatientExperience_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/patients/{jobId}/experiences</span></td>
+              <td style="width:45%;font-size:8pt">Log a patient contact: call attempt, inquiry, complaint, or scheduling contact with outcome</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">7.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_PatientExperience_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/patient-experiences/{peId}</span></td>
+              <td style="width:45%;font-size:8pt">Update the status, follow-up date, or notes on a patient contact record (close out or escalate)</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">7.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_PatientExperience_GetTypes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/patient-experience-types</span></td>
+              <td style="width:45%;font-size:8pt">Get contact type dropdown (inquiry, scheduling, complaint, satisfaction, etc.)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">7.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_PatientExperience_GetStatuses</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/patient-experience-statuses</span></td>
+              <td style="width:45%;font-size:8pt">Get contact status dropdown (open, resolved, escalated, etc.)</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">7.6</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_PatientExperience_GetComplaintTypes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/complaint-types</span></td>
+              <td style="width:45%;font-size:8pt">Get complaint type dropdown — used when logging a formal patient complaint</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">7.7</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_PatientExperience_GetTemplates</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/patient-experience-templates</span></td>
+              <td style="width:45%;font-size:8pt">Get message templates that pre-populate contact notes for common contact types</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 8 — Collector Actions
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">8.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_CollectorAction_List</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/collector-actions</span></td>
+              <td style="width:45%;font-size:8pt">List collector actions for an account or by rep — calls made, voicemails, payment arrangements</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">8.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_CollectorAction_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/collector-actions</span></td>
+              <td style="width:45%;font-size:8pt">Log a new collection activity: call made, voicemail left, payment plan set, referral to agency</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">8.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_CollectorAction_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/collector-actions/{actionId}</span></td>
+              <td style="width:45%;font-size:8pt">Update a collector action — revise the follow-up date or add resolution notes</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">8.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_CollectorAction_GetReasonCodes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/collector-action-reasons</span></td>
+              <td style="width:45%;font-size:8pt">Get reason code dropdown (called/no answer, payment plan set, referred to agency, etc.)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">8.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_CollectorAction_GetDailyTotals</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/collector-actions/totals</span></td>
+              <td style="width:45%;font-size:8pt">Get aggregated collector performance stats — actions, follow-ups completed, accounts touched — by user and date range</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 9 — Products & Inventory
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Product_List</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/products</span></td>
+              <td style="width:45%;font-size:8pt">Browse the product catalog filtered by category or active status</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Product_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/products</span></td>
+              <td style="width:45%;font-size:8pt">Add a new product to the catalog with pricing and vendor info (admin only)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Product_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/products/{productId}</span></td>
+              <td style="width:45%;font-size:8pt">Update product name, part number, pricing, or active status (admin only)</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Product_GetBillingCodes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/products/{productId}/billing-codes</span></td>
+              <td style="width:45%;font-size:8pt">Get HCPCS billing code mappings for a product — used in billing validation</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Product_GetBodyParts</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/body-parts</span></td>
+              <td style="width:45%;font-size:8pt">Get body part dropdown (Left Knee, Right Ankle, etc.) for the medical intake section</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.6</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Product_GetCategories</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/product-categories</span></td>
+              <td style="width:45%;font-size:8pt">Get product category dropdown (AFO, KAFO, TLSO, etc.)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.7</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Product_GetManufacturers</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/manufacturers</span></td>
+              <td style="width:45%;font-size:8pt">Get vendor/manufacturer dropdown for product assignment</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.8</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Inventory_ListLocations</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/inventory/locations</span></td>
+              <td style="width:45%;font-size:8pt">List warehouse and storage locations by site — where stock is physically held</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.9</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Inventory_ListSites</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/inventory/sites</span></td>
+              <td style="width:45%;font-size:8pt">List inventory sites (warehouses and offices) — parent lookup for inventory locations</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">9.10</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Inventory_Assign</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/inventory/{equipmentId}/assign</span></td>
+              <td style="width:45%;font-size:8pt">Assign a specific piece of serialized equipment to a patient — records serial number, model, and assignment date for stock-and-bill compliance</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 10 — Orders & Purchasing
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">10.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Order_ListByPatient</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/orders</span></td>
+              <td style="width:45%;font-size:8pt">List all orders and purchase orders linked to the patient account with status and item count</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">10.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Order_GetDetail</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/orders/{orderId}</span></td>
+              <td style="width:45%;font-size:8pt">Get full order detail including all line items with SKU, description, quantity, and price</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">10.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Purchasing_GetByPatient</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/purchasing</span></td>
+              <td style="width:45%;font-size:8pt">Get the sales order number, PO number, and invoice number for the account's purchasing record</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 11 — Documents / Files
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">11.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Document_ListByPatient</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/patients/{jobId}/documents</span></td>
+              <td style="width:45%;font-size:8pt">List all documents attached to the account: type, filename, upload date, and uploader</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">11.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Document_GetMeta</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — retrieves blob path for signed URL generation; raw path never returned to client (HIPAA)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">11.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Document_CreateRecord</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/patients/{jobId}/documents</span></td>
+              <td style="width:45%;font-size:8pt">Attach an uploaded file to the patient account; blob is stored in Azure, metadata recorded in the database</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">11.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Document_GetViewUrl</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/documents/{documentId}/view</span></td>
+              <td style="width:45%;font-size:8pt">Get a 5-minute signed URL to view a patient document; access is logged to the HIPAA audit trail automatically</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 12 — Directory, Users & Reps
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Directory_GetList</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/directory</span></td>
+              <td style="width:45%;font-size:8pt">Browse the staff directory filtered by division or territory — used for rep assignment pickers</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Directory_GetReps</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/reps</span></td>
+              <td style="width:45%;font-size:8pt">Get the sales rep list, optionally filtered by territory — populates rep assignment dropdowns</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Directory_GetTerritories</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/territories</span></td>
+              <td style="width:45%;font-size:8pt">Get the territory lookup (regions and territories) — used in scheduling, intake, and queue filtering</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Directory_GetDivisions</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/divisions</span></td>
+              <td style="width:45%;font-size:8pt">Get the division/business-unit lookup</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Directory_GetDoctors</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/doctors</span></td>
+              <td style="width:45%;font-size:8pt">Browse the physician directory filtered by specialty — used on the referring doctor picker</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.6</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Directory_GetPractitioners</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/practitioners</span></td>
+              <td style="width:45%;font-size:8pt">List clinical practitioners (PTs, OTs, RNs) — used on clinical assignment pickers</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.7</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_User_ListAll</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/admin/users</span></td>
+              <td style="width:45%;font-size:8pt">List all user accounts with roles, division, and territory (admin only — User Management screen)</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.8</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_User_GetSecurity</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/admin/users/{userId}/security</span></td>
+              <td style="width:45%;font-size:8pt">Get role assignments and territory access for a specific user (admin only)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">12.9</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_User_GetRoleTypes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/admin/roles</span></td>
+              <td style="width:45%;font-size:8pt">Get all defined role types (Admin, Billing, Clinical, etc.) — used in user role assignment</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 13 — Time Records (HR)
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_List</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/time-records</span></td>
+              <td style="width:45%;font-size:8pt">List time record submissions filtered by employee, pay period, or approval status</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_GetDetail</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/time-records/{timeRecordId}</span></td>
+              <td style="width:45%;font-size:8pt">Get a specific time record with all hourly or salaried line items</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/time-records</span></td>
+              <td style="width:45%;font-size:8pt">Create a new time record header for a pay period</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/time-records/{timeRecordId}</span></td>
+              <td style="width:45%;font-size:8pt">Submit, approve, or reject a time record — workflow status update</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.5</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_GetSalariedData</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/time-records/{id}/salaried-data</span></td>
+              <td style="width:45%;font-size:8pt">Get daily salaried entries and PTO allocations (included in GetDetail response)</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.6</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_GetHourlyData</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/time-records/{id}/hourly-data</span></td>
+              <td style="width:45%;font-size:8pt">Get hourly shift entries with start/end times and OT hours (included in GetDetail response)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.7</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_GetPTOTypes</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/pto-types</span></td>
+              <td style="width:45%;font-size:8pt">Get PTO type dropdown (Vacation, Sick, Personal, Holiday, Bereavement)</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.8</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_GetPaymentCalendar</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/time-records/payment-calendar</span></td>
+              <td style="width:45%;font-size:8pt">Get pay period dates for a given year — used to validate week ranges on timecard entry</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">13.9</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_TimeRecord_GetHolidayCalendar</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/time-records/holiday-calendar</span></td>
+              <td style="width:45%;font-size:8pt">Get company holidays for a year — used in timecard calculations for days that count as worked</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 14 — Lookups (Generic)
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">14.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Lookup_GetValues</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/lookups/{tableName}</span></td>
+              <td style="width:45%;font-size:8pt">Get dropdown values for any lookup table by name — cancellation reasons, document types, regions, etc. One SP covers all reference lists</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">14.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Lookup_Create</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/admin/lookups/{tableName}</span></td>
+              <td style="width:45%;font-size:8pt">Add a new value to a lookup table (admin only); change is audit-logged</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">14.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Lookup_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/admin/lookups/{tableName}/{id}</span></td>
+              <td style="width:45%;font-size:8pt">Update a lookup table value (admin only); change is audit-logged</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">14.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Lookup_Delete</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — soft-deletes a lookup value; blocked if value is in use; admin UI action only, not an MCP tool</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 15 — Config
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">15.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Config_GetIdp</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — returns MSAL configuration for the SPA; agents use client_credentials, not IDP config</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">15.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Config_GetAll</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/config</span></td>
+              <td style="width:45%;font-size:8pt">Get all system configuration values: session timeout, max file size, feature flags, runtime settings</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">15.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Config_GetCompany</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/config/company</span></td>
+              <td style="width:45%;font-size:8pt">Get company name, address, and branding for display in reports and print views</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 16 — Reporting
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">16.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Report_BillingCollections</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/reports/billing-collections</span></td>
+              <td style="width:45%;font-size:8pt">Billing and collections report: outstanding balances, collection performance by payer, aging buckets</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">16.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Report_DepartmentDeliverables</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/reports/department-deliverables</span></td>
+              <td style="width:45%;font-size:8pt">Department productivity report: deliverables completed, time logged, productivity score by division</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">16.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Report_PSR</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/reports/psr</span></td>
+              <td style="width:45%;font-size:8pt">Patient Satisfaction (PSR) report: contact outcomes, complaint resolution, rep performance by date range</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">16.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Report_Variance</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/reports/variance</span></td>
+              <td style="width:45%;font-size:8pt">Pricing variance report: billed amounts vs contracted rates — surfaces underbilling, overbilling, and margin issues</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 17 — Audit & Activity Logs
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">17.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_AuditLog_Insert</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — writes HIPAA audit events (PHI access, data change, security); called by API middleware only</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">17.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_AuditLog_GetList</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/admin/audit-logs</span></td>
+              <td style="width:45%;font-size:8pt">Search the HIPAA audit log: PHI access events, data changes, security events (admin/auditor only)</td>
+            </tr>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">17.3</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_ActivityLog_Insert</td>
+              <td style="width:7%;text-align:center"><span style="background:#EEF2F7;color:#718096;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">INTERNAL</span></td>
+              <td style="width:28%"><span style="color:#718096;font-size:7.5pt;font-style:italic">not exposed</span></td>
+              <td style="width:45%;font-size:8pt">INTERNAL — records page views, logins, and logouts; called by request pipeline middleware only</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">17.4</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_ActivityLog_GetList</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/admin/activity-logs</span></td>
+              <td style="width:45%;font-size:8pt">Search the user activity log: login, logout, and page-view events by user and date range (admin only)</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 18 — Compliance / Scheduled
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">18.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Compliance_GetPendingJobs</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/admin/compliance/pending</span></td>
+              <td style="width:45%;font-size:8pt">List patient accounts awaiting compliance review that are overdue — used for the daily compliance sweep</td>
+            </tr>
+            <tr style="">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">18.2</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Compliance_MassMoveJobs</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">POST&nbsp;/api/admin/compliance/mass-move</span></td>
+              <td style="width:45%;font-size:8pt">Bulk-move accounts that have exceeded the compliance hold period to the next queue; returns count of accounts moved</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 19 — Yes/No Module (PA/CMN/EDF)
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">19.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_YesNo_Update</td>
+              <td style="width:7%;text-align:center"><span style="background:#FEEBD9;color:#B3521E;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">WRITE</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">PUT&nbsp;/api/patients/{jobId}/yesno</span></td>
+              <td style="width:45%;font-size:8pt">Update the three compliance gates in one call: PA authorization status, CMN receipt confirmation, and EDF sign-off. PA Denied blocks the account from advancing to Billing</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="font-size:10pt;font-weight:700;color:#1A2B3C;
+                      border-left:4px solid #006DB6;padding:6px 12px;
+                      background:#F5F7FA;margin-bottom:6px">
+            Domain 20 — Dashboard
+          </div>
+          <table style="border-collapse:collapse;width:100%;font-size:8pt">
+            <thead>
+              <tr style="background:#006DB6;color:#fff">
+                <th style="padding:5px 8px;text-align:left;width:3%">#</th>
+                <th style="padding:5px 8px;text-align:left;width:17%">Stored Procedure</th>
+                <th style="padding:5px 8px;text-align:center;width:7%">R / W</th>
+                <th style="padding:5px 8px;text-align:left;width:28%">API Endpoint</th>
+                <th style="padding:5px 8px;text-align:left;width:45%">What It Does</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="background:#F5F7FA">
+              <td style="width:3%;text-align:center;font-size:7.5pt;color:#718096">20.1</td>
+              <td style="width:17%;font-family:monospace;font-size:7.5pt;color:#006DB6;word-break:break-all">usp_Dashboard_GetActivity</td>
+              <td style="width:7%;text-align:center"><span style="background:#C6F6D5;color:#276749;border-radius:3px;padding:1px 6px;font-size:7pt;font-weight:600">READ</span></td>
+              <td style="width:28%"><span style="font-family:monospace;font-size:7.5pt;color:#006DB6">GET&nbsp;/api/dashboard/activity</span></td>
+              <td style="width:45%;font-size:8pt">Get six headline dashboard KPIs in one call: new intakes today, queue transitions, scheduled deliveries, documents uploaded, open collector follow-ups, overdue compliance. Territory-filtered for non-admin users</td>
+            </tr></tbody>
+          </table>
+        </div>
+</div>
+
+<div class="section">
+  <h1>06 &nbsp; Security, HIPAA &amp; Governance</h1>
+
+  <p>OXPLive contains protected health information — patient demographics, insurance details, DME order data,
+  and EDI 835/837 claims. Security controls are designed into every layer of this architecture, not added
+  afterward. The following table summarises each control.</p>
+
+  <table class="sec-table">
+    <thead>
+      <tr><th>Control</th><th>Implementation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Service Account Isolation</strong></td>
+          <td>The <code>oxplive_mcp_svc</code> SQL Server login holds only <code>GRANT EXECUTE ON SCHEMA::oxadmin</code>.
+          No table-level SELECT, INSERT, UPDATE, or DELETE permissions are granted. No dynamic SQL is possible.</td></tr>
+      <tr><td><strong>SP-Only Access Pattern</strong></td>
+          <td>Every AI request resolves to a named, version-controlled stored procedure.
+          Inline SQL from AI-generated queries is architecturally impossible.</td></tr>
+      <tr><td><strong>Audit Logging</strong></td>
+          <td>Domain 17 exposes audit-log procedures. HIPAA-sensitive SPs
+          (<code>usp_Document_GetViewUrl</code>, all patient-record writers) trigger server-side
+          audit entries recording user, action, timestamp, and affected record ID.</td></tr>
+      <tr><td><strong>PHI Field Masking</strong></td>
+          <td>SSN and other PHI identifiers are masked at the stored-procedure level before
+          they reach the MCP response payload. Patient-data fields require explicit role clearance
+          (enforced in the procedure's parameter validation).</td></tr>
+      <tr><td><strong>Document URLs</strong></td>
+          <td>File access (<code>usp_Document_GetViewUrl</code>) returns HIPAA-compliant signed URLs
+          with short-lived expiry. No raw file paths or permanent links are returned.</td></tr>
+      <tr><td><strong>Transport Security</strong></td>
+          <td>Streamable HTTP runs over HTTPS in production. An optional <code>MCP_API_KEY</code>
+          header provides HTTP-level bearer auth. Network access to the MCP server port is restricted
+          by firewall to authorised client IP ranges.</td></tr>
+      <tr><td><strong>Session Isolation</strong></td>
+          <td>Each Claude session receives a unique <code>mcp-session-id</code>.
+          Sessions are server-memory-scoped; one session cannot access another session's state or results.</td></tr>
+      <tr><td><strong>Compliance Domains</strong></td>
+          <td>Domain 19 (Yes/No Module) enforces the three compliance gates — PA Status, CMN receipt,
+          and EDF sign-off — that must be satisfied before a job can progress in the queue.
+          Domain 18 handles mass-move and scheduled compliance batch operations.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="infobox">
+    This design supports OrthoKinetix's HIPAA compliance posture. It does not replace the organisation's
+    existing policies, Business Associate Agreements, or staff training, which remain in place.
+  </div>
+</div>
+
+<div class="section">
+  <h1>07 &nbsp; What Gets Built</h1>
+
+  <h2>MCP Server — Node.js Application</h2>
+  <p>The OXPLive MCP server is a <strong>Node.js / TypeScript</strong> application built on the
+  official <code>@modelcontextprotocol/sdk</code> package. It uses the <code>mssql</code> library for
+  SQL Server connectivity and <code>Express</code> for the Streamable HTTP transport. Key components:</p>
+
+  <ul>
+    <li><strong>DB Client</strong> — singleton <code>mssql</code> connection pool; <code>executeSP()</code>,
+    <code>querySP()</code>, and <code>querySPSingle()</code> helpers that auto-prefix <code>oxadmin.</code>
+    to every procedure name</li>
+    <li><strong>20 Domain Tool Files</strong> — one TypeScript file per domain, each exporting its MCP
+    tool definitions and request handlers</li>
+    <li><strong>Server Core</strong> — <code>createOxpliveMcpServer()</code> registers all 94 tools
+    and dispatches calls to the matching domain handler</li>
+    <li><strong>Streamable HTTP Transport</strong> — Express app with session map; supports multiple
+    concurrent Claude sessions</li>
+  </ul>
+
+  <h2>SQL Server Service Account</h2>
+  <p>A dedicated, least-privilege SQL Server login is created specifically for the MCP server:</p>
+  <div class="infobox" style="font-family:monospace;font-size:8.5pt;line-height:1.6">
+    CREATE LOGIN oxplive_mcp_svc WITH PASSWORD = '&lt;vault-managed password&gt;';<br>
+    CREATE USER  oxplive_mcp_svc FOR LOGIN oxplive_mcp_svc;<br>
+    GRANT EXECUTE ON SCHEMA::oxadmin TO oxplive_mcp_svc;
+  </div>
+  <p>No further permissions are required. The service account cannot read, write, or alter any table,
+  view, or function directly.</p>
+
+  <h2>Configuration &amp; Deployment</h2>
+  <p>All connection strings and secrets are managed via environment variables (never committed to source
+  control). The server ships with a <code>.env.example</code> file and a
+  <code>config/claude-code.mcp.json</code> snippet for immediate Claude Code integration.</p>
+
+  <h2>What Is NOT in Scope</h2>
+  <ul>
+    <li>The .NET 8 REST API layer (Phase F — planned, not yet approved)</li>
+    <li>An admin portal or management dashboard</li>
+    <li>Changes to the existing OXPLive ColdFusion application</li>
+    <li>Changes to the OrthoXpressDB schema or existing stored procedures</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h1>08 &nbsp; Delivery Plan</h1>
+
+  <p>The MCP server delivery is structured in three phases. Each phase ends with a clear, demonstrable result
+  that OrthoKinetix can test before the next phase begins.</p>
+
+  <table class="phase-table">
+    <thead>
+      <tr><th>Phase</th><th>Deliverable</th><th>Scope</th><th>Exit Criteria</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-blue">Phase 1</span></td>
+        <td><strong>Stored Procedure Foundation</strong></td>
+        <td>All 116 stored procedures authored, reviewed, and deployed to the OXPLive test database.
+        Includes read-only procedures for all 20 domains plus write procedures for core entities.</td>
+        <td>All SPs pass unit tests against test DB; naming convention compliant; HIPAA-sensitive fields verified</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-teal">Phase 2</span></td>
+        <td><strong>MCP Server — Build &amp; Test</strong></td>
+        <td>Node.js MCP server with all 94 tools, DB-Direct wiring, Streamable HTTP transport, service
+        account provisioning, and Claude Code integration.</td>
+        <td>Claude can invoke all 94 tools against the test database; audit log confirms all calls recorded</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">Phase 3</span></td>
+        <td><strong>Production Deployment</strong></td>
+        <td>Production environment setup, credential vault integration, firewall rules, HTTPS,
+        staff training session, and final sign-off from OrthoKinetix IT.</td>
+        <td>Server running in production; OrthoKinetix team can connect Claude and execute representative queries</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Detailed timeline and effort estimates are confirmed during the kick-off session and provided in a
+  companion Statement of Work upon approval of this document.</p>
+</div>
+
+<div class="section">
+  <h1>09 &nbsp; What We Need From You</h1>
+
+  <p>Approval of this document authorises Technijian to begin Phase 1. A short kick-off session is
+  scheduled immediately afterward to confirm the items below. None of these decisions block approval —
+  they shape the detailed plan.</p>
+
+  <ul>
+    <li><strong>Domain priority order.</strong> Which of the 20 domains should be built first?
+    (Suggested default: Domains 1–5 — Auth, Patient, Insurance Auth, Queue, Billing.)</li>
+    <li><strong>Test database access.</strong> Confirmation that Technijian may continue working against
+    the existing test/UAT environment for Phase 1 and Phase 2.</li>
+    <li><strong>Service account provisioning.</strong> Authorisation to create the <code>oxplive_mcp_svc</code>
+    login and grant it EXECUTE on the <code>oxadmin</code> schema.</li>
+    <li><strong>Credential vault.</strong> Preferred secret-management approach (Azure Key Vault, Windows
+    Credential Manager, or Technijian-managed vault) for the service account password and API key.</li>
+    <li><strong>Hosting location.</strong> Where the MCP server will run — on-premises IIS, Windows service,
+    Docker container, or Technijian-hosted.</li>
+    <li><strong>Internal users.</strong> Who at OrthoKinetix will use Claude with the MCP tools, and at
+    what initial permission level (read-only vs. read/write access to write-capable domains).</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h1>10 &nbsp; Approval &amp; Sign-Off</h1>
+
+  <p>By signing below, OrthoKinetix authorises Technijian to proceed with the OXPLive MCP Server project
+  as described in this document, beginning with Phase 1 (Stored Procedure Foundation). This approval
+  covers the technical approach, domain scope, and phased delivery plan.</p>
+
+  <p>Specific timeline, effort hours, and fees are confirmed in a companion Statement of Work,
+  which will be issued within five (5) business days of receiving this signed approval.</p>
+
+  <div class="sig-grid">
+    <div class="sig-block">
+      <h3>OrthoKinetix</h3>
+      <p style="font-size:8.5pt;color:#718096">
+        Authorised on behalf of OrthoKinetix / OrthoXpress
+      </p>
+      <div class="sig-line">
+        <span>Signature</span>
+        <span>Date</span>
+      </div>
+      <div class="sig-line" style="margin-top:20px;">
+        <span>Name (print)</span>
+        <span>Title</span>
+      </div>
+    </div>
+
+    <div class="sig-block">
+      <h3>Technijian</h3>
+      <p style="font-size:8.5pt;color:#718096">
+        Prepared and submitted by Technijian Inc.
+      </p>
+      <div class="sig-line">
+        <span>Rohit Jain, Technijian</span>
+        <span>June 2026</span>
+      </div>
+      <div class="sig-line" style="margin-top:20px;">
+        <span>949.379.8499 · rjain@technijian.com</span>
+        <span>&nbsp;</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="infobox" style="margin-top:24px;">
+    <strong>Questions?</strong> Contact Technijian at 949.379.8499 (main) or rjain@technijian.com.
+    The full engineering specification, STP-API-MCP Coverage Matrix, and Statement of Work
+    are available on request.
+  </div>
+</div>
+
+<div class="section">
+  <h1>A &nbsp; Appendix — Full Domain Reference</h1>
+
+  <h2>A.1 &nbsp; Domain Summary (authoritative counts)</h2>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Domain</th><th>STPs</th><th>API Endpoints</th><th>MCP Tools</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Auth & Session</td><td>5</td><td>4</td><td>2</td></tr><tr><td>2</td><td>Patient / Account</td><td>18</td><td>16</td><td>16</td></tr><tr><td>3</td><td>Insurance Authorization</td><td>5</td><td>5</td><td>5</td></tr><tr><td>4</td><td>Queue & Workflow</td><td>7</td><td>7</td><td>6</td></tr><tr><td>5</td><td>Billing & Claims</td><td>5</td><td>5</td><td>5</td></tr><tr><td>6</td><td>Scheduling</td><td>10</td><td>9</td><td>9</td></tr><tr><td>7</td><td>Patient Experience</td><td>7</td><td>6</td><td>5</td></tr><tr><td>8</td><td>Collector Actions</td><td>5</td><td>5</td><td>4</td></tr><tr><td>9</td><td>Products & Inventory</td><td>10</td><td>10</td><td>9</td></tr><tr><td>10</td><td>Orders & Purchasing</td><td>3</td><td>3</td><td>3</td></tr><tr><td>11</td><td>Documents / Files</td><td>4</td><td>4</td><td>3</td></tr><tr><td>12</td><td>Directory, Users & Reps</td><td>9</td><td>8</td><td>6</td></tr><tr><td>13</td><td>Time Records (HR)</td><td>9</td><td>9</td><td>6</td></tr><tr><td>14</td><td>Lookups (Generic)</td><td>4</td><td>4</td><td>2</td></tr><tr><td>15</td><td>Config</td><td>3</td><td>3</td><td>2</td></tr><tr><td>16</td><td>Reporting</td><td>4</td><td>4</td><td>4</td></tr><tr><td>17</td><td>Audit & Activity Logs</td><td>4</td><td>4</td><td>3</td></tr><tr><td>18</td><td>Compliance / Scheduled</td><td>2</td><td>2</td><td>2</td></tr><tr><td>19</td><td>Yes/No Module (PA/CMN/EDF)</td><td>1</td><td>1</td><td>1</td></tr><tr><td>20</td><td>Dashboard</td><td>1</td><td>1</td><td>1</td></tr>
+      <tr style="font-weight:700;background:#1A2B3C;color:#FFFFFF">
+        <td colspan="2">TOTAL</td>
+        <td>116</td>
+        <td>110</td>
+        <td>94</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>A.2 &nbsp; The 13 Workflow Queues</h2>
+  <p>The OXPLive platform routes DME orders through 13 named queues. Domain 4 (Queue &amp; Workflow)
+  provides the stored procedures that govern job transitions between queues.</p>
+
+  <table>
+    <thead><tr><th>#</th><th>Queue</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Intake</td><td>New DME orders received; initial eligibility check</td></tr>
+      <tr><td>2</td><td>Benefits</td><td>Insurance benefit verification in progress</td></tr>
+      <tr><td>3</td><td>Auth</td><td>Prior authorisation requested or under review</td></tr>
+      <tr><td>4</td><td>Pending</td><td>Awaiting patient or clinical information</td></tr>
+      <tr><td>5</td><td>Shipping</td><td>Order approved; equipment dispatch in progress</td></tr>
+      <tr><td>6</td><td>Billing</td><td>Delivered; claim submitted to payer</td></tr>
+      <tr><td>7</td><td>Re-Bill</td><td>Claim denied or adjusted; re-submission in progress</td></tr>
+      <tr><td>8</td><td>EDF</td><td>Equipment Delivery Form outstanding — compliance hold</td></tr>
+      <tr><td>9</td><td>Collections</td><td>Overdue balance; active collector follow-up</td></tr>
+      <tr><td>10</td><td>Yes/No</td><td>PA Status / CMN / EDF compliance gates pending</td></tr>
+      <tr><td>11</td><td>Inactive</td><td>Order on hold; no active work</td></tr>
+      <tr><td>12</td><td>Cancelled</td><td>Order cancelled; record retained for audit</td></tr>
+      <tr><td>13</td><td>Collector Actions</td><td>Collector daily-action tracking and totals</td></tr>
+    </tbody>
+  </table>
+
+  <h2>A.3 &nbsp; Companion Documents</h2>
+  <ul>
+    <li><strong>STP-API-MCP Coverage Matrix</strong> (A3 landscape PDF) —
+    All 116 stored procedures with full parameter lists, return schemas, API endpoint mappings,
+    and MCP tool definitions. Provided as a separate deliverable.</li>
+    <li><strong>Statement of Work</strong> — Issued within 5 business days of approval.
+    Covers phased timeline, effort hours, and fees.</li>
+  </ul>
+</div>
+
+</body>
+</html>
