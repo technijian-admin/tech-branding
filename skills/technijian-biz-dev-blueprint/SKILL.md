@@ -202,6 +202,36 @@ Do not default to the RKE three-diagram set. For each potential diagram, ask: *d
 - **DERIVE each figure's aspect ratio from the REAL PNG pixel dimensions** (read width/height off the cropped file), then size the docx image to that AR. Never hardcode an aspect ratio — a hardcoded AR drifts as content changes and distorts the figure or leaves a gap.
 - **Long y-axis labels:** render the label inside a fixed-width bar rotated about its own center, so a long label can never overflow the plot area or collide with the bars.
 
+**Implementation: `pngDims()` + `diagramImage()` pattern (mandatory)**
+
+Read actual PNG dimensions from the IHDR header (bytes 16–23), then compute the embedded height from the real ratio. Never pass a hardcoded `aspectRatio`:
+
+```javascript
+// Read PNG IHDR dimensions — offsets 16=width, 20=height
+function pngDims(buf) {
+  return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+}
+
+// Embed diagram at correct aspect ratio derived from real file dimensions
+function diagramImage(buf, altTitle, widthPx = 600) {
+  if (!buf) return new Paragraph({ children: [new TextRun('')] });
+  const { w, h } = pngDims(buf);
+  const imgW = widthPx;
+  const imgH = Math.round(widthPx * h / w);
+  return new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { before: 120, after: 80 },
+    children: [new ImageRun({
+      type: 'png', data: buf,
+      transformation: { width: imgW, height: imgH },
+      altText: { title: altTitle, description: altTitle, name: altTitle }
+    })]
+  });
+}
+```
+
+If a tall diagram causes its last bullet/caption to orphan onto the next page, reduce the `widthPx` argument (e.g., from 620 to 520) rather than cutting content — the diagram gets shorter and the text fits.
+
 ---
 
 ## Phase 5: Technijian Capability Proof
@@ -450,18 +480,28 @@ For non-AI topics (cybersecurity, IT, hosting), adapt the second clause to match
 
 ## Playwright Render Setup
 
-```python
-from playwright.sync_api import sync_playwright
+**MANDATORY: always use `device_scale_factor=3` (or minimum 2) in the browser context.** Default (1×) renders at ~72–113 DPI effective in print — diagrams look pixelated in the PDF. `device_scale_factor=3` yields ~340–410 DPI at content width, which is print-quality. This is the async pattern (sync_playwright works too — use the same `device_scale_factor` arg):
 
-def render_diagram(html_content, output_path, width=1200, height=700):
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page(viewport={"width": width, "height": height})
-        page.set_content(html_content)
-        page.wait_for_timeout(500)
-        page.screenshot(path=output_path, full_page=False)
-        browser.close()
+```python
+from playwright.async_api import async_playwright
+import asyncio
+
+async def render_all_diagrams(diagrams: dict[str, str], out_dir: str):
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch()
+        # device_scale_factor=3 renders at 3× physical pixels → ~340-410 DPI at DOCX content width
+        context = await browser.new_context(device_scale_factor=3)
+        page = await context.new_page()
+        for name, html in diagrams.items():
+            await page.set_content(html)
+            await page.wait_for_timeout(500)
+            await page.screenshot(path=f"{out_dir}/{name}.png", full_page=True)
+        await browser.close()
+
+asyncio.run(render_all_diagrams(DIAGRAMS, "diagrams/"))
 ```
+
+Expected output file sizes with `device_scale_factor=3`: ~100–280 KB per diagram PNG (vs ~10–30 KB at 1×). DOCX will grow to ~1 MB — that is correct and expected for print-quality output.
 
 ### Fonts
 ```html
@@ -673,7 +713,19 @@ When the engagement also needs a heavy technical/commercial analysis (e.g. the C
 ### Build-pattern gotchas (these will bite you)
 - **Always spread helper calls that return arrays** into `docChildren`: `...sectionHeader(...)`, `...numberedSteps(...)`. A bare un-spread array (or a stray scalar) serializes as the invalid XML token `<0/>`, and **Word silently refuses to open the file** ("Word experienced an error trying to open the file") even though `node` built it without complaint. Diagnose any won't-open docx with `python -c "import zipfile,xml.dom.minidom as M; M.parseString(zipfile.ZipFile('...docx').read('word/document.xml'))"` — a stray `<0/>` is the tell.
 - **Convert DOCX→PDF sequentially, never in a parallel tool batch.** Parallel Word COM calls wedge Word so it fails to open *every* file. If it wedges: kill WINWORD, delete `%APPDATA%\Microsoft\Templates\Normal.dotm` (Word rebuilds it), clear `HKCU:\...\Word\Resiliency`.
-- **Watch for blank pages** from an explicit `pageBreak()` landing on an already-full boundary — render every page and check for empties; remove the redundant break and let content flow.
+- **Watch for blank pages** from an explicit `pageBreak()` landing on an already-full boundary — render every page and check for empties; remove the redundant break and let content flow. **The fix is to embed the `PageBreak` run INSIDE the last content paragraph** (not as a standalone `new Paragraph({ children: [new PageBreak()] })`). A standalone pageBreak paragraph that lands at a page boundary creates a completely blank page. Instead, add `{ pageBreakAfter: true }` support to your `p()` helper and call it on the last paragraph of the section:
+  ```javascript
+  // Add pageBreakAfter option to the p() helper
+  function p(text, opts = {}) {
+    const { pageBreakAfter = false, ...rest } = opts;
+    const children = [new TextRun({ text, ...rest })];
+    if (pageBreakAfter) children.push(new PageBreak());
+    return new Paragraph({ children, ...rest });
+  }
+  // Usage: last paragraph of a section
+  p('Final sentence of section...', { pageBreakAfter: true }),
+  // NOT: separate pageBreak() paragraph after it
+  ```
 - **Verify visually, and don't trust a flaky shell.** Render the PDF/diagram pages to PNG and actually look (cover logo real? tables not overlapping? no blank pages?). When the shell's text output is unreliable, trust the image reads and Word's own success/failure over echoed text.
 
 ## Related Skills
