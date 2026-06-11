@@ -25,9 +25,12 @@ Do not reinvent the PPTX plumbing. Read and follow **`technijian-presentation`**
 > **Use the real Technijian logo PNG via `addImage`. Never draw the wordmark with text boxes or colored squares. Reverse-white transparent PNG on dark slides, full-color PNG on light slides.** After rendering, convert the cover to an image and *look at it* — confirm the real dot-grid mark appears, correct aspect ratio. A fabricated logo silently signals "thrown together," which is fatal in a first meeting.
 
 ```
-assets/logos/png/technijian-logo-reverse-white-5000x1667-transparent.png  ← dark slides (cover, section, closing)
-assets/logos/png/technijian-logo-full-color-600x125.png                   ← light body slides
+assets/Technijian Logo - white text.png   ← dark slides (cover, section, closing)
+assets/Technijian Logo 2.png              ← light body slides
+(both have aspect ratio w/h = 4.78 — size with h = w / 4.78)
 ```
+
+> Do NOT use `assets/logos/png/technijian-logo-*` — those are AI-regenerated files with the WRONG icon (`feedback_logo_use_authentic_files`). The two assets-root files above are the authentic logos (the CNBC and JRMDF decks are the working reference).
 
 All other brand values (colors, fonts, phone, addresses) come from `assets/brand-tokens.json` — the SINGLE SOURCE OF TRUTH; never hardcode (any literal value elsewhere in this skill is a cached convenience — read/sync from the JSON). Brand specifics that bite on a first impression:
 - **Tagline:** "technology as a solution" (lowercase, no period). The old "Technology Support, Your Way." is RETIRED — never use it.
@@ -96,6 +99,17 @@ The next step must be **low-commitment and valuable on its own**. The default is
 ### Closing CTA — one dated in-document step + risk-reversal
 The closing slide must carry ONE concrete, **dated** next step *on the slide itself* (e.g. "Book your free Nexus Assess — we'll have the prioritized roadmap back to you by [date]") paired with explicit risk-reversal (free, no contract, the roadmap is yours to keep). Do NOT make "use the Book-a-Meeting button in my signature" the CTA — a CTA buried in a signature is too easy to ignore; the booking link can support the on-slide ask but cannot replace it. Broaden the topic slightly beyond this one lead — e.g. "...to dig into this and the broader AI strategy we're rolling out for ourselves and our clients" — which positions the rep as a thought leader, not a one-deal pitch. (Encoded from the blueprint's Phase 11.)
 
+## Speaker notes — mandatory on every slide
+
+Every first-meeting deck ships with **presenter speaker notes on EVERY slide** (`slide.addNotes(...)`) — no exceptions (Ravi, 2026-06-11). In a discovery deck the notes ARE half the deliverable: the slides carry the conversation spine; the notes carry the rep's game plan. Per slide, write coaching-style notes that include:
+
+- the one idea the slide must land, and what to say if time is short;
+- the **discovery probes** to ask while that slide is up (the "what we heard" slide gets the must-learn list);
+- **verify-live items** — everything research suggests but the booking didn't confirm (who the lead is, environment, affiliations). Background research lives in the notes, NEVER on the client-facing slide;
+- handling guidance — pricing framing ("estimate; fixed quote after the free assessment"), the known objection rebuttal, what NOT to pitch in this meeting.
+
+Reference pattern: `Clients/CNBC/presentation/generate_presentation.js` and `Clients/JRMDF/presentation/generate_presentation.js` (a `NOTES = {...}` object + `slide.addNotes(NOTES.x)` per slide). Verify after building: unzip the `.pptx` and confirm `ppt/notesSlides/notesSlide*.xml` count equals the slide count.
+
 ## Voice
 
 Run the draft through **`technijian-voice`** before finalizing. First-meeting decks especially must avoid hype words (leverage, seamless, world-class, cutting-edge, game-changing) and weak CTAs — a new lead's BS detector is fully on. Be specific, human, and confident-not-pushy. Use the prospect's industry language, not ours.
@@ -119,6 +133,7 @@ A first-meeting deck often needs to survive being *forwarded* to someone who was
 6. **Next step is one clear, low-risk action** — ONE dated CTA on the closing slide itself + risk-reversal (the booking button supports it but does not replace it).
 7. **Render and eyeball every slide** — render EVERY slide to an image and proofread at display size; never declare done unverified. Use a body-region fill metric (header/footer excluded) to catch whitespace, short slides, and stranded captions/text — a slide can pass a height check while content silently clips or strands. Confirm: no clipped text/overflow, logo on cover + closing, tagline "technology as a solution," contact = main line 949.379.8499.
 8. **No fabrication slipped in** — every proof point is anonymized scope/effort with no invented metric/quote; any not-yet-built capability reads as a dated near-term build; numbers flagged "to confirm at discovery."
+9. **Speaker notes on EVERY slide** — coaching-style presenter notes with discovery probes and verify-live items; confirmed embedded (notesSlide XML count == slide count).
 
 ## Related skills
 - **`technijian-presentation`** — PPTX mechanics + logo handling (read this first; this skill builds on it)

@@ -466,8 +466,10 @@ const cover = [
 const toc = [
   ...sectionHeader('Table of Contents', CORE_BLUE, '', { newPage: true }),
   spacer(200),
-  // TOC limited to H1 + H2 (no h3 subsections) — keeps the TOC compact and on 1-2 pages
-  new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
+  // TOC limited to H1 ONLY (sections, no subsections) — ACU precedent. At '1-2' the TOC filled
+  // pages 2-3 exactly and its trailing paragraph mark spilled onto p4, which Section 01's
+  // pageBreakBefore then stranded as a blank page (the 2026-06-10/11 "RKE p4" artifact).
+  new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-1' }),
 ];
 
 // ---------- EXECUTIVE SUMMARY ----------

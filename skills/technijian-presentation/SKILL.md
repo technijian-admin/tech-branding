@@ -111,12 +111,35 @@ Every presentation MUST use these approved layouts. Never create plain white sli
 
 Always use the REAL logo files (never recreate the mark). Reverse-white on dark backgrounds, full-color on light backgrounds, centered/aligned per the layout spec.
 
-```
-// White/reverse for dark backgrounds:
-assets/logos/png/technijian-logo-reverse-white-5000x1667.png
+> **WARNING — authentic files only.** The files under `assets/logos/png/technijian-logo-*` are AI-REGENERATED with the WRONG icon (see `feedback_logo_use_authentic_files` memory). The authentic logos live at the `assets/` ROOT:
 
-// Full-color for light backgrounds:
-assets/logos/png/technijian-logo-full-color-1200x251.png
+```
+// Full-color (dark text) for LIGHT backgrounds:
+assets/Technijian Logo 2.png
+
+// White-text for DARK backgrounds (cover, section, closing):
+assets/Technijian Logo - white text.png
+
+// Both files share aspect ratio width/height = 4.78 — size with h = w / 4.78
+```
+
+## Speaker Notes (MANDATORY — every slide, every deck)
+
+Every presentation MUST ship with proper speaker notes on EVERY slide via `slide.addNotes("...")` — no exceptions (Ravi, 2026-06-11). A deck without notes is not done. Notes are presenter-facing scripts, not slide-text repeats:
+
+- **What the rep should SAY** — the framing, the one idea the slide must land, what to emphasize or skip when short on time.
+- **Discovery probes** — the live questions to ask on that slide (especially the "what we heard" slide).
+- **Verify-live items** — research/assumptions to confirm naturally in conversation (prospect identity, environment details). Background research belongs in the NOTES, never on the client-facing slide.
+- **Handling guidance** — pricing framing ("estimate, fixed quote after assessment"), objection responses, what NOT to pitch in this meeting.
+- Write them as coaching ("OPEN WARM…", "Keep this short…", "If she pushes for an exact number: …") — the CNBC and JRMDF decks (`Clients/CNBC/`, `Clients/JRMDF/`) are the reference pattern.
+
+**Verification:** after building, confirm notes embedded — unzip the `.pptx` and count `ppt/notesSlides/notesSlide*.xml` (must equal the slide count), e.g.:
+
+```python
+import zipfile
+z = zipfile.ZipFile("deck.pptx")
+notes = [n for n in z.namelist() if "notesSlides/notesSlide" in n and n.endswith(".xml")]
+assert len(notes) == SLIDE_COUNT
 ```
 
 ## Content Honesty
@@ -129,7 +152,8 @@ Never declare a deck finished unverified. After building the `.pptx`:
 
 1. Render EVERY slide to an image (e.g. export/convert to PNG) and visually proofread each at display size — check for overflow, clipped text, stranded captions, and short/empty slides.
 2. Use a body-region fill check (exclude the header bar and footer line) to catch whitespace and under-filled slides.
-3. Confirm logos, tagline, and the `949.379.8499` CTA render correctly. Only then declare done.
+3. Confirm logos, tagline, and the `949.379.8499` CTA render correctly.
+4. Confirm SPEAKER NOTES are embedded on every slide (notesSlide count == slide count — see the Speaker Notes section). Only then declare done.
 
 ## Related Skills
 
