@@ -73,10 +73,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -371,7 +374,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -398,7 +400,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: this blueprint was built from public information. The community’s internal numbers — current occupancy, average days-to-lease, turnover, and renewal rate — were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call. The specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: this blueprint was built from public information. The community’s internal numbers — current occupancy, average days-to-lease, turnover, and renewal rate — were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call. The specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 HOW A COMMUNITY LIKE THE AVENTINE GROWS ----------
@@ -624,6 +626,14 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. A growing share of renters now ask an AI assistant to shortlist communities before they ever open a listing site. When a prospect asks the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "What are the best luxury apartments in Aliso Viejo with great reviews and easy online touring?"', [
+    'TODAY — the assistant answers with whichever communities have the strongest reviews and the most modern, machine-readable leasing content: it names Irvine Company and Greystar communities (Vista Bella, ARTÀ) with their 4-plus-star ratings and self-guided touring, and does NOT surface the Aventine — whose 3.0-star rating and PDF-only application give the assistant little to cite. The Aventine is invisible at the exact moment the renter is forming a shortlist.',
+    'AFTER THE PROGRAM — the same query returns the Aventine as a cited option ("The Aventine at Aliso Viejo — a luxury community with a 24/7 AI leasing assistant, online application, and self-guided tours…"), with the lifted review rating and answer-engine content as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is part of the digital-audit baseline.)', { italics: true, size: 18 }),
 );
 
 // ---------- 08 THE SILENT VACANCY ----------
@@ -652,6 +662,9 @@ docChildren.push(
     ],
     DARK_CHARCOAL
   ),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('This leak is not static — it compounds. Every month the funnel stays manual, the competitors at Vista Bella, ARTÀ, and Vantis answer first, win the tour, and earn the review the Aventine did not — and a 3.0-star rating becomes the default a searching renter sees and a higher rating becomes the rival’s moat. On a $13.9-million rent roll, even a single percentage point of occupancy is on the order of $139,000 a year, so the question is not whether the community can afford to modernize the leasing experience — it is how many months of cooled leads and avoidable move-outs it can afford to absorb first. The cost of waiting is not zero; it is the leases and renewals quietly going to whoever answered faster.'),
 );
 
 // ---------- 09 TECHNIJIAN CAPABILITY PROOF ----------
@@ -710,11 +723,96 @@ docChildren.push(
     'For the Aventine it is the speed-to-lead engine: instant first response to every ILS and website inquiry, automated follow-up and tour booking, and nurture that keeps a prospect warm until they lease.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across leasing, reputation, and resident communication: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, Fair-Housing-sensitive answers, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — prospect replies, follow-up personalization, review responses, summarization', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, tagging inquiries, routing maintenance requests', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: the Aventine pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single piece of authority content is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one off-the-shelf chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms The Aventine’s Growth Engine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for The Aventine Leadership', CORE_BLUE, '10'),
+  spacer(100),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where the Aventine sits today, how to adopt it without risk, and what comparable operators are already doing. The goal is that the leasing and ownership team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn\'t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "answer this after-hours inquiry with hours, availability, and a tour link." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the lead pipeline and decide who to follow up with and when." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. The Aventine starts with simple automations that pay off in the first 90 days — instant lead response, review requests, maintenance-status updates — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where The Aventine Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most well-run regional operators — including the Aventine — sit at the first or second rung of the widely-used five-stage AI maturity model (consistent with the Gartner and Google Cloud frameworks). The leaders in the submarket are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'The Aventine Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      [{ text: '1. Foundational', bold: true }, { text: 'Little or no AI; manual, people-dependent leasing and resident communication — a 360° tour and listings, but a PDF application and no after-hours response', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      [{ text: '2. Emerging', bold: true }, 'First AI in place — an after-hours assistant, review automation, speed-to-lead capture — the move this report makes in the first 90 days', { text: '→ next', color: CORE_BLUE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — leasing, reputation, resident comms — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across the funnel and the portfolio with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the operator runs and competes across all nine communities', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('The honest read: the Aventine is at the Foundational rung today — its competitors at Irvine Company, Greystar, and AvalonBay are already Operational. The good news is the distance is short. This report is the plan to reach Emerging in the first ninety days and Operational within twelve months — AI working in the leasing funnel and the resident experience.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a regulated business like apartment leasing, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Uniform scripted responses on availability, pricing, and qualifying criteria, with human-in-the-loop review on anything compliance-bound — the same control that keeps the assistant Fair-Housing-safe'],
+      ['Data leakage', 'Applicant data pasted into public tools can escape', 'Private, governed deployments behind a CCPA-aligned notice and DPA — applicant and resident PII stays owned by the operator and never touches a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source; the assistant logs its bot disclosure and never makes the accept-or-deny decision or sets rent — led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Operators Are Already Doing', { color: CORE_BLUE }),
+  bullet('Institutional multifamily: the national REITs and large operators (Irvine Company, AvalonBay, Greystar) run 24/7 AI leasing assistants, self-guided tours, and online applications as standard — the experience renters now expect.'),
+  bullet('Independent and regional operators: smaller owner-operators are adopting right-sized, brand-trained leasing assistants to answer after-hours inquiries and book tours, capturing demand that used to cool overnight.'),
+  bullet('Resident experience: operators are automating maintenance intake, status updates, and renewal outreach to lift retention — the cheapest lease being the one you never lose.'),
+  p('These are representative directions of travel across comparable operators, not guarantees; the Aventine\'s own numbers would be confirmed in discovery. Technijian\'s specific, demonstrated builds appear in Section 9 (Capability Proof), and the modeled impact for the Aventine appears in Section 12.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — An Aventine Leasing Agent', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A leasing agent arrives to a stack of overnight inquiries that went unanswered, several already touring a competitor that replied first. The day is spent fielding the same availability and amenity questions by phone, chasing PDF applications, and reconstructing where each prospect left off — while renewal conversations and tours slip because there is no time.',
+    'WITH AI: The 24/7 assistant has already answered every overnight inquiry uniformly, booked tours, and sent the online application — disclosed as a bot and Fair-Housing-safe. The agent walks in to a prioritized list of warm, tour-ready prospects and spends the day on the human moments that close a lease and renew a resident, not on after-hours triage and paperwork.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but the Aventine assembles, secures, and governs everything — and owns the three risks above (Fair Housing, privacy, accountability) alone'],
+      ['Enterprise platform', 'EliseAI, RealPage, and Yardi are priced and built for 10,000-unit portfolios, keep your prospect and resident data inside their ecosystem, and sound generic — and one (RealPage) carries the antitrust baggage this program avoids'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'A right-sized, brand-trained, operator-owns-the-data build — strategy, build, security, and Fair-Housing/privacy governance in one team, with proven AI builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms The Aventine’s Growth Engine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get found and convert (own local search and lift the reputation that earns the tour), lease faster (answer instantly and let prospects tour, apply, and pay online), and keep and grow (retain residents and replicate across the portfolio). The first fills the top of the funnel, the second is the speed-to-lead core, and the third protects and scales the rent roll.'),
   spacer(160),
@@ -754,12 +852,32 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on quick wins — local search, reputation, and instant speed-to-lead capture — and expands into the 24/7 assistant, the online application, and the portfolio only as the results prove out. The model below is built from public information and conservative assumptions, because the community’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 14 replace them with real baselines.'),
-  spacer(140),
+  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on quick wins — local search, reputation, and instant speed-to-lead capture — and expands into the 24/7 assistant, the online application, and the portfolio only as the results prove out. The model below is built from public information and conservative assumptions, because the community’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 15 replace them with real baselines.'),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Industry surveys consistently find that while a large majority of companies now use AI in some form, only a minority report a clear profit impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement (faster leasing, higher retention), then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. The Aventine carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Lead-Gen Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up the Aventine’s local-search and answer-engine presence, the reputation engine that lifts the 3.0-star rating, and the instant speed-to-lead capture that answers every inquiry around the clock — and proves the lift before any larger build is discussed.'),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, every new inquiry — including after-hours — receives an instant first response and a booked-or-offered tour, with the review rating measurably climbing off 3.0 and the community ranking higher on the listing sites it lives on.',
+      'Our commitment: the entry program is month-to-month, no lock-in. If the pilot has not moved the needle on the metric above by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
     [
@@ -832,9 +950,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence that mirrors the land-and-expand plan: start with the low-commitment entry — get found and capture every lead — then add the assistant-and-application build, then retention and the portfolio. Real gains — a modern site, a rising rating, instant lead response — are visible inside the first ninety days, before any large build; the deeper build and the portfolio roll-out are given realistic runway.'),
   spacer(200),
@@ -867,14 +985,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Retention & Resident Experience', 'Launch renewal automation, the maintenance-intake and status assistant, and resident-sentiment monitoring; itemized, document-backed deposits to end move-out disputes.'],
-      ['3.2 — Portfolio Roll-Out', 'Replicate the leasing-and-retention stack across the other eight communities, and deliver an ROI dashboard measured against the Section 14 baselines.'],
+      ['3.2 — Portfolio Roll-Out', 'Replicate the leasing-and-retention stack across the other eight communities, and deliver an ROI dashboard measured against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions The Aventine can take immediately — before any Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -899,11 +1017,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE THIS PLAN ----------
+// ---------- 15 QUESTIONS TO CALIBRATE THIS PLAN ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with the community’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with the community’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -934,9 +1052,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions the Aventine and Pacific Coast Management are most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have someone handling the website and listings. Why add Technijian?', bold: true }, 'Keep them — the listings and the syndication are working; leads arrive. We add the layer they do not: AI-search visibility (GEO), the 24/7 leasing assistant, online application and payments, reputation management to lift the 3.0-star rating, and the resident-experience automation. We run alongside whoever owns marketing today, not over them.'],
+      [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — instant lead response, review requests, maintenance updates — not autonomous "agents" running your leasing office. We use the simplest tool that works, measure it, and only expand what earns its place. The institutional operators you compete with already run exactly this.'],
+      [{ text: 'Is our applicant and resident data safe?', bold: true }, 'Yes. Applicant data never touches a public AI model; we deploy private, governed systems behind a CCPA-aligned notice and data-processing agreement, with the operator owning the data — not a third-party platform. Human review stays on anything compliance-bound, led by a CISSP-certified team. Governance is built into the program from day one.'],
+      [{ text: 'We\'re a lean team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give the leasing team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly check-in plus reviewing what we draft. The assistant handles the after-hours questions, follow-ups, and paperwork — so no new hire to manage.'],
+      [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry program is a fixed-scope 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it. You carry the upside, not the risk.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $32K for Year 1 at published rates — local search, reputation, and speed-to-lead capture, with no large up-front build. The full engine (the 24/7 assistant, online application, and portfolio platform) is profiled in Section 12, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('The Aventine already has the hard thing: a genuinely good luxury product, in a strong submarket, run by an operator with the scale of nine communities. What it has not yet done is make that product as easy to find, tour, and lease as its competitors have — or serve and keep residents with the consistency that protects the rent roll.'),
   p('The opportunity is concrete: get found and convert as the community renters discover first and trust on sight, lease faster by answering every prospect in seconds and letting them tour and apply online, and keep and grow by retaining residents and replicating the engine across the portfolio. A focused, demand-generation program does all three — and it stays Fair-Housing-safe, privacy-safe, and entirely out of rent-setting, so the speed comes without the risk.'),
@@ -944,7 +1082,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the modern site, the reputation engine, and speed-to-lead capture — live inside 30 days of signature, with no large build required to start.',
     ],
@@ -967,9 +1105,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help regional operators compete at scale — with security and compliance built in, not bolted on.'),
   spacer(140),

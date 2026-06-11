@@ -80,11 +80,13 @@ function pRuns(runs, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '', { newPage = false } = {}) {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
-    pageBreakBefore: newPage,
+    pageBreakBefore: true,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -410,7 +412,6 @@ docChildren.push(
     hyperlink: true,
     headingStyleRange: '1-2',
   }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -425,7 +426,7 @@ docChildren.push(
   ]),
   spacer(300),
   p('Monaco Wheel Restoration is Orange County\'s premier wheel repair and auto restyling destination — a 13-year-old business built on hand-craftsmanship, same-day speed, and a 4.9-star reputation across 200+ reviews. Owner Javon has grown the operation from a dealer-focused service into a thriving direct-retail brand serving luxury vehicle owners, Tesla drivers, and body shops across the region.'),
-  p('The opportunity in front of Monaco is significant: the shop currently operates at roughly 40–48% of daily capacity, with 10–12 wheels repaired on an average day against a maximum of 20–30. The gap between current output and full capacity represents over $250,000 in annual revenue waiting to be captured — not through more technicians or equipment, but through smarter demand generation.'),
+  p('The opportunity in front of Monaco is significant: the shop currently operates at roughly 40–48% of daily capacity, with 10–12 wheels repaired on an average day against a maximum of 20–30. Closing even part of that gap is worth six figures a year — at the blended average ticket, lifting from today\'s ~11 wheels/day toward 60–75% capacity represents on the order of $150,000–$300,000 in annual revenue waiting to be captured — not through more technicians or equipment, but through smarter demand generation.'),
   p('This blueprint maps exactly how an AI-driven program — powered by Technijian\'s proven platforms — fills that capacity gap through three engines: dominating local search in Orange County and San Clemente, converting every interaction into a loyal returning customer, and automating the operational tasks that currently consume Javon\'s time.'),
   spacer(100),
   calloutBox(
@@ -540,10 +541,10 @@ docChildren.push(
 
   // Persona 2
   personaCard('2 — The Tesla Owner', CORE_ORANGE, [
-    ['Role', 'Tesla Model 3, Y, S, or X owner. One of the highest per-capita Tesla densities in the country lives in Orange County.'],
-    ['Pain Points', 'Tesla\'s staggered wheel profile makes curb rash nearly inevitable in tight OC parking. Inductive charging disrupts traditional tire shops.'],
-    ['Decision Driver', 'Wants a specialist who knows Tesla wheels — not a generic rim shop. Will pay a premium for EV-specific knowledge.'],
-    ['AI Opportunity', '"Tesla wheel repair [city]" is an underserved search term with high intent. Owning this keyword cluster captures a massive recurring customer segment.'],
+    ['Role', 'Tesla Model 3, Y, S, or X owner. Orange County and coastal Southern California have a notably high concentration of Tesla and EV owners.'],
+    ['Pain Points', 'Large-diameter, low-profile EV wheels are easy to curb-rash in tight OC parking, and replacement Tesla wheels are expensive — making quality repair a clear money-saver over replacement.'],
+    ['Decision Driver', 'Wants a specialist who knows EV wheels — not a generic rim shop. Will pay a premium for someone who has worked on Teslas before.'],
+    ['AI Opportunity', '"Tesla wheel repair [city]" is an underserved search term with high intent. Owning this keyword cluster captures a sizable, repeat-prone customer segment.'],
     ['Technijian Hook', 'My SEO — "Tesla wheel specialist" AEO content strategy. My Dev — Tesla-specific quote flow on website.'],
   ]),
   spacer(160),
@@ -685,6 +686,23 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a local car owner asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox(
+    'Prompt: "Best mobile wheel repair near San Clemente?"',
+    [
+      'TODAY — the AI assistant answers with whichever shops have the strongest content and review signals it can read: it names a couple of mobile operators that have built up reviews, and does NOT mention a Monaco / San Clemente Wheel Repair brand — because there is no San Clemente listing, page, or reviews for it to cite yet. Monaco is invisible at the exact moment a local is choosing who to call.',
+      'AFTER the program — the same query surfaces San Clemente Wheel Repair as a cited option ("San Clemente Wheel Repair offers mobile curb-rash and refinishing with same-day service and strong local reviews…"), with the Google Business Profile, before/after content, and reviews as the supporting evidence the assistant points to.',
+    ],
+    CORE_ORANGE
+  ),
+  p('(Illustrative of current AI-search behavior for this query class; the live result would be captured as the baseline at kickoff.)', { italics: true, size: 18 }),
+  spacer(160),
+
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('Local search and AI-search visibility compound, and they reward whoever builds first. Every month San Clemente Wheel Repair does not exist online, the map pack and the AI assistants learn to answer "wheel repair near me" with someone else — and that default, once set, is harder and more expensive to dislodge than to claim now while Rim Revival sits at only 68 reviews and no brand owns the city. The same is true for the after-hours gap: every unanswered weekend text is a job that books with a 7-day competitor and a customer relationship that starts with someone else. The cost of waiting is not zero — it is a competitor becoming the default answer in a market that is still open today.'),
 );
 
 // ---------- 07 TECHNIJIAN CAPABILITY PROOF ----------
@@ -727,16 +745,101 @@ docChildren.push(
     'Technijian\'s My AI Lead Gen platform automates the full outbound prospecting cycle: identify high-fit B2B targets from public data (dealer inventory systems, fleet operator directories, collision shop listings), draft AI-personalized outreach sequences in the client\'s voice, and manage follow-up cadences until a reply or a booked call — all without manual effort.',
     'Applied to Monaco: Technijian runs a dealer and fleet outreach program targeting Orange County and Las Vegas new-car dealers who accumulate wheel damage from lot moves and test drives. AI-personalized emails go out from Javon\'s inbox, with automated Day 3 and Day 7 follow-ups. Positive responses are flagged for Javon to close personally. Secondary sequences target fleet managers and corporate accounts. Goal: 2 new wholesale dealer accounts within 60 days; 8+ by end of Year 1 — adding an estimated $8,000–$12,000 per month in B2B revenue at volume pricing.'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across content, reviews, and outreach: won\'t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass on customer-facing copy, the trickiest quote and outreach decisions, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — before/after captions, review replies, dealer outreach personalization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, photo tagging, extracting details from inbound texts, enriching dealer lists', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Monaco pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single before/after social post is drafted by a low-cost model, tightened by a mid model, and given a final brand-voice pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 08 AI GROWTH ENGINE ----------
+// ---------- 08 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms Monaco\'s Growth Engine', CORE_BLUE, '08'),
+  ...sectionHeader('Understanding AI — A Field Guide for Monaco Wheel & Rim Leadership', CORE_BLUE, '08'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Monaco sits today, how to adopt it without risk, and what comparable businesses are already doing. The goal is that Javon and the Monaco team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn\'t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a business owner needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "text the customer a review link the moment a job is marked complete." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch incoming texts overnight and draft quotes for the morning." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. Monaco starts with simple automations that pay off in the first 30 days, and adds more autonomous behavior only where the value is proven — which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Monaco Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run small businesses — including Monaco — sit at the first or second rung of the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Monaco Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      [{ text: '1. Foundational', bold: false }, 'Little or no AI; manual, people-dependent processes — phone, text, and memory', ''],
+      [{ text: '2. Emerging', bold: true }, { text: 'A few digital tools are in place (website, Instagram, Yelp) but AI is not yet woven into how leads are won or jobs are run', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — local search, reviews, booking, content — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and operations with dashboards and a clear owner', ''],
+      ['5. Transformational', 'AI is the default way the business runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Monaco is a strong Emerging business — a real brand, an active Instagram, and a 4.9-star Yelp reputation. This report is the plan to reach Operational — AI working in the growth engine and inside the shop — within 90 days, not years.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Owner Manages', { color: CORE_BLUE }),
+  p('The U.S. government\'s NIST AI Risk Management Framework gives owners a simple mental model — Govern, Map, Measure, Manage. For a customer-facing business like Monaco, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer — like quoting the wrong price', 'Human-in-the-loop review on anything customer-facing or money-bound — AI drafts the quote, a person confirms before it is sent'],
+      ['Data leakage', 'Customer contact info pasted into public tools can escape', 'Private, governed AI deployments — customer phone numbers, photos, and booking details never touch a public model'],
+      ['Brand & accountability', 'Off-brand or untracked AI replies erode the trust Monaco earned', 'Every AI tool inventoried with an owner and brand-voice rules — and led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Businesses Are Already Doing', { color: CORE_BLUE }),
+  bullet('Local auto-services shops: detailers and tire shops are automating post-service review requests to climb the Google Map Pack — turning every finished job into a ranking signal competitors never capture.'),
+  bullet('Mobile service brands: home-service and mobile-repair operators are using AI to answer and quote after-hours inquiries, capturing weekend demand that used to go to voicemail.'),
+  bullet('Visual trades: businesses whose work is inherently photogenic (body shops, landscapers, restylers) are running automated before/after content engines to grow social reach without a marketing hire.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Monaco\'s own numbers would be confirmed as the program runs. Technijian\'s specific builds appear in Section 07 (Capability Proof) and the impact is modeled in Section 10.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — Javon and the Monaco Front Desk', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A customer texts a photo of a curb-rashed wheel at 9pm on Saturday. The message sits unanswered until Monday; by then they have booked with a competitor who is open weekends. Javon spends his mornings returning calls, re-quoting the same jobs, and chasing reviews by hand — three out of four bookings still run through a manual phone or text exchange.',
+    'WITH AI: The Saturday text gets an instant, on-brand reply with a quote range and a booking slot; Monday\'s schedule is already half-full. The moment a job is marked done, the customer gets a one-tap review link, and the finished wheel becomes a scheduled before/after post. Javon reviews and approves — the expertise is captured in a system, so the same standard holds whether it is Costa Mesa or the new San Clemente brand.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but Monaco assembles, secures, and governs everything — and owns the three risks above alone, on top of running the shop'],
+      ['Hire in-house', 'A capable marketing/AI hire typically costs $70K–$120K+/year and is hard to find, and one person cannot cover SEO, content, booking, and security'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, and security in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 09 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms Monaco\'s Growth Engine', CORE_BLUE, '09'),
   spacer(100),
   p('Monaco\'s AI growth program operates across three channels simultaneously: inbound demand generation, outbound relationship building, and internal capacity optimization. Together, they close the gap between Monaco\'s current output and its full operational capacity.'),
   spacer(200),
   diagramImage(DIAGRAM_ARCH_BUF, 'Monaco AI Growth Engine Architecture', 560, 1.61),
-  diagramCaption('Figure 8.0 — Monaco AI Growth Engine: Three-Channel Architecture'),
+  diagramCaption('Figure 9.0 — Monaco AI Growth Engine: Three-Channel Architecture'),
   spacer(160),
 
   buildTable(
@@ -766,10 +869,17 @@ docChildren.push(
   ),
 );
 
-// ---------- 09 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 10 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '09'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '10'),
   spacer(100),
+  p('Technijian\'s engagement with Monaco is structured to prove value before it asks for scale: a focused, fixed-price entry pilot that delivers measurable lift in the first 90 days, followed by the full program once the engine is validated. All pricing is based on published Technijian service rates. ROI projections are illustrative estimates — exact figures should be confirmed against Monaco\'s real booking values and conversion rates.'),
+  spacer(120),
+  calloutBox('AI as a Managed Investment — Not a Leap of Faith', [
+    'The reason most AI spending disappoints is rarely the technology — it is the lack of measurement. Widely-cited industry surveys find that most companies now use AI in some form, but only a minority report a clear profit impact; the difference is discipline, not budget.',
+    'Technijian runs every engagement with stage-gates: we track adoption, then operational lift (wheels/day, reviews, captured leads), then revenue against total cost — and if the pilot does not clear its cost at the gate, we stop and re-scope. Monaco carries the upside, not blind risk.',
+  ], CORE_ORANGE),
+  spacer(160),
 
   subHeader('Projected KPI Lift'),
   buildTable(
@@ -812,7 +922,34 @@ docChildren.push(
   ),
   spacer(200),
 
-  subHeader('Technijian Service Investment Map'),
+  subHeader('The Entry Offer — The 90-Day AI Lead-Gen Pilot', { color: CORE_ORANGE }),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up Monaco\'s local-search presence, the after-hours booking and review automation, and the first wave of before/after content, and proves the lift before any larger build is discussed.'),
+  buildTable(
+    [
+      { label: 'What\'s Included', weight: 2.5 },
+      { label: 'Detail', weight: 4 },
+      { label: 'Investment', weight: 1.8 },
+    ],
+    [
+      [{ text: 'My SEO — Local Dominance', bold: true }, 'Google Map Pack + AEO content + GBP weekly optimization (OC + San Clemente)', '$800/mo'],
+      [{ text: 'My AI — Content & Reviews', bold: true }, 'Before/after content engine + automated post-service review requests', '$700/mo'],
+      [{ text: 'AI Booking & Quote Bot', bold: true }, 'After-hours SMS intake + photo-to-quote flow (one-time build, deployed in the pilot)', '$15,000 build'],
+      [{ text: 'ENTRY PILOT — 90 DAYS', bold: true }, 'Fixed scope, published rates, month-to-month after the initial term', { text: '~$15K build + $1,500/mo', bold: true, color: CORE_BLUE }],
+    ],
+    { headerColor: CORE_ORANGE },
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, Monaco is capturing after-hours and weekend inquiries that previously went to voicemail (target: 80%+ of inbound inquiries answered and quoted), with a measurable lift in booked jobs over the pre-pilot baseline.',
+      'Our commitment: the entry pilot is month-to-month after the initial term — no long lock-in, no obligation to continue if it doesn\'t hit the metric by day 90. If it hasn\'t moved the needle, you are free to stop, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(200),
+
+  subHeader('Full Program — Year 1 Service Investment Map'),
   buildTable(
     [
       { label: 'Service', weight: 2.5 },
@@ -840,9 +977,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 10 SUBSCRIPTION & MEMBERSHIP PRICING ----------
+// ---------- 11 SUBSCRIPTION & MEMBERSHIP PRICING ----------
 docChildren.push(
-  ...sectionHeader('Subscription & Membership Pricing Strategy', TEAL, '10'),
+  ...sectionHeader('Subscription & Membership Pricing Strategy', TEAL, '11'),
   spacer(100),
   p('As Monaco\'s AI program matures and the customer base grows, a subscription or membership model creates predictable monthly recurring revenue, locks in loyalty, and enables capacity planning. Done correctly, it also builds a competitive moat that is nearly impossible for solo-operator competitors to replicate.'),
   spacer(120),
@@ -923,14 +1060,14 @@ docChildren.push(
   p('At 150 subscribers (Year 2 target), Monaco collects ~$6,240/month in guaranteed subscription fees — providing a predictable revenue floor regardless of seasonal fluctuation. Combined with the capacity gains from the AI program, this transforms Monaco\'s financial profile from purely transactional to partially recurring.'),
 );
 
-// ---------- 11 IMPLEMENTATION ROADMAP ----------
+// ---------- 12 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '11'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
   spacer(100),
   p('The Monaco AI Growth Program is designed for fast impact. Rather than a multi-year transformation, this roadmap is built for 90-day proof-of-concept cycles — with meaningful, measurable results visible within the first 30 days.'),
   spacer(200),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'Monaco 30-60-90 Day Implementation Timeline', 580, 2.30),
-  diagramCaption('Figure 11.0 — Monaco AI Growth Program: 30/60/90 Day Roadmap'),
+  diagramCaption('Figure 12.0 — Monaco AI Growth Program: 30/60/90 Day Roadmap'),
   spacer(160),
 
   subHeader('Phase 1 — Foundation (Days 1–30)', { color: CORE_BLUE }),
@@ -966,9 +1103,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 QUICK WINS ----------
+// ---------- 13 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '12'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
   spacer(100),
   p('These are five actions Monaco can take immediately — before any Technijian contract is signed. Each one is a concrete step that creates value this week and naturally leads to the larger AI program.'),
   spacer(140),
@@ -1004,9 +1141,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 CONCLUSION ----------
+// ---------- 14 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '13'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '14'),
+  spacer(100),
+  p('The honest answers to the questions Monaco is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already do our own marketing and social. Why add Technijian?', bold: true }, 'Keep doing what works — your Instagram and reputation are real assets. We add the layer that is hard to do by hand: systematic local-search and AI-search ranking (SEO/AEO), automated review velocity, after-hours booking capture, and a content engine that runs without you sitting at a phone. We run alongside what you do, not over it.'],
+      [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — a review text when a job is done, a quote reply at 9pm Saturday — not autonomous "agents" running your shop. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is our customer data — phone numbers, photos, addresses — safe?', bold: true }, 'Yes. Customer data never touches a public AI model; we deploy private, governed systems with human review on anything customer-facing or money-bound, led by a CISSP-certified team. Data handling is set up correctly from day one.'],
+      [{ text: 'We\'re a lean shop. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give you back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly check-in plus a quick approve on what we draft. No new hire to manage.'],
+      [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry pilot is a fixed-price 90-day program with a defined success metric (Section 10), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry pilot is roughly a $15K one-time bot build plus $1,500/mo at published rates — no hidden fees. The full Year-1 program is profiled in Section 10 (~$36K), but only after the pilot proves the lift. At a $140 blended ticket, ~2 extra wheels a day covers the full monthly program.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 15 CONCLUSION ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
   spacer(100),
   p('Monaco Wheel Restoration has everything it needs to dominate the Orange County and San Clemente wheel repair markets: the craft, the reputation, the capacity, and a 13-year head start. The missing piece is a systematic AI program that makes the quality of the work as visible online as it is in person.'),
   p('The opportunity is not abstract. It is 2 additional wheels per day, captured after hours by an AI that never sleeps. It is 50 San Clemente reviews that make Monaco the first name that appears when a local searches "wheel repair near me." It is a dealer base that doubles because an AI handles the outreach Javon does not have time for.'),
@@ -1039,9 +1196,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 13 ABOUT TECHNIJIAN ----------
+// ---------- 16 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '14'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California. We build and operate the AI systems that help local and regional businesses compete at scale — without adding headcount.'),
   spacer(140),

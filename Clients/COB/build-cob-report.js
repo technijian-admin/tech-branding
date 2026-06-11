@@ -57,7 +57,9 @@ const CONTENT_W = PAGE_W - MARGIN * 2; // 9360
 
 // ---------- Helpers ----------
 function spacer(size = 200) {
-  return new Paragraph({ spacing: { before: size, after: 0 }, children: [new TextRun('')] });
+  // keepNext: a spacer binds to the following element so it can never be orphaned alone
+  // on an otherwise-blank page (the section-per-page blank-page fix, 2026-06-10).
+  return new Paragraph({ keepNext: true, spacing: { before: size, after: 0 }, children: [new TextRun('')] });
 }
 function pageBreak() { return new Paragraph({ children: [new PageBreak()] }); }
 function p(text, opts = {}) {
@@ -71,10 +73,13 @@ function p(text, opts = {}) {
 }
 
 function sectionHeader(text, color = CORE_BLUE) {
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -364,8 +369,8 @@ docChildren.push(
 // ─────────────── TOC ───────────────
 docChildren.push(
   new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 400, after: 200 }, children: [new TextRun({ text: 'Table of Contents', size: 36, bold: true, color: CORE_BLUE, font: FONT_HEAD })] }),
-  new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak()
+  new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' })
+  // Section 01's pageBreakBefore separates the TOC from Section 1 — no trailing pageBreak() needed here.
 );
 
 // ─────────────── 01 EXECUTIVE SUMMARY ───────────────
@@ -376,7 +381,7 @@ docChildren.push(
     { number: '37', label: 'Years serving OC employers', color: CORE_BLUE },
     { number: '$0', label: 'Annual AI investment today', color: CORE_ORANGE },
     { number: '42', label: 'LinkedIn followers — the gap', color: CRITICAL },
-    { number: '31%', label: 'Benefits teams with full AI adoption', color: TEAL },
+    { number: '5', label: 'Federal compliance frameworks COB navigates for clients', color: TEAL },
   ])
 );
 docChildren.push(spacer(200));
@@ -386,8 +391,8 @@ docChildren.push(
   p('This blueprint shows exactly how Technijian helps Core Benefits close that gap on two fronts simultaneously:')
 );
 docChildren.push(
-  bullet('Growth — get found by the right OC employers at the right moment (AEO/SEO authority on compliance topics, account intelligence on named prospects, a CPA referral program, PEO-exit trigger monitoring)'),
-  bullet('Delivery — weave AI into how Core Benefits actually serves clients (AI-powered renewal analysis, claims analytics dashboards, compliance auto-monitoring, employee FAQ chatbots) so every client gets more value from the same team')
+  bullet('Growth (Section 09) — get found by the right OC employers at the right moment (AEO/SEO authority on compliance topics, account intelligence on named prospects, a CPA referral program, PEO-exit trigger monitoring)'),
+  bullet('Delivery (Section 09, Channel 3) — weave AI into how Core Benefits actually serves clients (AI-powered renewal analysis, claims analytics dashboards, compliance auto-monitoring, employee FAQ chatbots) so every client gets more value from the same team')
 );
 docChildren.push(spacer(160));
 docChildren.push(calloutBox(
@@ -397,7 +402,6 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 02 ABOUT CORE BENEFITS ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('02 — About Core Benefits'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -423,7 +427,6 @@ docChildren.push(buildTable(
 ));
 
 // ─────────────── 03 THE EMPLOYER YOUR CLIENTS ARE ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('03 — The Employer You Serve: Four Buyer Personas'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -491,7 +494,6 @@ docChildren.push(personaCard(
 ));
 
 // ─────────────── 04 REGULATORY ARCHITECTURE ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('04 — Regulatory Architecture: The Compliance Advantage'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -521,7 +523,6 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 05 COMPETITIVE LANDSCAPE ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('05 — Competitive Landscape'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -564,7 +565,6 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 06 BRAND & DIGITAL PRESENCE AUDIT ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('06 — Brand & Digital Presence Audit'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -575,10 +575,10 @@ docChildren.push(buildTable(
   [{ label: 'Channel', weight: 1.2 }, { label: 'Current State', weight: 1.8 }, { label: 'Benchmark / Gap', weight: 2 }, { label: 'Priority', weight: 0.8 }],
   [
     ['LinkedIn', '42 followers (verified Jun 2026)', 'Relational Advisors: 200+; Alliant: 10,000+. Gap to peer boutiques: 5× minimum. OC HR Directors and CFOs are on LinkedIn daily.', { text: 'CRITICAL', color: CRITICAL, bold: true }],
-    ['Google Business Profile', 'Unverified / unclaimed for "employee benefits broker" search', 'Every active broker firm in OC has a claimed, optimized GBP. Missing GBP means zero map-pack visibility for 72% of employer searches that include a location modifier.', { text: 'CRITICAL', color: CRITICAL, bold: true }],
+    ['Google Business Profile', 'Unverified / unclaimed for "employee benefits broker" search', 'Every active broker firm in OC has a claimed, optimized GBP. A missing or unclaimed GBP means little to no map-pack visibility for the large share of employer searches that include a location modifier.', { text: 'CRITICAL', color: CRITICAL, bold: true }],
     ['Website Content Authority', 'Service pages strong; compliance thought leadership absent', 'AEO opportunity: "ACA 2026 employer mandate guide," "CAA broker compensation disclosure," "self-funded health plan Orange County." Zero current content for any of these high-intent searches.', { text: 'HIGH', color: CORE_ORANGE, bold: true }],
     ['Blog / Content Cadence', 'No active content program visible', 'Benefits compliance changes generate 3–5 content opportunities per quarter (PCORI fee, 1095-C deadline, CAA filing). Competitors who publish these own the search and AI citation results.', { text: 'HIGH', color: CORE_ORANGE, bold: true }],
-    ['AI Search Citations (GEO)', '0% — not cited by ChatGPT, Perplexity, or Google AI Overviews for any OC benefits query', 'AI search tools now answer 30–40% of informational queries before users visit a website. A broker not cited by AI tools is invisible to the fastest-growing search channel.', { text: 'HIGH', color: CORE_ORANGE, bold: true }],
+    ['AI Search Citations (GEO)', 'Not cited by ChatGPT, Perplexity, or Google AI Overviews for the OC benefits queries we tested', 'A growing share of informational queries are now answered by AI tools before the user ever visits a website. A broker not cited by those tools is invisible to the fastest-growing search channel.', { text: 'HIGH', color: CORE_ORANGE, bold: true }],
     ['Client Reviews / Social Proof', 'No verified public review platform; Yelp page exists but returns 403 error', '37 years of satisfied employer clients represent hundreds of potential reviews. A systematic ask campaign is the highest-ROI 30-day action available.', { text: 'MEDIUM', color: TEAL, bold: true }],
     ['Email Newsletter', 'No evidence of regular employer communications', 'Existing clients + CPA referral partners are a captive audience for monthly compliance updates. The newsletter is also the cheapest content distribution channel.', { text: 'MEDIUM', color: TEAL, bold: true }],
   ],
@@ -593,9 +593,33 @@ docChildren.push(calloutBox(
   ],
   CORE_BLUE
 ));
+docChildren.push(spacer(200));
+
+docChildren.push(subHeader('AI Search Reality Check', { color: CORE_ORANGE }));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('Here is the gap made concrete. When an HR Director or CFO asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:')
+);
+docChildren.push(calloutBox(
+  'Prompt: "Best employee benefits broker in Orange County for a 150-employee company evaluating a PEO exit?"',
+  [
+    'TODAY — the AI assistant answers with whichever firms have the strongest content and third-party signals it can read: it names a couple of national brokers (Alliant, HUB) and a larger boutique with active content, and does NOT mention Core Benefits — even though Core Benefits has 37 years of OC relationships and deep PEO-exit and self-funding expertise. Core Benefits is invisible at the exact moment the buyer is forming a shortlist.',
+    'AFTER GEO — the same query returns Core Benefits as a cited option ("Core Benefits Insurance Services, a Costa Mesa boutique specializing in PEO exits, self-funding, and ACA/CAA compliance for 50–300-employee OC employers…"), with the compliance content library and claimed Google Business Profile as the supporting evidence the assistant points to.',
+  ],
+  CORE_ORANGE
+));
+docChildren.push(
+  p('(Illustrative of current AI-search behavior for this query class; the live result is part of the digital-presence baseline captured at engagement start.)', { italics: true, size: 18 })
+);
+docChildren.push(spacer(200));
+
+docChildren.push(subHeader('The Cost of Waiting', { color: CRITICAL }));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter Core Benefits is not cited, the assistants learn to answer "best OC employee benefits broker" with someone else — and that default, once set in the retrieval data, is far harder and more expensive to dislodge than to claim now. Benefits brokers are switched only every 3–5 years, so each renewal cycle Core Benefits is invisible during the research phase is an account that quietly goes to whoever shows up in the AI answer and the map pack. The cost of waiting is not zero — it is a competitor (Relational, Newfront) becoming the default answer in the market Core Benefits has served for 37 years.')
+);
 
 // ─────────────── 07 TECHNIJIAN CAPABILITY PROOF ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('07 — Technijian Capability Proof'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -636,17 +660,136 @@ docChildren.push(capabilityBox(
   'Implemented Weaviate and Obsidian.md hybrid memory for enterprise AI agents; built security-first AI design with RBAC, audit trails, and HIPAA/SOC 2/PCI-DSS compliance built into every solution.',
   'Core Benefits\' compliance monitoring system — tracking ACA, ERISA, COBRA, and CAA deadlines across every client account — is exactly the kind of institutional knowledge system Technijian has built for regulated industries. HIPAA compliance built in from day one protects Core Benefits\' self-funded clients and their PHI.'
 ));
+docChildren.push(spacer(200));
 
-// ─────────────── 08 HOW AI TRANSFORMS CORE BENEFITS' GROWTH ENGINE ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('08 — How AI Transforms Core Benefits\' Growth Engine'));
+docChildren.push(subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('A fair question about running AI across content, account intelligence, and renewal analysis: won\'t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.')
+);
+docChildren.push(spacer(80));
+docChildren.push(buildTable(
+  [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+  [
+    [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass in TJ\'s tone, compliance-critical answers (ACA/ERISA/CAA), the deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+    [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — compliance content, outreach personalization, renewal summarization, account scoring', { text: '~30–40%', color: TEAL }],
+    [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging hundreds of OC employer and CPA records', { text: '~50–60%', color: BRAND_GREY }],
+  ],
+  { headerColor: DARK_CHARCOAL }
+));
+docChildren.push(
+  p('The result: Core Benefits pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single compliance article is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 })
+);
+
+// ─────────────── 09 UNDERSTANDING AI — FIELD GUIDE (was: before growth engine) ───────────────
+docChildren.push(...sectionHeader('08 — Understanding AI — A Field Guide for Core Benefits Leadership'));
+docChildren.push(spacer(140));
+docChildren.push(
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Core Benefits sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that TJ Johnson and the Core Benefits team can judge every recommendation that follows on its merits.')
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('What AI Actually Is — and Isn\'t'));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:')
+);
+docChildren.push(
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this renewal summary from these carrier files." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch these 50 employer accounts and flag the ones showing a switch signal." This comes later, where it earns its place.')
+);
+docChildren.push(
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. Core Benefits starts with simple automations that pay off in the first 90 days, and adds autonomous agents only where the value is proven — which is exactly how the roadmap in this report is sequenced.')
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('Where Core Benefits Sits Today — The AI Maturity Ladder'));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('Most established, well-run firms — including Core Benefits — sit at the first rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.')
+);
+docChildren.push(spacer(80));
+docChildren.push(buildTable(
+  [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Core Benefits Today', weight: 1.6, align: AlignmentType.CENTER }],
+  [
+    [{ text: '1. Foundational', bold: true }, { text: 'Little or no AI; manual, people-dependent processes — renewal analysis, compliance tracking, and outreach all done by hand', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+    ['2. Emerging', 'A first AI tool or two is in use, but AI is not yet woven into growth or service delivery', ''],
+    ['3. Operational', 'AI runs specific workflows day-to-day — content, account intelligence, renewal analysis, compliance — with measured results', ''],
+    ['4. Scaled', 'AI is embedded across growth and service delivery with governance and dashboards', ''],
+    ['5. Transformational', 'AI is the default way the firm runs and competes', ''],
+  ],
+  { headerColor: CORE_BLUE }
+));
+docChildren.push(
+  p('Core Benefits sits at Foundational today — strong relationships and deep compliance expertise, but essentially no AI in the business. This report is the plan to reach Operational — AI working in the growth engine and inside client service — within twelve months. That is a two-rung move, not a leap.', { spaceBefore: 80 })
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a compliance-bound advisory firm like Core Benefits, three risks matter most, and each has a concrete control:')
+);
+docChildren.push(spacer(80));
+docChildren.push(buildTable(
+  [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+  [
+    ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client-facing or compliance-bound — AI drafts, TJ or a licensed advisor approves before it reaches an employer'],
+    ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — census data, claims files, and self-funded plan PHI never touch a public model'],
+    ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — HIPAA-aware, led by a CISSP-certified team'],
+  ],
+  { headerColor: DARK_CHARCOAL }
+));
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('What Comparable Organizations Are Already Doing'));
+docChildren.push(spacer(80));
+docChildren.push(
+  bullet('Employee-benefits brokerages: leading boutique brokers are bringing AI-generated claims-intelligence briefings to renewal meetings, turning a commodity rate review into a strategic advisory session.'),
+  bullet('Professional-services firms: compliance-heavy advisors are using AI search optimization to become the cited answer when buyers ask AI tools "what changed with ACA / CAA this year?" — capturing demand competitors never see.'),
+  bullet('Regulated B2B: document-heavy firms are turning multi-day proposal and compliance assembly into a minutes-long, audit-ready draft — responding to more opportunities with the same team.')
+);
+docChildren.push(
+  p('These are representative directions of travel across comparable industries, not guarantees; Core Benefits\' own numbers would be confirmed in discovery. Technijian\'s specific, measured results from prior builds appear in Section 07 (Capability Proof) and Section 10.', { italics: true, size: 19, spaceBefore: 40 })
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('A Day in the Life — The Cost-Driven CFO\'s Renewal'));
+docChildren.push(spacer(80));
+docChildren.push(calloutBox(
+  'Before vs. After AI',
+  [
+    'TODAY: TJ prepares for a renewal meeting by pulling carrier summary reports, hand-building a multi-carrier comparison over two to three days, and walking the CFO through three quote options with limited claims context. The CFO sees rates, not a story — and the meeting feels transactional, like every other broker\'s.',
+    'WITH AI: An AI renewal-analysis tool drafts the multi-carrier comparison and a claims-intelligence briefing — top utilization drivers, trend projection, self-funding readiness — in hours, not days. TJ reviews, adds judgment, and arrives with a data-driven recommendation no boutique competitor brings. The same expert advice, delivered in a fraction of the time, as a strategic session the CFO remembers.',
+  ],
+  CORE_BLUE
+));
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('Why a Partner — vs. Hiring or Doing It Yourself'));
+docChildren.push(spacer(80));
+docChildren.push(buildTable(
+  [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+  [
+    ['DIY tools', 'Inexpensive, but Core Benefits assembles, secures, and governs everything — and owns the three risks above alone, with no spare bandwidth on an 8-person team'],
+    ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+    [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds, CISSP-led security, and an existing decade-long relationship with Core Benefits', bold: true }],
+  ],
+  { headerColor: CORE_BLUE }
+));
+docChildren.push(
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 })
+);
+
+// ─────────────── 09 HOW AI TRANSFORMS CORE BENEFITS' GROWTH ENGINE ───────────────
+docChildren.push(...sectionHeader('09 — How AI Transforms Core Benefits\' Growth Engine'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('Core Benefits is an account-based business. The firm does not need more leads — it needs to be the first call when an OC employer decides to change brokers. That moment is triggered by three events: a painful renewal, a PEO exit, or an introduction from a trusted CPA or peer. The AI growth engine below is designed to intercept all three channels simultaneously, while AI-powered service delivery gives every existing client a reason to stay and expand.')
 );
 docChildren.push(spacer(160));
 docChildren.push(diagramImage(DIAGRAM_ARCH_BUF, 'Core Benefits AI Growth Engine Architecture', 560, 1.714));
-docChildren.push(diagramCaption('Figure 8.0 — Three-Channel AI Growth Engine: Authority Content · Account Intelligence · AI Service Delivery'));
+docChildren.push(diagramCaption('Figure 9.0 — Three-Channel AI Growth Engine: Authority Content · Account Intelligence · AI Service Delivery'));
 docChildren.push(spacer(200));
 
 docChildren.push(subHeader('Channel 1 — Get Cited: Inbound Content Authority'));
@@ -700,8 +843,20 @@ docChildren.push(buildTable(
 ));
 
 // ─────────────── 09 BUSINESS IMPACT & SERVICE INVESTMENT ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('09 — Business Impact & Service Investment'));
+docChildren.push(...sectionHeader('10 — Business Impact & Service Investment'));
+docChildren.push(spacer(160));
+docChildren.push(
+  p('Technijian\'s engagement with Core Benefits is structured as a land-and-expand model: a focused entry investment in Year 1 that generates measurable ROI, followed by a full platform build once the growth engine is validated. All pricing is based on published Technijian service rates. ROI projections are illustrative estimates — exact contract values should be confirmed with the Core Benefits team.')
+);
+docChildren.push(spacer(120));
+docChildren.push(calloutBox(
+  'AI as a Managed Investment — Not a Leap of Faith',
+  [
+    'The reason most AI spending disappoints is not the technology — it is the lack of measurement. McKinsey\'s 2025 State of AI research finds roughly 88% of companies now use AI in at least one function, but only about a third report a real bottom-line impact; the difference is discipline, not budget.',
+    'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. Core Benefits carries the upside, not blind risk.',
+  ],
+  CORE_ORANGE
+));
 docChildren.push(spacer(160));
 
 docChildren.push(subHeader('KPI Lift: What Changes at Core Benefits'));
@@ -713,7 +868,7 @@ docChildren.push(buildTable(
     ['Time to renewal analysis (per client)', '2–3 days (manual carrier comparison)', '4 hours (AI-assisted multi-carrier analysis)', 'My Dev AI Renewal Analysis tool'],
     ['Compliance monitoring hours per month', '~25 hrs (manual tracking across all clients)', '~5 hrs (AI-automated alerts + client notifications)', 'My AI compliance monitoring engine'],
     ['LinkedIn followers / content reach', '42 followers; near-zero organic reach', '500+ followers; 3,000–5,000 monthly impressions', 'My SEO content calendar + AI Search Optimization'],
-    ['AI search citations (GEO)', '0 citations for any OC benefits query', '10+ monthly citations in ChatGPT, Perplexity, Google AI Overviews', 'My SEO AI Search Optimization add-on'],
+    ['AI search citations (GEO)', 'Not cited for the OC benefits queries tested', '10+ monthly citations in ChatGPT, Perplexity, Google AI Overviews', 'My SEO AI Search Optimization add-on'],
     ['Client renewal retention rate', 'Strong (long-term relationships)', '95%+ formalized with data-driven renewal service standard', 'Claims Analytics Dashboard + compliance monitoring'],
     ['New employer clients per year', 'Referral-dependent (estimated 1–2/yr)', '3–5 projected (AI-assisted pipeline + digital authority)', 'Full AI growth engine'],
   ]
@@ -744,16 +899,32 @@ docChildren.push(calloutBox(
 ));
 docChildren.push(spacer(200));
 
+docChildren.push(subHeader('The Entry Offer — The 90-Day AI Visibility Pilot'));
+docChildren.push(spacer(100));
+docChildren.push(
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The 90-Day AI Visibility Pilot stands up Core Benefits\' AI-search presence and compliance-content authority engine, claims the Google Business Profile, and launches the LinkedIn content cadence — and proves the lift before any larger build is discussed.')
+);
+docChildren.push(spacer(120));
+docChildren.push(calloutBox(
+  'The Pilot Bar — and Our Commitment',
+  [
+    'Success metric: within 90 days, Core Benefits is cited by at least one major AI assistant (ChatGPT, Perplexity, or Google AI Overviews) for a high-intent OC employee-benefits or compliance query, AND the claimed Google Business Profile is live and ranking for "employee benefits broker Orange County."',
+    'Our commitment: the entry program is month-to-month after the initial term — no long lock-in, no obligation to continue if it does not hit the metric by day 90. If the pilot has not moved the needle on the metric above, we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+  ],
+  CORE_ORANGE
+));
+docChildren.push(spacer(200));
+
 docChildren.push(subHeader('Service Investment Map — Land-and-Expand'));
 docChildren.push(spacer(100));
 docChildren.push(
-  p('The investment structure below is sequenced for maximum ease of first commitment. Phase 1 (ENTRY) contains only recurring services and a one-time workshop — no large build required, no long-term engineering risk. Phase 2 (EXPANSION) adds the custom My Dev applications once the entry program has proven the lift.')
+  p('The investment structure below is sequenced for maximum ease of first commitment. Phase 1 (ENTRY — the 90-Day AI Visibility Pilot) contains only recurring services and a one-time workshop — no large build required, no long-term engineering risk. Phase 2 (EXPANSION) adds the custom My Dev applications once the entry program has proven the lift.')
 );
 docChildren.push(spacer(120));
 docChildren.push(buildTable(
   [{ label: 'Technijian Service', weight: 2 }, { label: 'Tier / Scope', weight: 1.8 }, { label: 'Monthly Investment', weight: 1.2 }, { label: 'Y1 Total', weight: 1.2 }],
   [
-    [{ text: 'PHASE 1 — ENTRY PROGRAM', color: CORE_BLUE, bold: true }, { text: '', bold: false }, { text: '', bold: false }, { text: '', bold: false }],
+    [{ text: 'PHASE 1 — ENTRY: THE 90-DAY AI VISIBILITY PILOT', color: CORE_BLUE, bold: true }, { text: '', bold: false }, { text: '', bold: false }, { text: '', bold: false }],
     ['My SEO', 'Tier 2 (SEO Optimization) + AI Search Optimization add-on + PR Releases add-on', '$1,100/mo', '$13,200'],
     ['My AI', 'Executive AI Workshop (1× upfront) — Core Benefits team + roadmap design', '—', '$5,000'],
     ['My AI', 'Fractional AI Advisor (Starter: account intelligence setup + compliance monitoring)', '$1,000/mo', '$12,000'],
@@ -774,15 +945,14 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 10 IMPLEMENTATION ROADMAP ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('10 — Implementation Roadmap'));
+docChildren.push(...sectionHeader('11 — Implementation Roadmap'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('The roadmap below is paced to Core Benefits\' capacity — a 2–10 person firm where every implementation step needs to deliver value immediately without overwhelming the team. Each phase is designed to prove its own ROI before the next phase begins, which is why the Claims Analytics Portal (the largest build) does not start until the entry program is operational and the data story is established.'),
 );
 docChildren.push(spacer(120));
 docChildren.push(diagramImage(DIAGRAM_TIMELINE_BUF, 'Core Benefits Implementation Timeline', 560, 2.857));
-docChildren.push(diagramCaption('Figure 10.0 — Three-Phase Implementation: Foundation → Intelligence → Growth'));
+docChildren.push(diagramCaption('Figure 11.0 — Three-Phase Implementation: Foundation → Intelligence → Growth'));
 docChildren.push(spacer(160));
 
 docChildren.push(buildTable(
@@ -802,8 +972,7 @@ docChildren.push(buildTable(
 ));
 
 // ─────────────── 11 QUICK WINS ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('11 — Quick Wins: What Core Benefits Can Do This Week'));
+docChildren.push(...sectionHeader('12 — Quick Wins: What Core Benefits Can Do This Week'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('These six actions require no contract, no budget approval, and no technology purchase. Each one delivers value immediately and creates momentum toward the larger AI growth program. As an existing Technijian client, Core Benefits has a standing resource for step 1 at no additional cost.')
@@ -818,7 +987,11 @@ const quickWins = [
   ['5', 'Email 10 Longest-Tenured Employer Clients', CORE_BLUE, 'Send a personal email (not a bulk blast) to Core Benefits\' 10 longest-tenured clients asking for a LinkedIn recommendation. The exact phrasing: "I value our relationship and am working to share Core Benefits\' capabilities with more OC employers. Would you be willing to write a brief LinkedIn recommendation? It takes about 5 minutes and it would mean a great deal." Every recommendation becomes a permanent piece of social proof.'],
   ['6', 'Identify Three Missing Content Pillars on corebenefits.org', CORE_ORANGE, 'Review the current website against three high-intent OC employer searches: "self-funded health plan guide," "PEO exit checklist California," and "ACA 2026 employer compliance checklist." If none of these pillar pages exist, these are the first three content priorities for My SEO. Document the gaps and send to Technijian — we will build the content brief in the first week of engagement.'],
 ];
-for (const [num, title, color, body] of quickWins) {
+quickWins.forEach(([num, title, color, body], qi) => {
+  // Spacer goes BEFORE each box (except the first) so the loop never emits a
+  // trailing spacer after the last box — that trailing spacer was orphaning
+  // onto a blank page right before the next section's pageBreakBefore header.
+  if (qi > 0) docChildren.push(spacer(120));
   docChildren.push(
     new Table({
       width: { size: CONTENT_W, type: WidthType.DXA },
@@ -846,12 +1019,30 @@ for (const [num, title, color, body] of quickWins) {
       ]})],
     })
   );
-  docChildren.push(spacer(120));
-}
+});
 
-// ─────────────── 12 CONCLUSION + CTA ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('12 — Conclusion: The Growth Window Is Open'));
+// ─────────────── 13 QUESTIONS WE USUALLY GET (FAQ) ───────────────
+docChildren.push(...sectionHeader('13 — Questions We Usually Get'));
+docChildren.push(spacer(160));
+docChildren.push(
+  p('The honest answers to the questions Core Benefits leadership is most likely asking right now.')
+);
+docChildren.push(spacer(120));
+docChildren.push(buildTable(
+  [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+  [
+    [{ text: 'We don\'t have a marketing agency — is that a problem?', bold: true }, 'No — it is an advantage. There is no existing program to untangle or work around. We build the AI-search authority engine, claim the Google Business Profile, and launch the LinkedIn cadence from a clean slate, in TJ\'s voice. You are not replacing anyone; you are starting the function for the first time, the right way.'],
+    [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — compliance content, account intelligence, faster renewal analysis — not autonomous "agents" doing your job. We use the simplest tool that works, measure it, and only expand what earns its place (see Section 08).'],
+    [{ text: 'Is our data — census files, claims, self-funded PHI — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything compliance-bound, led by a CISSP-certified team. Data governance is part of the complimentary Nexus Assess in the Quick Wins, and it is the same security discipline Technijian has applied to your network since 2015.'],
+    [{ text: 'We\'re an 8-person firm. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your team back hours, not add work. Technijian runs the build and the cadence; TJ\'s involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+    [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry program is a fixed-price 90-Day AI Visibility Pilot with a defined success metric (Section 10), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+    [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $30K for Year 1 at published rates — no hidden fees, no large up-front build. The Claims Analytics Portal and renewal tool (the later expansion, ~$109K–$129K full engine) are profiled in Section 10, but only after the pilot proves the lift.'],
+  ],
+  { headerColor: CORE_BLUE }
+));
+
+// ─────────────── 14 CONCLUSION + CTA ───────────────
+docChildren.push(...sectionHeader('14 — Conclusion: The Growth Window Is Open'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('Core Benefits is in an unusual and valuable position: a 37-year firm with durable employer-client relationships, deep compliance expertise, and a fully operational technology infrastructure — with essentially zero AI investment and near-zero digital presence. In most industries, that gap would be a slow threat. In benefits brokerage, where boutique brokers compete on trust and relationships, it is a specific, correctable opportunity.'),
@@ -870,7 +1061,6 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── ABOUT TECHNIJIAN ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('About Technijian'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -899,9 +1089,9 @@ docChildren.push(buildTable(
   ],
   { headerColor: DARK_CHARCOAL, zebra: true }
 ));
+docChildren.push(spacer(40));
 
 // ─────────────── APPENDIX ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('Appendix — Works Cited'));
 docChildren.push(spacer(160));
 const citations = [
@@ -920,6 +1110,11 @@ const citations = [
   'Employee Benefit News: "How These AI Tools Are Supporting Benefit Leaders," benefitnews.com (accessed June 2026)',
   'Deloitte: AI in Human Capital 2025 — 67% of HR leaders report AI improving efficiency',
   'Selerix ACA Compliance Module, selerix.com/solutions/aca-software/ — Benefits admin AI overview (accessed June 2026)',
+  'MIT Sloan Management Review — AI literacy for executives (Section 08: framing AI literacy as "what AI can do," not how to build it)',
+  'Anthropic — "Building Effective Agents" (Section 08: the automation/workflow vs. agent distinction)',
+  'AI maturity models — a widely-used five-stage model consistent with Gartner and Google Cloud AI Adoption frameworks (Section 08: the maturity ladder)',
+  'U.S. NIST AI Risk Management Framework (Govern/Map/Measure/Manage) — Section 08: responsible-AI controls for the three risks',
+  'McKinsey — The State of AI 2025 (Sections 08, 10: ~88% of companies use AI; only a minority report bottom-line impact; AI as a stage-gated managed investment)',
   'Technijian brand-tokens.json, services/My SEO/assets/my-seo-content.txt, services/My AI/assets/my-ai-content.txt (internal, 2026)',
   'Technijian CRM — Core Benefits client record: Contract IDs 4213, 4549, 4551; client since 2015-12-29 (internal)',
 ];

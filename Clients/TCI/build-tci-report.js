@@ -80,10 +80,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -376,7 +379,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -403,7 +405,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures and pricing: this blueprint was built from public information. Every projection is labeled estimated and conservative, and the discovery questions in Section 14 replace these assumptions with TCI’s real baselines. On investment, only published Technijian pricing is stated as firm; every custom build is shown with its rate-card basis and scoped in discovery, so the numbers TCI sees are real — not invented to fill a table.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures and pricing: this blueprint was built from public information. Every projection is labeled estimated and conservative, and the discovery questions in Section 15 replace these assumptions with TCI’s real baselines. On investment, only published Technijian pricing is stated as firm; every custom build is shown with its rate-card basis and scoped in discovery, so the numbers TCI sees are real — not invented to fill a table.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE MARKET POSITION ----------
@@ -422,7 +424,7 @@ docChildren.push(
     ],
     CORE_BLUE
   ),
-  p('The one thing TCI has not yet done is carry that story into search, into AI answers, and into a modern, AI-assisted buying experience. The strengths are real; they are simply under-marketed. Making them visible is the fastest early win, and it is where Section 13’s Quick Wins begin.', { spaceBefore: 60 }),
+  p('The one thing TCI has not yet done is carry that story into search, into AI answers, and into a modern, AI-assisted buying experience. The strengths are real; they are simply under-marketed. Making them visible is the fastest early win, and it is where Section 14’s Quick Wins begin.', { spaceBefore: 60 }),
 );
 
 // ---------- 03 THE TCI BUSINESS MODEL ----------
@@ -731,7 +733,7 @@ docChildren.push(
   capabilityBox(
     'Proven Build 3 — Account-Based Intelligence & Outbound',
     'Technijian operates a multi-agent AI lead-generation system for a luxury home builder that watches seven layers of public-records signals across ten permit jurisdictions and 60-plus review committees — replacing 15–20 hours a week of manual portal-reading and producing 24 enriched, scored, contact-ready leads in a single 75-minute production run, months before a competitor sees the same opportunity.',
-    'The same public-records-harvesting motion points straight at TCI’s growth: identify WAIRE-obligated warehouses by facility and truck-trip data, fleets at a lease-versus-own inflection, expiring contracts, and new distribution-center permits — each enriched into a scored, dossier-ready target for the rep who owns the relationship. It is delivered as My AI Lead Gen, a productized service with published tiers (see Section 11).'
+    'The same public-records-harvesting motion points straight at TCI’s growth: identify WAIRE-obligated warehouses by facility and truck-trip data, fleets at a lease-versus-own inflection, expiring contracts, and new distribution-center permits — each enriched into a scored, dossier-ready target for the rep who owns the relationship. It is delivered as My AI Lead Gen, a productized service with published tiers (see Section 12).'
   ),
   spacer(140),
   capabilityBox(
@@ -762,16 +764,116 @@ docChildren.push(
   ),
   spacer(60),
   p('Engagements are described by industry and scope only; client-identifying details are withheld. Hours and counts trace to Technijian’s own engagement records.', { italics: true, size: 18 }),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across search, account intelligence, RFPs, and quoting: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.7 },
+      { label: 'What It Does', weight: 3.3 },
+      { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER },
+    ],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, compliance-critical answers, the deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — content, outreach personalization, RFP answers, summarization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging thousands of fleet and warehouse records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: TCI pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single piece of WAIRE-authority content is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. That is the kind of AI-engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 HOW AI TRANSFORMS THE GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms TCI’s Growth Engine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for TCI Transportation Leadership', CORE_BLUE, '10'),
+  spacer(100),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where TCI sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Andrew, Ryan, and the TCI team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this lease proposal from the spec and the rate sheet." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the named-account list and flag which fleets just hit a lease-versus-own trigger." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. TCI starts with simple automations that pay off in the first ninety days, and adds autonomous agents only where the value is proven — which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where TCI Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run companies sit at the first or second rung of the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). TCI is an interesting case: it is further along than most on the operational side and at the starting rung on the commercial side. The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Stage', weight: 1.6 },
+      { label: 'What It Looks Like', weight: 4 },
+      { label: 'TCI Today', weight: 1.4, align: AlignmentType.CENTER },
+    ],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'Operational AI is real (preventative maintenance, collision mitigation, telematics) but AI is not yet woven into the commercial side — getting found, winning accounts, quoting', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific commercial workflows day-to-day — search, account intelligence, quoting, RFPs — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and operations with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('TCI is further along than most on operations — the ops and safety AI it already runs puts it at the Emerging stage, not the starting line. This report is the plan to reach Operational on the commercial side — AI working in the growth engine and inside the quoting and bidding work — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For an operator like TCI, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Risk', weight: 1.8 },
+      { label: 'What It Means', weight: 3.4 },
+      { label: 'How Technijian Controls It', weight: 3.4 },
+    ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything customer-facing or compliance-bound — AI drafts a lease quote or WAIRE comparison, a person approves'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — customer, contract, and pricing data never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — led by a CISSP-certified team, so DOT/WAIRE document automation stays auditable'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Multi-location service operators are building per-location search and review presence so the right local query resolves to them — capturing demand competitors with one national page never see.'),
+  bullet('Equipment-leasing and fleet businesses are using account intelligence on public signals to spot lease-versus-own inflection points and expiring contracts before a competitor does.'),
+  bullet('Document-heavy regulated businesses are turning multi-day proposal and compliance assembly into a minutes-long, audit-ready draft — responding to more bids with the same team.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; TCI’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 9 (Capability Proof) and Section 12.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A TCI Leasing Sales Rep'),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A rep fields a leasing inquiry, hand-builds the spec and the lease math, checks availability across yards by phone, writes the proposal from scratch, and only chases the accounts they can personally remember — while WAIRE-obligated warehouses and lease-expiry triggers in their territory go unseen.',
+    'WITH AI: Account intelligence surfaces the right fleets and warehouses with the timing and the trigger already attached; a quote-to-lease assistant drafts the configured proposal in minutes; the rep reviews, personalizes, and sends. The expertise is captured in a system, so the same standard holds across every yard and survives a territory change or a new hire.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [
+      { label: 'Path', weight: 1.6 },
+      { label: 'Reality', weight: 5 },
+    ],
+    [
+      ['DIY tools', 'Inexpensive, but TCI assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 HOW AI TRANSFORMS THE GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms TCI’s Growth Engine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get found for the demand that searches, win the named accounts worth winning, and run leaner so quoting, bidding, and service hold as volume grows. The first motion captures broad search demand at scale; the second is account-based by design, aimed at the fleets, shippers, and WAIRE warehouses TCI already knows; the third speeds the work that turns interest into closed leases and dedicated contracts. Together they extend the operational AI TCI already runs into a full commercial engine.'),
   spacer(160),
   diagramImage(DIAGRAM_ARCH_BUF, 'TCI AI Growth Engine', 600, 1.607),
-  diagramCaption('Figure 10.0 — The Engine: Get Found, Account Intelligence & Outbound, and Internal Automation'),
+  diagramCaption('Figure 11.0 — The Engine: Get Found, Account Intelligence & Outbound, and Internal Automation'),
   spacer(160),
   buildTable(
     [
@@ -807,14 +909,34 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
   p('This section is deliberately honest about numbers. Where Technijian has a published price, it is shown as a firm price. Where an investment depends on the scope of a custom build, the document shows the real rate-card basis and states plainly that the figure is set in discovery — it does not invent a total to fill a cell. And the return is framed as the value at stake across TCI’s growth levers, with the dollar figures calibrated once discovery establishes TCI’s real per-deal economics. That is the standard TCI should expect from a partner: no numbers we cannot ground.'),
+  spacer(120),
+  calloutBox(
+    'AI Search Reality Check',
+    [
+      'Here is the gap made concrete. Ask an AI assistant the question below today, and this is the shape of the answer a buyer gets — illustrative of how AI search resolves this query right now:',
+      'Prompt: "Who can supply zero-emission trucks and WAIRE help for a warehouse in the South Coast Air Basin?" TODAY — the assistant answers with whichever names have the strongest content and third-party signals it can read: it points to the national players and a couple of EV vendors, and does NOT mention TCI — even though TCI is physically in the basin and offers EV acquisitions, charging, and WAIRE assistance under one roof. TCI is invisible at the exact moment the buyer is forming a shortlist.',
+      'AFTER answer-engine optimization — the same query returns TCI as a cited option, with the per-yard pages and the WAIRE/EV content hub as the supporting evidence the assistant points to.',
+    ],
+    CORE_ORANGE
+  ),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is part of the discovery baseline.)', { italics: true, size: 18 }),
+  spacer(120),
+  calloutBox(
+    'The Cost of Waiting',
+    [
+      'AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter TCI is not cited, the assistants learn to answer "full-service truck leasing [city]" and "WAIRE-obligated warehouse EV options" with someone else — and that default, once set in the training and retrieval data, is harder and more expensive to dislodge than to claim now.',
+      'The same is true of the local-search demand leaking to Ryder, Penske, and the marketplaces across TCI’s 26-plus yards, and of the WAIRE deadlines ramping through 2031: every obligated warehouse that signs an EV-and-charging deal elsewhere this year is a multi-year relationship TCI does not get a second shot at. The cost of waiting is not zero — it is a competitor becoming the default answer in a niche TCI is physically built to own.',
+    ],
+    CRITICAL
+  ),
   spacer(140),
-  subHeader('Phase 1 — Published Services (Firm Monthly Pricing)'),
-  p('Two of the program’s core engines carry firm, published pricing and need no custom build to start: the search and answer-engine foundation (My SEO), and the account-intelligence engine that finds named fleets, shippers, and WAIRE-obligated warehouses (My AI Lead Gen). Both are productized services with published rates.'),
+  subHeader('The Entry Offer — The 90-Day AI Visibility & Lead-Gen Pilot'),
+  p('Start with one clearly-scoped program built on published pricing — not an open-ended engagement. The pilot stands up TCI’s local and answer-engine search presence and the account-intelligence engine, and proves the lift before any custom build is discussed. Two of the program’s core engines carry firm, published pricing and need no custom build to start: the search and answer-engine foundation (My SEO), and the account-intelligence engine that finds named fleets, shippers, and WAIRE-obligated warehouses (My AI Lead Gen). Both are productized services with published rates.'),
   buildTable(
     [
       { label: 'Service', weight: 3 },
@@ -833,6 +955,15 @@ docChildren.push(
   ),
   spacer(60),
   p('My AI Lead Gen tiers (published): Starter $1,499/mo (1 vertical, 500 leads/mo, $2,500 setup) · Professional $3,499/mo (“Most Popular” — the multi-vertical fit for TCI) · Enterprise $6,999/mo (unlimited custom sources, 10K+ leads, $15,000 setup). A 2-week paid pilot ($995, credited to month one) de-risks the start; annual plans save 17% and waive setup. Third-party data/API costs (e.g., ATTOM, Apollo, Claude) pass through at cost. Optional: Digital Marketing (paid-ads) management at $200/mo (Standard) + $100 setup per brand, media spend separate.', { italics: true, size: 18 }),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, TCI is cited by at least one major AI assistant (ChatGPT, Perplexity, or Google AI Overviews) for a high-intent leasing or WAIRE/EV query, AND the account-intelligence engine has delivered its first batch of scored, contact-ready named fleets and WAIRE-obligated warehouses to the sales team.',
+      'Our commitment: the entry program is month-to-month — no long lock-in, no obligation to continue if it does not hit the metric above by day 90. If the pilot has not moved the needle, we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
   spacer(160),
   subHeader('Phase 2 — Custom Build & Advisory (Scoped in Discovery)'),
   p('The custom build and ongoing advisory are scoped to TCI’s actual needs — how many yards, how many integrations, how deep the tooling — so rather than print an invented total, the table shows the real 2026 US-led rate basis and the work to be scoped into a fixed-price Statement of Work. The advisor and workshop figures are planning estimates, confirmed at discovery.'),
@@ -890,20 +1021,20 @@ docChildren.push(
     [
       'The published recurring program — the search foundation plus account intelligence — is a known investment of about $5,549/mo (≈ $71,588 in Year 1 month-to-month, or ≈ $59,590 on annual plans, which waive setup). No large custom build is required to start.',
       'The custom build and advisory are scoped in discovery into a fixed-price Statement of Work, priced from the published 2026 US-led rates above — never an invented number.',
-      'Within five business days of a 30-minute discovery call (Section 14), Technijian returns a calibrated ROI model and a fixed-scope SOW built on TCI’s real per-deal economics. That is the right sequence: prove the published engines, then size the build.',
+      'Within five business days of a 30-minute discovery call (Section 15), Technijian returns a calibrated ROI model and a fixed-scope SOW built on TCI’s real per-deal economics. That is the right sequence: prove the published engines, then size the build.',
     ],
     CORE_BLUE
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence suited to a multi-yard, multi-state, regulated operation: build the foundation first (local SEO, yard pages, and the capture layer), then stand up the demand-and-intelligence engine (content, citations, the named-account list, and an RFP pilot), then scale outbound and ship the commercial tools. Meaningful inbound and faster quoting are visible inside the first ninety days; the bigger builds are given realistic runway.'),
   spacer(200),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'TCI 90-180-365 Day Roadmap', 600, 2.296),
-  diagramCaption('Figure 12.0 — TCI Growth Program: 90 / 180 / 365-Day Roadmap'),
+  diagramCaption('Figure 13.0 — TCI Growth Program: 90 / 180 / 365-Day Roadmap'),
   spacer(160),
   subHeader('Phase 1 — Foundation (Days 1–90)', { color: CORE_BLUE }),
   p('Get the commercial-digital base right and stand up the layer that turns visits into quotes and open accounts.'),
@@ -931,14 +1062,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Account-Based Outreach at Scale', 'Personalized sequences running across the named universe; reps supported by dossiers and trigger alerts. RFP and lease-proposal automation in production. New lease and dedicated-contract deals closing.'],
-      ['3.2 — Tools + Optimize', 'WAIRE/EV ROI tool and used-truck merchandising live; the AI-assisted portal extended across lines. ROI dashboard delivered against the Section 14 baselines.'],
+      ['3.2 — Tools + Optimize', 'WAIRE/EV ROI tool and used-truck merchandising live; the AI-assisted portal extended across lines. ROI dashboard delivered against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions TCI can take immediately — before any Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -963,11 +1094,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE THIS PLAN ----------
+// ---------- 15 QUESTIONS TO CALIBRATE THIS PLAN ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative — a short discovery call replaces them with TCI’s real baselines, sets the dollar value of each growth lever, and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative — a short discovery call replaces them with TCI’s real baselines, sets the dollar value of each growth lever, and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -998,9 +1129,32 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions TCI leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [
+      { label: 'Question', weight: 3 },
+      { label: 'Our Honest Answer', weight: 5 },
+    ],
+    [
+      [{ text: 'We already handle marketing and run our own ops tech. Why add Technijian?', bold: true }, 'Keep what works. You run the operational and safety AI well — that is not where we plug in. We add the commercial layer no one is building for you: local and answer-engine search across your 26-plus yards, account intelligence on named fleets and WAIRE-obligated warehouses, and quote/RFP automation. We run alongside what you have, not over it.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — not autonomous "agents" doing your sales job. We use the simplest tool that works, measure it, and only expand what earns its place. You already run real AI in maintenance and safety; this is the same discipline applied to the commercial side.'],
+      [{ text: 'Is our data — customer, contract, and pricing — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything compliance-bound, led by a CISSP-certified team. Data governance is scoped up front, and DOT/WAIRE document automation stays auditable — it supports your compliance function, it does not replace it.'],
+      [{ text: 'We have a lot going on. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your reps and coordinators back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a published-price 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The published recurring program is about $5,549/mo (≈ $71,588 in Year 1 month-to-month, or ≈ $59,590 on annual plans) at published rates — no hidden fees, no large up-front build. The custom build and advisory are scoped in discovery into a fixed-price Statement of Work from the published 2026 US-led rates in Section 12 — never an invented number.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('TCI already has the hard things: 47 years of reputation, a diversified two-unit model, 3,800-plus units across 26-plus yards, a family-owned service culture, and an operational-AI foundation most independents do not have. What it has not yet done is point AI at the commercial side — getting found, winning named accounts, and turning California’s EV mandates into a sales conversation — and that corner of the market is still open to the operator who moves first.'),
   p('The opportunity is concrete: buyers are already searching for what TCI sells, named fleets and warehouses are won by a team that AI can multiply, and the quoting, bidding, and merchandising work is exactly what automation speeds. A focused, hybrid program captures the search demand, sharpens the account-based effort, and ships the tools — without pretending software replaces the relationship that closes a lease.'),
@@ -1008,7 +1162,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope and sponsor.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope and sponsor.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the local / AEO foundation, the first yard pages, the stat refresh, and the AI-assisted capture layer — live inside 30 days of signature.',
     ],
@@ -1031,9 +1185,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help regional businesses compete at scale — with security and governance built in, not bolted on.'),
   spacer(140),

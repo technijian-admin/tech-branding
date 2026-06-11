@@ -71,8 +71,10 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
-  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
+  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true, pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })] });
   const visualTable = new Table({
     width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: [120, CONTENT_W - 120], borders: noBorders,
@@ -254,7 +256,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: Brandywine’s internal numbers — deal volume, entitlement timelines, absorption pace, and capital structure — were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call. The specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: Brandywine’s internal numbers — deal volume, entitlement timelines, absorption pace, and capital structure — were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call. The specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE INFILL GROWTH MODEL ----------
@@ -507,6 +509,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a buyer or a city partner asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now, given the crawler block:'),
+  calloutBox('Prompt: "Who builds quality infill townhomes on redeveloped sites in Orange County?"', [
+    'TODAY — the AI assistant answers with whichever builders have content it can actually read and third-party signals it can find: it names a couple of larger regional and national builders, and does NOT mention Brandywine — even though Brandywine has 32 years, 60-plus infill communities, and a documented public-private-partnership track record. With the site returning a 403 to many fetchers, the assistant cannot read the very pages that would make Brandywine the obvious answer. Brandywine is invisible at the exact moment a buyer or a city is forming a shortlist.',
+    'AFTER THE FIX — the same query returns Brandywine as a cited option ("Brandywine Homes is a family-owned Southern California infill builder with 60+ communities and a public-private-partnership track record…"), with the AI-readable community pages and the partner-facing presence as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is part of the free Nexus Assess baseline.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter the site stays unreadable to crawlers and the partner presence stays thin, the assistants learn to answer "infill builder in Southern California" with someone else — and that default, once set in the training and retrieval data, is harder and more expensive to dislodge than to claim now. The same is true of the supply side: the CEQA-reform window rewards the fastest mover on by-right infill, and that speed comes from the screening-and-drafting layer this report describes. No SoCal infill competitor has moved yet — that lane is open today, not indefinitely. The cost of waiting is not zero; it is a competitor becoming the default answer and the first to clear the new exemptions.'),
 );
 
 // ---------- 09 TECHNIJIAN CAPABILITIES ----------
@@ -565,11 +578,96 @@ docChildren.push(
     'Together they fix the crawler block, build the buyer and partner-facing presence, and put a hands-on AI advisor over the whole program so a lean team gets the value without having to run it.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across land intelligence, entitlement drafting, and buyer absorption: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, the compliance-critical sections of an entitlement filing, deepest deal-feasibility reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — staff reports and community-meeting materials, parcel scoring, outreach personalization, summarization', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classifying and extracting from thousands of parcels, enriching owner and permit records, tagging by-right eligibility', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Brandywine pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single CEQA filing, for example, is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final accuracy-and-compliance pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. Where the stakes are highest, like a land-feasibility commit, the LLM-council pattern above puts three models on the same decision. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Grows Brandywine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for Brandywine Homes Leadership', CORE_BLUE, '10'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Brandywine sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Brett Whitehead, Alex Hernandez, and the Brandywine team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft the CEQA exemption checklist from this parcel’s zoning and APN data." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch Southern California parcels and flag new off-market infill sites worth underwriting." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Brandywine starts with simple automations that pay off in the first 90 days, and adds autonomous agents only where the value is proven — which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Brandywine Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run companies — including Brandywine — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with the Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Brandywine Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'Already courting AI search (the site tracks ChatGPT-referral traffic) and running modern web tooling, but AI is not yet woven into land, entitlements, or absorption', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — parcel screening, entitlement drafting, buyer response — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across sourcing, entitlements, construction, and sales with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business sources, entitles, builds, and sells', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Brandywine is already at the Emerging stage: it tracks AI-search referrals and runs real-time-availability tooling on its community sites. This report is the plan to reach Operational — AI working in land sourcing, entitlements, and absorption — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a deal-driven, relationship-heavy business like Brandywine, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer — a misread setback, an over-stated yield', 'Human-in-the-loop review on anything that goes to a city, a partner, or a buyer — AI drafts, a person approves before it leaves the building'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — deal terms, capital-partner relationships, and feasibility numbers never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing', { color: CORE_BLUE }),
+  bullet('Homebuilding land teams: national builders run AI land platforms that let one analyst evaluate thousands of parcels a month instead of a couple hundred — finding deals a hand-run process never sees.'),
+  bullet('Regulated, document-heavy approvals: organizations facing paperwork-intensive filings are turning multi-day document assembly into a minutes-long, review-ready draft — responding to more opportunities with the same team.'),
+  bullet('For-sale and rental sales: builders and operators are using AI assistants to answer overnight buyer inquiries and book tours that would otherwise go cold until morning — converting demand a soft market makes scarce.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Brandywine’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 9 (Technijian Capabilities) and the operational levers in Section 12.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Brandywine Entitlements Lead', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: An entitlements lead hears about an off-market parcel, pulls zoning and APN records by hand, estimates yield from experience, and then spends days drafting the CEQA paperwork, the staff report, and the community-meeting materials city by city — most of it held in a few senior people’s heads across several concurrent communities.',
+    'WITH AI: AI parcel monitoring surfaces the site and scores its by-right path (SB 9 / SB 35-423 / AB 2011 / density bonus) with a yield estimate in minutes; an AI assistant drafts the entitlement filings and meeting materials from the parcel data; the lead reviews, corrects, and approves. The 32-year playbook is captured in a system, so the same standard holds across every community and survives a new hire or a new city.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but Brandywine assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader is scarce and typically costs $180K+/year, and one person cannot cover strategy, build, security, and governance for a lean ~50-person team'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one Irvine team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Grows Brandywine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions that mirror the pipeline: source (find and qualify more infill land with AI parcel and feasibility intelligence), entitle and build (compress approvals and run constrained sites leaner with document automation, timeline modeling, construction-ops AI, and a knowledge graph), and sell and partner (absorb homes with a 24/7 buyer assistant and answer-engine search, and keep the land, city, and capital relationships full). It supports the human relationship layer — it does not replace it.'),
   spacer(160),
@@ -605,11 +703,16 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The model below is built from public and industry benchmarks because Brandywine’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 14 replace them with real baselines. The logic holds across a wide range of inputs, because the levers — land sourced, entitlement time saved, margin protected, homes absorbed — are large relative to the program cost.'),
+  p('The model below is built from public and industry benchmarks because Brandywine’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 15 replace them with real baselines. The logic holds across a wide range of inputs, because the levers — land sourced, entitlement time saved, margin protected, homes absorbed — are large relative to the program cost.'),
+  spacer(120),
+  calloutBox('AI as a Managed Investment — Not a Leap of Faith', [
+    'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Per McKinsey’s State of AI, the large majority of companies now use AI, but only a minority see a real profit impact; the difference is disciplined measurement, not bigger budgets.',
+    'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. Brandywine carries the upside, not blind risk.',
+  ], CORE_ORANGE),
   spacer(140),
   subHeader('Projected Lift (Estimated)'),
   buildTable(
@@ -642,28 +745,33 @@ docChildren.push(
   spacer(60),
   p('Figures are illustrative and conservative, modeled on public benchmarks (e.g., the ~7.5% incentive norm and ULI’s 12-18 month entitlement estimate). Value is attributed to the program, not guaranteed, and the largest lever — new land sourced and entitled — is not counted in the ratio. All inputs calibrate to Brandywine’s actuals in discovery.', { italics: true, size: 18 }),
   spacer(160),
-  subHeader('Technijian Service Investment Map'),
-  p('Structured to start small. The entry program is the headline ask — recurring quick-win services and a workshop, no large build — and pays for itself on the land and absorption levers alone. The custom build is the expansion, deliberately held for after the entry proves the lift.'),
+  subHeader('The Entry Offer — The 90-Day AI Land & Visibility Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot turns on AI land and account intelligence, fixes the crawler block, and stands up the AI-search and partner-facing presence, and proves the lift before any larger build is discussed. It is the headline ask — recurring quick-win services and a workshop, no large build — and pays for itself on the land and absorption levers alone. The custom build is the expansion, deliberately held for after the pilot proves out.'),
   buildTable(
     [ { label: 'Service', weight: 2.9 }, { label: 'Scope', weight: 3.5 }, { label: 'Monthly', weight: 1.4 }, { label: 'Y1 Total', weight: 1.4 } ],
     [
       ['My AI — Executive Workshop & Readiness (one-time)', 'Leadership alignment and a prioritized AI roadmap', '—', '$5,000'],
       ['My AI Lead Gen — Land & Account Intelligence (Starter)', 'Monitor SoCal infill parcels, starts, permits; landowner, city, and capital targets', '$1,499/mo', '$17,988'],
       ['My SEO — Community + Answer-Engine Search (Tier 3 + AI Search Opt)', 'AI-readable community pages, the crawler fix, and the B2B partner presence', '$1,200/mo', '$14,400'],
-      [{ text: 'ENTRY PROGRAM SUBTOTAL', bold: true }, { text: '~$2,699/mo + $5,000 one-time', bold: true }, { text: '', bold: true }, { text: '~$37,400', bold: true, color: CORE_BLUE }],
+      [{ text: 'THE 90-DAY PILOT — YEAR 1', bold: true }, { text: '~$2,699/mo + $5,000 one-time', bold: true }, { text: '', bold: true }, { text: '~$37,400', bold: true, color: CORE_BLUE }],
       ['My AI — Fractional AI Advisor (Phase 2)', 'Program lead across the land tool, entitlement AI, and buyer assistant', '$2,000/mo', '$24,000'],
       ['My Dev — Custom AI Builds (Phase 2; estimated, confirmed at quote)', 'Land-feasibility tool, entitlement document-intelligence, 24/7 buyer assistant, knowledge graph', '—', '$75,000'],
       ['My Dev — Managed App Services (Phase 2)', 'Run and maintain the builds', '$800/mo', '$9,600'],
       [{ text: 'FULL ENGINE (entry + expansion)', bold: true }, { text: 'Recurring $5,499/mo + builds', bold: true }, { text: '', bold: true }, { text: '~$146,000', bold: true, color: CORE_BLUE }],
     ],
   ),
+  spacer(120),
+  calloutBox('The Pilot Bar — and Our Commitment', [
+    'Success metric: within 90 days, AI land-and-account intelligence is live and delivering a scored, prioritized pipeline of Southern California infill parcels and partner targets the team would not have surfaced by hand, AND Brandywine is readable and cited by AI search — the crawler block is fixed and the answer-engine and partner-facing presence are live.',
+    'Our commitment: the pilot is month-to-month after the initial term — no lock-in. If it has not hit the metric above by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+  ], CORE_ORANGE),
   spacer(60),
   p('Productized rates are current published figures (My SEO tiers and add-ons; My AI Lead Gen Starter). My AI and My Dev are estimated and confirmed at quote. A blended, US-led rate is shown; project and custom work is quoted against a transparent labor-rate card with no surprises. Scale is the third step: roll the tooling across every active and future community and the build-to-rent arm — the one-time build amortizes across sites.', { italics: true, size: 18 }),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence: turn on the foundation and the intelligence first, then build the pipeline tools, then scale across communities. The cheapest, highest-visibility wins land in the first ninety days; the bigger builds get realistic runway and only start after the entry proves out.'),
   spacer(200),
@@ -696,14 +804,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Buyer Assistant + Knowledge Graph', 'Launch the 24/7 AI buyer assistant across communities and the institutional-knowledge graph for the team.'],
-      ['3.2 — Construction-Ops AI + ROI Dashboard', 'Bring schedule and budget-variance AI into production and deliver the ROI dashboard against the Section 14 baselines.'],
+      ['3.2 — Construction-Ops AI + ROI Dashboard', 'Bring schedule and budget-variance AI into production and deliver the ROI dashboard against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions Brandywine can take immediately — before any engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -728,11 +836,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 15 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with Brandywine’s real baselines and sharpens the whole program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with Brandywine’s real baselines and sharpens the whole program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [ { label: 'Topic', weight: 2.4 }, { label: 'What We’d Confirm', weight: 4.4 }, { label: 'Why It Matters', weight: 3.2 } ],
@@ -759,9 +867,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions Brandywine leadership is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have a web partner (P11) and an SEO blog. Why add Technijian?', bold: true }, 'Keep them — they built a solid, modern site. We add the layer they do not: AI-search optimization (answer-engine) that fixes the crawler block, the landowner and city-facing B2B presence, and the AI land intelligence and internal automation no web or SEO shop provides. We run alongside your partner, not over them.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — parcel screening and document drafting — not autonomous "agents" running your business. We use the simplest tool that works, measure it, and only expand what earns its place. The national giants already run AI on land and sales; this is the same discipline, tuned for infill.'],
+      [{ text: 'Is our data — deal terms, capital relationships, feasibility numbers — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything that goes to a city, a partner, or a buyer, led by a CISSP-certified team. Data governance is part of the free Nexus Assess in the Quick Wins.'],
+      [{ text: 'We’re a lean ~50-person team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry is a fixed-price 90-day pilot with a defined success metric (Section 12), month-to-month with no lock-in. If it has not hit the metric by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The 90-day pilot is approximately $37K for Year 1 at published rates — no hidden fees, no large up-front build. Because we route work across roughly seven models by task (Section 9), the AI run cost is a fraction of wiring everything to one premium model. The full engine (the later expansion) is profiled in Section 12, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('Brandywine has the hard things: 32 years, 60-plus infill communities, $1.2 billion in revenue, deep city and capital relationships, and a proven adaptive-reuse model. What it has not yet done is bring AI to the supply side of that model — and no Southern California infill competitor has either. That is a first-mover lane, open today, in the exact part of the business where growth is actually gated.'),
   p('The opportunity is concrete and low-risk: turn on AI land and account intelligence, fix the front door and the partner presence, then build the land-feasibility, entitlement, and buyer tools on top. The entry program is small on purpose and pays for itself on the land and absorption levers alone; the bigger build comes later, once the entry proves the lift.'),
@@ -769,7 +897,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope — or start with a half-day Executive AI Briefing tailored to Brandywine.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope — or start with a half-day Executive AI Briefing tailored to Brandywine.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the workshop, land and account intelligence, and the crawler and search fixes — live inside 30 days.',
     ],
@@ -786,9 +914,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help regional businesses compete at scale — as a fellow Orange County company that understands the Southern California development landscape.'),
   spacer(140),
@@ -821,7 +949,8 @@ docChildren.push(
   p('Intelligence gathered via public web research, June 2026. Company details are drawn from public sources and Brandywine’s own materials, and should be confirmed before external use.', { italics: true, spaceAfter: 100 }),
   p('1. Brandywine Homes — brandywine-homes.com (Vision/Mission, Partnerships, Team, Find Your Home, Past Communities, Multi-Family, News); Yelp / D&B / BuildZoom; LinkedIn; Instagram; PR Newswire (2019 results); The Real Deal LA (Pico Rivera, 2024); SoCal MAME 2021.', { size: 20, spaceAfter: 100 }),
   p('2. Market, policy & proptech — Davis Vanguard and firsttuesday (permits / starts); HousingWire and John Burns Research (sales, inventory, incentives, affordability); C.A.R. 2026 forecast; Holland & Knight and Urban Land Institute (AB 130 / SB 131, 12-18 month estimate); Terner Center and CA YIMBY (SB 423, AB 2011); NAR and Zonda / NewHomeSource; The Real Deal and Bisnow (Prophetic, D.R. Horton, Century); HousingWire (Acres.ai); Higharc / Inman; Cotality and HouseCanary; ECI (MarkSystems, Lasso CRM); Salesforce and Chief AI Officer (Lennar LISA / Agentforce); Autodesk 2025 construction-AI trends.', { size: 20, spaceAfter: 100 }),
-  p('3. Competitors & Technijian — The Olson Company, City Ventures, Melia Homes, Trumark Homes, Warmington, Intracorp; Risewell Homes (New Home Co. + Landsea); Lennar, KB Home, Tri Pointe, Toll Brothers (Builder Magazine, GlobeNewswire, company sites). Technijian documented Proven Results: AI Document Intelligence (FINRA broker-dealers); Multi-Agent SEO + Answer-Engine Platform; ScamShield LLM Council; Weaviate + Obsidian knowledge system.', { size: 20 }),
+  p('3. Competitors & Technijian — The Olson Company, City Ventures, Melia Homes, Trumark Homes, Warmington, Intracorp; Risewell Homes (New Home Co. + Landsea); Lennar, KB Home, Tri Pointe, Toll Brothers (Builder Magazine, GlobeNewswire, company sites). Technijian documented Proven Results: AI Document Intelligence (FINRA broker-dealers); Multi-Agent SEO + Answer-Engine Platform; ScamShield LLM Council; Weaviate + Obsidian knowledge system.', { size: 20, spaceAfter: 100 }),
+  p('4. AI literacy & responsible-AI frameworks (Section 10) — MIT Sloan Management Review (AI literacy: "what AI can do," not how to build it); Anthropic, "Building Effective Agents" (the automation/workflow vs. agent distinction); the widely-used five-stage AI maturity model, consistent with Gartner and Google Cloud frameworks; U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage); McKinsey State of AI (AI as a stage-gated, measured investment).', { size: 20 }),
 );
 
 // =====================================================================

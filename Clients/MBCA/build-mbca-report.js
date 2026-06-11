@@ -76,10 +76,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -374,7 +377,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-1' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -401,7 +403,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures, and on the spirit of this document. It was prepared for a fellow Vistage member from public information, and the projections in Sections 14 and 15 are deliberately conservative — MBC’s real numbers (average engagement value, pursuit volume and win rate, the named-account roster, and the succession timeline) sharpen the entire plan after a short conversation. Every number here is labeled estimated. The specific questions are in Section 17.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures, and on the spirit of this document. It was prepared for a fellow Vistage member from public information, and the projections in Sections 15 and 16 are deliberately conservative — MBC’s real numbers (average engagement value, pursuit volume and win rate, the named-account roster, and the succession timeline) sharpen the entire plan after a short conversation. Every number here is labeled estimated. The specific questions are in Section 18.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 INDUSTRY & REGULATORY ARCHITECTURE ----------
@@ -735,7 +737,7 @@ docChildren.push(
   p('The loss is rarely dramatic; it is quiet and compounding. A younger scientist re-derives a method a predecessor perfected. A proposal omits a directly relevant project because no one remembered it. A regulator asks about site history from fifteen years ago and the answer takes a week of digging instead of a minute of recall. A new hire takes three years to build context a retiring expert could have transferred in three months. Consider the thirty-year El Segundo monitoring record, or the multi-decade datasets behind twelve generating stations: the data is archived, but the scientist who knows why a given anomaly in a 2009 survey was not a concern is the irreplaceable part. None of this shows up as a line item — it shows up as slower proposals, thinner institutional continuity on long monitoring contracts, and a moat that erodes one retirement at a time.'),
   spacer(120),
   subHeader('Capturing It Is a Proven Build, Not an Experiment'),
-  p('This is precisely the problem Technijian’s Enterprise Knowledge and Memory system was built to solve. Index the firm’s reports, field datasets, toxicity records, taxonomic keys, photographs, agency contacts, and — through structured debriefs — the senior scientists’ own judgment, into a secure, private, queryable institutional brain. Any scientist can then ask, in plain language, "every eelgrass mitigation we have done in this bay, the agency conditions, and the outcomes," and get a sourced answer in seconds. The next generation onboards on the firm’s accumulated judgment instead of reinventing it. And the same brain becomes the engine room for faster proposals, covered in Section 13. For a Vistage member thinking about how to scale a firm whose value is in people, this is the move that converts a key-person risk into a durable, transferable asset.'),
+  p('This is precisely the problem Technijian’s Enterprise Knowledge and Memory system was built to solve. Index the firm’s reports, field datasets, toxicity records, taxonomic keys, photographs, agency contacts, and — through structured debriefs — the senior scientists’ own judgment, into a secure, private, queryable institutional brain. Any scientist can then ask, in plain language, "every eelgrass mitigation we have done in this bay, the agency conditions, and the outcomes," and get a sourced answer in seconds. The next generation onboards on the firm’s accumulated judgment instead of reinventing it. And the same brain becomes the engine room for faster proposals, covered in Section 14. For a Vistage member thinking about how to scale a firm whose value is in people, this is the move that converts a key-person risk into a durable, transferable asset.'),
   spacer(120),
   calloutBox(
     'The Memory Is the Moat',
@@ -805,6 +807,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI-Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When an agency project manager or a prime asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who are the best eelgrass survey and restoration consultants in Southern California?"', [
+    'TODAY — the AI assistant answers with whichever firms have the strongest content and third-party signals it can read: it names a couple of larger environmental generalists and one or two niche peers, and does NOT mention MBC Aquatic Sciences — even though MBC pioneered eelgrass-restoration science in California and has worked the field for more than three decades. MBC is invisible at the exact moment the buyer is forming a shortlist.',
+    'AFTER AEO — the same query returns MBC as a cited option ("MBC Aquatic Sciences pioneered eelgrass-restoration science in California and has authored 600+ marine reports since 1969…"), with the project portfolio and authority content as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is the baseline the Quick Wins ask MBC to capture, and the first thing the entry program moves.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter MBC is not cited, the assistants learn to answer "eelgrass restoration consultant" or "§316(b) entrainment study firm" with someone else — and that default, once set in the training and retrieval data, is far harder and more expensive to dislodge than to claim now. The same compounding works against the named-account pipeline: an on-call window missed because no one was watching the solicitation calendar is a multi-year revenue stream lost to a competitor for the length of the contract. New demand is also forming — Pacific oil-platform decommissioning is in environmental review, and California offshore wind will eventually need exactly this marine baseline science — and the firm that is already the cited authority captures it first. The cost of waiting is not zero; it is a competitor becoming the default answer, and a renewal or a pursuit quietly going to someone else.'),
 );
 
 // ---------- 12 TECHNIJIAN CAPABILITY PROOF ----------
@@ -870,11 +883,96 @@ docChildren.push(
     'For MBC it is named-account pursuit intelligence: watch on-call solicitations, capital-improvement and CEQA filings, NPDES renewal cycles, and agency and prime staff changes, and deliver pre-pursuit dossiers — depth and timing on a known universe, never shotgun marketing.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across the institutional brain, the proposal engine, AI-search content, and pursuit monitoring: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final draft-quality pass, defensibility-critical QC, the deepest reasoning before a scientist signs', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — SOQ and scope drafts, content, outreach personalization, summarization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — indexing reports, classification, extraction, enriching and tagging thousands of records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: MBC pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single statement of qualifications is drafted from the institutional brain by a low-cost model, tightened and fact-checked by a mid model, and given a final defensibility-and-accuracy pass by a frontier model (or the multi-model QC council) — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 13 AI GROWTH & INTEGRATION ENGINE ----------
+// ---------- 13 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms MBC’s Growth & Integration', CORE_BLUE, '13'),
+  ...sectionHeader('Understanding AI — A Field Guide for MBC Leadership', CORE_BLUE, '13'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where MBC sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Shane, the founder, and the senior bench can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this statement of qualifications from these past projects and resumes." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the on-call solicitation calendar and flag what needs attention." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. MBC starts with simple automations that pay off in the first ninety days — getting cited, drafting proposals from its own history — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced. And the bright line never moves: a qualified scientist owns and signs every scientific determination, as Section 10 sets out.'),
+  spacer(140),
+
+  subHeader('Where MBC Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run firms — including MBC — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'MBC Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'Sophisticated digital data and an in-house laboratory exist, but AI is not yet woven into how the firm wins work or runs its proposals and institutional memory', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — proposals, AI-search authority, pursuit monitoring — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and operations with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the firm runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('MBC has the raw material most firms lack: fifty-seven years of reports, field data, and an in-house lab already produce a deep, structured record — that is why it sits at Emerging rather than Foundational. This report is the plan to reach Operational — AI working in the growth engine and inside the firm’s proposals and institutional memory — within nine months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a science-first firm whose deliverables carry regulatory and legal weight, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop on anything client-facing or regulatory — AI drafts, a qualified scientist reviews and signs every determination'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — the institutional brain, toxicity records, and client project data never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — defensibility-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing', { color: CORE_BLUE }),
+  bullet('Professional services: qualifications-based firms are turning multi-day SOQ and proposal assembly into a minutes-long, well-referenced draft — responding to more pursuits with the same senior team.'),
+  bullet('Knowledge-heavy consultancies: firms whose value is in long-tenured experts are capturing decades of judgment into a private, searchable institutional brain before key people retire — de-risking succession.'),
+  bullet('Niche technical specialists: under-the-radar experts are using AI-search optimization to become the cited answer when a buyer asks an AI tool "who does this kind of study?" — capturing pursuits competitors never see.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; MBC’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 12 (Capability Proof) and Section 15 (Business Impact).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — An MBC Senior Scientist', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A solicitation lands with a short deadline. A senior scientist hunts through project servers and filing cabinets for the most relevant prior work, re-keys resumes and references, reconstructs an agency’s site history from memory, and drafts the qualifications by hand — pulling hours away from the science only they can do, and risking that a directly relevant project is simply forgotten.',
+    'WITH AI: The institutional-memory brain surfaces every relevant prior project, the agency conditions, and the outcomes in seconds; the proposal engine drafts the SOQ, scope, and reference package in the agency’s format; a multi-model check flags any gap. The scientist reviews, sharpens the science, and signs — turning days of assembly into hours, with nothing forgotten and the firm’s judgment captured, not retiring.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but MBC assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 14 AI GROWTH & INTEGRATION ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms MBC’s Growth & Integration', CORE_BLUE, '14'),
   spacer(100),
   p('The engine runs three motions at once. Capture the memory turns fifty-seven years of expertise into a queryable institutional brain. Win the proposal race uses that brain to draft qualifications, scopes, and references in hours, with a multi-model quality check before a scientist signs. Get cited and pursue makes MBC the firm AI engines and agency PMs name first, and watches the named-account solicitation calendar so no opportunity is missed. The brain on the left feeds the proposal engine in the center; AI-search authority fills the pursuit funnel on the right.'),
   spacer(40),
@@ -916,11 +1014,11 @@ docChildren.push(
   ),
 );
 
-// ---------- 14 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 15 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '14'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '15'),
   spacer(100),
-  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — AI-search authority, named-account pursuit intelligence, and a strategy workshop — and expands into the institutional-memory brain and the proposal engine only as the results prove out. The model below is built from public information and conservative assumptions, because MBC’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 17 replace them with real baselines.'),
+  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — AI-search authority, named-account pursuit intelligence, and a strategy workshop — and expands into the institutional-memory brain and the proposal engine only as the results prove out. The model below is built from public information and conservative assumptions, because MBC’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 18 replace them with real baselines.'),
   spacer(140),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
@@ -965,6 +1063,13 @@ docChildren.push(
   spacer(60),
   p('The ratio is measured against the entry program only — the easiest place to start. It does not count the larger gains the expansion build adds (the institutional-memory brain and the proposal engine), the succession and key-person risk it retires, the AI-search authority that compounds month over month, or the senior-scientist hours recovered from administrative work. Average first-year value per won engagement is illustrative and is replaced with MBC’s actual book in discovery. All figures are projected, not guaranteed.', { italics: true, size: 18 }),
   spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Visibility & Pursuit Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The 90-Day AI Visibility & Pursuit Pilot stands up MBC’s AI-search presence on the niche technical queries it should own and the named-account pursuit monitoring, and proves the lift before any larger build is discussed. It is the recurring entry services below (AI-search authority + named-account pursuit intelligence) plus the executive workshop — roughly $32,000 for Year 1.'),
+  calloutBox('The Pilot Bar — and Our Commitment', [
+    'Success metric: within 90 days, MBC is cited by at least one major AI assistant (ChatGPT, Perplexity, or Google AI) for a high-intent niche query (eelgrass survey/restoration, §316(b) entrainment study, or marine toxicity testing), AND the named-account pursuit monitor is live and delivering pre-pursuit dossiers against MBC’s target roster.',
+    'Our commitment: the entry program is month-to-month — no long lock-in, no obligation to continue if it doesn’t hit the metric by day 90. If the pilot has not moved the needle on the metric above, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+  ], CORE_ORANGE),
+  spacer(160),
   subHeader('Service Investment Map — Start Small, Expand as It Proves Out'),
   buildTable(
     [
@@ -977,7 +1082,7 @@ docChildren.push(
       ['My AI — AI Readiness + Executive Workshop (one-time)', 'A half-day session with Shane and the senior scientists: the institutional-memory and succession roadmap, proposal-velocity quick wins, and the "scientist signs" AI-governance boundary', { text: '—', align: AlignmentType.CENTER }, { text: '$5,000', align: AlignmentType.CENTER }],
       ['My SEO — Niche AI-Search Authority + Reputation', 'Own AI-search citations on eelgrass, §316(b), toxicity, and desalination queries; the thought-leadership cadence', { text: '$1,250', align: AlignmentType.CENTER }, { text: '$15,000', align: AlignmentType.CENTER }],
       ['My AI Lead Gen — Named-Account Pursuit (Starter)', 'Watch on-call solicitations, CIP/CEQA filings, and NPDES cycles across named agencies, utilities, ports, and primes; pre-pursuit dossiers', { text: '$1,000', align: AlignmentType.CENTER }, { text: '$12,000', align: AlignmentType.CENTER }],
-      [{ text: 'ENTRY PROGRAM — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
+      [{ text: 'THE 90-DAY AI VISIBILITY & PURSUIT PILOT — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
       ['My Dev — Institutional-Memory Brain + Proposal Engine (Phase 2 build)', 'The custom build — Weaviate/Obsidian institutional brain, AI SOQ/RFP/scope drafting, multi-model QC, and the buyer-side conversational layer (estimated; scoped at discovery)', { text: '—', align: AlignmentType.CENTER }, { text: '~$65,000', align: AlignmentType.CENTER }],
       ['My Dev — Managed App Services (Phase 2)', 'Hosting, monitoring, and iteration of the brain and proposal engine', { text: '$800', align: AlignmentType.CENTER }, { text: '$9,600', align: AlignmentType.CENTER }],
       ['My AI — Fractional AI Advisor (Phase 2)', 'Program leadership, AI-governance and the "scientist signs" boundary, model-performance and QC review', { text: '$2,000', align: AlignmentType.CENTER }, { text: '$24,000', align: AlignmentType.CENTER }],
@@ -996,9 +1101,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 IMPLEMENTATION ROADMAP ----------
+// ---------- 16 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '15'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '16'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 270-day cadence that mirrors the land-and-expand plan: start with the low-commitment entry — get cited and capture the named-account pipeline — then build the institutional-memory brain and the proposal engine, then add quality control, renewal intelligence, and scale. Real gains — AI-search citations, pursuit dossiers, an indexed knowledge base — are visible inside the first ninety days, before the larger build; the deeper engine is given realistic runway.'),
   spacer(200),
@@ -1031,14 +1136,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — QC + Onboarding + Renewal Intelligence', 'Operationalize multi-model QC on draft deliverables (scientist signs). Use the brain for next-generation onboarding. Add renewal intelligence — on-call cycles, performance milestones, agency-relationship triggers — so no renewal lapses unattended.'],
-      ['3.2 — Scale the Engine + ROI Review', 'Extend the proposal engine and brain firm-wide across service lines and the lake-management book. Deliver an ROI dashboard measured against the Section 17 baselines, and a plan for ongoing thought-leadership authority.'],
+      ['3.2 — Scale the Engine + ROI Review', 'Extend the proposal engine and brain firm-wide across service lines and the lake-management book. Deliver an ROI dashboard measured against the Section 18 baselines, and a plan for ongoing thought-leadership authority.'],
     ],
   ),
 );
 
-// ---------- 16 QUICK WINS ----------
+// ---------- 17 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '16'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '17'),
   spacer(100),
   p('Five actions MBC can take immediately — before any new Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -1063,11 +1168,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 17 QUESTIONS TO CALIBRATE ----------
+// ---------- 18 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '17'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '18'),
   spacer(100),
-  p('This strategy was built from public information. The numbers in Sections 14 and 15 are deliberately conservative estimates — a short discovery call replaces them with MBC’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This strategy was built from public information. The numbers in Sections 15 and 16 are deliberately conservative estimates — a short discovery call replaces them with MBC’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -1099,9 +1204,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 18 WHAT HAPPENS NEXT ----------
+// ---------- 19 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '18'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '19'),
+  spacer(100),
+  p('The honest answers to the questions MBC leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have people and tools that handle our website and proposals. Why add Technijian?', bold: true }, 'Keep them — this sits alongside what you do today, it does not replace your scientists or your process. We add the layer no general marketing help provides: AI-search authority on your niche queries, the institutional-memory brain, and the AI proposal engine drawing on your own fifty-seven-year history. We run under your named-account strategy, not over it.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this plan starts with simple, proven automations that pay back fast — getting cited and drafting proposals from your own record — not autonomous "agents" doing the science. We use the simplest tool that works, measure it, and only expand what earns its place. The scientist still signs every determination.'],
+      [{ text: 'Is our data — reports, toxicity records, client project files — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything client-facing or regulatory, led by a CISSP-certified team. Data protection is also the point of the free Nexus Assess in the Quick Wins — your institutional data is your single most valuable asset.'],
+      [{ text: 'We’re a lean senior team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your senior scientists back hours, not add work. Technijian runs the build and the cadence; your involvement is a short strategy session plus structured debriefs and reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a fixed-scope 90-day pilot with a defined success metric (Section 15), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it. You carry the upside, not the risk.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $32K for Year 1 — AI-search authority, named-account pursuit intelligence, and the strategy workshop — at published or quote-confirmed rates, with no large up-front build. The full engine (the institutional-memory brain and proposal engine) is profiled in Section 15, but only as the later expansion once the entry proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 20 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '20'),
   spacer(100),
   p('MBC already has the hard things: fifty-seven years of field-defining science, a founder still on staff, a senior bench whose depth no competitor in the niche can match, an in-house toxicity laboratory, and a reputation that wins work. What it has not yet done is capture that expertise into a durable asset, and put an AI growth and integration layer underneath the proposals and pursuits that turn reputation into awards. That is where this program starts.'),
   p('The opportunity is concrete: capture the institutional memory before it retires, win the proposal race by drafting qualifications and scopes from the firm’s own history in hours, and get cited and pursue so MBC is the firm agency PMs and AI engines name first. A focused, account-based program does all three — and it stays firmly on the right side of the boundary that matters to a science-first firm: AI serves, the scientist decides.'),
@@ -1109,7 +1234,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 17 questions and confirm program scope — and, since this began as a conversation between Vistage members, to talk candidly about the succession and scaling questions underneath it.',
+      'Step 1: A 30-minute discovery call to answer the Section 18 questions and confirm program scope — and, since this began as a conversation between Vistage members, to talk candidly about the succession and scaling questions underneath it.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within five business days.',
       'Step 3: Phase 1 kickoff — AI-search authority, named-account pursuit intelligence, the strategy workshop, and a free Nexus Assess — live inside 30 days of signature, with no large build required to start.',
     ],
@@ -1132,9 +1257,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 19 ABOUT TECHNIJIAN ----------
+// ---------- 21 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '19'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '21'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help right-sized, expert organizations compete at scale — with security and compliance built in, not bolted on. For MBC, that means capturing fifty-seven years of institutional knowledge, accelerating the proposals that win work, and earning the AI-search authority a field-defining firm deserves.'),
   spacer(140),
@@ -1172,6 +1297,7 @@ docChildren.push(
   p('4. Competitors — Tenera Environmental (since 1975; §316(b), eelgrass), Merkel & Associates (eelgrass mitigation, e.g., Pier 300), Miller Marine Science & Consulting (intake/outfall, NPDES), CSA Ocean Sciences (since 1970), Dudek, Environmental Science Associates (founded 1969), Anchor QEA, Chambers Group, and the global generalists AECOM, ICF, and Stantec.', { size: 20, spaceAfter: 100 }),
   p('5. Regulatory context — CEQA/NEPA; Clean Water Act §316(a)/(b); EPA whole-effluent toxicity (WET) and NPDES; Coastal Commission, USACE §404, and RWQCB §401 permitting; the California Eelgrass Mitigation Policy (CEMP) and marine-protected-area framework; QBS (federal Brooks Act / CA Mini-Brooks Act, Gov. Code 4525–4529.5).', { size: 20, spaceAfter: 100 }),
   p('6. Technijian — proven builds: Enterprise Knowledge & Memory (Weaviate + Obsidian), AI Document Intelligence (FINRA), ScamShield LLM Council, Multi-Agent SEO & Answer-Engine, AI-Native SDLC v7.0. Services: My Dev, My SEO, My AI Lead Gen, My AI, My Security. My SEO uses published tiers; My AI and My Dev figures are estimated, confirmed at quote.', { size: 20, spaceAfter: 100 }),
+  p('7. AI literacy & responsible-AI frameworks (Section 13) — MIT Sloan Management Review (AI literacy: "what AI can do," not how to build it); Anthropic, "Building Effective Agents" (the automation/workflow vs. agent distinction); a widely-used five-stage AI maturity model, consistent with Gartner and Google Cloud frameworks (the Foundational→Transformational ladder concept); U.S. NIST AI Risk Management Framework, Govern/Map/Measure/Manage (the responsible-AI controls for the three risks). Peer "directions of travel" are representative industry examples, not Technijian client guarantees.', { size: 20, spaceAfter: 100 }),
 );
 
 // =====================================================================

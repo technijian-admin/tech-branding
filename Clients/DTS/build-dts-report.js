@@ -73,10 +73,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -371,7 +374,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -398,7 +400,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: this blueprint was built from public information. DisruptiX\'s internal numbers — current named-client roster, placement volume by search type, average first-year value of a won account, average contract markup, KeyMatch architecture specifics, candidate pool size — were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: this blueprint was built from public information. DisruptiX\'s internal numbers — current named-client roster, placement volume by search type, average first-year value of a won account, average contract markup, KeyMatch architecture specifics, candidate pool size — were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 HOW A BOUTIQUE STAFFING FIRM WINS ----------
@@ -653,6 +655,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a SoCal hiring authority asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who is the best CFO and Controller recruiter in Orange County?"', [
+    'TODAY — the AI assistant answers with whichever firms have the strongest content and third-party signals it can read: it names the national giants (Robert Half, Vaco) and one or two long-established OC search firms, and does NOT mention DisruptiX — even though DisruptiX has the CPA-founder credibility, the KeyMatch portal, and a 48-to-72-hour contract-placement velocity that sits ahead of category average. DisruptiX is invisible at the exact moment the buyer is forming a shortlist.',
+    'AFTER AEO — the same query returns DisruptiX as a cited option ("DisruptiX Talent Solutions is a boutique Costa Mesa accounting and finance search firm led by a CPA and former Vaco OC managing partner, with a transparency-driven KeyMatch client portal…"), with the authority content, founder LinkedIn cadence, and ClearlyRated reviews as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is captured as the AEO baseline in Quick Win 1 and the Phase 1 standup.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter DisruptiX is not cited, the assistants learn to answer "best CFO recruiter Orange County" with someone else — and that default, once set in the retrieval and training data, is harder and more expensive to dislodge than to claim now. The same is true of the trigger queue: every SoCal CFO transition a faster competitor catches first is a search that never reaches DisruptiX, so it never even appears as a lost deal. The cost of waiting is not zero — it is a competitor becoming the default answer, and the missed-trigger placements that never show up in any report.'),
 );
 
 // ---------- 08 THE SILENT MARGIN LEAK ----------
@@ -746,16 +759,101 @@ docChildren.push(
     'For DisruptiX it is the SoCal mid-market account-intelligence engine: track the PE-portfolio companies, the public-company finance teams, the VC-backed scale-ups, and the named operating partners; watch for triggers (CFO transitions, IPO filings, PE acquisitions, audit-firm changes); and deliver pre-meeting account dossiers the BD team can act on the day a finance seat opens.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across content, matching, and account intelligence: won\'t the token bill be enormous for a boutique? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, compliance-critical answers, the deepest reasoning on a candidate-against-JD match', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — job specs, candidate one-pagers, reference summaries, authority content, outreach personalization', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, indexing and tagging thousands of resumes and account records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: DisruptiX pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single candidate one-pager is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final accuracy-and-tone pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms DisruptiX’s Growth Engine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for DisruptiX Talent Leadership', CORE_BLUE, '10'),
+  spacer(100),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where DisruptiX sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Jen, Frankie, Brad, Alex, and the team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn\'t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this job spec from the intake-call transcript." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the SoCal mid-market for CFO transitions and flag what the BD team should act on." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. DisruptiX starts with simple automations that pay off in the first 90 days — AI-drafted job specs, candidate one-pagers, reference summaries — and adds autonomous account-intelligence agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where DisruptiX Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run companies — including DisruptiX — sit at the first or second rung of the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'DisruptiX Today', weight: 1.6, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent recruiter operations', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'A proprietary technology layer exists (the KeyMatch portal) but AI is not yet woven into matching, screening, or growth', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — matching, job specs, account intelligence — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and recruiter operations with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('DisruptiX is further along than most: the KeyMatch portal already puts it at the Emerging stage. This report is the plan to reach Operational — AI working in the growth engine and inside the recruiter workflow — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a hiring-adjacent organization like DisruptiX, three risks matter most, and each has a concrete control (this is the same boundary named in Section 03):'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client- or candidate-facing — AI drafts the spec, brief, or summary; the recruiter approves'],
+      ['Data leakage', 'Sensitive candidate PII pasted into public tools can escape', 'Private, governed AI deployments — resumes, comp notes, and reference details never touch a public model; CCPA/CPRA-ready by design'],
+      ['Bias & compliance', 'Algorithmic screening can create disparate-impact and audit gaps', 'EEOC-defensible, NYC LL 144-ready architecture: bias-audit-ready, source-cited, recruiter-in-the-loop; the AI never makes the hiring decision'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing', { color: CORE_BLUE }),
+  bullet('Professional-services recruiting: boutique search firms are using AI to draft job specs and candidate briefs from intake calls and resumes, recovering recruiter hours for the relationship work that closes placements.'),
+  bullet('Talent and staffing: firms are using AI-search optimization to become the cited answer when a hiring authority asks an AI tool "best CFO recruiter in my market" — capturing procurement demand competitors never see.'),
+  bullet('Regulated B2B services: document-heavy firms are turning multi-day proposal and engagement-letter assembly into a minutes-long, audit-ready draft — responding to more opportunities with the same team.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; DisruptiX\'s own numbers would be confirmed in discovery. Technijian\'s specific, measured results from prior builds appear in Section 09 (Capability Proof) and the ROI model in Section 12.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A DisruptiX Recruiter', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A recruiter takes an intake call, hand-writes the job spec, searches the candidate pool from memory and LinkedIn, reads each resume to build a brief, and writes up three reference calls by hand — then re-keys the same details into KeyMatch and the engagement letter. The hard mandates wait while the easy ones get worked first.',
+    'WITH AI: The intake call becomes a drafted job spec in minutes; AI matching surfaces the best-fit profiles from the indexed pool with an audit-logged rationale; resumes become recruiter one-pagers and three reference calls become one synthesized brief — all reviewed and approved by the recruiter. The expertise is captured in a system, so the same standard holds across the team and survives a new hire or an expansion to LA and the Inland Empire.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but DisruptiX assembles, secures, and governs everything — and owns the three risks above (including the EEOC and NYC LL 144 exposure) alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and hiring-compliance governance for a boutique'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security, and the AI built inside the hiring-compliance boundary from day one', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms DisruptiX’s Growth Engine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get found and cited (own AI-search authority on SoCal CFO and Controller procurement queries, with a founder LinkedIn cadence on the topics that compound), match faster and better (extend KeyMatch with AI matching, AI job-spec generation, AI candidate one-pagers, and AI pre-screen and reference summarization), and keep and grow (sales-pipeline memory, consultant-care intelligence between placements, account-renewal triggers, and recruiter productivity that recovers eight to twelve hours per recruiter per week). The first fills the top of the named-account funnel, the second is the matching and screening core, and the third protects and scales the placement count.'),
   spacer(160),
   diagramImage(DIAGRAM_ARCH_BUF, 'The DisruptiX AI Growth Engine', 600, 1.607),
-  diagramCaption('Figure 10.0 — The Engine: Get Found & Cited, Match Faster & Better, and Keep & Grow'),
+  diagramCaption('Figure 11.0 — The Engine: Get Found & Cited, Match Faster & Better, and Keep & Grow'),
   spacer(160),
   buildTable(
     [
@@ -792,11 +890,20 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — AI-search authority, named-account intelligence, and a strategy workshop — and expands into the KeyMatch v2 AI matching layer, the recruiter productivity tools, and the fractional AI advisor only as the results prove out. The model below is built from public information and conservative assumptions, because DisruptiX’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 14 replace them with real baselines.'),
+  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — AI-search authority, named-account intelligence, and a strategy workshop — and expands into the KeyMatch v2 AI matching layer, the recruiter productivity tools, and the fractional AI advisor only as the results prove out. The model below is built from public information and conservative assumptions, because DisruptiX’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 15 replace them with real baselines.'),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Industry surveys consistently find that a large majority of companies now use AI in some form, yet only a minority report a clear bottom-line impact; the difference is measurement discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement (recruiter hours recovered, time-to-match), then financial benefit against total cost — and if the pilot does not clear its cost at the gate, we stop and re-scope. DisruptiX carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
   spacer(140),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
@@ -817,8 +924,8 @@ docChildren.push(
     ],
   ),
   spacer(160),
-  subHeader('Year-1 ROI Model — The Entry Program (Estimated, Conservative)'),
-  p('Value is modeled on the two highest-conviction levers — additional client searches won and additional contract-consulting placements completed at the same close rate — not on rate changes, because rate-setting stays out of scope. The entry program alone (AI-search authority, named-account intelligence, and the strategy workshop) drives the lift below; the KeyMatch v2 expansion build and the fractional AI advisor push both levers further.', { size: 20 }),
+  subHeader('Year-1 ROI Model — The 90-Day AI Lead-Gen Pilot (Estimated, Conservative)'),
+  p('Start with one clearly-scoped, fixed-price entry — the 90-Day AI Lead-Gen Pilot — not an open-ended engagement. It stands up DisruptiX\'s AI-search authority and the named-account intelligence and proves the lift before any larger build is discussed. Value is modeled on the two highest-conviction levers — additional client searches won and additional contract-consulting placements completed at the same close rate — not on rate changes, because rate-setting stays out of scope. The KeyMatch v2 expansion build and the fractional AI advisor push both levers further.', { size: 20 }),
   buildTable(
     [
       { label: 'Model Input', weight: 3.6 },
@@ -854,7 +961,7 @@ docChildren.push(
       ['My AI — AI Readiness + Executive Workshop (one-time)', 'A one-day session with Jen, Frankie, Brad, and Alex — recruiter workflow tour, KeyMatch v2 scoping, compliance posture review (EEOC, NYC LL 144, SB 7)', { text: '—', align: AlignmentType.CENTER }, { text: '$5,000', align: AlignmentType.CENTER }],
       ['My SEO — Tier 4: Website + SEO + Blog Content + Video', 'Own AI-search citations on SoCal CFO and Controller queries; founder LinkedIn cadence on transparency-as-tech and CFO comp 2026', { text: '$1,250', align: AlignmentType.CENTER }, { text: '$15,000', align: AlignmentType.CENTER }],
       ['My AI Lead Gen — Named-Account ABM (Starter)', 'Track SoCal PE portcos, public-company finance teams, VC-backed scale-ups; trigger monitoring; per-account dossiers', { text: '$1,000', align: AlignmentType.CENTER }, { text: '$12,000', align: AlignmentType.CENTER }],
-      [{ text: 'ENTRY PROGRAM — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
+      [{ text: 'THE 90-DAY AI LEAD-GEN PILOT — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
       ['My Dev — KeyMatch v2 AI Layer (Phase 2 build)', 'AI matching engine + AI job-spec generator + AI candidate one-pager + AI pre-screen summarizer + AI reference-check summarizer + sales-pipeline memory layer', { text: '—', align: AlignmentType.CENTER }, { text: '$48,000', align: AlignmentType.CENTER }],
       ['My Dev — Managed App Services (Phase 2)', 'Hosting, monitoring, audit-log review, and iteration of the KeyMatch v2 layer', { text: '$800', align: AlignmentType.CENTER }, { text: '$9,600', align: AlignmentType.CENTER }],
       ['My AI — Fractional AI Advisor (Phase 2)', 'Program leadership, EEOC and NYC LL 144 governance, model performance review, recruiter team training', { text: '$2,000', align: AlignmentType.CENTER }, { text: '$24,000', align: AlignmentType.CENTER }],
@@ -871,16 +978,25 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, DisruptiX is cited by at least one major AI assistant (ChatGPT, Perplexity, or Google AI) for a high-intent SoCal recruiter query — for example "best CFO recruiter Orange County" or "fractional Controller Costa Mesa" — AND the named-account intelligence is live, delivering pre-meeting dossiers on the priority SoCal trigger signals.',
+      'Our commitment: the entry program is month-to-month after the initial term — no long lock-in, no obligation to continue if it doesn\'t hit the metric by day 90. If the pilot has not moved the needle on that metric, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    DARK_CHARCOAL
+  ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 270-day cadence that mirrors the land-and-expand plan: start with the low-commitment entry — get cited and stand up the named-account intelligence — then add the KeyMatch v2 AI matching layer and the recruiter productivity tools, then scale and explore productizing. Real gains — AI-search citations, named-account dossiers, an indexed candidate pool — are visible inside the first ninety days, before the larger build; the deeper engine and the SaaS productization are given realistic runway.'),
   spacer(200),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'DisruptiX 90-180-270 Day Roadmap', 600, 2.296),
-  diagramCaption('Figure 12.0 — The DisruptiX Growth Program: 90 / 180 / 270-Day Roadmap'),
+  diagramCaption('Figure 13.0 — The DisruptiX Growth Program: 90 / 180 / 270-Day Roadmap'),
   spacer(160),
   subHeader('Phase 1 — Foundation & Quick Wins (Days 1–90)', { color: CORE_BLUE }),
   p('The low-commitment entry — get cited on SoCal recruiter queries and stand up the named-account intelligence, with quick, visible wins and no large build to begin.'),
@@ -910,14 +1026,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Sales-Pipeline Memory + Consultant-Care Engine', 'Index every prior search, debrief, candidate preference, and client comp note in the Weaviate + Obsidian memory layer. Stand up the consultant-care engine: between-placement check-ins, opportunity matching, upskilling cues. Add account-renewal intelligence with a per-account dashboard.'],
-      ['3.2 — Productize KeyMatch (SCALE) + Functional Expansion', 'Begin discovery with three to five peer boutique accounting and finance firms outside DisruptiX’s competitive territory on KeyMatch as a sellable SaaS. Validate cross-vertical reuse with a first HR or Marketing senior search. Deliver an ROI dashboard measured against the Section 14 baselines.'],
+      ['3.2 — Productize KeyMatch (SCALE) + Functional Expansion', 'Begin discovery with three to five peer boutique accounting and finance firms outside DisruptiX’s competitive territory on KeyMatch as a sellable SaaS. Validate cross-vertical reuse with a first HR or Marketing senior search. Deliver an ROI dashboard measured against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Six actions DisruptiX can take immediately — before any new Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -946,11 +1062,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 15 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with DisruptiX’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with DisruptiX’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -985,9 +1101,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions DisruptiX leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have a marketing approach — and Jen publishes herself. Why add Technijian?', bold: true }, 'Keep what works — the founder\'s voice is the firm\'s best asset, and the plan amplifies it rather than replacing it. We add the layer a boutique cannot run by hand: AI-search optimization (AEO) so DisruptiX gets cited on SoCal CFO and Controller queries, the named-account intelligence, and the AI matching and recruiter productivity layer on KeyMatch. We run alongside Jen\'s cadence, not over it.'],
+      [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — AI-drafted job specs, candidate one-pagers, reference summaries — not autonomous "agents" making hiring calls. We use the simplest tool that works, measure it, and only expand what earns its place. The KeyMatch v2 matching layer comes second, after the entry proves the lift.'],
+      [{ text: 'Is our data — candidate resumes, comp notes, client rosters — safe?', bold: true }, 'Yes. Sensitive candidate PII never touches a public AI model; we deploy private, governed systems with human review on anything client- or candidate-facing, CCPA/CPRA-ready by design and led by a CISSP-certified team. The AI matching layer is built EEOC-defensible and NYC LL 144-ready from day one, as Section 03 and Section 10 detail.'],
+      [{ text: 'We\'re a one-to-ten-person team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give the team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short workshop, then reviewing what the AI drafts before it goes out. The recruiter productivity layer is designed to recover eight to twelve hours per recruiter per week — the bandwidth ceiling described in Section 08.'],
+      [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry program is a focused, low-commitment 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle on the metric by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $32,000 for Year 1 at published rates — AI-search authority, named-account intelligence, and the strategy workshop — with no large build to begin. The full engine (the KeyMatch v2 expansion) is profiled in Section 12, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('DisruptiX already has the hard things: a CPA founder with twenty-five years of SoCal accounting and finance market relationships, the KeyMatch portal, the transparency tagline that signals exactly the right architectural posture for the EEOC / NYC LL 144 / SB 7 world, and a 48-to-72-hour contract-placement velocity. What it has not yet done is add the AI matching and recruiter-productivity layer that turns a boutique into a national-grade research bench — and that is where this program starts.'),
   p('The opportunity is concrete: get found and cited as the SoCal accounting and finance recruiter procurement researchers ask about first, match faster and better by extending KeyMatch with an AI matching layer the giants cannot legally re-platform around inside two years, and keep and grow by holding the supply side warm and watching the renewal triggers. A focused, hybrid program does all three — and it stays inside the EEOC, NYC LL 144, and antitrust boundaries that decide which AI is even safe to deploy in this category.'),
@@ -995,7 +1131,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — AEO authority, named-account ABM intelligence, and the strategy workshop — live inside 30 days of signature, with no large build required to start.',
     ],
@@ -1018,9 +1154,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed-services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help right-sized operators compete at scale — with security and compliance built in, not bolted on.'),
   spacer(140),

@@ -67,6 +67,59 @@ Before writing a single section, answer these questions. The answers determine s
 
 **If no source document exists**: run cold. Use web research to populate the business-context sections, then layer the Technijian sections on top.
 
+> **⚠️ DIGITAL AUDIT DATA — NEVER TRUST COLD WEB SCRAPES FOR THESE METRICS (AXRT lesson, 2026-06-09):**
+> Jill Goodwin (CEO, Axis Research & Technologies) responded to the blueprint identifying three wrong data points in Section 08 (Brand & Digital Presence Audit):
+> - LinkedIn followers: report said **43** → actual **2,027**
+> - Google Business Profile: report said "Not found for any location" → they had **GBP for all 4 locations**, 57 five-star reviews in Irvine alone
+> - Blog/SEO: report said "no blog, no content strategy" → active blog + 10-year marketing partner managing SEO
+>
+> **Root cause:** LinkedIn follower counts, Google review counts, and GBP presence are routinely stale or wrong in cold web research (cached data, wrong entity matching, third-party aggregator lag). These are also the numbers a client WILL check and WILL call out.
+>
+> **Mandatory discipline for the Brand & Digital Presence Audit section:**
+> 1. **Never assert a follower count or review count as fact** in the published report without cross-referencing at least two independent sources (e.g., direct LinkedIn page visit + SimilarWeb/Apollo). If you cannot verify, write "approximately X" or "reported at X" with the caveat noted.
+> 2. **Do NOT say "Google Business Profile not found"** unless you have personally searched `site:google.com/maps "[company name]"` AND tried the business name + city in Google Maps. GBP is frequently mis-indexed by third-party tools.
+> 3. **Do NOT say "no blog / no content strategy"** unless you have scrolled the actual website blog/news section and found it empty. Many sites have blog content not indexed by standard research tools.
+> 4. **Frame the audit as an enhancement opportunity, not a failure audit.** When a client has an existing marketing partner, the pitch is NOT "you have no digital presence" but "your traditional SEO is not translating into AI search (GEO/AEO) — that is the new frontier your current partner hasn't built capability in yet." This keeps the conversation collaborative rather than antagonistic.
+
+### Gate 0: Live Digital-Presence Verification (run BEFORE writing Section 08 — MANDATORY)
+
+Use the Playwright MCP browser (or WebFetch where the page is static) to capture evidence for every claim that will appear in the digital audit table. No claim enters the table without a verification row below.
+
+| Claim to verify | Method | Evidence required |
+|---|---|---|
+| LinkedIn follower count | `browser_navigate` → `linkedin.com/company/<slug>` → screenshot. If login-walled, try Google cache / Bing preview; if still blocked, label the number "approximate, unverified" in the report | Screenshot or "UNVERIFIED" label |
+| Google Business Profile + review counts | `browser_navigate` → `google.com/maps/search/<company>+<city>` for EVERY location | Screenshot per location showing listing + star count, or two failed direct searches before claiming absence |
+| Blog / content activity | `browser_navigate` → site `/blog`, `/news`, `/resources`, `/insights` paths + check sitemap.xml for post URLs with dates | List of ≥3 recent post titles+dates, or confirmation all paths 404/empty |
+| Online booking | Click the site's actual CTA buttons — follow "Schedule"/"Book" links to see if a real scheduling tool loads | Note the tool (Calendly/custom/none) |
+| Product pages | Navigate to the product name directly + site search | URL or confirmed absence |
+| Careers/jobs (workflow intel) | Site careers page + `linkedin.com/company/<slug>/jobs` + Indeed search | Job titles list — reveals internal workflows and team structure |
+
+Record results in `_research.md` under a `## Verified Digital Presence (date)` heading with the capture date. Numbers go stale — re-verify if more than ~2 weeks pass between research and send.
+
+**Quick verification snippet (Playwright MCP not available → use Python):**
+```python
+# py -3.12 verify_digital.py — screenshots LinkedIn, Maps, blog for the research file
+from playwright.sync_api import sync_playwright
+TARGETS = {
+    "linkedin":  "https://www.linkedin.com/company/<slug>/",
+    "maps_loc1": "https://www.google.com/maps/search/<company>+<city1>",
+    "blog":      "https://<domain>/blog",
+}
+with sync_playwright() as p:
+    b = p.chromium.launch()
+    pg = b.new_context(device_scale_factor=2).new_page()
+    for name, url in TARGETS.items():
+        try:
+            pg.goto(url, timeout=20000, wait_until="domcontentloaded")
+            pg.wait_for_timeout(2500)
+            pg.screenshot(path=f"verify_{name}.png", full_page=False)
+            print(name, "->", pg.title())
+        except Exception as e:
+            print(name, "FAILED", e)
+    b.close()
+# Then OPEN each verify_*.png with the Read tool and read the actual numbers off the image.
+```
+
 ---
 
 ## Phase 1: Research Synthesis
@@ -99,6 +152,7 @@ This file is the foundation. Sections are written from it, not invented during w
 | The Customer (Personas) | Research-driven personas — as many as the data supports; see persona guidance below |
 | Competitive Landscape | Named, researched competitors — as many as exist; see competitor guidance below |
 | Technijian Capability Proof | Map proven Technijian builds to THIS client's specific use cases |
+| Understanding AI — Field Guide for [Client] Leadership | The education layer: what AI is, where the client sits on the maturity ladder, the 3 risks to manage, what peers do, why a partner. See Phase 5c. |
 | How AI Transforms [Client]'s Growth Engine | Inbound / Outbound / Internal AI; AI Tools matrix citing Technijian services |
 | Business Impact & Service Investment | KPI lift, ROI model, Service Investment Map with real pricing |
 | Implementation Roadmap | Milestones paced to client complexity — not always 90/180/365 |
@@ -264,6 +318,72 @@ Each build = one callout box:
 - Row 2: "How This Applies to [Client]" — the specific application for this client
 - Left accent bar in Core Blue
 
+### Phase 5b: The multi-model cost discipline — answer "won't AI cost a fortune?" (always address; Ravi, 2026-06-10)
+
+A real, recurring buyer concern: *"if you run AI on everything — content, lead gen, credit, RFPs — won't the token bill be enormous?"* The honest, differentiating answer is that **Technijian does not wire every task to one expensive model. It runs a routed, multi-model platform — roughly seven models across three vendors and three capability tiers — and sends each sub-task to the cheapest model that can do it well.** This is the single biggest reason a partner who has *built* the routing beats a client (or a one-model agency) wiring everything to a single premium model. Put a version of this in the report — in the Capability Proof, the Investment section, or the FAQ's "what does it cost" answer.
+
+**The seven-model spread (frame as tiers, not exact versions — versions go stale):**
+
+| Tier | Representative models | Used for |
+|---|---|---|
+| **Frontier (most capable, most expensive)** | Claude Opus · GPT-5-class · Gemini Ultra/Pro | The ~5–10% of work that needs deep judgment: final brand-voice pass, compliance-critical answers, the hardest reasoning |
+| **Workhorse (balanced)** | Claude Sonnet · Gemini Flash/Pro | The bulk of reasoning and drafting: blog drafts, outreach personalization, summarization, scoring borderline cases |
+| **Lightweight (fast, cheapest)** | Claude Haiku · GPT-4o-mini | High-volume mechanical work: classification, extraction, enrichment, tagging thousands of records |
+
+**The routing logic — say it plainly:** every job is decomposed; cheap models do the volume, mid models do the reasoning, and the frontier model is reserved for the small slice that genuinely needs it. Where quality is non-negotiable, an **LLM-council pattern** (3 models peer-review the same output, ScamShield-style) catches what any single model would miss. Result: clients pay frontier-model prices only for the fraction of work that warrants them — typically a **~60–80% lower run cost than routing everything to one premium model**, with no quality loss on the work that matters.
+
+**Give 2–3 concrete examples (adapt to the client's actual workflows):**
+- *Content factory:* a lightweight model drafts from the brief, a workhorse fact-checks and tightens, a frontier model does the final brand-voice and accuracy pass — instead of one premium model doing all three at ~3× the cost (this is the "~70% less content-production time/cost" claim on the SEO platform).
+- *Lead gen:* thousands of prospects are enriched and ICP-scored on the cheapest model; only the borderline hot/warm calls escalate to a reasoning model; outreach drafts come from a workhorse. You pay pennies on the volume and dollars only on the judgment.
+- *Document intelligence (RFPs / credit packets):* extraction runs on a lightweight model, the actual answer drafting on a workhorse, and a frontier model + council review on the compliance-critical sections — the same engine behind "RFPs: days → minutes, 60–80% less manual review."
+
+**Why it converts:** it defuses the cost objection, demonstrates real AI-engineering depth (not just "we use ChatGPT"), and reinforces the "use the simplest tool that works" principle from the education layer (Phase 5c). It also pairs with the responsible-AI story — private, governed deployments — so cheap models never see sensitive data they shouldn't. Keep numbers as ranges ("~60–80% lower run cost," "typically") and label them as engineering norms, not a client-specific guarantee.
+
+---
+
+## Phase 5c: Client AI Education Layer — "Understanding AI" section (always include)
+
+**Encoded after AXRT + SC Fuels, 2026-06-10.** Ravi's direction: the reports were strong on the *sell* but light on the *educate*. For the buyers these blueprints target — an ops-minded CEO at a bioskills lab, a sales director at a 95-year-old fuel distributor — the reflex is *"is this real or is this hype?"* A vendor-neutral education section converts that skepticism into trust, and **almost no competitor does it.** Every element below is anchored to a **citable, third-party framework** (NIST, Gartner, MIT, Anthropic, McKinsey) — that is what makes it educational rather than another pitch. Place this section AFTER Capability Proof and BEFORE the AI Growth Engine: prove you can build it, teach them how to think about it, then show the engine.
+
+Build it as one cohesive section, **"Understanding AI — A Field Guide for [Client] Leadership"**, with these sub-parts. Keep it plain-English and short — this educates a non-technical executive, so no jargon without a one-line definition.
+
+**1. What AI actually is (and isn't).** Open with the MIT Sloan framing — *you need to know what AI can and can't do, not how to build it* — to disarm a non-technical owner. Then the single most useful distinction, from Anthropic's "Building Effective Agents": **automation/workflows** (AI follows a predefined path — predictable, low-risk; e.g. "draft this from these inputs") vs **agents** (AI decides the steps itself — flexible, needs oversight; e.g. "monitor the pipeline and act"). State the operating principle: *use the simplest thing that works* — we start the client with simple automations that pay off fast and add agents only where they earn it. This directly justifies the maturity-laddered roadmap.
+
+**2. Where [Client] sits today — the AI maturity ladder.** A small table using a 5-stage model (Gartner-style: **Foundational → Emerging → Operational → Scaled → Transformational**, or the simpler **Assisted → Augmented → Autonomous**), with the client honestly marked at stage 1–2 and the next two rungs named. Reassure: most established firms in their industry sit here; the leaders are one or two rungs up and the gap closes in months, not years. This reframes the engagement as *"move you up two rungs,"* not *"buy a product,"* and creates urgency without insult.
+
+**3. Adopting AI responsibly — the 3 risks every leader must manage.** Anchor to the **NIST AI Risk Management Framework** (its four functions — **Govern, Map, Measure, Manage** — give a CEO a memorable, vendor-neutral mental model). Then the three plain risks every owner must manage, each paired with how Technijian handles it:
+   - **Hallucination** (AI can state a confident wrong answer) → human-in-the-loop on anything customer-facing or compliance-bound.
+   - **Data leakage** → never put PHI / customer / proprietary data into public AI tools; use private, governed deployments.
+   - **Compliance & accountability** → inventory every AI tool (owner, vendor, data source) — straight from the RMF *Govern* function.
+   This is a **trust differentiator** and lands hardest for regulated clients (HIPAA / tissue chain-of-custody; LCFS/RIN; financial). Tie to Ravi's CISSP / security-first method.
+
+**4. What peers are already doing.** A short sidebar — 3–4 anonymized industry analogues with real before/after numbers. Source from a credible public use-case library (e.g. the MIT-licensed / CC-BY `ai-use-cases-library`, attribution-safe) and adapt to the client's industry. Creates concreteness and healthy FOMO for buyers who think "nobody in our industry does this." Keep claims sourced — do not invent peer outcomes.
+
+**5. A day in the life — before and after.** One page (or a two-column callout) following ONE real persona from the report (a lab coordinator; a fuel rep) through their day with vs. without AI. Visceral and memorable where tables aren't. Pull the tasks straight from the operational-efficiency section (Phase 6b) so the two reinforce.
+
+**6. Why a partner — vs. hiring or DIY tools.** A short three-way comparison: **DIY tools** (cheap, but you assemble and govern it yourself — and own the 3 risks); **hire** (a capable AI hire is $180K+/yr, scarce, and can't cover strategy + build + security + governance alone); **partner / Technijian** (strategy + build + security + governance at fractional cost, with proven builds and CISSP-led security). This is the "educate on Technijian" beat — it positions the firm without a hard sell.
+
+**7. ROI as a managed investment — fold into the Business Impact section (Phase 7), not here.** Use McKinsey's stage-gate framing: run AI as a managed investment, track **adoption → operational improvement → financial benefit vs total cost of ownership → stop/scale decision**, and state plainly: *"if a pilot doesn't clear its cost at the gate, we stop."* Anchor with the credibility stat (≈88% of companies use AI, only ≈39% see profit impact — the difference is disciplined measurement, not more spend). This de-risks the ask and matches the truthful-pricing / value-at-stake convention.
+
+### Citable sources (use these names; everything else is phrasing-only)
+
+| Element | Citable anchor |
+|---|---|
+| What AI is / literacy | MIT Sloan ("literacy, not expertise"); WEF AI-literacy pillars |
+| Workflow vs agent | Anthropic, "Building Effective Agents" |
+| Maturity ladder | Gartner AI Maturity Model (Foundational→Transformational); Google Cloud AI Adoption Framework |
+| Responsible AI | NIST AI Risk Management Framework (Govern/Map/Measure/Manage); ISO/IEC 42001 (where it leads at scale) |
+| Peer use cases | `ai-use-cases-library` (MIT + CC-BY-4.0, attribution required) — examples only |
+| ROI discipline | McKinsey QuantumBlack five-layer AI measurement framework |
+
+**Do NOT cite** vendor blogs (appinventiv, hyscaler, etc.) by name — use them for plain-language phrasing only. Only the institutional/standards sources above go in the report's text or appendix.
+
+### Build notes
+
+- This is client-agnostic content with client-specific examples — write it once, swap the industry analogues, the persona in the day-in-the-life, and the maturity-ladder "you are here" marker.
+- Keep it to ~2–3 pages. It is a primer, not a textbook. If it runs long, the day-in-the-life (#5) and peer sidebar (#4) are the first to trim.
+- Reuse existing helpers (`calloutBox`/`callout`, `buildTable`/`data_table`, `subHeader`/`h2`). No new diagram required, though a simple maturity-ladder bar is a nice-to-have if page budget allows.
+
 ---
 
 ## Phase 6: AI Growth Engine
@@ -287,6 +407,34 @@ Always 4 columns: Tool / Use Case / Impact Metric / **Technijian Service**
 The 4th column names the specific My AI / My SEO / My Dev offering. No abstract "AI for X" framing — name the product.
 
 Rows = as many AI tools as are relevant to this client. Don't pad; don't cut tools that genuinely apply.
+
+### Phase 6b: The Operational-Efficiency Front — always include a dedicated section (AXRT lesson, 2026-06-09)
+
+The two-front thesis (Growth + Integration) is only real if the report *has* an Integration section. A growth-only blueprint reads as "spend money to get more customers" — the efficiency front reads as "save money and de-risk what you already do," which is often the easier yes and lands especially well with an **operations-minded CEO** (Jill Goodwin at AXRT had been COO). Build a standalone section — typically titled *"Inside the [Business] — AI-Powered Operational Efficiency"* — placed right after the AI Growth Engine. Ravi's direction (2026-06-09): *"figure out internal workflows the company might have and using the Technijian case studies explain better how the AI consulting could help reduce costs, improve efficiency."*
+
+**How to discover internal workflows without insider access — reverse-engineer from the public site (this is the durable technique):**
+
+| Source on the client's own site | Workflow it reveals |
+|---|---|
+| Contact / booking form dropdowns ("I'm interested in… Booking a Lab / Event / Perfusion") | The actual service intake categories and how requests are triaged |
+| Multiple phone numbers / per-location contact lines | Whether ops are centralized or siloed per site (a manual-coordination tell) |
+| "Our process" / "what we offer" / services pages | The fulfillment steps (staffing, provisioning, catering, AV, storage) |
+| Careers / job postings (site + LinkedIn `/jobs` + Indeed) | Team structure and named roles = the humans doing manual work today |
+| Reviews (Google/Yelp) naming staff and praising "coordination," "prep," "responsiveness" | Where the labor-intensive excellence lives — and the key-person risk |
+| Compliance/credential language (AATB, FDA, HIPAA, chain-of-custody) | Documentation burden that AI can automate into audit-ready records |
+| Any proprietary product/platform they mention | Whether they already run *operational* AI (so the gap is *commercial/efficiency* AI, not "they have no AI") |
+
+**Build the section as a 3-column workflow→AI→proof table** — `Client Workflow Today | AI Integration | Proven Technijian Result`. Every row's third column must cite a REAL prior Technijian build with a hard number (see Phase 5 capability inventory + the case-study repos). This is what makes the efficiency claims credible instead of hand-wavy. Common high-value rows for any multi-site, booking-driven, or compliance-heavy business:
+- Booking/intake automation → cite the booking-portal build (~60% friction ↓, ~40% capture ↑)
+- Document/run-sheet/proposal assembly → cite AI document-intelligence (days → minutes)
+- Compliance/chain-of-custody records → cite HIPAA documentation-automation build
+- Institutional knowledge / onboarding → cite Weaviate knowledge-graph build
+- Cross-location visibility → cite multi-location reporting/dashboard build
+- Client rebooking/reactivation → cite AI lead-gen/outreach engine (hard lead count)
+
+**Then quantify in plain numbers** with a second table (Efficiency Lever | Conservative Annual Impact): staff hours recovered, error reduction, faster audit response, utilization lift (note even a 3–5% utilization lift on premium capacity is six figures), knowledge-retention/onboarding speed. Label everything "conservative estimate, confirm at discovery," and add matching **operational discovery questions** to the Questions-to-Calibrate section (how are bookings/logistics coordinated today and how many staff hours; how is compliance documentation handled; how is knowledge transferred to new sites/hires).
+
+**Reflect the two fronts in the Executive Summary** — explicitly say the blueprint works on two fronts (growth + efficiency) and name the section numbers, so an ops-minded reader sees the cost-saving half immediately.
 
 ---
 
@@ -388,6 +536,27 @@ Each Quick Win must be:
 - A content gap they can fill this week (add photos, update hours, write FAQ)
 - A competitor they should monitor (set a Google Alert)
 - An internal process they can document (for future AI training data)
+
+---
+
+## Phase 9b: Conversion Layer — turn the report into a "yes" (always include)
+
+**Encoded after AXRT + SC Fuels, 2026-06-10.** Ravi's question: *"is there anything to make this report more of a conversion for a client to work with Technijian?"* The honest answer was that the reports were ~80% inform / 20% convert. A blueprint that educates beautifully still doesn't *close* — closing needs specific conversion mechanics that are easy to leave out. Build ALL of these into every blueprint:
+
+**1. Productized, risk-reversed entry offer (the single most important conversion fix).** "Scoped at discovery" is friction — it makes the buyer wait and think. Replace it with a **named, fixed-scope, fixed-price, fixed-timeline starter** with ONE headline success metric:
+- Give the entry a product name ("The 90-Day AI Visibility Pilot," "The AI Lead-Gen Pilot Sprint").
+- State exactly what's included, the price (use published rates), the duration, and the single metric you'll be judged on.
+- **Add an explicit risk-reversal** — turn the McKinsey stage-gate philosophy into an actual offer: *"If the pilot doesn't hit [metric] by day 90, you're under no obligation to continue — and we'll tell you honestly whether to."* (Calibrate the strength of the guarantee with Ravi; even a soft "no lock-in, cancel anytime, we stop if it's not working" beats silence.) Risk reversal is frequently the literal thing that tips the yes.
+
+**2. Cost of inaction / urgency.** The report shows upside; add the quantified downside of waiting — loss aversion outpulls gain. A short callout: *"every quarter without [GEO / the pilot], you cede [AI-search citations / warm pipeline] to competitors optimizing right now; here is the leaking demand."* Tie it to a real, dated window where one exists (first-mover, a regulation, a budget cycle).
+
+**3. "AI Search Reality Check" — show, don't tell.** A visceral, **clearly-labeled-illustrative** box that simulates what an AI assistant returns today for a high-intent query in their space, showing the client is NOT cited (or competitors are). Format as a mock prompt→answer in a bordered callout. **Truthfulness rule:** label it "illustrative of how AI search resolves this query" — do NOT present a fabricated box as a real screenshot. (If you want real proof, actually run the query on Perplexity/ChatGPT and screenshot it — but never fake a screenshot.) This makes the GEO gap real in a way a table never does.
+
+**4. Objection-handling FAQ.** Name and defuse the silent no's in a 5–6 Q&A section near the CTA. The real objections are always some of: *"we already pay an agency," "isn't AI just hype," "is our data safe," "we don't have bandwidth for another vendor," "what if our team won't adopt it," "what does this really cost."* Answer each in 2–3 honest sentences. Unaddressed objections are where deals silently die.
+
+**5. The forwardable 1-page executive brief (see Phase 10).** The champion (the person you met) is rarely the sole economic buyer; a CFO or parent-company exec may never open a 30–45-page PDF. A single-page brief the champion can forward — gap → engine → entry price → ROI → one CTA — is often what actually closes. Build it for every engagement (Phase 10 covers the artifact mechanics).
+
+**Placement:** entry offer + risk reversal go in the Business-Impact/Investment section; cost-of-inaction near the opportunity framing or right before the CTA; AI-search reality check in the digital-audit or growth-engine section; the FAQ as its own short section just before "What Happens Next." Keep the voice honest and specific — conversion copy that overclaims reads as a pitch and backfires with a sophisticated buyer.
 
 ---
 
@@ -578,9 +747,15 @@ page: {
 }
 ```
 
-### No pageBreakBefore on H1
+### Every section starts on a new page (Ravi, 2026-06-10 — supersedes the old "no pageBreakBefore" rule)
 
-Remove `pageBreakBefore: true` from Heading1 style. Use `spacing.before: 480` + `keepNext: true` instead. This prevents orphan pages when a section ends mid-page. Cover and TOC are the only forced page breaks.
+**Every numbered section must begin on a fresh page. The TOC must never share a page with Section 1.** Use the Word-native page-break-before property on the section heading — NOT standalone `pageBreak()` paragraphs (those create blank pages when content already fills the page; native page-break-before never does).
+
+- **docx.js:** add `pageBreakBefore: true` to the invisible Heading1 paragraph inside `sectionHeader()`, and set its `spacing.before: 0`. Then **remove every standalone `pageBreak()` call that ends a section** and every `{ pageBreakAfter: true }` / embedded `new PageBreak()` you previously used to separate sections — with page-break-before on the next header, those now double up into blank pages. Keep exactly one manual break: cover → TOC (the TOC is generated content, not an H1, so it needs the cover's trailing `pageBreak()`). Section 1's `pageBreakBefore` then separates TOC from Section 1 automatically.
+- **python-docx:** set `p.paragraph_format.page_break_before = True` on the heading in `h1()` (and `space_before = Pt(0)`). Then **remove the trailing `doc.add_page_break()` from `toc()`** — the first section's `h1` page-break-before starts that page, so the TOC won't double-break into a blank. Keep `cover()`'s trailing `add_page_break()` (cover → TOC). `secbreak()` becomes a pure no-op.
+- **Trade-off, accept it:** forcing a page per section means short sections leave white space at the bottom of their page. That is the intended look — a clean, section-per-page document — and it is what the client asked for. Page count rises ~30–40%; that is fine.
+- **ALSO remove any `spacer()` / empty paragraph that sits IMMEDIATELY BEFORE a section header** (not just manual `pageBreak()` calls). This is the subtler blank-page cause (found across 8 reports in the 2026-06-10 mass sweep). Pattern: `docChildren.push(spacer(100)); docChildren.push(...sectionHeader('04'))`. When the *previous* section ends with a page-filling callout/table, that trailing spacer orphans onto its own otherwise-empty page, and the header's `pageBreakBefore` then starts the next page → a fully blank page in between. The section header's own `pageBreakBefore` already provides all the separation needed, so a spacer before it is redundant AND harmful. **Put spacers AFTER the header (between header and its first content), never before it.** AXRT is clean precisely because it spaces *after* the header; the reports that broke spaced *before* it.
+- **Verify after build:** render every page; confirm (a) the TOC does not share a page with Section 1, (b) each section header sits at the top of a page, (c) zero fully-blank pages. If a blank appears, the cause is almost always one of: a stray manual `pageBreak()`, OR a `spacer()`/empty paragraph immediately before a section header. Render the blank page AND the page before it — the page-before will end with the content that filled it, and the blank is the orphaned spacer.
 
 ### Brand anchors (read from `assets/brand-tokens.json` — single source of truth)
 
@@ -619,9 +794,21 @@ $word.Quit()
 - [ ] All statistics are real (sourced or client-provided) — no placeholder numbers
 - [ ] All competitor names are real organizations (not invented)
 - [ ] Investment ranges match current pricing files in `services/`
-- [ ] Cross-references between sections are correct (e.g., "see Section 11.1" actually exists)
+- [ ] Cross-references between sections are correct (e.g., "see Section 11.1" actually exists) — **re-check EVERY "Section N" reference after any section insert/renumber; this breaks silently every single time**
 - [ ] Persona count is consistent across all sections that mention it
 - [ ] Growth-engine framing matches the client's GTM motion (Phase 0.2) — NO "lead generation" / "inbound funnel" / "shotgun" language for an account-based (ABM) client
+
+### Gate 1b: Truthfulness audit (run before every send — AXRT + SC Fuels, 2026-06-10)
+
+A wrong number destroys trust faster than a missing one, and a sophisticated client WILL spot-check. Audit every factual claim and classify it VERIFIED / UNVERIFIED / OVERSTATED before it ships. Hard-won rules:
+
+- **Market-size & CAGR stats are the #1 fabrication risk.** They get pulled from thin air or a hallucinated "market report" and are often wrong by multiples. (AXRT shipped "$26B medical device training market" — the real figure is ~$3.8B, off by ~7×.) **Verify every market number against a real, named analyst source (web search it), or soften to a defensible range** ("several billion dollars, growing ~16% annually"). Never cite a source title you didn't actually read (e.g. "Global X Market Report 2025" with no publisher is a tell).
+- **Never attribute specific framework labels to a firm unless they're that firm's actual labels.** The five-stage maturity ladder: Gartner's *real* stages are Awareness → Active → Operational → Systemic → Transformational. Do NOT call a paraphrased ladder "Gartner's." Say "a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks)." The McKinsey "≈88% use AI, ≈39% see EBIT impact" pairing IS real (State of AI 2025) — verified, citable as-is. NIST's four functions (Govern/Map/Measure/Manage) are real. MIT Sloan "literacy not expertise" is real. Anthropic "Building Effective Agents" is real.
+- **"What peers are doing" sidebars are INDUSTRY examples, not Technijian client outcomes.** Label them "representative directions of travel across comparable industries, not guarantees," and point the reader to the Capability-Proof / efficiency sections for Technijian's *own* measured results. Do not let a peer-trend bullet read as "a [specific client type] Technijian served got X" unless it actually maps to a real engagement.
+- **Attribute client-stated facts to the client, every time.** If a number came from the prospect's own mouth in a meeting (e.g. SC Fuels: "Pilot cut onboarding 27→3 days with AI"), write "as [name] shared on [date]" — do NOT restate it as an independent fact about a third party (especially when that third party is the client's own parent company).
+- **Don't print a precise count you can't see.** Review counts, follower counts, employee counts: cite only what the live source actually shows (Gate 0). "4.5-star rating" (visible) is safe; "4.5 stars / 20 reviews" (count not visible) is not. Use a range or drop the number.
+- **Respect the client's own accuracy guardrails in `_research.md`** (e.g. SC Fuels: "DO NOT cite revenue," "keep unverified leadership names out"). These exist because the data is unreliable — honor them.
+- **Hedge unsourced-but-plausible figures** ("typically $180K+/year," "estimated," "industry-typical") rather than stating them flat. Keep every "illustrative / conservative / to be confirmed at discovery" disclaimer already in the ROI and efficiency sections.
 
 ### Gate 2: Voice compliance
 Run `technijian-voice` skill on the full draft text before inserting into docx-js. Flag and fix:
@@ -713,6 +900,7 @@ When the engagement also needs a heavy technical/commercial analysis (e.g. the C
 ### Build-pattern gotchas (these will bite you)
 - **Always spread helper calls that return arrays** into `docChildren`: `...sectionHeader(...)`, `...numberedSteps(...)`. A bare un-spread array (or a stray scalar) serializes as the invalid XML token `<0/>`, and **Word silently refuses to open the file** ("Word experienced an error trying to open the file") even though `node` built it without complaint. Diagnose any won't-open docx with `python -c "import zipfile,xml.dom.minidom as M; M.parseString(zipfile.ZipFile('...docx').read('word/document.xml'))"` — a stray `<0/>` is the tell.
 - **Convert DOCX→PDF sequentially, never in a parallel tool batch.** Parallel Word COM calls wedge Word so it fails to open *every* file. If it wedges: kill WINWORD, delete `%APPDATA%\Microsoft\Templates\Normal.dotm` (Word rebuilds it), clear `HKCU:\...\Word\Resiliency`.
+- **Never publish unverified digital metrics in Section 08.** LinkedIn follower counts, Google review counts, and GBP presence are routinely wrong in cold web research. The client WILL read this section and WILL call out wrong numbers (AXRT: report said 43 LinkedIn followers → actual 2,027; said GBP not found → GBP active all 4 locations with 57 five-star reviews). Cross-reference any metric you state as fact. See the Data gathering checklist warning block above.
 - **Watch for blank pages** from an explicit `pageBreak()` landing on an already-full boundary — render every page and check for empties; remove the redundant break and let content flow. **The fix is to embed the `PageBreak` run INSIDE the last content paragraph** (not as a standalone `new Paragraph({ children: [new PageBreak()] })`). A standalone pageBreak paragraph that lands at a page boundary creates a completely blank page. Instead, add `{ pageBreakAfter: true }` support to your `p()` helper and call it on the last paragraph of the section:
   ```javascript
   // Add pageBreakAfter option to the p() helper

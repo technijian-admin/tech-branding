@@ -58,7 +58,8 @@ const MARGIN = 1440;
 const CONTENT_W = PAGE_W - MARGIN * 2; // 9360
 
 function spacer(size = 200) {
-  return new Paragraph({ spacing: { before: size, after: 0 }, children: [new TextRun({ text: '' })] });
+  // keepNext: a spacer binds to the following element so it can never orphan onto a blank page.
+  return new Paragraph({ keepNext: true, spacing: { before: size, after: 0 }, children: [new TextRun({ text: '' })] });
 }
 
 function pageBreak() {
@@ -132,16 +133,18 @@ function pRuns(runs, opts = {}) {
 
 // Section header — emits a TOC-visible Heading1 paragraph + a colored visual table.
 // Use with spread: `...sectionHeader('Title', COLOR, '01')`.
-// Sections flow continuously (no forced page break); the colored accent bar provides visual separation.
-// Generous `before` spacing on the H1 ensures mid-page sections still feel distinct.
+// Every section starts on a fresh page (Ravi, 2026-06-10): the invisible Heading1 carries
+// pageBreakBefore: true with spacing.before: 0. Native Word page-break-before avoids the
+// blank-page artifacts that standalone pageBreak() paragraphs cause. The `newPage` param is
+// retained for call-site compatibility but no longer alters behavior.
 function sectionHeader(text, color = CORE_BLUE, num = '', { newPage = false } = {}) {
   const label = num ? `${num}  ${text}` : text;
   const tocLabel = num ? `${num}  ${text}` : text;
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
-    pageBreakBefore: newPage,
+    pageBreakBefore: true,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: tocLabel, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -504,7 +507,7 @@ const execSummary = [
   ]),
   bulletRuns([
     { text: 'Internal AI is just as valuable as outbound AI. ', bold: true, color: DARK_CHARCOAL },
-    { text: 'Proposal generation, technical peer-review acceleration, and CEQA litigation intelligence collectively recover ~450 billable-equivalent hours per principal per year (Section 10.3 details the breakdown).' },
+    { text: 'Proposal generation, technical peer-review acceleration, and CEQA litigation intelligence collectively recover ~450 billable-equivalent hours per principal per year (Section 11.4 details the breakdown).' },
   ]),
 
   spacer(200),
@@ -599,7 +602,6 @@ const section2 = [
       ],
     ]
   ),
-  pageBreak(),
 
   subHeader('3.2  Environmental Engineering: Air Quality, GHG, and Acoustics'),
   p('The second major pillar of RKE\'s service model involves environmental compliance tailored to the rigorous technical requirements of CEQA. Every discretionary land use approval in California must be evaluated for its potential impact on regional air quality and global climate change.'),
@@ -785,7 +787,6 @@ const section6 = [
       { label: 'Engagement Channels', value: 'Building Industry Association (BIA), Urban Land Institute (ULI), NAIOP, ICSC; targeted outreach with entitlement case studies' },
     ]
   ),
-  pageBreak(),
 
   personaCard(
     'Persona 3 — The Design Integrator',
@@ -817,7 +818,6 @@ const section6 = [
       { label: 'Engagement Channels', value: 'CLE seminars on engineering/CEQA case law; publication in legal trade journals; direct outreach to elite firms with documented expert witness CVs' },
     ]
   ),
-  pageBreak(),
 
   // --- 6.5 emerging / niche personas (NEW) ---
   subHeader('6.5  Emerging & Niche Personas'),
@@ -870,7 +870,6 @@ const section6 = [
       { label: 'Engagement Channels', value: 'GreenBiz, AICPA Sustainability Assurance Symposium, IR firms supporting CARB SB 253 reporters, corporate real estate sustainability councils' },
     ]
   ),
-  pageBreak(),
 
   subHeader('6.6  Cross-Persona Interaction Matrix'),
   buildTable(
@@ -1066,7 +1065,6 @@ const section8proof = [
     ],
     CHARTREUSE
   ),
-  pageBreak(),
 
   subHeader('8.2  How These Builds Translate into RKE Capabilities'),
   buildTable(
@@ -1107,24 +1105,126 @@ const section8proof = [
   spacer(200),
   calloutBox(
     'Why This Matters',
-    'Choosing Technijian is not choosing an experimental partner. Every architectural pattern in the RKE blueprint has been deployed and is in production for an existing Technijian client. The 90-day Foundation phase (Section 11.1) integrates and configures known-good components — it does not invent them. This is the difference between an R&D engagement and an integration engagement, and it is reflected in both the timeline and the investment profile.',
+    'Choosing Technijian is not choosing an experimental partner. Every architectural pattern in the RKE blueprint has been deployed and is in production for an existing Technijian client. The 90-day Foundation phase (Section 12.1) integrates and configures known-good components — it does not invent them. This is the difference between an R&D engagement and an integration engagement, and it is reflected in both the timeline and the investment profile.',
     CORE_ORANGE
-  ),];
+  ),
+
+  spacer(200),
+  subHeader('8.3  How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across content, lead gen, RFP drafting, and peer review: won\'t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.7 },
+      { label: 'What It Does', weight: 3.3 },
+      { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER },
+    ],
+    [
+      [{ text: 'Frontier (premium)', bold: true, color: DARK_CHARCOAL }, 'The hardest judgment only — final brand-voice pass, litigation-grade accuracy checks, deepest reasoning on a peer review', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true, color: DARK_CHARCOAL }, 'The bulk of drafting and reasoning — content, outreach personalization, proposal summarization, lead scoring', { text: '~30–40%', color: TEAL, bold: true }],
+      [{ text: 'Lightweight (low-cost)', bold: true, color: DARK_CHARCOAL }, 'High-volume mechanical work — classification, extraction, enriching and tagging thousands of permit and RFP records', { text: '~50–60%', color: BRAND_GREY, bold: true }],
+    ],
+    { headerColor: DARK_CHARCOAL }
+  ),
+  p('The result: RKE pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single SB 743 authority article, for example, is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),];
 
 // ============================================================
-// SECTION 9 — THE AI GROWTH ENGINE (EXPANDED CENTERPIECE)
+// SECTION 9 — UNDERSTANDING AI: FIELD GUIDE (NEW EDUCATION LAYER)
+// ============================================================
+const sectionEdu = [
+  ...sectionHeader('Understanding AI — A Field Guide for RK Engineering Group Leadership', CORE_BLUE, '09'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where RKE sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that RKE\'s principals can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('9.1  What AI Actually Is — and Isn\'t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this RFP response from our prior winning proposals and the new evaluation criteria." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch every SoCal RFP platform and permit feed and flag what RKE should pursue." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. RKE starts with simple automations that pay off in the first 90 days, and adds autonomous agents only where the value is proven — which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('9.2  Where RKE Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run firms — including RKE — sit at the first or second rung of a widely-used five-stage AI maturity model. The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Stage', weight: 1.6 },
+      { label: 'What It Looks Like', weight: 4 },
+      { label: 'RKE Today', weight: 1.4, align: AlignmentType.CENTER },
+    ],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent business development and proposal work', ''],
+      [{ text: '2. Emerging', bold: true, color: DARK_CHARCOAL }, { text: 'Some modern tooling and a clear appetite to adopt AI, but AI is not yet woven into growth or internal delivery', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — RFP detection, content, peer review — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and delivery with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the firm competes and wins work', ''],
+    ],
+    { headerColor: CORE_BLUE }
+  ),
+  p('RKE is well-positioned to move quickly: a deep deliverable archive and disciplined engineering practice are exactly the inputs AI needs. This report is the plan to reach Operational — AI working in the growth engine and inside the firm — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('9.3  Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a firm whose deliverables must survive cross-examination in Superior Court, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Risk', weight: 1.8 },
+      { label: 'What It Means', weight: 3.4 },
+      { label: 'How Technijian Controls It', weight: 3.4 },
+    ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client-facing or litigation-bound — AI drafts, a principal approves before it leaves the building'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — client project files, expert-witness materials, and prior peer reviews never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create gaps', 'Every AI tool inventoried with owner, vendor, and data source — defensible and audit-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL }
+  ),
+  spacer(140),
+
+  subHeader('9.4  What Comparable Organizations Are Already Doing', { color: CORE_BLUE }),
+  bullet('Professional services: document-heavy regulated firms are turning multi-day proposal and qualification-package assembly into a minutes-long, reviewable draft — responding to more opportunities with the same team.'),
+  bullet('Specialized consultancies: technical experts are using AI search optimization to become the cited answer when buyers ask AI tools a regulatory question — capturing demand competitors never see.'),
+  bullet('Engineering and AEC: boutique firms are indexing decades of past deliverables into a searchable knowledge layer, so a new hire reaches productivity in weeks and senior staff retrieve comparable past work in seconds.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; RKE\'s own numbers would be confirmed in discovery. Technijian\'s specific, measured results from prior builds appear in Section 8 (Capability Proof) and Section 11.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('9.5  A Day in the Life — An RKE Principal', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A principal opens the day to an RFP that was forwarded late, hand-assembles a proposal from old documents scattered across folders, performs a 40-hour peer review of a competitor\'s traffic study line by line, and tries to remember which past project is the right comparable — all while the billable engineering work waits.',
+    'WITH AI: The RFP was flagged the day it posted; a first-draft proposal is already assembled from prior winning bids for the principal to refine; the peer-review assistant has surfaced the likely methodology flaws for the principal to validate in a quarter of the time; and the knowledge graph returns the five most comparable past studies in seconds. The expertise stays with the principal — the overhead does not.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('9.6  Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [
+      { label: 'Path', weight: 1.6 },
+      { label: 'Reality', weight: 5 },
+    ],
+    [
+      ['DIY tools', 'Inexpensive, but RKE assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true, color: DARK_CHARCOAL }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds (Section 8) and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE }
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework.', { italics: true, size: 18, spaceBefore: 100 }),];
+
+// ============================================================
+// SECTION 10 — THE AI GROWTH ENGINE (EXPANDED CENTERPIECE)
 // ============================================================
 const section8 = [
-  ...sectionHeader('How AI Transforms RKE\'s Growth Engine', CORE_ORANGE, '09'),
+  ...sectionHeader('How AI Transforms RKE\'s Growth Engine', CORE_ORANGE, '10'),
   spacer(160),
   p('This section is the heart of the report. The seven customer personas are real, the competitive landscape is well understood, and the regulatory tailwinds (SB 743, CEQA litigation volume, infill housing pressure, AB 98 warehouse setbacks, and CARB SB 253/261 climate disclosure) all favor RKE. What is missing is a modern, AI-powered growth machine. The remainder of this section presents — concretely and tactically — what Technijian can build, operate, and measure for RKE in the next 12 months.'),
 
   spacer(120),
   diagramImage(DIAGRAM_ARCH_BUF, 'AI Growth Engine Architecture', 620, 1.57),
-  diagramCaption('Figure 9.0 — Public data sources flow into the Technijian AI layer; outputs reach each of the seven personas through dedicated channels.'),
+  diagramCaption('Figure 10.0 — Public data sources flow into the Technijian AI layer; outputs reach each of the seven personas through dedicated channels.'),
 
-  subHeader('9.1  Why AI Matters for a Specialized Engineering Consultancy'),
-  p('Boutique engineering firms have always been outgunned on marketing. A 15-person firm cannot fund the content engine, RFP-tracking team, or CRM operation that a 1,000-person AEC giant maintains. Historically, that headcount asymmetry has been decisive — larger firms simply see more opportunities and respond faster. AI changes that math.'),
+  subHeader('10.1  Why AI Matters for a Specialized Engineering Consultancy'),
+  p('Boutique engineering firms have always been outgunned on marketing. A small, principal-led firm cannot fund the content engine, RFP-tracking team, or CRM operation that a 1,000-person AEC giant maintains. Historically, that headcount asymmetry has been decisive — larger firms simply see more opportunities and respond faster. AI changes that math.'),
   p('A small firm with the right AI infrastructure can monitor every RFP platform in California, every permit filing in Southern California, every CEQA case docket, and every prime-contract award — continuously, automatically, and at a fraction of the investment a competitor spends on a single business development manager. AI does not replace RKE\'s engineers. It removes the marketing and pipeline-management overhead that currently consumes principal time.'),
 
   spacer(120),
@@ -1134,9 +1234,8 @@ const section8 = [
     { number: '40%', label: 'Improvement in proposal cycle time', color: TEAL },
   ]),
   p('Modeled targets for a 90-day deployment of the Technijian AI growth stack. Actual results vary by execution; commitments are documented in a formal Statement of Work.', { italics: true, size: 18, align: AlignmentType.CENTER }),
-  pageBreak(),
 
-  subHeader('9.2  Inbound AI — Owning the Search Layer'),
+  subHeader('10.2  Inbound AI — Owning the Search Layer'),
   p('RKE\'s inbound problem is not that it lacks expertise. It is that the expertise is not discoverable where buyers now look — Google\'s local pack, AI search engines, and AI-cited references inside ChatGPT, Perplexity, Claude, and Google AI Overviews. Inbound AI cements RKE as the undisputed technical authority on CEQA, VMT, and environmental compliance — capturing both traditional local search traffic and emerging AI-driven inquiries.'),
 
   h3('Local SEO for Municipalities and Developers'),
@@ -1145,14 +1244,35 @@ const section8 = [
   h3('Answer Engine Optimization (AEO)'),
   p('Legal strategists and AEC professionals increasingly use AI search engines for regulatory research. Traditional SEO alone is insufficient. Technijian\'s AEO approach uses schema markup, direct-answer content formatting, and AI citation optimization so that when a user asks ChatGPT "How do I calculate VMT under SB 743?" RKE\'s materials are the source the engine recommends. AI search engines source from a smaller pool than Google — first-mover advantage in this space is the most valuable inbound investment available today.'),
 
+  spacer(120),
+  p('Here is the gap made concrete. When a buyer asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:', { spaceBefore: 40 }),
+  calloutBox(
+    'Prompt: "Who are the top traffic and VMT engineering firms for a CEQA project in Orange County?"',
+    [
+      'TODAY — the AI assistant answers with whichever firms have the strongest content and third-party signals it can read: it names a couple of large regional players (Fehr & Peers, Urban Crossroads) and does NOT mention RK Engineering Group — even though RKE has 35+ years, 7,000+ projects, and the expert-witness depth those competitors lack. RKE is invisible at the exact moment the buyer is forming a shortlist.',
+      'AFTER AEO — the same query returns RKE as a cited option ("RK Engineering Group is a Southern California traffic, VMT, and environmental engineering firm with deep SB 743 and expert-witness experience…"), with the SB 743 hub content and project case studies as the supporting evidence the assistant points to.',
+    ],
+    CORE_ORANGE
+  ),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is captured as part of the discovery baseline — not a fabricated screenshot.)', { italics: true, size: 18 }),
+
   h3('Semantic SEO & Topic Authority'),
   p('Content is built using a Hub-and-Spoke model targeting featured snippets and semantic authority. Rather than chasing broad keywords, RKE publishes a tightly organized library of technical white papers and case studies on topics like CEQA litigation defense, acoustic impact mitigation, mixed-use shared parking modeling, and TDM plan design. Each hub article links to spoke articles answering specific sub-questions — a structure search engines and LLMs both reward. A 90-day content sprint can produce 25+ pieces ranked for high-intent queries.'),
 
   h3('Generative Content at Scale'),
   p('Technijian operates a content production system that combines retrieval-augmented generation (RAG) over RKE\'s existing project deliverables with human review by RKE principals. The result: case studies, white papers, and blog posts published weekly at the editorial quality bar a senior principal would set — without consuming the principal\'s time. This is the single largest lever for closing the marketing-surface-area gap against Fehr & Peers.'),
-  pageBreak(),
 
-  subHeader('9.3  Outbound AI — Real-Time Intent and Personalization'),
+  spacer(120),
+  calloutBox(
+    'The Cost of Waiting',
+    [
+      'AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter RKE is not cited, the assistants learn to answer "best VMT / CEQA traffic firm in Southern California" with Fehr & Peers or Urban Crossroads — and that default, once set in the training and retrieval data, is far harder and more expensive to dislodge than to claim now.',
+      'The same applies to the RFP pipeline: every on-call solicitation detected late, or missed entirely, is a contract awarded to a competitor and an on-call roster RKE does not sit on for the next several years. The cost of waiting is not zero — it is a competitor becoming the default answer and the default vendor.',
+    ],
+    CRITICAL
+  ),
+
+  subHeader('10.3  Outbound AI — Real-Time Intent and Personalization'),
   p('AI lead generation shifts outbound from inefficient cold-calling to data-driven, high-intent prospecting. The objective: every outbound message lands at the exact moment the recipient has a project-shaped problem.'),
 
   h3('Real-Time Intent Signals — Targeting the Timeline Driver'),
@@ -1166,9 +1286,8 @@ const section8 = [
 
   h3('Conversation Intelligence'),
   p('When outreach connects, AI conversation intelligence captures every sales call, transcribes it, extracts the prospect\'s objections and needs, and feeds the insights back into the CRM. Over months, the system learns which messages work for which personas and continuously refines outreach copy. This is how a small firm builds the institutional sales knowledge that takes a large firm a decade to accumulate.'),
-  pageBreak(),
 
-  subHeader('9.4  Internal AI — Capacity Multiplication for Principals'),
+  subHeader('10.4  Internal AI — Capacity Multiplication for Principals'),
   p('Outbound AI fills the pipeline. Internal AI lets RKE close more of it. Four internal AI tools convert principal time from administrative overhead back into billable engineering work.'),
 
   h3('Generative Proposal Engine'),
@@ -1182,9 +1301,8 @@ const section8 = [
 
   h3('Knowledge Graph of Past Projects'),
   p('Over 35 years, RKE has accumulated thousands of project deliverables. A semantic knowledge graph indexes every study, comparable site, mitigation recommendation, and traffic count — making the entire institutional memory searchable in seconds. When a new project comes in, the principal asks one question and surfaces five comparable past studies, the assumptions used, and the results. New hires reach productivity in weeks instead of years.'),
-  pageBreak(),
 
-  subHeader('9.5  AI Tools Matched to Each Persona'),
+  subHeader('10.5  AI Tools Matched to Each Persona'),
   p('Every AI initiative below maps to an existing Technijian productized service. The "Technijian Service" column identifies which My AI, My SEO, or My Dev offering delivers the capability. This avoids invoice surprises and makes the engagement structure explicit from day one.'),
   spacer(120),
   buildTable(
@@ -1268,11 +1386,48 @@ const section8 = [
 // SECTION 10 — PROJECTED BUSINESS IMPACT (NEW)
 // ============================================================
 const section9 = [
-  ...sectionHeader('Projected Business Impact & Service Investment', CORE_BLUE, '10'),
+  ...sectionHeader('Projected Business Impact & Service Investment', CORE_BLUE, '11'),
   spacer(160),
   p('The financial case for AI-powered growth must be specific. The projections below are modeled estimates based on benchmark performance Technijian has observed in comparable specialized professional services firms. They are not contractual commitments — exact results depend on RKE\'s market posture, conversion discipline, and pricing. They are presented to anchor planning discussions.'),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. McKinsey\'s 2025 State of AI finds roughly 88% of companies now use AI, but only about a third see a meaningful bottom-line impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. RKE carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(200),
 
-  subHeader('10.1  Top-Line Pipeline Lift'),
+  subHeader('11.1  The Entry Offer — The 90-Day AI Visibility Pilot'),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up RKE\'s AI-search presence (so RKE becomes the cited answer on SB 743 and VMT questions) and the RFP intelligence engine, and proves the lift before any larger build is discussed. It maps to the recommended starting posture in Section 11.5: My SEO Tier 3 plus AI Search Optimization, plus the first persona outreach loop.'),
+  buildTable(
+    [
+      { label: 'What\'s Included', weight: 3 },
+      { label: 'Detail', weight: 4 },
+      { label: 'Investment', weight: 2 },
+    ],
+    [
+      [{ text: 'My SEO — Tier 3 + AI Search Optimization', bold: true, color: DARK_CHARCOAL }, 'GEO/AEO layer so RKE is cited on SB 743 / VMT queries; SB 743 hub article; Google Business Profile + 50-directory NAP audit', '$1,000/mo + $200/mo'],
+      [{ text: 'RFP Intelligence Engine (pilot)', bold: true, color: DARK_CHARCOAL }, 'Continuous monitoring of PlanetBids, BidNet Direct, BidSync, OCTA CAMMNET; daily digest to the BD lead', 'Scoped in SOW'],
+      [{ text: 'Executive AI Workshop', bold: true, color: DARK_CHARCOAL }, 'Half-day kickoff with RKE\'s actual project data; validates persona priorities and 90-day KPIs', 'One-time'],
+      [{ text: 'ENTRY PILOT — 90 DAYS', bold: true, color: CORE_BLUE }, 'Fixed scope, published rates, no large up-front build', { text: 'Month-to-month, no lock-in', bold: true, color: CORE_BLUE }],
+    ],
+    { headerColor: CORE_BLUE }
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, RKE is cited by at least one major AI assistant (ChatGPT, Perplexity, Claude, or Google AI Overviews) for a high-intent SB 743 / VMT / CEQA query, AND the RFP intelligence engine has surfaced at least one qualifying opportunity RKE would otherwise have missed.',
+      'Our commitment: the entry program is month-to-month, no lock-in, and no obligation to continue if it doesn\'t hit the metric by day 90. If the pilot has not moved the needle, you are under no obligation to continue — and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(200),
+
+  subHeader('11.2  Top-Line Pipeline Lift'),
   kpiRow([
     { number: '+45%', label: 'Qualified opportunities / quarter', color: CORE_BLUE },
     { number: '+22%', label: 'RFP win rate', color: CORE_ORANGE },
@@ -1282,7 +1437,7 @@ const section9 = [
   spacer(200),
   p('These four metrics, together, are the difference between organic growth and exponential growth. A 45% lift in qualified opportunities at a 22% improvement in win rate is — in compounding effect — a near-doubling of new contract value over 18 months, holding pricing constant.', { italics: true, size: 20 }),
 
-  subHeader('10.2  Investment Recovery Estimate (Year 1)'),
+  subHeader('11.3  Investment Recovery Estimate (Year 1)'),
   buildTable(
     [
       { label: 'AI Initiative', weight: 32 },
@@ -1301,7 +1456,7 @@ const section9 = [
   spacer(200),
   p('Investment ranges reflect the full Technijian engagement: build, integrate, train, and operate. They include licensing for the AI infrastructure, data subscriptions for public-records monitoring, and ongoing operational support. Pipeline value reflects projected incremental new-contract revenue and recovered principal capacity — both contribute to firm growth.', { italics: true, size: 20 }),
 
-  subHeader('10.3  Capacity Recovery Per Principal'),
+  subHeader('11.4  Capacity Recovery Per Principal'),
   kpiRow([
     { number: '~250', label: 'Hours/yr recovered from proposal automation', color: CORE_BLUE },
     { number: '~120', label: 'Hours/yr recovered from peer-review AI', color: CORE_ORANGE },
@@ -1309,7 +1464,7 @@ const section9 = [
   ]),
   p('A single RKE principal recovers approximately 450 billable-equivalent hours per year — roughly 25% of their working capacity. Multiplied across the principal team, this is the single largest hidden return of the AI program.', { italics: true, size: 20 }),
 
-  subHeader('10.4  Technijian Service Investment Map'),
+  subHeader('11.5  Technijian Service Investment Map'),
   p('The investment ranges above resolve into specific Technijian productized services. RKE knows exactly what is being purchased, at what monthly investment, and which AI initiative it powers.'),
   spacer(120),
   buildTable(
@@ -1387,15 +1542,15 @@ const section9 = [
 // SECTION 11 — IMPLEMENTATION ROADMAP (NEW)
 // ============================================================
 const section10 = [
-  ...sectionHeader('Implementation Roadmap (90 / 180 / 365 Days)', CORE_BLUE, '11'),
+  ...sectionHeader('Implementation Roadmap (90 / 180 / 365 Days)', CORE_BLUE, '12'),
   spacer(160),
   p('Technijian recommends a phased deployment. The first 90 days establish the foundation: inbound SEO/AEO, the RFP intelligence engine, and one persona-specific outreach loop. The next 90 days add the AI proposal engine, the VMT self-serve calculator, and the CEQA litigation watch. The full year completes the program with the knowledge graph, conversation intelligence, and continuous-optimization layer.'),
 
   spacer(120),
   diagramImage(DIAGRAM_TIMELINE_BUF, '90/180/365 Implementation Timeline', 620, 1.57),
-  diagramCaption('Figure 11.0 — Three phases with milestones plotted on day-of-year axis; cumulative outcomes shown beneath each phase.'),
+  diagramCaption('Figure 12.0 — Three phases with milestones plotted on day-of-year axis; cumulative outcomes shown beneath each phase.'),
 
-  subHeader('11.1  Days 1–90: Foundation'),
+  subHeader('12.1  Days 1–90: Foundation'),
   buildTable(
     [
       { label: 'Week', weight: 12 },
@@ -1411,7 +1566,7 @@ const section10 = [
     ]
   ),
 
-  subHeader('11.2  Days 91–180: Acceleration'),
+  subHeader('12.2  Days 91–180: Acceleration'),
   buildTable(
     [
       { label: 'Week', weight: 12 },
@@ -1426,7 +1581,7 @@ const section10 = [
     ]
   ),
 
-  subHeader('11.3  Days 181–365: Compounding'),
+  subHeader('12.3  Days 181–365: Compounding'),
   buildTable(
     [
       { label: 'Quarter', weight: 14 },
@@ -1445,7 +1600,7 @@ const section10 = [
 // SECTION 12 — QUICK WINS (NEW)
 // ============================================================
 const section11 = [
-  ...sectionHeader('Quick Wins: What RKE Can Start in Week 1', CORE_ORANGE, '12'),
+  ...sectionHeader('Quick Wins: What RKE Can Start in Week 1', CORE_ORANGE, '13'),
   spacer(160),
   p('Strategy is meaningless without immediate motion. The following five actions can be initiated within seven days of report acceptance. None of them require a contract with Technijian to begin — they are presented to demonstrate the kind of urgency the market rewards.'),
   spacer(200),
@@ -1480,22 +1635,46 @@ const section11 = [
   ], CRITICAL),];
 
 // ============================================================
-// SECTION 13 — CONCLUSION
+// SECTION 14 — QUESTIONS WE USUALLY GET (FAQ, NEW)
+// ============================================================
+const sectionFaq = [
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '14'),
+  spacer(160),
+  p('The honest answers to the questions RKE leadership is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [
+      { label: 'Question', weight: 3 },
+      { label: 'Our Honest Answer', weight: 5 },
+    ],
+    [
+      [{ text: 'We already work with a marketing or web vendor. Why add Technijian?', bold: true, color: DARK_CHARCOAL }, 'Keep them if they are doing good work. We add the layer most agencies do not build: AI-search optimization (AEO) so RKE is cited on SB 743/VMT questions, the RFP intelligence engine, and the internal AI (proposal, peer-review, knowledge graph) that no SEO agency provides. We run alongside an existing vendor, not over them.'],
+      [{ text: 'Isn\'t AI mostly hype right now?', bold: true, color: DARK_CHARCOAL }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — RFP detection, AEO content, proposal drafting — not autonomous "agents" running your practice. We use the simplest tool that works, measure it, and only expand what earns its place. Every component is already in production for a Technijian client (Section 8).'],
+      [{ text: 'Is our data — project files, expert-witness materials, peer reviews — safe?', bold: true, color: DARK_CHARCOAL }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything client-facing or litigation-bound, led by a CISSP-certified team. Data governance is part of the discovery in the entry pilot (Section 11.1).'],
+      [{ text: 'We\'re a lean, principal-led firm. Do we have the bandwidth for this?', bold: true, color: DARK_CHARCOAL }, 'The point is the opposite — to give your principals back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The internal AI tools recover roughly 450 billable-equivalent hours per principal per year (Section 11.4).'],
+      [{ text: 'What if it doesn\'t work?', bold: true, color: DARK_CHARCOAL }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 11.1), month-to-month with no lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true, color: DARK_CHARCOAL }, 'The entry pilot runs on published My SEO rates — Tier 3 at $1,000/mo plus AI Search Optimization at $200/mo — with the RFP engine and workshop scoped in a short SOW, month-to-month and no large up-front build. The full-year program is profiled in Section 11, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE }
+  ),];
+
+// ============================================================
+// SECTION 15 — CONCLUSION
 // ============================================================
 const conclusion = [
-  ...sectionHeader('Conclusion', CORE_BLUE, '13'),
+  ...sectionHeader('Conclusion', CORE_BLUE, '15'),
   spacer(160),
   p('RK Engineering Group operates in an industry where baseline technical proficiency in drafting a traffic model or measuring ambient decibels is merely the minimum expectation for entry. True success and sustainable market dominance in the California architecture, engineering, and construction landscape require a profound, almost psychological understanding of the state\'s draconian regulatory mandates, the volatile political dynamics of local city councils, and the acute financial and legal pressures faced by those attempting to build within its borders.'),
   p('RKE has that understanding. Its 35-year track record, multi-disciplinary integration, and expert-witness credibility are competitive moats that national firms with ten times the headcount cannot replicate. What RKE lacks — and what every firm of its size lacks — is the marketing surface area and pipeline visibility of its larger competitors.'),
   p('Both deficits are solvable. AI does not replace RKE\'s engineers. It removes the marketing and pipeline-management overhead currently consuming principal time, and it amplifies every outbound touch with intelligence the largest competitors cannot match. The seven target personas — The Regulatory Guardian, The Timeline Driver, The Design Integrator, The Legal Strategist, The Industrial Logistics Developer, The Institutional Steward, and the ESG / Sustainability Officer — can each be reached at scale, with personalization, and at a fraction of the investment a traditional marketing buildout would require. Every component of the engine has been proven in production for an existing Technijian client — the work for RKE is configuration and integration, not invention.'),
-  p('Technijian is prepared to design, build, and operate this program in partnership with RKE leadership. The next step is a focused planning session to validate the personas, prioritize the 90-day milestones, and execute the Quick Wins outlined in Section 12. We look forward to that conversation.'),
+  p('Technijian is prepared to design, build, and operate this program in partnership with RKE leadership. The next step is a focused planning session to validate the personas, prioritize the 90-day milestones, and execute the Quick Wins outlined in Section 13. We look forward to that conversation.'),
 
   spacer(300),
   calloutBox(
     'Next Steps',
     [
       '1. Schedule a 60-minute strategy session with Technijian to validate this report\'s assumptions and refine priorities for RKE.',
-      '2. Authorize the 90-day Foundation phase (Section 11.1) to begin within two weeks of the strategy session.',
+      '2. Authorize the 90-day Foundation phase (Section 12.1) to begin within two weeks of the strategy session.',
       '3. Identify the RKE principal who will sponsor the program and the operational lead who will hold the Technijian team accountable to weekly milestones.',
     ],
     CORE_ORANGE
@@ -1505,7 +1684,7 @@ const conclusion = [
 // SECTION 14 — ABOUT TECHNIJIAN
 // ============================================================
 const about = [
-  ...sectionHeader('About Technijian', CORE_BLUE, '14'),
+  ...sectionHeader('About Technijian', CORE_BLUE, '16'),
   spacer(160),
   p('Technijian is a full-spectrum IT services partner founded in 2000 by Ravi Jain. For more than 25 years we have served small and mid-sized businesses with managed IT services, CrowdStrike-powered cybersecurity, cloud infrastructure, compliance frameworks (HIPAA, PCI, SOC 2, GDPR), and AI-driven software development.'),
   p('Our Technijians pod model assigns a dedicated team to each client, providing deep institutional knowledge and eliminating the fragmented experience common with other managed service providers. With offices in Irvine, California and Panchkula, India, we deliver 24/7 global support without additional investment. Our cybersecurity-first, AI-forward approach helps businesses use technology as a competitive advantage — not a back-office afterthought.'),
@@ -1671,10 +1850,12 @@ const allChildren = [
   ...section6,
   ...section7,
   ...section8proof,
+  ...sectionEdu,
   ...section8,
   ...section9,
   ...section10,
   ...section11,
+  ...sectionFaq,
   ...conclusion,
   ...about,
   ...appendix,

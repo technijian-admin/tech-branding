@@ -75,10 +75,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -384,7 +387,7 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-1' }),
-  pageBreak(),
+  // No trailing pageBreak: Section 01's pageBreakBefore starts the next page automatically.
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -440,7 +443,7 @@ docChildren.push(
     'Technijian designs, builds, and operates the AI growth and integration stack so Skyline\'s designers and sales team stay focused on the craft and the relationships. We are not a marketing agency - we are the technology partner that builds the AI infrastructure, sized and priced for a family-owned exhibit house, and white-labels the booth layer Skyline resells under its own name.',
     CORE_BLUE
   ),
-  p('A note on figures: this blueprint was built from public information. Skyline\'s internal numbers - project mix, average project value, win rate on RFPs, repeat-client share, and current marketing spend - were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 16.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: this blueprint was built from public information. Skyline\'s internal numbers - project mix, average project value, win rate on RFPs, repeat-client share, and current marketing spend - were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 17.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 HOW AN EXHIBIT HOUSE WINS ----------
@@ -785,6 +788,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_BLUE }),
+  p('Here is the gap made concrete. When a buyer asks an AI assistant the question below, this is the shape of the answer they get - illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Best custom trade-show booth company in Orange County?"', [
+    'TODAY - the AI assistant answers with whichever exhibit houses have the strongest content and third-party signals it can read: it names a couple of the SoCal independents and a national player with city pages, and does NOT mention Skyline - even though Skyline has forty years of craft, named clients, and 45,000 square feet of asset management. Skyline is invisible at the exact moment the buyer is forming a shortlist.',
+    'AFTER AEO - the same query returns Skyline as a cited option ("Skyline Displays of Orange County designs, builds, and manages custom and portable exhibits, with an AI-enabled booth option for lead capture and post-show follow-up..."), with the modernized site and consolidated reviews as the supporting evidence the assistant points to.',
+  ], CORE_BLUE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is captured as the Quick Win #1 baseline.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter Skyline is not cited, the assistants learn to answer "best trade-show booth company in Orange County" with someone else - and that default, once set in the training and retrieval data, is far harder and more expensive to dislodge than to claim now. The same window is open on the AI-enabled booth: no local rival is selling that layer yet, so the dealer who operationalizes and resells it first owns a differentiator the whole field is missing. The cost of waiting is not zero - it is a competitor becoming the default answer, and a high-margin resale line left on the table.'),
 );
 
 // ---------- 08 THE SILENT REVENUE LEAK ----------
@@ -878,11 +892,96 @@ docChildren.push(
     'For Skyline it catches and nurtures the inquiry across the 6-8-month booth-buying cycle, and runs targeted outreach to companies already registered to exhibit at upcoming Anaheim, Los Angeles, and Las Vegas shows - a ready-made, time-boxed target list.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable - Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across search, capture, quoting, and the booth layer: won\'t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model - our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only - final brand-voice pass on a concept narrative, compliance-sensitive answers, the deepest reasoning', { text: '~5-10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning - RFP and quote drafts, outreach personalization, summarization, lead scoring', { text: '~30-40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work - badge-scan classification, lead enrichment, tagging and enriching thousands of exhibitor records', { text: '~50-60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Skyline pays premium-model prices only for the small slice of work that warrants them - typically a 60-80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single concept-and-quote draft, for example, is assembled by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model - instead of one premium model doing all three at roughly triple the cost. This is the kind of AI-engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI GROWTH ENGINE ----------
+// ---------- 12 UNDERSTANDING AI - FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms Skyline OC\'s Growth Engine', CORE_BLUE, '12'),
+  ...sectionHeader('Understanding AI - A Field Guide for SKYOC Leadership', CORE_BLUE, '12'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype - just what AI is, where Skyline sits today, how to adopt it without risk, and what comparable businesses are already doing. The goal is that John, Grady, and the Skyline team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is - and Isn\'t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do - not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define - predictable and low-risk. For example, "draft a first concept narrative and rate-sheet quote from this RFP." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself - more flexible, and it needs human oversight. For example, "watch the exhibitor lists and flag who is worth reaching out to." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. Skyline starts with simple automations that pay off in the first 90 days - faster quotes, found-in-search, captured inquiries - and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Skyline Sits Today - The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run companies - including Skyline - sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with the Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Skyline Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'AI is appearing at the edges (the parent network\'s digital activations; an awareness of AI lead capture) but is not yet woven into Skyline\'s own growth or operations', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day - search authority, capture, quoting, the booth layer - with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and the booth resale line with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business runs, sells, and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Skyline is early but not behind - the craft is world-leading and the parent network is already moving on digital. This report is the plan to reach Operational - AI working in the growth engine and inside the booth - within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly - Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model - Govern, Map, Measure, Manage. For a business that captures attendee data on the show floor, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client-facing or that goes out under Skyline\'s name - AI drafts, a person approves the concept, the quote, and the follow-up'],
+      ['Data leakage', 'Attendee badge and contact data pasted into public tools can escape', 'Private, governed AI deployments - attendee PII and client data never touch a public model; capture runs inside CCPA/CPRA, CAN-SPAM, and TCPA rules'],
+      ['Compliance & accountability', 'Untracked AI tools create gaps - including an undisclosed booth chatbot', 'Every AI tool inventoried with owner, vendor, and data source; the on-floor concierge discloses it is an assistant (California SB 1001), led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Businesses Are Already Doing', { color: CORE_BLUE }),
+  bullet('Experiential & exhibit marketing: exhibitors are moving to AI lead capture and instant post-show nurture because digital capture converts far better than a stack of paper cards left to go cold for a week.'),
+  bullet('Local service businesses: multi-location operators are using AI-search optimization to become the cited answer when buyers ask AI tools "who is the best [trade] near me?" - capturing demand competitors never see.'),
+  bullet('Project-and-proposal businesses: design-and-bid firms are turning multi-day proposal and quote assembly into a same-day, review-ready draft - responding to more RFPs with the same team.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Skyline\'s own numbers would be confirmed in discovery. Technijian\'s specific, measured results from prior builds appear in Section 11 (Capability Proof), and the growth engine that puts them to work is in Section 13.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life - A Skyline Exhibit Consultant', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A consultant fields an RFP, hunts through old files for a comparable past build, re-keys booth dimensions and graphics specs, assembles a rate sheet by hand across design, fabrication, I&D, drayage, and storage, and sends a first concept days later - while a faster competitor has already answered. After the show, the captured cards sit in a pile until someone has time to follow up.',
+    'WITH AI: The RFP lands and an AI assistant drafts a first concept narrative and a rate-sheet quote in minutes - pulling from a searchable memory of forty years of builds - which the consultant reviews and approves the same day. On the floor, the AI-enabled booth captures and enriches every lead and drafts the personalized follow-up instantly. The expertise is captured in a system, so the same standard holds across every consultant and survives a new hire or a succession.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner - vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but Skyline assembles, secures, and governs everything - and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire - with proven builds and CISSP-led security, plus a booth platform Skyline owns and resells', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 13 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms Skyline OC\'s Growth Engine', CORE_BLUE, '13'),
   spacer(100),
   p('The engine runs three motions at once: get found and win the project (AI-search authority, reputation, targeted outbound, and faster RFP and quote drafting), sell the AI-enabled booth (the new resale line - lead capture, an on-floor concierge, instant post-show nurture, and an ROI dashboard), and keep and grow the account (re-book intelligence, a searchable design memory, social proof, and the AI layer attached across the client base). The first fills the funnel, the second is a brand-new high-margin revenue line, and the third protects and compounds the order book.'),
   spacer(160),
@@ -924,11 +1023,11 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 14 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '13'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '14'),
   spacer(100),
-  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers - AI-search authority, reputation, capture-and-nurture, and a strategy workshop - and expands into the AI-enabled booth platform, the AI quote engine, and the design memory only as the results prove out. The model below is built from public information and conservative assumptions, because Skyline\'s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 16 replace them with real baselines.'),
+  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers - AI-search authority, reputation, capture-and-nurture, and a strategy workshop - and expands into the AI-enabled booth platform, the AI quote engine, and the design memory only as the results prove out. The model below is built from public information and conservative assumptions, because Skyline\'s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 17 replace them with real baselines.'),
   spacer(140),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
@@ -969,6 +1068,18 @@ docChildren.push(
   spacer(60),
   p('The ratio is measured against the entry program only - the easiest possible place to start. It does not count the new AI-booth resale margin (pure new revenue at an attach rate across the client base), the retention the re-book intelligence protects, the staff hours recovered from faster quoting, or the enterprise-value lift of being a differentiated dealer in a consolidating network. Average project value is illustrative and is replaced with Skyline\'s actual book in discovery. All figures are projected, not guaranteed.', { italics: true, size: 18 }),
   spacer(160),
+  calloutBox('AI as a Managed Investment - Not a Leap of Faith', [
+    'The reason most AI spending disappoints is not the technology - it is the lack of measurement. Industry research (McKinsey, State of AI 2025) finds roughly 88% of companies now use AI, but only about 39% see a real profit impact; the difference is discipline, not budget.',
+    'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost - and if a pilot does not clear its cost at the gate, we stop and re-scope. Skyline carries the upside, not blind risk.',
+  ], CORE_ORANGE),
+  spacer(160),
+  subHeader('The Entry Offer - The 90-Day AI Visibility Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped, fixed-price program - not an open-ended engagement. The pilot stands up Skyline\'s AI-search presence, consolidates and grows the reputation, and captures the inbound, and proves the lift before any larger build is discussed.'),
+  calloutBox('The Pilot Bar - and Our Commitment', [
+    'Success metric: within 90 days, Skyline is cited by at least one major AI assistant (ChatGPT, Perplexity, or Google AI) for a high-intent booth-design query in its market, AND the capture-and-nurture funnel is live and producing qualified inbound exhibit inquiries.',
+    'Our commitment: the entry program is month-to-month after the initial term - no long lock-in. If the pilot has not moved the needle on the metric above by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+  ], CORE_ORANGE),
+  spacer(160),
   subHeader('Service Investment Map - Start Small, Expand as It Proves Out'),
   buildTable(
     [
@@ -981,7 +1092,7 @@ docChildren.push(
       ['My SEO - AI-Search Authority + Reputation (Tier 4)', 'Own AI-search citations on booth-design queries; consolidate and grow reviews; before/after social content', { text: '$1,250', align: AlignmentType.CENTER }, { text: '$15,000', align: AlignmentType.CENTER }],
       ['My AI Lead Gen - Capture & Nurture (Starter)', 'Catch and nurture inbound across the 6-8-month cycle; targeted outbound on public exhibitor lists', { text: '$1,000', align: AlignmentType.CENTER }, { text: '$12,000', align: AlignmentType.CENTER }],
       ['My AI - Executive AI Workshop (one-time)', 'A half-day with John, Grady, and the creative and sales leads: the AI-booth product roadmap and the growth plan', { text: '-', align: AlignmentType.CENTER }, { text: '$5,000', align: AlignmentType.CENTER }],
-      [{ text: 'ENTRY PROGRAM - Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
+      [{ text: 'THE 90-DAY AI VISIBILITY PILOT - Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
       ['My Dev - AI-Enabled Booth Platform (Phase 2 build)', 'The resale product: AI lead capture + enrichment, booth concierge, post-show nurture, ROI dashboard; plus the AI RFP/quote engine and design knowledge memory', { text: '-', align: AlignmentType.CENTER }, { text: '$48,000', align: AlignmentType.CENTER }],
       ['My Dev - Managed App Services (Phase 2)', 'Hosting, monitoring, per-show deployment, and iteration of the platform', { text: '$800', align: AlignmentType.CENTER }, { text: '$9,600', align: AlignmentType.CENTER }],
       ['My AI - Fractional AI Advisor (Phase 2)', 'Program leadership, measurement governance, and the AI-booth go-to-market with Skyline\'s sales team', { text: '$2,000', align: AlignmentType.CENTER }, { text: '$24,000', align: AlignmentType.CENTER }],
@@ -1000,9 +1111,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 15 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '14'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '15'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 270-day cadence that mirrors the land-and-expand plan: start with the low-commitment entry - get found and capture the inbound - then build and resell the AI-enabled booth, then hold and scale. Real gains - AI-search citations, a growing review base, captured inquiries - are visible inside the first ninety days, before the larger build; the platform and the scale are given realistic runway.'),
   spacer(200),
@@ -1035,14 +1146,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 - Repeat & Attach-Rate Growth', 'Turn on re-book intelligence that watches each client\'s show calendar and surfaces the next-show conversation before the window closes. Attach the AI-booth layer to repeat and multi-show clients, lifting the attach rate across the existing base.'],
-      ['3.2 - Scale + Enterprise Value', 'Roll the AI-booth resale line across the client base and into agency channels. Deliver an ROI dashboard measured against the Section 16 baselines, and position the differentiated, AI-enabled book of business as enterprise value within the consolidating Skyline network.'],
+      ['3.2 - Scale + Enterprise Value', 'Roll the AI-booth resale line across the client base and into agency channels. Deliver an ROI dashboard measured against the Section 17 baselines, and position the differentiated, AI-enabled book of business as enterprise value within the consolidating Skyline network.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 16 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins - Start This Week', CORE_ORANGE, '15'),
+  ...sectionHeader('Quick Wins - Start This Week', CORE_ORANGE, '16'),
   spacer(100),
   p('Five actions Skyline can take immediately - before any new Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -1067,11 +1178,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 17 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '16'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '17'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 13 and 14 are deliberately conservative estimates - a short discovery call replaces them with Skyline\'s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 14 and 15 are deliberately conservative estimates - a short discovery call replaces them with Skyline\'s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -1104,9 +1215,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 18 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '18'),
+  spacer(100),
+  p('The honest answers to the questions Skyline leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have a marketing partner - and the Echo Experiential alliance. Why add Technijian?', bold: true }, 'Keep them. Echo handles the campaign and the creative; Technijian adds the AI layer neither builds: AI-search authority (AEO), AI lead capture and instant nurture, the AI quote engine, and the white-label AI-enabled booth. We are the technology partner that makes the Echo Experiential "capture leads pre-show to post-show" promise scale and become measurable - alongside your partners, not over them.'],
+      [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast - get found, capture the inquiry, draft the quote faster - not autonomous "agents" doing your designers\' job. We use the simplest tool that works, measure it, and only expand what earns its place. The booth-floor AI numbers are public industry context, not our guarantees - we label them that way.'],
+      [{ text: 'Is our data - and our attendees\' data - safe?', bold: true }, 'Yes. Attendee badge and contact data never touches a public AI model; we deploy private, governed systems with human review on anything that goes out under Skyline\'s name, and capture runs inside the CCPA/CPRA, CAN-SPAM, and TCPA rules. The booth concierge discloses it is an assistant (California SB 1001). It is led by a CISSP-certified team.'],
+      [{ text: 'We\'re a lean, family-owned team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite - to give your designers and sales team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 14), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue - and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $32K for Year 1 at published and estimated rates - no hidden fees, no large up-front build. The full engine, including the AI-enabled booth platform Skyline resells, is profiled in Section 14, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 19 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '19'),
   spacer(100),
   p('Skyline already has the hard things: forty years of craft, a trusted family-owned name, named multi-show clients, 45,000 square feet of asset management, a Lake Forest showroom, and a place in the Skyline Exhibits network. What it has not yet done is add the AI-driven layer that decides who gets found, who responds fastest, and who can sell measurable results instead of just a structure - and that is where this program starts.'),
   p('The opportunity is concrete and runs on two engines. Grow Skyline\'s own book - get found in the AI answers and searches buyers read first, win more of the projects with faster concepts and quotes, and keep the repeat clients the company has earned. And stand up the AI-enabled booth as a new high-margin resale line no local rival offers. Both stay inside a plain boundary: AI serves the capture, the follow-up, and the drafting; the designer owns the craft and the client owns the data decision. The entry is small on purpose and pays for itself fast; the build comes second, once it proves the lift.'),
@@ -1114,7 +1245,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 16 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 17 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff - AEO authority, reputation, capture-and-nurture, and the strategy workshop - live inside 30 days of signature, with no large build required to start.',
     ],
@@ -1137,9 +1268,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 20 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '20'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help right-sized operators compete at scale - with security and compliance built in, not bolted on. For Skyline, that means two engines on one show floor: a modern growth engine for the company\'s own book, and a white-label AI-enabled booth platform Skyline resells to its clients.'),
   spacer(140),

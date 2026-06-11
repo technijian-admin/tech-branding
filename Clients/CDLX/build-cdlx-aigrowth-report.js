@@ -74,10 +74,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -410,7 +413,7 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: false, headingStyleRange: '1-2' }),
-  pageBreak(),
+  // No trailing pageBreak — Section 01's pageBreakBefore separates TOC from Section 1 automatically.
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -506,6 +509,9 @@ docChildren.push(
   leadBullet('Month 3 — Mock audit on the pilot. ', 'Run the first joint LE-agency pilot under the wrapper and dry-run a CJIS audit against it — the reusable proof point for every deal after.'),
   leadBullet('Ongoing — Formalize + staff. ', 'Promote the wrapper to a standing CJIS practice inside My Compliance, with CJIS-trained, US-based, background-screened personnel on any CJI-touching work.'),
   p('It is a build measured in months, not years, and the partnership is what triggers it — but the path, the owner, and the milestones are concrete, not aspirational. CJIS work is scoped to the first pilot before any multi-agency commitment, and every CJI-touching task is handled by US-based, background-screened staff.', { size: 18, italics: true, spaceBefore: 40 }),
+  spacer(120),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('This window does not stay open indefinitely. The MFA mandates are already live — CJIS has required it for criminal-justice access since October 1, 2024 — so agencies and insurance-driven private buyers are choosing managed-services partners now, not later. Every quarter CardLogix waits to put a delivery wrap behind its credentials is a quarter the larger incumbent, HID Global, gets to answer the "who runs it after we sell it?" question for those buyers first — and the partner an agency picks for its first CJIS deployment is hard and expensive to displace afterward. The white space is open today; it does not stay open while competitors build their own delivery story. The cost of waiting is not zero — it is a deal defaulting to the vendor with the more complete answer.'),
 );
 
 // ---------- 04 THE BUYER MAP ----------
@@ -653,11 +659,115 @@ docChildren.push(
     'A staged modernization of a two-host virtualization environment: assessment and migration plan, an on-site loaner ESXi server to build and migrate onto with zero data loss, host-by-host upgrade (HV01 then HV02) with VMs live-migrated across the pair, then load-balancing and removal of the loaner. Scoped at ~84 hours, sequenced so the business kept running throughout.',
     'CardLogix runs roughly this shape — about two servers carrying the load. It shows the disciplined, no-downtime way Technijian modernizes a small server footprint, which is precisely the work the co-managed engagement (Track A) absorbs.'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across authority content, account intelligence, and compliance evidence: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.7 },
+      { label: 'What It Does', weight: 3.3 },
+      { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER },
+    ],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, compliance-critical answers, the deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — content, outreach personalization, summarization, account scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging thousands of agency and integrator records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: CardLogix pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single piece of CJIS-authority content is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. That is the kind of AI-engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 07 AI GROWTH ENGINE ----------
+// ---------- 07 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('The AI Growth Engine', CORE_BLUE, '07'),
+  ...sectionHeader('Understanding AI — A Field Guide for CardLogix Leadership', CORE_BLUE, '07'),
+  spacer(100),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where CardLogix sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Nick, and in turn Sebastien and Tom, can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this CJIS audit-evidence pack from these control records." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch named agency grant cycles and flag what needs outreach." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. CardLogix starts with simple automations that pay off in the first 90 days, and adds autonomous agents only where the value is proven — which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where CardLogix Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run companies — including CardLogix — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Stage', weight: 1.6 },
+      { label: 'What It Looks Like', weight: 4 },
+      { label: 'CardLogix Today', weight: 1.4, align: AlignmentType.CENTER },
+    ],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'Real digital products and content exist (the website, the CJIS/MFA blog), but AI is not yet woven into growth or operations', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — authority content, account intelligence, compliance evidence — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and operations with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('CardLogix already produces real authority content and runs a credentialing-grade product line, which puts it at the Emerging stage. This report is the plan to reach Operational — AI working in the growth engine and inside the compliance and account-intelligence workflows — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a security-and-compliance company like CardLogix, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Risk', weight: 1.8 },
+      { label: 'What It Means', weight: 3.4 },
+      { label: 'How Technijian Controls It', weight: 3.4 },
+    ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything customer-facing or compliance-bound — AI drafts, a person approves'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — CJIS-bound records, agency data, and certificate material never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — CJIS/CMMC-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Security hardware makers: credential and identity vendors are using AI-search optimization to become the cited answer when an agency IT lead asks an AI tool "how do we meet CJIS MFA?" — capturing demand competitors never see.'),
+  bullet('Regulated B2B: document-heavy regulated businesses are turning multi-day proposal and compliance-evidence assembly into a minutes-long, audit-ready draft — responding to more agency RFPs and grants with the same team.'),
+  bullet('Channel sellers: companies that sell through integrators are using account intelligence on named targets — region, size, regulatory-deadline exposure — to point a finite sales team at the accounts most ready to buy.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; CardLogix’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 06 (Capability Proof) and the Business-Impact section.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — Nick, Running IT and Business Development'),
+  calloutBox(
+    'Before vs. After AI',
+    [
+      'TODAY: Nick runs IT solo for a growing shop — fielding after-hours issues, patching by hand, provisioning users, and being the second pair of eyes on anything unusual — then switches hats to business development, researching agencies and integrators and drafting outreach and RFP responses one at a time, mostly from knowledge held in his own head.',
+      'WITH AI: Co-managed IT absorbs the toil — monitoring, patching, after-hours coverage handled by a partner pod, with Nick keeping strategic control. On the growth side, an AI account-intelligence engine surfaces the named agencies most ready to buy and drafts the per-account outreach, while an AI document-intelligence layer turns RFP and CJIS-evidence drafting from days into minutes. Nick reviews and approves; the expertise is captured in a system instead of living only in his head.',
+    ],
+    CORE_BLUE
+  ),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [
+      { label: 'Path', weight: 1.6 },
+      { label: 'Reality', weight: 5 },
+    ],
+    [
+      ['DIY tools', 'Inexpensive, but CardLogix assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 08 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('The AI Growth Engine', CORE_BLUE, '08'),
   spacer(100),
   p('The engine runs three motions, and because this is an account-based opportunity, every motion is aimed at named buyers rather than a broad funnel. AI sits underneath the human relationship layer — it surfaces the right agencies, arms the conversation, and automates the evidence — but the trust between CardLogix, Technijian, and an agency is still what closes a deal. Stating that plainly is the point.'),
   spacer(60),
@@ -685,6 +795,18 @@ docChildren.push(
       ['Internal', 'Card-lifecycle automation', 'Provisioning, binding, and renewal workflow around issuance', 'Issuance cycle time', 'My Dev'],
     ],
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the inbound gap made concrete. When an agency IT lead asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox(
+    'Prompt: "Who can deploy and run CJIS-compliant phishing-resistant MFA for a small police department?"',
+    [
+      'TODAY — the AI assistant answers with whichever vendors have the strongest content and third-party signals it can read: it names the large identity incumbents and a couple of MFA platforms, and does NOT surface a CardLogix + managed-services-partner answer — even though that joint offer is the more complete one for an agency that lacks internal IT. The partnership is invisible at the exact moment the agency is forming a shortlist.',
+      'AFTER AEO/AUTHORITY CONTENT — the same query can return the joint offer as a cited option ("CardLogix supplies the phishing-resistant credentials; a managed-services partner stands up and runs the CJIS-aligned environment around them, including the certificate authority…"), with the authority content and FAQ pages as the supporting evidence the assistant points to.',
+    ],
+    CORE_ORANGE
+  ),
+  p('(Illustrative of current AI-search behavior for this query class — not a screenshot; the live result is part of the free Nexus Assess baseline.)', { italics: true, size: 18 }),
   spacer(120),
   calloutBox(
     'The Honest Boundary',
@@ -697,17 +819,18 @@ docChildren.push(
   ),
 );
 
-// ---------- 08 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 09 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '08'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '09'),
   spacer(100),
-  p('The pricing below is built land-and-expand: a small, easy-to-approve entry that solves a real problem now (Track A), and a clearly-labeled later expansion that builds the partnership engine once the working relationship is proven (Track B). The managed-IT and labor figures are drawn from Technijian’s current 2026 rate card — real published rates, not round-number guesses — and are calibrated to a firm quote after the free assessment. The figures most sensitive to your environment are CardLogix’s actual endpoint count and the number it walked from on the prior co-managed conversation; the discovery questions in Section 11 pin those down.'),
+  p('The pricing below is built land-and-expand: a small, easy-to-approve entry that solves a real problem now (Track A), and a clearly-labeled later expansion that builds the partnership engine once the working relationship is proven (Track B). The managed-IT and labor figures are drawn from Technijian’s current 2026 rate card — real published rates, not round-number guesses — and are calibrated to a firm quote after the free assessment. The figures most sensitive to your environment are CardLogix’s actual endpoint count and the number it walked from on the prior co-managed conversation; the discovery questions in Section 13 pin those down.'),
   spacer(140),
   subHeader('The Managed Certificate Authority — the Technical Anchor'),
   p('In our conversation Nick asked specifically what Technijian recommends for the certificate authority (CA) behind the credentials — the system that issues and signs them. This is the technical heart of the partnership offer, and Technijian has already done the engineering work on it. The short version: rather than keep the CA key in software on a Windows server (where a breach exposes it), the CA key is generated inside a dedicated, FIPS-validated cloud Hardware Security Module (HSM) and designed to be non-exportable — it stays in tamper-resistant hardware rather than living on a server an attacker can copy. Because the existing key may already be exposed, the right move is to stand up a fresh CA in the HSM rather than migrate the old one. Indicative cost runs roughly $2,000–$4,000/mo for the HSM-backed CA infrastructure depending on cloud and redundancy (detailed, with the AWS-vs-Azure recommendation, in the companion CloudHSM analysis); on the partnership model CardLogix resells it and Technijian operates it.'),
   p('Technijian has prepared a companion deliverable — the CardLogix Managed-PKI / Cloud HSM analysis — that compares AWS CloudHSM and Microsoft Azure Cloud HSM on cost, fit, and implementation, with a working commercial model where CardLogix resells the service and Technijian implements and operates it. That document holds the cost tables and step-by-step build; it is kept separate from this strategy on purpose, because its provider pricing is list-price-current and will be validated at quote time. For this blueprint, the point is simpler: the managed CA is a real, costed, deliverable service that becomes the technical anchor of the Track-B expansion — offered per customer on AWS, Azure, or Google to match whichever cloud they already run.', { spaceBefore: 0 }),
   spacer(140),
-  subHeader('The Entry — Track A (the easy yes)'),
+  subHeader('The Entry Offer — The 90-Day AI Visibility Pilot (Track A)'),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up CardLogix’s co-managed IT coverage and the authority-content foundation the partnership’s inbound presence rests on, and proves the working rhythm before any larger build is discussed.'),
   buildTable(
     [
       { label: 'Service', weight: 2.8 },
@@ -719,7 +842,7 @@ docChildren.push(
       ['My IT — Co-Managed', 'Managed-services stack (endpoint security, patching, monitoring, image backup) for ~6 workstations + 2 servers, plus a monthly block of co-managed senior support — billed per Technijian’s 2026 managed-services schedule. Ad-hoc / project work beyond the block at the labor rates below.', { text: '~$1,200', align: AlignmentType.RIGHT }, { text: '~$14,400', align: AlignmentType.RIGHT }],
       ['My SEO — Tier 3 (authority content)†', 'GEO/authority content on the MFA, CJIS, and smart-card questions buyers ask; foundation for the partnership’s inbound presence', { text: '$1,000', align: AlignmentType.RIGHT }, { text: '$12,000', align: AlignmentType.RIGHT }],
       ['My AI — Readiness Workshop', 'One-time executive workshop (CTO-advisory hours) to map the joint go-to-market and the CJIS-practice build path', { text: '—', align: AlignmentType.RIGHT }, { text: '~$5,000', align: AlignmentType.RIGHT }],
-      [{ text: 'ENTRY PROGRAM (Y1)', bold: true }, { text: 'The land — solves Track A now, no large build', bold: true }, { text: '', align: AlignmentType.RIGHT }, { text: '~$31,400', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
+      [{ text: 'THE 90-DAY AI VISIBILITY PILOT (Y1)', bold: true }, { text: 'The land — solves Track A now, fixed scope, no large build', bold: true }, { text: '', align: AlignmentType.RIGHT }, { text: '~$31,400', bold: true, color: CORE_BLUE, align: AlignmentType.RIGHT }],
     ],
   ),
   p('† The managed-IT figure is grounded in Technijian’s current 2026 managed-services schedule and is consistent with what comparable lean offices pay today. The SEO line is My SEO Tier 3 at its standard $1,000/mo published rate — kept lean on purpose for the entry; the fuller program that adds AI Search Optimization, PR, and content syndication runs $1,550/mo and can layer on later. All figures are confirmed in a firm quote after the free assessment.', { size: 18, italics: true, spaceBefore: 60 }),
@@ -731,6 +854,15 @@ docChildren.push(
       'It is month-to-month-friendly and the free assessment comes first — so you see the real scope and a firm number before committing to anything. The goal is an easy yes, not a leap of faith.',
     ],
     TEAL
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, CardLogix has co-managed IT live and stable across its environment AND a published authority-content foundation answering the core CJIS / MFA / smart-card questions — with at least one piece beginning to surface in AI-assisted search for those queries.',
+      'Our commitment: the entry program is month-to-month, no lock-in. If the pilot has not hit that metric by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
   ),
   spacer(140),
   subHeader('Labor Rates — 2026 Rate Card (for ad-hoc & project work)'),
@@ -858,9 +990,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 09 IMPLEMENTATION ROADMAP ----------
+// ---------- 10 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', CORE_ORANGE, '09'),
+  ...sectionHeader('Implementation Roadmap', CORE_ORANGE, '10'),
   spacer(100),
   p('The roadmap sequences the two tracks: land Track A fast, prove the joint motion on a single pilot, then scale the channel play. It is paced for a lean organization — no phase asks CardLogix to absorb more than it comfortably can while still running its business.'),
   spacer(160),
@@ -883,9 +1015,9 @@ docChildren.push(
   bullet('Move to a co-sell motion across multiple agencies — the partnership operating at scale.'),
 );
 
-// ---------- 10 QUICK WINS ----------
+// ---------- 11 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — No Commitment Required', TEAL, '10'),
+  ...sectionHeader('Quick Wins — No Commitment Required', TEAL, '11'),
   spacer(100),
   p('A handful of things CardLogix can do right away with no contract and no spend — each a genuine improvement on its own, and each a natural on-ramp to the program. The first is the marquee: a complete, no-cost security and risk assessment.'),
   spacer(80),
@@ -906,9 +1038,32 @@ docChildren.push(
   leadBullet('Review one published CJIS / MFA FAQ. ', 'See how few card makers answer agency CJIS and MFA questions well online — the authority gap is visible in minutes.'),
 );
 
-// ---------- 11 NEXT STEPS & DISCOVERY ----------
+// ---------- 12 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('Next Steps & Discovery', DARK_CHARCOAL, '11'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '12'),
+  spacer(100),
+  p('The honest answers to the questions CardLogix leadership is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [
+      { label: 'Question', weight: 3 },
+      { label: 'Our Honest Answer', weight: 5 },
+    ],
+    [
+      [{ text: 'Nick already runs our IT. Why add Technijian?', bold: true }, 'Nick keeps strategic control — co-managed IT extends his reach, it does not replace him. We absorb the toil (after-hours coverage, patching, monitoring, second-pair-of-eyes on incidents) and bring senior depth on demand, so a growing shop is not one person away from a problem. The entry is sized to a lean team on purpose.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — account intelligence on named agencies and AI-assisted evidence drafting — not autonomous "agents" running your business. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is our data — agency records, CJIS-bound material, certificate keys — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything compliance-bound, led by a CISSP-certified team. The certificate authority is designed around a FIPS-validated, non-exportable key in a cloud HSM, and any CJI-touching work is handled by US-based, background-screened staff.'],
+      [{ text: 'We’re a lean team. Do we have the bandwidth to add a vendor?', bold: true }, 'The point is the opposite — to give Nick back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly check-in plus reviewing what we draft. Track B (the partnership) stays a separate, later conversation so it never crowds the easy first step.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry starts with a free Nexus Assess and a month-to-month-friendly co-managed engagement — no large up-front build and no long lock-in. You see the real scope and a firm number before committing, and if it is not delivering we will tell you honestly. You carry the upside, not the risk.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $31K for Year 1 at published 2026 rates — no hidden fees, no large up-front build. The partnership expansion (the managed CA, the CJIS practice, the account-intelligence engine) is profiled in Section 09, but only after the entry proves the rhythm and Goulet/Hope are ready.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 13 NEXT STEPS & DISCOVERY ----------
+docChildren.push(
+  ...sectionHeader('Next Steps & Discovery', DARK_CHARCOAL, '13'),
   spacer(100),
   p('These follow directly from what we agreed on the May 29 call: Technijian delivers this AI growth strategy, follows with the managed certificate-authority / cloud-HSM options, and Nick sends over the other IT issues on his list. The steps below put structure around that.'),
   spacer(60),
@@ -935,9 +1090,9 @@ docChildren.push(
   ]),
 );
 
-// ---------- 12 ABOUT TECHNIJIAN ----------
+// ---------- 14 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '12'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '14'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California — minutes from CardLogix in the Spectrum — serving small and mid-sized businesses since 2000. We design, build, and operate secure infrastructure with security and compliance built in, and a dedicated team assigned to each client.'),
   spacer(160),
@@ -980,9 +1135,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 13 APPENDIX — SOURCES ----------
+// ---------- 15 APPENDIX — SOURCES ----------
 docChildren.push(
-  ...sectionHeader('Appendix — Sources & Notes', BRAND_GREY, '13'),
+  ...sectionHeader('Appendix — Sources & Notes', BRAND_GREY, '15'),
   spacer(100),
   p('This blueprint draws on our May 29, 2026 conversation with Nick Schooler, public sources, and Technijian’s research foundation for CardLogix. Company figures (headcount, revenue, endpoint count) are public-signal estimates and are confirmed at discovery. CJIS references are to the FBI CJIS Security Policy and public analyses of versions 5.9.5 and 6.0.'),
   spacer(60),
@@ -993,6 +1148,7 @@ docChildren.push(
   bullet('Public analyses of authentication requirements (phishing-resistant MFA; PKI smart cards and FIDO2 as satisfying controls).'),
   bullet('Competitive references: HID Global, Identiv, Tx Systems, Yubico, and phone-based MFA (Cisco Duo, Okta) — public product and positioning material.'),
   bullet('Companion deliverable: CardLogix Managed-PKI / CloudHSM analysis (AWS vs. Azure CA-grade HSM options).'),
+  bullet('Education layer (Section 07): MIT Sloan Management (AI literacy — "what AI can do, not how to build it"); Anthropic, "Building Effective Agents" (the automation/workflow vs. agent distinction); a widely-used five-stage AI maturity model consistent with Gartner and Google Cloud AI-adoption frameworks; U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage). Peer-trend examples are representative directions of travel across comparable industries, not Technijian client guarantees.'),
   bullet('Technijian service definitions: My IT, My Security, My Compliance (eight frameworks), My AI, My SEO, My Dev.'),
   bullet('Technijian 2026 rate card (MSA standard schedule) — labor rates (US support, CTO/vCIO advisory, offshore) and managed-services component pricing used as the basis for the Track-A figures. Final pricing is set in a firm quote after the assessment.'),
   spacer(140),

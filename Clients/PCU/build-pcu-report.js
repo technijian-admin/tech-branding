@@ -66,7 +66,9 @@ function p(text, opts = {}) {
 }
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
-  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true, spacing: { before: 480, after: 120, line: 240 }, children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })] });
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
+  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true, pageBreakBefore: true, spacing: { before: 0, after: 120, line: 240 }, children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })] });
   const visualTable = new Table({ width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: [120, CONTENT_W - 120], borders: noBorders,
     rows: [new TableRow({ children: [
       new TableCell({ width: { size: 120, type: WidthType.DXA }, shading: { fill: color, type: ShadingType.CLEAR }, borders: noBorders, children: [new Paragraph({ children: [new TextRun('')] })] }),
@@ -196,7 +198,8 @@ docChildren.push(
 );
 
 // ---------- TOC ----------
-docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-1' }), pageBreak());
+// Section 01's pageBreakBefore (in sectionHeader) separates the TOC from Section 1 — no trailing pageBreak() needed here.
+docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-1' }));
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
 docChildren.push(
@@ -223,7 +226,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: Pacific Utility’s internal numbers (bid volume, win rate, average job size, estimating capacity) were not part of this draft. Every projection below is labeled illustrative, pricing shows real published rates where they exist and "to be determined in discovery" everywhere else, and the return is shown as the method we will measure — not an invented multiple. The discovery questions in Section 16 replace estimates with real baselines.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: Pacific Utility’s internal numbers (bid volume, win rate, average job size, estimating capacity) were not part of this draft. Every projection below is labeled illustrative, pricing shows real published rates where they exist and "to be determined in discovery" everywhere else, and the return is shown as the method we will measure — not an invented multiple. The discovery questions in Section 19 replace estimates with real baselines.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE STRATEGIC INFLECTION ----------
@@ -236,7 +239,7 @@ docChildren.push(
     [ { label: 'Engine', weight: 2.1 }, { label: 'What’s Happening (2025–2026)', weight: 4.2 }, { label: 'What It Means for Pacific Utility', weight: 3.7 } ],
     [
       ['Residential development (cooling)', 'Housing starts and deliveries are pulling back across CA, NV, and AZ; SoCal metros saw price softening and Las Vegas builders logged the slowest February sales in a decade', 'The developer/builder channel softens near-term — a reason to diversify the bid mix, not to lean harder on cooling demand'],
-      ['Grid & public infrastructure (booming)', '~$1.4T U.S. utility capex 2025–2030; the largest transmission build ever; 2023 alone saw $11.8B on underground lines and $7.5B on transformers (+23% YoY)', 'Pacific Utility already self-performs high voltage, Rule 20 undergrounding, and streetlights — the exact scopes the boom demands'],
+      ['Grid & public infrastructure (booming)', '~$1.4T U.S. utility capex 2025–2030; the largest transmission build ever; in 2023, utilities spent on the order of $11.8B on underground lines and $7.5B on transformers (the latter up roughly 23% year over year)', 'Pacific Utility already self-performs high voltage, Rule 20 undergrounding, and streetlights — the exact scopes the boom demands'],
       ['Federal & state programs', 'IIJA grid modernization (~$73B), DOE grid-hardening and undergrounding, NEVI EV charging ($5B, restored 2025), BEAD broadband ($42B) ramping into 2026, CA SB 1 (~$5B/yr) for streets', 'New, fundable channels for dry-utility, high-voltage, EV, broadband, and streetlight scopes — if the firm is found and prepared early'],
       ['Wildfire-driven undergrounding', 'CPUC Rule 20 is shifting from legacy work-credit projects to utility wildfire-mitigation undergrounding (IOU hardening) — a growing, multi-year channel', 'A direct fit for the firm’s origin business; the contractor that owns the "undergrounding" story is positioned to win it'],
       ['The skilled-labor shortage', 'Construction needs hundreds of thousands of net new workers; electricians retire faster than they are replaced, with the workforce projected to shrink while demand rises', 'Estimating bandwidth and crew productivity — not demand — become the binding constraint; this is precisely where AI pays'],
@@ -536,6 +539,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a developer’s engineer or an agency buyer asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who installs dry utility and high-voltage for a master-planned community in the Inland Empire / Las Vegas / Phoenix?"', [
+    'TODAY — the AI assistant answers with whichever contractors have the strongest indexable content and third-party signals it can read: it names a couple of larger or better-publicized firms, and does NOT mention Pacific Utility — even though Pacific Utility self-performs all five underground trades on one schedule across exactly those three states. The firm is invisible at the moment the buyer is forming a shortlist.',
+    'AFTER ANSWER-ENGINE OPTIMIZATION — the same query returns Pacific Utility as a cited option ("Pacific Utility Installation self-performs wet, dry, high-voltage, streetlights, and utility engineering across CA, NV, and AZ — a single-source underground partner…"), with the single-source page and the project-proof scoreboard as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result for the firm’s actual target queries would be captured as the answer-engine baseline at kickoff.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('Answer-engine visibility compounds, and it rewards whoever optimizes first. Every quarter Pacific Utility is not cited, the assistants learn to answer "underground / undergrounding / high-voltage contractor in [city]" with someone else — and that default, once set in the retrieval data the engines lean on, is harder and more expensive to dislodge than to claim now. The category is wide open: no underground-utility contractor in the set has claimed the AI-answer position, the single-source story, or the tri-state lane. That window is widest right now, before a rival builds its own answer-engine presence — and it lines up with the grid and public-infrastructure boom the firm is built to win. The cost of waiting is not zero; it is a competitor becoming the default answer in the exact lane Pacific Utility should own.'),
 );
 
 // ---------- 11 TECHNIJIAN CAPABILITY PROOF ----------
@@ -594,16 +608,101 @@ docChildren.push(
     'For Pacific Utility they build the AI takeoff and estimating acceleration, the bid and RFP assembly, the prequalification and compliance-document automation, and the institutional-knowledge system — with the licensed estimator or PM signing the price.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across content, project intelligence, and estimating support: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [ { label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER } ],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, compliance-critical answers, the deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — content, outreach personalization, summarization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging thousands of records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Pacific Utility pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single authority page is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. On the work that has to be right, the same three-model peer-review pattern (the LLM Council above) raises accuracy before anything goes out. This is the kind of AI-engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 12 AI ENGINE ----------
+// ---------- 12 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms Pacific Utility’s Growth Engine', CORE_BLUE, '12'),
+  ...sectionHeader('Understanding AI — A Field Guide for Pacific Utility Leadership', CORE_BLUE, '12'),
+  spacer(100),
+  p('This section exists to make the rest of this plan easy to evaluate. No jargon, no hype — just what AI is, where Pacific Utility sits today, how to adopt it without risk, and what comparable firms are already doing. The goal is that Daniel Mole and the leadership team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this bid response from these takeoff quantities and the firm’s past bids." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the permit and bid boards across three states and flag what fits our scope." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Pacific Utility starts with simple automations that pay off in the first ninety days, and adds autonomous monitoring only where the value is proven — which is exactly how the roadmap in this plan is sequenced. And on fixed-price, safety-critical work the boundary holds throughout: AI assists, the licensed estimator or PM signs.'),
+  spacer(140),
+
+  subHeader('Where Pacific Utility Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run firms — including Pacific Utility — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with the Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [ { label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Pacific Utility Today', weight: 1.6, align: AlignmentType.CENTER } ],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'The data and process assets for AI exist (twenty-five years of bids, jurisdictional know-how, a tri-state footprint) but AI is not yet woven into growth or operations', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — answer-engine content, project intelligence, estimating support — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and operations with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business competes and runs', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Pacific Utility has the raw material most firms lack — a deep bid history and real jurisdictional expertise — which is what puts it at the Emerging stage rather than the first rung. This plan is the path to reach Operational: AI working in the growth engine and inside estimating, within roughly nine months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a fixed-price, safety-critical contractor, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [ { label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 } ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer — a takeoff quantity or a bid number that looks right but isn’t', 'Human-in-the-loop on anything binding: AI drafts the takeoff and the bid; the licensed estimator or PM verifies and signs the price'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — bid history, pricing, and prequalification data never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps on prevailing-wage and DIR-governed public work', 'Every AI tool inventoried with owner, vendor, and data source — public-works-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Firms Are Already Doing'),
+  bullet('Construction estimating: contractors are using automated takeoff to compress preconstruction from dozens of hours to a fraction, letting each estimator carry more bids — the estimator still reviews and owns the number.'),
+  bullet('Business development: developer- and agency-facing firms are using project, permit, and entitlement intelligence to surface the right opportunities months early and bid before the field crowds in.'),
+  bullet('Specialty trades: document-heavy regulated contractors are turning multi-day bid, RFP, and prequal assembly into a minutes-long, reviewable draft — responding to more solicitations with the same team.'),
+  p('These are representative directions of travel across comparable firms, not guarantees; Pacific Utility’s own numbers would be confirmed in discovery. Technijian’s specific, delivered results from prior builds appear in Section 11 (Capability Proof) and feed the engine in Section 13.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Pacific Utility Estimator'),
+  calloutBox('Before vs. After AI', [
+    'TODAY: An estimator learns about a public-works RFP or a developer invitation, hunts for the documents, does the takeoff by hand against volatile material prices, rebuilds scope from memory and old bids, and assembles the prevailing-wage and prequal paperwork — and still has to decline bids there is no bandwidth to reach.',
+    'WITH AI: Project and permit intelligence flags the right bid early; an AI first-pass takeoff and a draft bid assemble in minutes from the firm’s own history; the prequal and compliance package drafts itself; and the licensed estimator reviews, prices, and signs. The same estimator carries more bids — and the binding constraint, bandwidth, loosens without a hire the labor market can’t supply.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [ { label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 } ],
+    [
+      ['DIY tools', 'Inexpensive, but Pacific Utility assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); the U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 13 AI ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms Pacific Utility’s Growth Engine', CORE_BLUE, '13'),
   spacer(100),
   p('The engine runs three motions at once: get found and trusted (own the answer-engine, the single-source story, and the tri-state lane), win the work (project and permit intelligence plus bid and estimating acceleration on the booming grid and public work), and run leaner and remember (a twenty-five-year knowledge system and more bids per estimator). Every part respects the boundary that protects a fixed-price, safety-critical contractor — covered in full in the next section.'),
   spacer(160),
   diagramImage(DIAGRAM_ARCH_BUF, 'Pacific Utility AI Engine', 600, 1.61),
-  diagramCaption('Figure 12.0 — The Engine: Get Found & Trusted, Win the Work, and Run Leaner & Remember'),
+  diagramCaption('Figure 13.0 — The Engine: Get Found & Trusted, Win the Work, and Run Leaner & Remember'),
   spacer(160),
   buildTable(
     [ { label: 'Motion', weight: 2.0 }, { label: 'Play', weight: 2.5 }, { label: 'What It Does', weight: 3 }, { label: 'Metric', weight: 1.5 }, { label: 'Service', weight: 1.5 } ],
@@ -633,9 +732,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 13 THE BOUNDARY THAT BUILDS TRUST ----------
+// ---------- 14 THE BOUNDARY THAT BUILDS TRUST ----------
 docChildren.push(
-  ...sectionHeader('The Boundary That Builds Trust', DARK_CHARCOAL, '13'),
+  ...sectionHeader('The Boundary That Builds Trust', DARK_CHARCOAL, '14'),
   spacer(100),
   p('Underground utility work is fixed-price and safety-critical, and that fact sets a hard boundary on where AI belongs — a boundary that, stated plainly, becomes a trust signal rather than a caveat. A bid is a binding price; a high-voltage installation is life-safety work; a public bid carries prevailing-wage and compliance obligations. AI can take off quantities, draft the bid, assemble the prequal package, and surface the precedent in seconds — but it cannot own the number or the safety sign-off. The licensed estimator and the project manager do. That is not a limitation on the strategy; it is the discipline that makes the strategy safe to run, and it is exactly the discipline a careful contractor already lives by.'),
   spacer(140),
@@ -661,11 +760,11 @@ docChildren.push(
   ),
 );
 
-// ---------- 14 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 15 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '14'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '15'),
   spacer(100),
-  p('This section shows where the value comes from and what the program costs. Pricing shows real published Technijian rates where they exist and "to be determined in discovery" everywhere else; the return is shown as the method we will measure, not an invented multiple. The discovery questions in Section 16 replace estimates with Pacific Utility’s real baselines.'),
+  p('This section shows where the value comes from and what the program costs. Pricing shows real published Technijian rates where they exist and "to be determined in discovery" everywhere else; the return is shown as the method we will measure, not an invented multiple. The discovery questions in Section 19 replace estimates with Pacific Utility’s real baselines.'),
   spacer(140),
   subHeader('Projected Lift (Illustrative)'),
   buildTable(
@@ -693,15 +792,16 @@ docChildren.push(
   spacer(60),
   p('Illustrative until discovery — no number we can’t back. Revenue is attributed to the program, not guaranteed; in this market a single additional grid or public-works award can outweigh the entire program cost.', { italics: true, size: 18 }),
   spacer(160),
-  subHeader('Technijian Service Investment Map (Land-and-Expand)'),
-  p('Lead with a modest entry program that makes the firm found and surfaces the right bids; add the AI estimating and knowledge build as a later expansion, once the entry proves the lift. Published rates are shown where they exist; the rest is scoped in discovery.'),
+  subHeader('The Entry Offer — The 90-Day AI Visibility & Bid-Intelligence Pilot'),
+  p('Start with one clearly-scoped entry program — not an open-ended engagement. The 90-Day AI Visibility & Bid-Intelligence Pilot stands up Pacific Utility’s answer-engine presence and the single-source story, and turns on the first project- and permit-intelligence feed — proving the lift before any larger estimating build is discussed. It runs on modest, published rates with no large up-front build.'),
+  spacer(120),
   buildTable(
     [ { label: 'Service', weight: 2.9 }, { label: 'Scope', weight: 3.7 }, { label: 'Monthly', weight: 1.6 }, { label: 'Investment', weight: 1.6 } ],
     [
       ['My SEO — Answer-Engine, Tri-State Local & Single-Source', 'AEO + the single-source story + Rule 20 / undergrounding lane + project-proof scoreboard (new)', '$500–$1,500/mo*', 'Published tier'],
       ['My AI Lead Gen — Project, Permit & Account Intelligence (Starter)', 'Early project/permit/program intelligence across CA, NV, AZ; relationship-led, not volume', '$1,499/mo*', '+ $2,500 setup'],
       [{ text: 'My AI — Readiness Workshop + Content Engine kickoff' }, 'Leadership alignment, the boundary, and the content engine', 'TBD', { text: 'TBD — discovery', color: CORE_ORANGE }],
-      [{ text: 'ENTRY PROGRAM SUBTOTAL', bold: true }, { text: 'The new growth layer: My SEO + Lead Gen Starter + the TBD workshop — starts small, no large build', bold: true }, { text: '', bold: true }, { text: 'Published + TBD', bold: true, color: CORE_BLUE }],
+      [{ text: 'THE 90-DAY PILOT — SUBTOTAL', bold: true }, { text: 'The new growth layer: My SEO + Lead Gen Starter + the readiness workshop — starts small, no large build', bold: true }, { text: '', bold: true }, { text: 'Published + TBD', bold: true, color: CORE_BLUE }],
       [{ text: 'My Dev / My AI — AI Estimating + Bid-Assembly + Knowledge (Phase 2)' }, 'AI takeoff/estimating, bid & RFP assembly, prequal/compliance docs, institutional-knowledge system', '—', { text: 'TBD — discovery', color: CORE_ORANGE }],
       [{ text: 'My Dev — Managed App Services (Phase 2)' }, 'Hosting, monitoring, and support for the AI estimating and knowledge platform', 'TBD', { text: 'TBD — discovery', color: CORE_ORANGE }],
       [{ text: 'My AI — Fractional AI Advisor (Phase 2)' }, 'Program leadership across authority, intelligence, and estimating', 'TBD', { text: 'TBD — discovery', color: CORE_ORANGE }],
@@ -710,6 +810,15 @@ docChildren.push(
   ),
   spacer(60),
   p('* Real published Technijian list rates. My SEO published tiers run $500–$1,500/mo (final tier set in discovery). My AI Lead Gen Starter is $1,499/mo plus a one-time $2,500 setup. My AI, My Dev, the AI estimating and knowledge build, managed app services, the advisor, and the workshop have no published rate and are scoped in discovery — the Year-1 total is finalized then.', { italics: true, size: 18 }),
+  spacer(160),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, Pacific Utility is cited by a major AI assistant (ChatGPT, Perplexity, or Microsoft Copilot) for a high-intent underground / undergrounding / high-voltage contractor query in at least one of its three states, AND the firm is receiving its first project- and permit-intelligence feed on target submarkets.',
+      'Our commitment: the entry program is month-to-month — no long lock-in, no obligation to continue if it doesn’t hit the metric by day 90. If it has not moved the needle on the metric above, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
   spacer(160),
   calloutBox(
     'The Math That Matters',
@@ -722,14 +831,14 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 IMPLEMENTATION ROADMAP ----------
+// ---------- 16 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '15'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '16'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 270-day cadence: make the firm found and trusted first, then turn on the project intelligence and bid acceleration, then build the AI estimating and knowledge engine. The lowest-cost, highest-visibility wins land in the first ninety days; the estimating build gets realistic runway and the boundary built in.'),
   spacer(200),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'Pacific Utility 90-180-270 Day Roadmap', 600, 2.30),
-  diagramCaption('Figure 15.0 — Pacific Utility Growth Program: 90 / 180 / 270-Day Roadmap'),
+  diagramCaption('Figure 16.0 — Pacific Utility Growth Program: 90 / 180 / 270-Day Roadmap'),
   spacer(160),
   subHeader('Phase 1 — Foundation (Days 1–90)', { color: CORE_BLUE }),
   p('Make the firm found and trusted the way buyers and AI engines now look.'),
@@ -757,14 +866,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — AI Estimating & Takeoff', 'Build the AI takeoff and estimating acceleration and the prequal/compliance-document automation, with the licensed estimator verifying and signing every price.'],
-      ['3.2 — Knowledge System + ROI Dashboard', 'Stand up the twenty-five-year institutional-knowledge system (matched precedents) and deliver the ROI dashboard against the Section 16 baselines.'],
+      ['3.2 — Knowledge System + ROI Dashboard', 'Stand up the twenty-five-year institutional-knowledge system (matched precedents) and deliver the ROI dashboard against the Section 19 baselines.'],
     ],
   ),
 );
 
-// ---------- 16 QUICK WINS ----------
+// ---------- 17 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '16'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '17'),
   spacer(100),
   p('Five actions Pacific Utility can take immediately — before any expanded engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -789,9 +898,29 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 17 CONCLUSION & NEXT STEPS ----------
+// ---------- 18 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('Conclusion & Next Steps', DARK_CHARCOAL, '17'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '18'),
+  spacer(100),
+  p('The honest answers to the questions Pacific Utility leadership is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [ { label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 } ],
+    [
+      [{ text: 'We have marketing handled internally. Why add Technijian?', bold: true }, 'Keep what works — Melessa’s team owns the brand and the relationships. We add the layer an in-house marketing function rarely builds: answer-engine optimization (so AI assistants cite the firm), the single-source story made searchable, project and permit intelligence, and the AI estimating and bid-assembly tooling. We run alongside your team, not over it.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this plan starts with simple, proven automations that pay back fast — answer-engine content and project intelligence — not autonomous "agents" bidding your jobs. We use the simplest tool that works, measure it, and only expand what earns its place. The estimating build comes later, inside the boundary where the licensed estimator still signs the number.'],
+      [{ text: 'Is our data — bid history, pricing, prequal records — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything binding, led by a CISSP-certified team. Data governance is part of the readiness work in the entry program, and it is built for the prevailing-wage and DIR-governed nature of public work.'],
+      [{ text: 'We’re a lean team in a labor shortage. Do we have bandwidth for this?', bold: true }, 'The point is the opposite — to give your estimators and PMs back hours, not add work. Technijian runs the build and the cadence; your involvement is a short strategy session plus reviewing what we draft. The whole thesis is to bid more without a hire the labor market can’t supply.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a 90-day pilot with a defined success metric (Section 15), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it. You carry the upside, not the risk.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program runs on real published rates — My SEO at $500–$1,500/mo and My AI Lead Gen Starter at $1,499/mo plus a one-time $2,500 setup — with no large up-front build. The AI estimating and knowledge build is the later expansion, scoped in discovery and only after the pilot proves the lift; the full Year-1 number is finalized then, with no figure we can’t back.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 19 CONCLUSION & NEXT STEPS ----------
+docChildren.push(
+  ...sectionHeader('Conclusion & Next Steps', DARK_CHARCOAL, '19'),
   spacer(100),
   p('Pacific Utility has the hard things: more than twenty-five years, an employee-owned culture that retains craftspeople, a tri-state license footprint, named agency work, and the rare ability to self-perform all five underground trades on one schedule. What it has not yet done is make that capability visible where buyers now look, surface the right bids early, and use AI — safely — to bid more with the team it has. And it is doing this at the exact moment the market is rebalancing toward the grid and public-infrastructure work the firm does best.'),
   p('The opportunity is concrete and low-risk: own the answer-engine, the single-source story, and the tri-state lane no competitor has claimed; surface the booming grid and public work early; and build AI estimating and knowledge inside the boundary that protects a fixed-price, safety-critical contractor. The boundary that governs the work — AI assists, the licensed estimator or project manager signs — is not a limitation on the strategy. It is the strategy’s moat.'),
@@ -799,7 +928,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 16 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call — bid volume, win rate, average job size by channel, and estimating capacity — to replace the illustrative figures with real baselines and confirm program scope.',
       'Step 2: Technijian returns a calibrated model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the answer-engine foundation, the single-source story, and the proof scoreboard — inside 30 days.',
     ],
@@ -816,9 +945,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 18 ABOUT TECHNIJIAN ----------
+// ---------- 20 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '20'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help firms compete at scale, with security and compliance built in, not bolted on — and we map real, delivered capabilities to each client’s actual work, honestly labeled.'),
   spacer(140),
@@ -857,6 +986,7 @@ docChildren.push(
   p('6. Labor shortage — Associated Builders and Contractors (net new-worker estimates); ECMag / BLS and AGC (electrician supply, retirements, and workforce projections).', { size: 20 }),
   p('7. AI in construction & bidding — AGC 2026 Construction Outlook (AI adoption and estimating); Autodesk BuildingConnected, ConstructConnect, and project-intelligence platforms (Mercator.ai, Dodge); estimating-accuracy and preconstruction data (Procore); professional-liability considerations on AI-generated estimates.', { size: 20 }),
   p('8. Technijian capabilities & pricing — My SEO published tiers ($500–$1,500/mo plus add-ons), My AI Lead Gen ($1,499 Starter + $2,500 setup); My AI and My Dev scoped per engagement; documented Proven Results (AI Document Intelligence inside a FINRA broker-dealer; Multi-Agent SEO + Answer-Engine Platform; Weaviate/Obsidian knowledge system; LLM Council three-model peer review).', { size: 20 }),
+  p('9. AI literacy & responsible-AI frameworks (Section 12) — MIT Sloan Management Review (AI literacy: "what AI can do," not how to build it); Anthropic, "Building Effective Agents" (the automation/workflow vs. agent distinction); a widely-used five-stage AI maturity model (consistent with the Gartner AI Maturity Model and Google Cloud AI Adoption Framework); U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage).', { size: 20 }),
 );
 
 // =====================================================================
@@ -865,7 +995,7 @@ const doc = new Document({
   styles: {
     default: { document: { run: { font: FONT_BODY, size: 22, color: BRAND_GREY } } },
     paragraphStyles: [
-      { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', run: { size: 2, bold: true, color: 'FFFFFF', font: FONT_HEAD }, paragraph: { spacing: { before: 480, after: 120 }, outlineLevel: 0 } },
+      { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', run: { size: 2, bold: true, color: 'FFFFFF', font: FONT_HEAD }, paragraph: { spacing: { before: 0, after: 120 }, outlineLevel: 0 } },
       { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', run: { size: 26, bold: true, color: CORE_BLUE, font: FONT_HEAD }, paragraph: { spacing: { before: 280, after: 120 }, outlineLevel: 1 } },
       { id: 'Heading3', name: 'Heading 3', basedOn: 'Normal', next: 'Normal', run: { size: 24, bold: true, color: DARK_CHARCOAL, font: FONT_HEAD }, paragraph: { spacing: { before: 220, after: 80 }, outlineLevel: 2 } },
     ],

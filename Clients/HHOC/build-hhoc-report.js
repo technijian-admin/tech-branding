@@ -74,10 +74,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -373,7 +376,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -400,7 +402,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: Housing for Health’s internal numbers (current Medi-Cal claims volume, denial rate, days to payment, caseload, and current financials) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: Housing for Health’s internal numbers (current Medi-Cal claims volume, denial rate, days to payment, caseload, and current financials) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE CALAIM MODEL ----------
@@ -707,6 +709,21 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is one part of the gap made concrete. Referral partners — hospital discharge planners, county Coordinated Entry staff, clinic case managers — increasingly ask an AI assistant who can take a Medi-Cal member before they ever open a directory. When a partner asks the question below today, this is the shape of the answer they get:'),
+  calloutBox(
+    'Prompt: "Who provides CalAIM Enhanced Care Management and housing supports for Medi-Cal members in Orange County?"',
+    [
+      'TODAY — the AI assistant answers with whichever organizations have the strongest content and third-party signals it can read: it names the larger, more-published CalAIM providers and the county’s own pages, and does NOT mention Housing for Health — even though it is a contracted ECM and Community Supports provider with real outcomes. A referrable member can be routed elsewhere at the exact moment a partner is choosing.',
+      'AFTER the fix — the same query can surface Housing for Health as a cited option ("Housing for Health Orange County provides CalAIM Enhanced Care Management and housing Community Supports for Medi-Cal members in Orange County…"), with the referral-partner page and the outcomes as the supporting evidence the assistant points to.',
+    ],
+    CORE_ORANGE
+  ),
+  p('(Illustrative of how AI search resolves this query class today, not a screenshot of a specific result; the live result would be captured in the readiness check.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('The cost of waiting here is not abstract — it is measured in unrecovered Medi-Cal dollars and a closing funding window. Every month of denied or unbilled claims is revenue already earned and then lost; that money does not come back. And the timing is unusually pointed: CalAIM’s PATH capacity funding — the exact money that pays for billing, data, and AI-readiness work — winds down at the end of 2026, the CalAIM waiver itself runs through December 31, 2026 with an uncertain successor, and Transitional Rent became a required new billable line in 2026 that a ready organization can capture first. The organizations that modernize their billing and data now capture this window; those that wait pay for the same work later without the grant offset, and leave the recoverable revenue on the table in the meantime.'),
 );
 
 // ---------- 09 TECHNIJIAN CAPABILITIES ----------
@@ -751,11 +768,115 @@ docChildren.push(
     'For Housing for Health it delivers the HIPAA safeguards program and the 42 CFR Part 2 readiness due in early 2026 — the compliance foundation that makes AI-assisted work deployable and a low-friction first engagement.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question from a nonprofit watching every dollar: won’t running AI across billing, documentation, outcomes, and account intelligence cost a fortune? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.7 },
+      { label: 'What It Does', weight: 3.3 },
+      { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER },
+    ],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final compliance-critical answers, the trickiest denial appeals, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — documentation, outcomes narratives, grant/RFP drafting, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, eligibility screening, tagging thousands of records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Housing for Health pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single grant narrative, for example, is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. And it pairs with the HIPAA-safe boundary: the cheap, high-volume models never see member PHI — sensitive data stays inside the private, governed deployment. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Helps Housing for Health Serve More & Capture More', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for Housing for Health OC Leadership', CORE_BLUE, '10'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Housing for Health sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that leadership can judge every recommendation that follows on its merits — and see that, for a Medi-Cal-funded nonprofit, the compliant way is the only way we build.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "turn this visit note into a compliant encounter record and flag what’s missing before the claim." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the claims pipeline and surface the denials worth appealing." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Housing for Health starts with simple automations that pay off in the first 90 days — clean claims, documentation completeness — and adds more autonomous capability only where the value is proven and a person still reviews every billing decision. That is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Housing for Health Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run nonprofits — including Housing for Health — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in the CalAIM field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Stage', weight: 1.6 },
+      { label: 'What It Looks Like', weight: 4 },
+      { label: 'Housing for Health Today', weight: 1.6, align: AlignmentType.CENTER },
+    ],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent billing, documentation, and reporting', ''],
+      [{ text: '2. Emerging', bold: true }, { text: 'A modern, recently-rebranded digital base and real outcomes, but AI is not yet woven into billing, care delivery, or reporting', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — clean claims, documentation, outcomes reporting — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across capture, service, and compliance with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the organization runs, scales, and supports its provider network', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('This report is the plan to reach Operational — AI capturing revenue, freeing care managers, and proving outcomes — within twelve months, on a HIPAA-safe foundation.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a Medi-Cal-funded, PHI-handling organization like Housing for Health, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Risk', weight: 1.8 },
+      { label: 'What It Means', weight: 3.4 },
+      { label: 'How Technijian Controls It', weight: 3.4 },
+    ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything that affects a claim or a member — AI assembles and flags, a person approves; billing is never autonomous'],
+      ['Data leakage', 'Member PHI pasted into public tools can escape', 'Private, governed AI under a Business Associate Agreement — member records and 42 CFR Part 2 (SUD) data never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — HIPAA/Part 2-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Health & housing operations: multi-site CalAIM and community-services organizations are automating documentation and clean-claim assembly to recover Medi-Cal revenue and free care managers for client-facing work.'),
+  bullet('Nonprofit funding: mission-driven organizations are drafting grant and RFP responses from a reusable evidence library — responding to more opportunities with the same small team.'),
+  bullet('Regulated intake: PHI-handling providers are using AI to screen referrals and discharge feeds against eligibility rules, turning a manual handoff into a fast, trackable enrollment.'),
+  p('These are representative directions of travel across comparable organizations, not guarantees; Housing for Health’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 9 (Capabilities) and Section 11 (the AI engine).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Housing for Health Care Manager'),
+  calloutBox(
+    'Before vs. After AI',
+    [
+      'TODAY: A care manager spends much of the day on paperwork — writing up encounters by hand, re-keying the same details across the case-management system and the billing portal, chasing the one missing document that will hold up a claim, and re-juggling caseloads as new referrals arrive. The expertise that keeps claims clean lives in a few experienced people’s heads.',
+      'WITH AI (HIPAA-safe): The visit note becomes a compliant encounter record in minutes, with any missing item flagged before the claim goes out; referrals and discharge feeds are screened for eligibility automatically; caseloads are balanced to the rate. The care manager reviews and approves — and spends the recovered hours on members, not forms. The standard is captured in a system, so it holds as the team grows and survives a new hire.',
+    ],
+    CORE_BLUE
+  ),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [
+      { label: 'Path', weight: 1.6 },
+      { label: 'Reality', weight: 5 },
+    ],
+    [
+      ['DIY tools', 'Inexpensive, but Housing for Health assembles, secures, and governs everything — and owns the three risks above alone, with PHI in play'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce — out of reach for a small nonprofit, and one person cannot cover strategy, build, security, and HIPAA governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and HIPAA/Part 2 governance in one team at a fraction of a hire — with proven builds and CISSP-led security, and a program designed to fund itself', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Helps Housing for Health Serve More & Capture More', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: capture revenue (collect cleanly and completely on services already delivered), serve more people (faster intake and better-balanced caseloads), and win and comply (the outcomes and account intelligence that win funding, on a compliant foundation). Every part that touches member information is HIPAA-safe by design.'),
   spacer(160),
@@ -796,12 +917,47 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The model below is built from public and industry benchmarks because Housing for Health’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 14 replace them with real baselines. The logic holds across a wide range of inputs, because the program is funded largely by revenue it recovers — money already earned but not yet collected.'),
-  spacer(140),
+  p('The model below is built from public and industry benchmarks because Housing for Health’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 15 replace them with real baselines. The logic holds across a wide range of inputs, because the program is funded largely by revenue it recovers — money already earned but not yet collected.'),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Industry research (McKinsey, State of AI 2025) finds roughly 88% of companies now use AI, but only about 39% see a real profit impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement (cleaner claims, recovered revenue), then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. Housing for Health carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Revenue-Capture Pilot'),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up the HIPAA-safe compliance foundation and a focused clean-claim and documentation pilot, and proves recovered dollars before any larger build is discussed.'),
+  buildTable(
+    [
+      { label: 'What’s Included', weight: 3 },
+      { label: 'Detail', weight: 4 },
+      { label: 'Investment', weight: 2 },
+    ],
+    [
+      [{ text: 'My Security — HIPAA + 42 CFR Part 2 Safeguards', bold: true }, 'The required security program and Part 2 readiness due early 2026 — the compliance foundation every AI step depends on', '$800/mo = $9,600/yr'],
+      [{ text: 'My AI — Fractional AI Advisor (HIPAA-safe)', bold: true }, 'AI program lead; clean-claim, documentation, and denial-recovery pilot on a defined set of services; baseline denials and days-to-payment', '$2,000/mo = $24,000/yr'],
+      [{ text: 'My AI — Executive AI Workshop + readiness', bold: true }, 'Leadership alignment and a HIPAA-safe AI roadmap; fix the partner and health-plan pages', '$5,000 one-time'],
+      [{ text: 'ENTRY PILOT — 90 DAYS / YEAR 1', bold: true }, 'Fixed scope, published rates, no large up-front build', { text: '~$38,600 Y1 (much of it PATH-offsettable)', bold: true, color: CORE_BLUE }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, the pilot recovers or cleanly captures a measurable amount of Medi-Cal revenue that would otherwise have been denied or left unbilled — a number set against the baseline we pull in week one — with the HIPAA/Part 2 foundation in place and a person reviewing every billing decision.',
+      'Our commitment: the entry pilot is month-to-month after the initial term — no long lock-in, no obligation to continue if it doesn’t hit the metric by day 90, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
   subHeader('Projected Lift (Estimated)'),
   buildTable(
     [
@@ -836,9 +992,10 @@ docChildren.push(
     ],
   ),
   spacer(60),
-  p('* Captured revenue = denials recovered, documentation gaps closed before submission, faster and cleaner billing, and caseload throughput. The figure depends on Housing for Health’s actual claims volume and denial rate — a key discovery item (Section 14). Not counted in the ratio: more people served, reduced audit risk, and contracts and grants won or renewed. All figures are projected, not guaranteed.', { italics: true, size: 18 }),
+  p('* Captured revenue = denials recovered, documentation gaps closed before submission, faster and cleaner billing, and caseload throughput. The figure depends on Housing for Health’s actual claims volume and denial rate — a key discovery item (Section 15). Not counted in the ratio: more people served, reduced audit risk, and contracts and grants won or renewed. All figures are projected, not guaranteed.', { italics: true, size: 18 }),
   spacer(160),
-  subHeader('Technijian Service Investment Map'),
+  subHeader('Full Program — Year 1 (~$91K, the later expansion)'),
+  p('Once the pilot proves the recovered dollars, the program expands to the full revenue-capture engine below — the build that turns clean claims, caseload throughput, outcomes reporting, and account intelligence into routine. This is the later expansion, not the entry ask.'),
   buildTable(
     [
       { label: 'Service', weight: 2.8 },
@@ -867,9 +1024,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence suited to a compliance-sensitive organization: get the HIPAA-safe foundation right, then turn revenue capture on, then scale outcomes and the funding pipeline. Recovered revenue and faster, cleaner billing are visible inside the first six months; the bigger reporting and account-intelligence work is given realistic runway.'),
   spacer(200),
@@ -902,14 +1059,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Account Intelligence & Grants', 'Turn on plan and county account intelligence and RFP and grant discovery to drive renewals and the expansion pipeline.'],
-      ['3.2 — Optimize & (Optional) Network', 'Bring audit-readiness monitoring into production and deliver the ROI dashboard against the Section 14 baselines — and, optionally, package the platform for the partner-CBO network.'],
+      ['3.2 — Optimize & (Optional) Network', 'Bring audit-readiness monitoring into production and deliver the ROI dashboard against the Section 15 baselines — and, optionally, package the platform for the partner-CBO network.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions Housing for Health can take immediately — before any Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -934,11 +1091,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE THIS PLAN ----------
+// ---------- 15 QUESTIONS TO CALIBRATE THIS PLAN ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with Housing for Health’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with Housing for Health’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -969,9 +1126,32 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions Housing for Health leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [
+      { label: 'Question', weight: 3 },
+      { label: 'Our Honest Answer', weight: 5 },
+    ],
+    [
+      [{ text: 'We already have people and partners doing this work. Why add Technijian?', bold: true }, 'Keep them — they know the mission and the members. We add the layer they don’t: HIPAA-safe clean-claim and documentation automation, outcomes reporting, and the account intelligence that wins managed-care contracts. We run the AI program alongside your team and any existing partners, not over them.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — clean claims and documentation — not autonomous "agents" replacing your care managers. We use the simplest tool that works, measure it, and only expand what earns its place. A person reviews every billing decision.'],
+      [{ text: 'Is our data — member PHI, substance-use records — safe?', bold: true }, 'Yes, and this is the first design decision, not an afterthought. Sensitive data never touches a public AI model; we deploy private, governed systems under a Business Associate Agreement, with 42 CFR Part 2 consent handling and human review on anything compliance-bound, led by a CISSP-certified team. The compliance posture comes before any automation.'],
+      [{ text: 'We’re a lean team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry is a fixed-scope 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle on captured revenue by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost — and can we afford it as a nonprofit?', bold: true }, 'The program is designed to fund itself by recovering Medi-Cal revenue already earned, and a meaningful part of the build may be offset by CalAIM PATH capacity funding through 2026. The full Year-1 program is profiled in Section 12 at published rates — but you start small, with the pilot, and only scale after the recovered dollars prove the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('Housing for Health already has the hard things: a CalAIM provider role, real outcomes, a mission that matters, and the beginnings of a platform that could lift other providers with it. What it has not yet done is put modern data and AI behind the work — to collect cleanly on what it has earned, free its team to serve more people, and prove its impact to the plans and funders who decide its future.'),
   p('The opportunity is concrete and conservative: capture the Medi-Cal revenue already being left on the table, serve more members with the same team, and win renewals and grants with outcomes reported cleanly — all on a HIPAA-safe foundation, with people in charge of every decision that matters. It is a program designed to pay for itself, with much of the build potentially grant-offsettable.'),
@@ -979,7 +1159,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the HIPAA-safe foundation, the partner and plan pages, and the first revenue-capture pilot — live inside 30 days of signature.',
     ],
@@ -1002,9 +1182,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized organizations since 2000. We build and operate the AI systems that help mission-driven and regional organizations compete at scale — with security and compliance built in, not bolted on.'),
   spacer(140),
@@ -1042,6 +1222,7 @@ docChildren.push(
   p('5. Funding — California HCD HHAP; CalAIM PATH capacity funding; HUD Continuum of Care; health-system and foundation philanthropy', { size: 20 }),
   p('6. Peers — Illumination Foundation; Brilliant Corners; PATH (People Assisting The Homeless); Mercy House; HealthRIGHT 360; Unite Us and findhelp (closed-loop referral platforms)', { size: 20 }),
   p('7. Technijian capabilities & service pricing — My AI, My Dev, My Security, and My SEO; documented Proven Results (AI Document Intelligence for FINRA broker-dealers; Enterprise Knowledge & Memory Systems)', { size: 20 }),
+  p('8. AI education layer (Section 10) — MIT Sloan Management Review (AI literacy for executives); Anthropic, "Building Effective Agents" (workflow vs. agent distinction); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud AI Adoption frameworks); U.S. NIST AI Risk Management Framework (Govern/Map/Measure/Manage); McKinsey, State of AI 2025 (AI adoption vs. profit-impact discipline)', { size: 20 }),
 );
 
 // =====================================================================

@@ -26,6 +26,7 @@ const WHITE         = 'FFFFFF';
 const LIGHT_GREY    = strip(tokens.color.neutral.light_grey.$value);
 const PASS          = strip(tokens.color.status.pass.$value);
 const GOLD          = 'C9922A';
+const CRITICAL_RED  = 'CC0000';
 
 const FONT_HEAD = 'Open Sans';
 const FONT_BODY = 'Open Sans';
@@ -69,10 +70,12 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -365,7 +368,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -387,11 +389,11 @@ docChildren.push(
     [
       'Century City is the top-performing office submarket on the West Coast, and the $100M Anderson Towers reposition lands in exactly the right place at the right time — premium space wins only if the right tenants and brokers are found, courted, and converted.',
       'Lease intelligence is the fastest, surest return: abstracting a complex commercial lease takes a human 2–3 hours; AI does it in minutes — across 250+ leases that is one to two full-time analysts of capacity recovered without adding headcount.',
-      'Almost no Westside family owner-operator has adopted AI — only ~5% of real-estate firms report achieving their AI goals. Anderson can hold a genuine first-mover position while the institutional REITs move slowly.',
+      'Almost no Westside family owner-operator has adopted AI — industry research suggests only a small share of real-estate firms (on the order of ~5%) report achieving their AI goals. Anderson can hold a genuine first-mover position while the institutional REITs move slowly.',
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: Anderson’s internal metrics (current vacancy and rollover, leasing-team capacity, lease-administration hours, systems in use) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the questions are in Section 13.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: Anderson’s internal metrics (current vacancy and rollover, leasing-team capacity, lease-administration hours, systems in use) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE TWO FRONTS ----------
@@ -419,7 +421,7 @@ docChildren.push(
     ],
   ),
   spacer(120),
-  p('Section 3 sets the market context that makes the timing matter; Sections 8 and 9 detail each front in turn; Section 10 models the return. The throughline is simple: AI is the operating layer under Anderson’s family-owned platform — it amplifies "people come first," it does not replace the relationship.'),
+  p('Section 3 sets the market context that makes the timing matter; Sections 9 and 10 detail each front in turn; Section 11 models the return. The throughline is simple: AI is the operating layer under Anderson’s family-owned platform — it amplifies "people come first," it does not replace the relationship.'),
 );
 
 // ---------- 03 THE MARKET MOMENT ----------
@@ -479,7 +481,7 @@ docChildren.push(
     [
       'Family stewardship vs. quarterly pressure: Anderson can make decisions — on a tenant, a renewal, a repositioning — that a REIT answerable to public shareholders cannot. "People come first" is a real differentiator, not a slogan.',
       'Boutique service at institutional quality: AI lets a lean family-office team deliver the data, responsiveness, and polish tenants expect from a DEI or BXP — without becoming impersonal.',
-      'AI first-mover: only ~5% of real-estate firms have made AI deliver; more than 60% say they are unprepared. No Westside family owner-operator is known to have built this layer. Anderson can.',
+      'AI first-mover: industry research suggests only a small share of real-estate firms (on the order of ~5%) report achieving their AI goals, and a majority say they are unprepared. No Westside family owner-operator is known to have built this layer. Anderson can.',
       'The relationship moat: brokers and tenants stay where they are known and well-served. AI sharpens the targeting and the follow-through; the Anderson team keeps the trust.',
     ],
     CORE_ORANGE
@@ -570,10 +572,21 @@ docChildren.push(
     [
       'This is not a vanity problem. For an account-based landlord, being the cited, credible answer at the moment a broker or tenant is searching is how the right deal starts — and today that answer is someone else.',
       'The fix is not "more marketing." It is authority and findability for a finite, high-value audience — and turning the Ares-anchored repositioning into a story that earns the next lease.',
-      'Every other element of Front 1 (Section 08) builds on this foundation: you cannot run account-based outreach from a presence that the market cannot find.',
+      'Every other element of Front 1 (Section 09) builds on this foundation: you cannot run account-based outreach from a presence that the market cannot find.',
     ],
     CORE_BLUE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a tenant-rep broker or a relocating firm asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who owns premium repositioned office space in Century City I can lease right now?"', [
+    'TODAY — the AI assistant answers with whichever names have the strongest public content and third-party signals it can read: it names the large Westside REITs and the brokerage portals, and does NOT mention Anderson Real Estate or the Anderson Towers reposition — even though Anderson owns the very space, in the right submarket, with an Ares anchor. Anderson is invisible at the exact moment the broker is building a tour shortlist.',
+    'AFTER GEO/AEO — the same query returns Anderson as a cited option ("Anderson Real Estate, a family-owned owner-operator, is repositioning Anderson Towers at 1800 & 1900 Avenue of the Stars in Century City, anchored by Ares Management…"), with the Towers narrative and availability as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is captured in the free Nexus Assess baseline.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL_RED }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every month Anderson is not the cited answer, brokers and tenants learn to answer "Century City office space" with someone else — and that default, once set in the assistants’ retrieval data, is harder and more expensive to dislodge than to claim now. There is a second, larger clock: every month a repositioned Anderson Towers floor sits empty is rent foregone at the metro’s highest base rate, near $80/sf. The Ares anchor gives Anderson a genuine, marquee story to own the narrative — and that window is widest before a competing landlord tells it first. The cost of waiting is not zero; it is a REIT becoming the default answer while a premium floor stays dark.'),
 );
 
 // ---------- 07 TECHNIJIAN CAPABILITY PROOF ----------
@@ -611,11 +624,111 @@ docChildren.push(
     'Chat.AI is Technijian’s enterprise AI platform; as an assistant it answers questions in natural language around the clock and routes what needs a human to the right person.',
     'For Anderson it becomes a 24/7 tenant assistant — fielding maintenance requests, building information, and after-hours questions across the portfolio — raising tenant satisfaction and freeing the property team.'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across leasing content, account intelligence, and lease abstraction: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.7 },
+      { label: 'What It Does', weight: 3.3 },
+      { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER },
+    ],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass on a leasing proposal, the nuanced read of a complex lease clause, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — proposal and outreach personalization, lease-abstract summarization, broker-signal scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — extracting dates and CAM terms, classifying documents, enriching and tagging hundreds of lease and tenant records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Anderson pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single lease is parsed by a low-cost model, its key terms verified by a mid model, and any ambiguous clause given a final review by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 07 FRONT 1 — LEASING & TENANT GROWTH ----------
+// ---------- 08 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('Front 1 — AI for Leasing & Tenant Growth', CORE_ORANGE, '08'),
+  ...sectionHeader('Understanding AI — A Field Guide for Anderson Real Estate Leadership', CORE_BLUE, '08'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Anderson sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Rebecca, Jeffrey, and the Anderson team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "abstract this lease and pull the dates, options, and CAM terms." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the broker and tenant market and flag which named accounts are going in-market." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Anderson starts with simple automations that pay off in the first 90 days — lease abstraction first — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Anderson Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run companies — including Anderson — sit at the first rung of the widely-used AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in commercial real estate are only one or two rungs higher, and in this industry the gap closes in months, not years — only a small share of firms report achieving their AI goals.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Stage', weight: 1.6 },
+      { label: 'What It Looks Like', weight: 4 },
+      { label: 'Anderson Today', weight: 1.4, align: AlignmentType.CENTER },
+    ],
+    [
+      ['1. Foundational', 'Little or no AI; lease, CAM, and reporting work is manual and people-dependent', ''],
+      [{ text: '2. Emerging', bold: true }, { text: 'First AI tools enter a workflow (a lease-abstraction pilot, leasing visibility) but AI is not yet woven into growth or operations', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — lease intelligence, CAM, tenant assistant — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across leasing and portfolio operations with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the portfolio is run and the way Anderson competes for tenants', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Anderson is well-positioned to move quickly: a finite, known buyer universe and a document-heavy operation are exactly where AI pays back fastest. This report is the plan to reach Operational — AI working in the leasing engine and inside portfolio operations — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a firm holding tenant PII, financial data, and lease documents, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Risk', weight: 1.8 },
+      { label: 'What It Means', weight: 3.4 },
+      { label: 'How Technijian Controls It', weight: 3.4 },
+    ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything tenant-facing or contract-bound — AI drafts the lease abstract, a person approves; every term links back to the source page'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — lease documents, tenant PII, and financial data never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — led by a CISSP-certified team, with the free Nexus Assess as the baseline'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing', { color: CORE_BLUE }),
+  bullet('Commercial real estate operations: owner-operators are using AI to abstract complex leases in minutes instead of hours, recovering analyst capacity without adding headcount.'),
+  bullet('Leasing & tenant growth: landlords and brokers are using AI search optimization to become the cited answer when a tenant or broker asks an AI tool "where can I lease premium space in this submarket?" — capturing demand competitors never see.'),
+  bullet('Family-office and multi-entity firms: knowledge-heavy operations are capturing decades of institutional decisions and relationships into a searchable AI layer so expertise survives turnover.'),
+  p('These are representative directions of travel across comparable organizations, not guarantees; Anderson’s own numbers would be confirmed in discovery. Technijian’s specific builds and how they map to Anderson appear in Section 7 (Capability Proof), and the return is modeled in Section 11.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — An Anderson Lease Administrator', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: An administrator opens a complex commercial lease, reads it end to end, and spends two to three hours by hand pulling the commencement and expiration dates, renewal and termination options, escalation schedule, and CAM terms into a spreadsheet — then does it again for the next lease, across 250+ of them. Critical dates live in documents and in a few people’s heads.',
+    'WITH AI: The lease is abstracted in minutes into a searchable summary with every extracted term linked back to its source page; the administrator reviews and approves. Renewal options and escalations surface automatically across the whole portfolio, so nothing is missed — and the same standard holds whether the original administrator is at her desk, on vacation, or retired.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [
+      { label: 'Path', weight: 1.6 },
+      { label: 'Reality', weight: 5 },
+    ],
+    [
+      ['DIY tools', 'Inexpensive, but Anderson assembles, secures, and governs everything — and owns the three risks above alone, on a lean family-office team'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 09 FRONT 1 — LEASING & TENANT GROWTH ----------
+docChildren.push(
+  ...sectionHeader('Front 1 — AI for Leasing & Tenant Growth', CORE_ORANGE, '09'),
   spacer(100),
   p('Commercial leasing is won through relationships, not broadcast marketing — so this front is account-based from end to end. The goal is not to "generate leads"; it is to know which named tenants are in-market, which brokers represent them, and to reach them faster and more credibly than the competing landlord down the street. AI does the finding, watching, and drafting; the Anderson team does the relationship.'),
   spacer(140),
@@ -647,9 +760,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 08 FRONT 2 — PORTFOLIO OPS & EFFICIENCY ----------
+// ---------- 10 FRONT 2 — PORTFOLIO OPS & EFFICIENCY ----------
 docChildren.push(
-  ...sectionHeader('Front 2 — AI for Portfolio Operations & Efficiency', TEAL, '09'),
+  ...sectionHeader('Front 2 — AI for Portfolio Operations & Efficiency', TEAL, '10'),
   spacer(100),
   p('This front is where the fastest, surest return lives. A 3.1M sq ft portfolio across nine markets generates an enormous amount of repetitive, document-heavy work — lease administration, CAM reconciliation, maintenance coordination, reporting — most of it still done by hand or buried in files and people’s heads. AI does not replace the team here; it removes the drudgery so the team can do the judgment work, and it surfaces what was previously invisible.'),
   spacer(140),
@@ -683,11 +796,11 @@ docChildren.push(
   ),
 );
 
-// ---------- 09 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '10'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
   spacer(100),
-  p('The model below is built from public market data and industry benchmarks because Anderson’s internal numbers were not available for this draft. Every figure is estimated and deliberately conservative; the discovery questions in Section 13 replace them with real baselines. The program is structured to land small and expand — prove the return on a modest entry, then build the larger engine once it is earned.'),
+  p('The model below is built from public market data and industry benchmarks because Anderson’s internal numbers were not available for this draft. Every figure is estimated and deliberately conservative; the discovery questions in Section 14 replace them with real baselines. The program is structured to land small and expand — prove the return on a modest entry, then build the larger engine once it is earned.'),
   spacer(140),
   subHeader('Projected Operating Lift (Estimated)'),
   buildTable(
@@ -727,6 +840,8 @@ docChildren.push(
   spacer(60),
   p('All figures projected, not guaranteed. The expansion build (portfolio dashboard, tenant portal, leasing CRM, full lease rollout) adds gains the entry ratio above does not count.', { italics: true, size: 18 }),
   spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Lead-Gen Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot proves the highest-ROI win (lease intelligence), switches on AI-search visibility for Westside space, and demonstrates the lift before any larger build is discussed. It is the headline ask; the Phase-2 expansion in the map below is shown for transparency, not as the first commitment.'),
   subHeader('Service Investment Map — Land and Expand'),
   buildTable(
     [
@@ -740,7 +855,7 @@ docChildren.push(
       ['My AI — Lease-Intelligence Pilot + Advisor', 'Abstract a first lease tranche + fractional AI advisory and roadmap', '$2,500/mo', '$30,000'],
       ['My AI — Executive AI Workshop', 'Leadership working session; prioritize the portfolio AI roadmap (1×)', '—', '$5,000'],
       ['Nexus Assess — IT/Security Risk Scan', 'Free, no-commitment assessment across the footprint (Quick Win)', 'Free', '$0'],
-      [{ text: 'ENTRY PROGRAM (the easy yes)', bold: true }, { text: 'Recurring $3,750/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$50,000', bold: true, color: CORE_BLUE }],
+      [{ text: 'THE 90-DAY AI LEAD-GEN PILOT (the easy yes)', bold: true }, { text: 'Recurring $3,750/mo + workshop — fixed scope, the entry program', bold: true }, { text: '', bold: true }, { text: '~$50,000', bold: true, color: CORE_BLUE }],
       ['My Dev — Portfolio Intelligence + Leasing CRM (Phase 2)', 'Occupancy/rollover/revenue dashboard + broker/tenant CRM (one-time build)', '—', '$90,000'],
       ['My Dev — Tenant Portal + Chat.AI Assistant (Phase 2)', 'Tenant-experience portal and 24/7 assistant (one-time build)', '—', '$45,000'],
       ['My AI — Full Lease Rollout + Account Intelligence (Phase 2)', 'Abstract all 250+ leases; broker/tenant account-intelligence engine', '$3,499/mo', '$42,000'],
@@ -750,6 +865,15 @@ docChildren.push(
   ),
   spacer(40),
   p('My SEO has published tiers; My AI and My Dev figures are estimated defaults confirmed at quote. The entry is the headline ask; the Phase-2 expansion is shown for transparency but is not the first commitment.', { italics: true, size: 18 }),
+  spacer(160),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, a first tranche of Anderson leases is abstracted into a searchable, source-linked view that surfaces critical dates, options, and CAM terms the team can act on — and Anderson begins surfacing in Google and AI answers for at least one high-intent Westside leasing query.',
+      'Our commitment: the entry program is month-to-month after the initial term — no lock-in. If the pilot has not hit the metric above by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
   spacer(160),
   subHeader('Transparent US Labor Rates (for any ad-hoc / project work)'),
   buildTable(
@@ -768,9 +892,9 @@ docChildren.push(
   p('A single blended US-led rate; project and ad-hoc work is billed transparently against this card so there are no surprises.', { italics: true, size: 18 }),
 );
 
-// ---------- 10 IMPLEMENTATION ROADMAP ----------
+// ---------- 12 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '11'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence and is sequenced land-first: prove the highest-ROI win (lease intelligence) and switch on leasing visibility in the first quarter, stand up the account-based leasing engine next, then build the portfolio intelligence layer and scale across the Anderson Holdings footprint. Meaningful results — abstracted leases, more direct inquiry — are visible inside the first 90 days.'),
   spacer(200),
@@ -803,14 +927,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Portfolio Dashboard + Full Rollout', 'Occupancy/rollover/revenue dashboard live; CAM automation; lease abstraction extended across all 250+ leases.'],
-      ['3.2 — Scale Across Holdings', 'Extend the operating layer toward the other Anderson Holdings lines; ROI dashboard delivered against the Section 13 baselines.'],
+      ['3.2 — Scale Across Holdings', 'Extend the operating layer toward the other Anderson Holdings lines; ROI dashboard delivered against the Section 14 baselines.'],
     ],
   ),
 );
 
-// ---------- 11 QUICK WINS ----------
+// ---------- 13 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Quarter', CORE_ORANGE, '12'),
+  ...sectionHeader('Quick Wins — Start This Quarter', CORE_ORANGE, '13'),
   spacer(100),
   p('Five actions Anderson can take immediately — before any new engagement. Each creates value now and leads into the larger program.'),
   spacer(140),
@@ -835,11 +959,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 12 QUESTIONS TO CALIBRATE ----------
+// ---------- 14 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '13'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 10 and 11 are deliberately conservative — a short discovery call replaces them with Anderson’s real baselines and sharpens the whole program. These questions move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative — a short discovery call replaces them with Anderson’s real baselines and sharpens the whole program. These questions move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -870,9 +994,32 @@ docChildren.push(
   ),
 );
 
-// ---------- 13 WHAT HAPPENS NEXT ----------
+// ---------- 15 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '15'),
+  spacer(100),
+  p('The honest answers to the questions Anderson leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [
+      { label: 'Question', weight: 3 },
+      { label: 'Our Honest Answer', weight: 5 },
+    ],
+    [
+      [{ text: 'We already have a marketing partner / leasing brokers. Why add Technijian?', bold: true }, 'Keep them — leasing is and should stay relationship-driven and broker-led. We add the layer they do not: AI-search visibility (GEO/AEO) so Anderson is the cited answer, lease and document intelligence that recovers analyst capacity, and the portfolio operations automation no broker or ad agency provides. We run alongside your team and your brokers, never over them.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with one simple, proven automation that pays back fast — abstracting leases in minutes instead of hours — not autonomous "agents" running your business. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is our data — leases, tenant PII, financials — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything tenant-facing or contract-bound, led by a CISSP-certified team. Data governance is part of the complimentary Nexus Assess in the entry program.'],
+      [{ text: 'We’re a lean family-office team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a fixed-scope 90-day pilot with a defined success metric (Section 11), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $50K for Year 1 — My SEO at published tiers plus estimated My AI defaults confirmed at quote, with no large up-front build. The full engine (the later expansion) is profiled in Section 11, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 16 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '16'),
   spacer(100),
   p('Anderson Real Estate has the hardest things to build already: a five-decade family track record, a 3.1M sq ft portfolio, and a repositioned Century City campus landing in the strongest office submarket on the West Coast. What it is missing is the operating layer that lets a lean, relationship-driven team move at institutional speed — abstracting leases in minutes, reaching the right tenants through the right brokers, and seeing the whole portfolio in one view. Both fronts are buildable now, on systems Technijian has already delivered.'),
   p('The plan is sequenced to earn trust before scale: prove the lease-intelligence return and switch on leasing visibility first, stand up the account-based leasing engine next, then build the portfolio intelligence layer and extend it across the Anderson Holdings footprint. Small, honest entry; large, earned expansion.'),
@@ -880,7 +1027,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 13 questions and confirm scope — we can run the free Nexus Assess in parallel.',
+      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm scope — we can run the free Nexus Assess in parallel.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the lease-intelligence pilot and leasing-visibility layer — live inside 14 days of signature.',
     ],
@@ -903,9 +1050,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 14 ABOUT TECHNIJIAN ----------
+// ---------- 17 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '15'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '17'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving businesses since 2000. We build and operate the AI systems that let organizations work at scale without losing the personal service that defines them — with a cybersecurity-first, AI-forward approach and a dedicated team assigned to each client.'),
   spacer(140),
@@ -942,8 +1089,12 @@ docChildren.push(
   p('3. TheOrg / Crunchbase / LinkedIn — Anderson Real Estate leadership (Jeffrey R. Anderson, Andrew Evans, Tere M. Throenle, Darren S. Bell) and Rebecca Reyna, Chief of Staff.', { size: 20 }),
   p('4. Wikipedia / LA Business Journal — John E. Anderson, Topa Equities, and the UCLA Anderson School of Management legacy.', { size: 20 }),
   p('5. Avison Young, The Real Deal, Bisnow, IPG, Kidder Mathews — Century City & Westside Los Angeles office market 2025–2026 (rents near $80/sf, flight to quality, leasing recovery).', { size: 20 }),
-  p('6. Re-Leased, Propmodo, Commercial Observer, Agora, Prophia — AI in commercial real estate 2026 (lease-abstraction ROI, adoption gap of ~5%, proptech VC of $16.7B in 2025).', { size: 20 }),
+  p('6. Re-Leased, Propmodo, Commercial Observer, Agora, Prophia — AI in commercial real estate 2026 (lease-abstraction ROI, adoption gap of roughly 5%, and proptech venture funding rebounding into the mid-teens of billions in 2025; figures vary by source and are directional).', { size: 20 }),
   p('7. Technijian service pricing and methodology — My SEO published tiers; My AI, My Dev, Chat.AI, and Nexus Assess scopes; US labor-rate card.', { size: 20 }),
+  p('8. MIT Sloan Management Review — AI literacy for executives (Section 8: framing AI literacy as "what AI can do," not how to build it).', { size: 20 }),
+  p('9. Anthropic — Building Effective Agents (Section 8: the automation/workflow vs. agent distinction and "use the simplest thing that works").', { size: 20 }),
+  p('10. AI maturity models — the widely-used five-stage ladder, consistent with Gartner and Google Cloud AI-adoption frameworks (Section 8).', { size: 20 }),
+  p('11. U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage) — Section 8: responsible-AI controls for the three risks.', { size: 20 }),
 );
 
 // =====================================================================

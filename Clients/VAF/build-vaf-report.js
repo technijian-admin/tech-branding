@@ -73,10 +73,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -369,9 +372,9 @@ docChildren.push(
 );
 
 // ---------- TOC ----------
+// No trailing pageBreak() here — Section 01's pageBreakBefore separates the TOC from Section 1.
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -398,7 +401,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: VIA’s internal metrics (active dealer count, annual origination run-rate, time-to-fund, and the CUSO’s per-loan economics) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: VIA’s internal metrics (active dealer count, annual origination run-rate, time-to-fund, and the CUSO’s per-loan economics) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE BUSINESS MODEL ----------
@@ -704,6 +707,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('VIA does not market to consumers, but its two real audiences — dealers vetting where to send paper, and credit unions evaluating CUSO partners — increasingly start with an AI assistant. Here is the gap made concrete. When a dealer-development manager or a CU executive asks the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Which credit-union-backed indirect auto lenders should an independent dealer or a credit union partner with?"', [
+    'TODAY — the AI assistant answers with whichever lenders and CUSO platforms have the strongest content and third-party signals it can read: it names the established CUSO platforms and a couple of national independents, and does NOT mention VIA Auto Finance — even though VIA has a genuine credit-union funding moat and a $350M / 10,000-member track record. VIA is invisible at the exact moment a dealer or a prospective CU partner is forming a shortlist.',
+    'AFTER A DEALER-AUTHORITY + GEO LAYER — the same query returns VIA as a cited option ("VIA Auto Finance is a credit-union-backed CUSO originating prime and near-prime indirect auto loans, with a structural deposit-funding cost advantage…"), with the modernized site and dealer-authority content as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result would be captured as part of the digital baseline. This is a dealer- and partner-facing visibility play, not consumer marketing — VIA does not transact with consumers.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('The window favors VIA right now, and it does not stay open. Competitors are retrenching — Prestige stopped new originations, Truist pulled back, Tricolor collapsed — and the dealer relationships they are abandoning are up for grabs this quarter for a disciplined lender that can move. Every month VIA stays manual, a faster rival funds the deal VIA could have won, and a default forms at that dealer that is harder and more expensive to dislodge later than to claim now. The credit-union channel is winning on speed and consistency, not rate; the lenders that pair a funding advantage with AI funding-speed first will set the bar the rest are measured against. The cost of waiting is not zero — it is dealer share, and the partner credit union’s confidence, going to whoever modernizes first.'),
 );
 
 // ---------- 09 TECHNIJIAN CAPABILITY PROOF ----------
@@ -748,16 +762,101 @@ docChildren.push(
     'For VIA this delivers the GLBA Safeguards information-security program the law requires, plus the audit trails and fair-lending monitoring that make AI-assisted underwriting deployable — the low-friction entry point that also de-risks the next credit-union partner.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across dealer intelligence, verification, fraud screening, and compliance: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final adverse-action / fair-lending review, the deepest reasoning on borderline decisions', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — dealer outreach personalization, document summarization, scoring borderline cases', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — document extraction, classification, enriching and tagging thousands of dealer and applicant records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: VIA pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single stipulation packet is extracted by a low-cost model, verified and reconciled by a mid model, and given a final compliance-and-accuracy pass by a frontier model with council review on the parts that touch a credit decision — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms VIA’s Growth Engine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for VIA Auto Finance Leadership', CORE_BLUE, '10'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where VIA sits today, how to adopt it without taking on un-defendable risk, and what comparable organizations are already doing. The goal is that Bob Barbee and the VIA team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "extract the income and employment fields from these stips and flag what is missing." This is where almost all near-term value lives — and where an explainable, auditable result is straightforward.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the dealer pipeline and surface the rooftops worth a call this week." This comes later, where it earns its place, with a person still owning the decision.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. VIA starts with simple automations that pay off in the first 90 days — verification, fraud screening, dealer intelligence — and adds autonomous agents only where the value is proven. That is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where VIA Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run companies — including VIA — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'VIA Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent decisioning, verification, and dealer outreach', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'A modern, disciplined operation that has not yet woven AI into growth or the funding workflow — the moat is real, the operations are manual', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — verification, fraud screening, dealer intelligence, adverse-action — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and the funding engine with governance, fair-lending monitoring, and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the lender competes for dealer share and protects the funding partner’s return', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('VIA sits at the Emerging stage: a proven CUSO with a structural funding moat, but a largely manual funding workflow. This report is the plan to reach Operational — AI working in the growth engine and inside the funding process — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a regulated lender like VIA, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client-facing or compliance-bound — AI drafts and screens, the rep and the credit union’s risk team approve the decision'],
+      ['Data leakage', 'Sensitive borrower and applicant data pasted into public tools can escape', 'Private, governed AI deployments — applicant PII, credit data, and decisioning never touch a public model; GLBA Safeguards controls around every workflow'],
+      ['Compliance & accountability', 'Untracked AI, and un-explainable models, create audit and fair-lending gaps', 'Explainable, adverse-action-ready models only; every AI tool inventoried with owner, vendor, and data source — ECOA-defensible, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Auto lending operations: full-spectrum and near-prime lenders are automating stipulation, income, and employment verification to clear the bulk of documents in seconds rather than days — funding faster and capturing deals slower competitors lose.'),
+  bullet('Credit-union indirect channel: CU-funded decisioning platforms are using AI to return instant, fair-lending-aware decisions at the dealer desk — the speed and consistency the channel now competes on.'),
+  bullet('Regulated B2B: document-heavy, compliance-bound businesses are turning multi-day verification and notice-generation into a minutes-long, audit-ready draft — responding to more volume with the same team, with the records to prove it.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; VIA’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 9 (Capability Proof) and the AI Growth Engine in Section 11.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Dealer F&I Manager'),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A customer is at the desk; the F&I manager submits a near-prime deal, then waits — chasing stipulations by phone and email, re-keying the same income and employment details, and re-submitting when something is missing. A slow "yes" — or a slow stip clear — risks losing the sale to a faster lender.',
+    'WITH AI: The deal goes in through the dealer portal; verification clears income and employment in seconds, an instant decision returns workable structures, and fraud screening runs in the background — the manager keeps the customer moving. The funding credit union still owns the credit decision; AI clears the friction so VIA is the lender that funds fastest and cleanest.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but VIA assembles, secures, and governs everything — and owns the three risks above alone, including the fair-lending exposure'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and explainable-underwriting governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and fair-lending governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms VIA’s Growth Engine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: win dealers (account-based acquisition), fund faster and safer (the speed and fraud control that lift capture and protect return), and protect and scale (the compliance and analytics that keep the credit union confident and bring on the next partner). The first motion grows the top of the funnel; the second converts it; the third makes the whole thing defensible and repeatable.'),
   spacer(160),
   diagramImage(DIAGRAM_ARCH_BUF, 'VIA AI Growth Engine', 600, 1.61),
-  diagramCaption('Figure 10.0 — The Engine: Win Dealers, Fund Faster & Safer, and Protect & Scale'),
+  diagramCaption('Figure 11.0 — The Engine: Win Dealers, Fund Faster & Safer, and Protect & Scale'),
   spacer(160),
   buildTable(
     [
@@ -794,11 +893,11 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The model below is built from public and industry benchmarks because VIA’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 14 replace them with real baselines. The logic holds across a wide range of inputs, because the levers — dealers won and funded volume per dealer — are large relative to the program cost.'),
+  p('The model below is built from public and industry benchmarks because VIA’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 15 replace them with real baselines. The logic holds across a wide range of inputs, because the levers — dealers won and funded volume per dealer — are large relative to the program cost.'),
   spacer(140),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
@@ -838,7 +937,35 @@ docChildren.push(
   spacer(60),
   p('* VIA’s CUSO economics (origination, servicing, and yield-share per loan) are not public, so the return line applies an illustrative, deliberately conservative ~1.5% of incremental originations as a placeholder — to be replaced with VIA’s actual per-loan economics in discovery. Beyond this, the program avoids fraud losses and protects the credit union’s return — the relationship that funds everything. All figures are projected, not guaranteed.', { italics: true, size: 18 }),
   spacer(160),
-  subHeader('Technijian Service Investment Map'),
+  subHeader('The Entry Offer — The 90-Day AI Lead-Gen Pilot'),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up VIA’s dealer account intelligence and the compliance foundation, and proves the lift before any larger build is discussed. It is the easy first move: the recurring services that pay for themselves fast, with no large up-front build.'),
+  buildTable(
+    [
+      { label: 'What’s Included', weight: 2.8 },
+      { label: 'Detail', weight: 4.2 },
+      { label: 'Investment', weight: 1.6 },
+    ],
+    [
+      [{ text: 'My AI Lead Gen — Dealer Account Intelligence', bold: true }, 'Named-dealer scoring and targeting, competitor-retrenchment triggers, and a rep CRM across the expansion (Professional tier)', '$3,499/mo'],
+      [{ text: 'My Security — GLBA Safeguards Program', bold: true }, 'The required information-security program and monitoring — the low-friction entry point', '$1,200/mo'],
+      [{ text: 'My SEO — Dealer Authority Content + Site', bold: true }, 'Dealer-facing B2B authority content and a modernized, credibility-building site (not consumer SEO)', '$1,500/mo'],
+      [{ text: 'My AI — Executive AI Workshop', bold: true }, 'Leadership alignment plus a fair-lending guardrails roadmap (one-time)', '$5,000 one-time'],
+      [{ text: '90-DAY PILOT — ENTRY PROGRAM', bold: true }, 'Fixed scope, published rates, no large up-front build (recurring $6,199/mo + workshop)', { text: '~$23,600 / quarter', bold: true, color: CORE_BLUE }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, VIA has a ranked, outreach-ready named-dealer target list across the expansion states, competitor-retrenchment triggers live, and the field team running its first AI-sourced dealer conversations — with the GLBA Safeguards and fair-lending readiness baseline in place.',
+      'Our commitment: the entry program is month-to-month after the initial term — no long lock-in, no obligation to continue if it does not hit the metric by day 90. If the pilot has not moved the needle by then, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
+  subHeader('Full Engine — Year 1 (~$188K, the later expansion)'),
+  p('Once the pilot proves the lift, the full engine adds the funding-speed build — verification, fraud screening, and the dealer portal — plus the fractional advisor and managed services. It is shown here as the expansion, not the ask.'),
   buildTable(
     [
       { label: 'Service', weight: 2.8 },
@@ -848,13 +975,13 @@ docChildren.push(
     ],
     [
       ['My AI Lead Gen — Dealer Account Intelligence', 'Named-dealer scoring and targeting, competitor-retrenchment triggers, and a rep CRM across the expansion (Professional tier)', '$3,499/mo', '$42,000'],
-      ['My AI — Fractional AI Advisor', 'AI program leadership plus explainable-underwriting and fair-lending governance', '$2,000/mo', '$24,000'],
+      ['My AI — Fractional AI Advisor (Phase 2)', 'AI program leadership plus explainable-underwriting and fair-lending governance', '$2,000/mo', '$24,000'],
       ['My SEO — Dealer Authority Content + Site', 'Dealer-facing B2B authority content and a modernized site (not consumer SEO)', '$1,500/mo', '$18,000'],
       ['My Security — GLBA Safeguards Program', 'The required information-security program and monitoring — the entry point', '$1,200/mo', '$14,400'],
-      ['My Dev — Managed App Services', 'Hosting, monitoring, and ongoing optimization of the portal and automations', '$800/mo', '$9,600'],
-      ['My Dev — Custom Build (one-time, phased)', 'Stip / income verification, fraud screening, dealer portal + instant-decision UX, and RouteOne / Dealertrack integration', '—', '$75,000'],
+      ['My Dev — Managed App Services (Phase 2)', 'Hosting, monitoring, and ongoing optimization of the portal and automations', '$800/mo', '$9,600'],
+      ['My Dev — Custom Build (Phase 2, one-time, phased)', 'Stip / income verification, fraud screening, dealer portal + instant-decision UX, and RouteOne / Dealertrack integration', '—', '$75,000'],
       ['My AI — Executive AI Workshop (one-time)', 'Leadership alignment plus a fair-lending guardrails roadmap', '—', '$5,000'],
-      [{ text: 'YEAR-1 TOTAL INVESTMENT', bold: true }, { text: 'Recurring $8,999/mo + builds', bold: true }, { text: '', bold: true }, { text: '~$188,000', bold: true, color: CORE_BLUE }],
+      [{ text: 'FULL ENGINE — YEAR-1 TOTAL', bold: true }, { text: 'Recurring $8,999/mo + builds', bold: true }, { text: '', bold: true }, { text: '~$188,000', bold: true, color: CORE_BLUE }],
     ],
   ),
   spacer(160),
@@ -869,14 +996,14 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence suited to a regulated, integration-dependent lender: lay the compliance and intelligence foundation first, then accelerate funding speed and the dealer experience, then scale the outreach and the platform. Real dealer-intelligence and funding-speed gains are visible inside the first ninety days; the bigger integrations and the next CU partner are given realistic runway.'),
   spacer(200),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'VIA 90-180-365 Day Roadmap', 600, 2.30),
-  diagramCaption('Figure 12.0 — VIA Growth Program: 90 / 180 / 365-Day Roadmap'),
+  diagramCaption('Figure 13.0 — VIA Growth Program: 90 / 180 / 365-Day Roadmap'),
   spacer(160),
   subHeader('Phase 1 — Foundation (Days 1–90)', { color: CORE_BLUE }),
   p('Get the compliance base right and stand up the intelligence that drives dealer acquisition.'),
@@ -904,14 +1031,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Decisioning & Outreach at Scale', 'Bring explainable decisioning support and fair-lending monitoring into production; scale personalized dealer outreach across the new states.'],
-      ['3.2 — Scale the CUSO & Optimize', 'Recruit additional credit-union partner(s) with the platform proof; turn on portfolio early-warning; deliver the ROI dashboard against the Section 14 baselines.'],
+      ['3.2 — Scale the CUSO & Optimize', 'Recruit additional credit-union partner(s) with the platform proof; turn on portfolio early-warning; deliver the ROI dashboard against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions VIA can take immediately — before any Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -936,11 +1063,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE THIS PLAN ----------
+// ---------- 15 QUESTIONS TO CALIBRATE THIS PLAN ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with VIA’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with VIA’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -971,9 +1098,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions VIA leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have systems and a field team. Why add Technijian?', bold: true }, 'Keep both — the field team and the credit-union relationship stay central. We add the layer they do not: dealer account intelligence, document verification and fraud screening that fund deals faster, and explainable decisioning support. We run under your existing motion, not over it.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — verification, fraud screening, dealer intelligence — not autonomous "agents" making credit decisions. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is our data — borrower PII, credit data, decisioning — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything compliance-bound, led by a CISSP-certified team. The GLBA Safeguards program is part of the entry program and is the low-friction starting point.'],
+      [{ text: 'We’re a lean team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is a small, fixed-price pilot at published rates — no large up-front build. The full engine (the later expansion, ~$188K Year 1) is profiled in Section 12, but only after the pilot proves the lift. We route work across roughly seven models so you pay premium-model prices only for the slice that warrants them.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('VIA already has the hard things: a proven CUSO model, a credit-union funding moat the competition cannot copy, a prime and near-prime book on the safer side of the market, and a track record of $350 million originated and ten thousand members created. What it has not yet done is convert that funding advantage into dealer share by funding faster — and the corner where a funding moat meets AI speed is still empty.'),
   p('The opportunity is concrete: win more dealers with account intelligence while competitors retrench, fund faster and cleaner so the lender that moves quickest gets the deal, and protect the credit union’s return so the platform can scale to more states and more partners. A focused, account-based program does all three — with underwriting that stays explainable and a field team that stays central.'),
@@ -981,7 +1128,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the compliance foundation, the site and dealer-enrollment refresh, and dealer account intelligence — live inside 30 days of signature.',
     ],
@@ -1004,9 +1151,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help regional businesses compete at scale — with security and compliance built in, not bolted on.'),
   spacer(140),
@@ -1063,7 +1210,7 @@ const doc = new Document({
     paragraphStyles: [
       { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal',
         run: { size: 2, bold: true, color: 'FFFFFF', font: FONT_HEAD },
-        paragraph: { spacing: { before: 480, after: 120 }, outlineLevel: 0 } },
+        paragraph: { spacing: { before: 0, after: 120 }, pageBreakBefore: true, outlineLevel: 0 } },
       { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal',
         run: { size: 26, bold: true, color: CORE_BLUE, font: FONT_HEAD },
         paragraph: { spacing: { before: 280, after: 120 }, outlineLevel: 1 } },

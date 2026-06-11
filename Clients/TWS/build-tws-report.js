@@ -64,8 +64,10 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
-  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
+  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true, pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })] });
   const visualTable = new Table({
     width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: [120, CONTENT_W - 120], borders: noBorders,
@@ -219,7 +221,7 @@ docChildren.push(
 );
 
 // ---------- TOC ----------
-docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }), pageBreak());
+docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }));
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
 docChildren.push(
@@ -246,7 +248,7 @@ docChildren.push(
     ],
     TEAL
   ),
-  p('A note on figures: ThriveWell\'s internal contract values and active client count were not available at time of preparation. Every ROI projection is labeled illustrative and calibrates to real numbers after a short discovery call — the specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: ThriveWell\'s internal contract values and active client count were not available at time of preparation. Every ROI projection is labeled illustrative and calibrates to real numbers after a short discovery call — the specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 ABOUT THRIVEWELL SCHOOLS ----------
@@ -308,9 +310,9 @@ docChildren.push(
     [
       ['Student dysregulation & behavioral referrals', 'Suspension rates disproportionately impact students of color and students with IEPs', 'Restorative Discipline + Responding to Dysregulated Students'],
       ['Teacher burnout', '53% of teachers report burnout (RAND 2025); #1 driver is student behavior management (52%)', 'Staff Resilience Workshop + Improving Staff Culture'],
-      ['Counselor overload', 'Recommended ratio is 1:250; CA average exceeds 1:400; most referrals are non-clinical', 'Wellness Rooms Program creates Tier I buffer before counselor referral'],
-      ['Vicarious trauma in staff', '78% of teachers cite insufficient administrative support; high turnover follows', 'Foundations in Trauma + Staff Culture training for administrators'],
-      ['School-to-prison pipeline', 'Students suspended even once are 3× more likely to become justice-involved', 'The entire ThriveWell framework — root cause intervention'],
+      ['Counselor overload', 'Counselor caseloads in many CA districts run well above the recommended ratio (ASCA recommends 1:250), and a large share of referrals are behavioral rather than clinical', 'Wellness Rooms Program creates Tier I buffer before counselor referral'],
+      ['Vicarious trauma in staff', '78% of teachers cite insufficient administrative support (RAND 2025); high turnover follows', 'Foundations in Trauma + Staff Culture training for administrators'],
+      ['School-to-prison pipeline', 'Research consistently links exclusionary discipline (suspension/expulsion) to lower graduation rates and higher justice-system involvement', 'The entire ThriveWell framework — root cause intervention'],
     ]
   ),
   spacer(200),
@@ -336,19 +338,18 @@ docChildren.push(
   buildTable(
     [{ label: 'Funding Source', weight: 3 }, { label: 'Scale', weight: 2 }, { label: 'Relevance to ThriveWell', weight: 4 }],
     [
-      ['Children & Youth Behavioral Health Initiative (CYBHI)', '$4B+ state investment', 'Direct funding for school-based mental health and behavioral support programs'],
-      ['CA Community Schools Partnership Program (CCSPP)', '$4B combined', 'Supports wraparound services and restorative practices in community schools'],
-      ['LCFF Cost-of-Living Increase (FY2026)', '$2.1B increase', 'Districts have expanded professional development budgets — discretionary'],
-      ['Discretionary Block Grants (FY2026)', '$1.7B one-time', 'ADA-based allocation; fully discretionary — ideal for wellness/PD contracts'],
+      ['CYBHI + CCSPP (combined)', '~$8B combined', 'Children & Youth Behavioral Health Initiative and CA Community Schools Partnership Program — fund school-based mental health, wraparound services, and restorative practices'],
+      ['LCFF Cost-of-Living Increase (FY2026)', '~$2.1B increase', 'Districts have expanded professional development budgets — discretionary'],
+      ['Discretionary Block Grants (FY2026)', '~$1.7B one-time', 'ADA-based allocation; fully discretionary — ideal for wellness/PD contracts'],
       ['Title IV Part A (Federal)', 'Ongoing annual', 'Student support and academic enrichment — PD and school climate initiatives'],
-      ['Federal SEL Continuation Grants', 'Up to $100K per district', 'Competitive grants for districts expanding evidence-based SEL programs'],
+      ['Federal / state SEL continuation grants', 'Competitive', 'Grants for districts expanding evidence-based SEL programs (amounts vary by program and year)'],
     ]
   ),
   spacer(200),
   calloutBox(
     'The Urgency: Federal Cuts Accelerate State Dependency',
     [
-      'The Trump administration has moved to cancel $168M+ in federal school mental health grants previously committed to California districts.',
+      'The federal administration has moved to cancel roughly $168M in school mental health grants previously committed (a reported figure; districts should confirm their own exposure).',
       'This creates an urgent shift: districts that were counting on federal dollars must now move faster to access state-level CYBHI and CCSPP funding — and they need credible partners who understand both the funding landscape and the implementation requirements.',
       'ThriveWell is positioned to help districts navigate this transition. With AI-assisted grant application support, ThriveWell can identify open funding opportunities, align program descriptions to grant criteria, and help districts build the outcome data that makes applications competitive.',
     ],
@@ -455,9 +456,10 @@ const personas = [
   },
 ];
 
-for (const persona of personas) {
-  docChildren.push(personaCard(persona.name, persona.color, persona.fields), spacer(200));
-}
+personas.forEach((persona, i) => {
+  if (i > 0) docChildren.push(spacer(200));
+  docChildren.push(personaCard(persona.name, persona.color, persona.fields));
+});
 
 // ---------- 07 COMPETITIVE LANDSCAPE ----------
 docChildren.push(
@@ -512,6 +514,14 @@ docChildren.push(
     ],
     CORE_BLUE
   ),
+  spacer(200),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a district administrator asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who provides trauma-informed, restorative-discipline professional development for California school districts?"', [
+    'TODAY — the AI assistant answers with whichever providers have the strongest content and third-party signals it can read: it names a few SEL curriculum vendors and assessment platforms, and does NOT mention ThriveWell or Dr. Lynn-Whaley — even though ThriveWell has the deepest restorative-justice and school-to-prison-pipeline lens and a documented 70% referral-reduction outcome. ThriveWell is invisible at the exact moment a district is forming its shortlist.',
+    'AFTER AI Search Optimization — the same query returns ThriveWell as a cited option ("ThriveWell Schools, led by Dr. Jennifer Lynn-Whaley, PhD, delivers trauma-informed and restorative-discipline implementation coaching with a documented referral-reduction outcome…"), with the case study and resource library as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result would be captured as a baseline at the start of the engagement.)', { italics: true, size: 18 }),
 );
 
 // ---------- 09 TECHNIJIAN CAPABILITY PROOF ----------
@@ -549,11 +559,96 @@ docChildren.push(
     'Transformed existing research publications, case studies, and practitioner frameworks into multi-channel content programs — LinkedIn authority series, Substack newsletters, speaking pitch decks, and media placement — for professional services clients with strong IP but limited digital distribution.',
     'Jennifer\'s "Neuroscience Behind Misbehavior" publication and the Antioch-area middle school case study are conversion-grade content waiting to be amplified. Technijian builds the content system that turns Jennifer\'s research credibility into inbound district conversations.'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across content, account intelligence, and grant support: won\'t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, research-credible claims, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — content, outreach personalization, grant-narrative drafts, summarization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging district records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: ThriveWell pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single piece of authority content is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 THE THRIVEWELL AI GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('The ThriveWell AI Growth Engine', TEAL, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for ThriveWell Schools Leadership', CORE_BLUE, '10'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where ThriveWell sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Jennifer and the ThriveWell team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn\'t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft a grant-narrative section from this program description." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the district funding and leadership signals and flag what needs attention." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. ThriveWell starts with simple automations that pay off in the first 90 days, and adds autonomous agents only where the value is proven — which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where ThriveWell Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most founder-led professional services firms — including ThriveWell — sit at the first or second rung of the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'ThriveWell Today', weight: 1.6, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'AI used informally for occasional content or research, but not yet woven into how the practice grows or delivers', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — SEO content, account intelligence, grant support — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and delivery with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the practice runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('ThriveWell is at the Emerging stage — using AI informally but not yet as growth infrastructure. This report is the plan to reach Operational — AI working in the growth engine and behind delivery — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For an organization that works inside schools and with student-adjacent data like ThriveWell, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything district-facing or grant-bound — AI drafts, Jennifer approves'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — district records, outcome data, and student-behavior data never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — FERPA-aware, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing', { color: CORE_BLUE }),
+  bullet('Education consulting: professional development providers are using AI search optimization to become the cited answer when district leaders ask AI tools "who does trauma-informed PD in California?" — capturing demand competitors never see.'),
+  bullet('Grant-funded services: organizations that depend on public funding are using AI to identify open grants and draft application narratives, responding to more opportunities with the same small team.'),
+  bullet('Founder-led practices: solo and small expert consultancies are packaging their methodology into online and on-demand formats so delivery is no longer capped by one person\'s calendar.'),
+  p('These are representative directions of travel across comparable organizations, not guarantees; ThriveWell\'s own numbers would be confirmed in discovery. Technijian\'s specific results from prior builds appear in Section 9 (Capability Proof).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A ThriveWell District-Outreach Week', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: Jennifer hears about a district\'s new wellness funding by chance — a referral, a conference hallway, an email forward. She drafts each outreach note from scratch, researches the district\'s situation by hand, and chases grant deadlines from memory — all between delivering the actual coaching that pays the bills.',
+    'WITH AI: A monitoring system surfaces the handful of California districts that just won CYBHI/CCSPP funding or changed superintendents this week; an AI assistant drafts a tailored note referencing that district\'s specific situation and the matching ThriveWell program; Jennifer reviews and sends. The same system flags grant deadlines and drafts narrative sections — so outreach happens consistently instead of only when she has a spare hour.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but ThriveWell assembles, secures, and governs everything — and owns the three risks above alone, on top of delivering client work'],
+      ['Hire in-house', 'A capable AI/marketing leader typically costs $120K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 THE THRIVEWELL AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('The ThriveWell AI Growth Engine', TEAL, '11'),
   spacer(100),
   diagramImage(DIAGRAM_ARCH_BUF, 'ThriveWell AI Growth Architecture', 600, 1.78),
   diagramCaption('Figure 3 — Three-motion AI growth engine: Get Found, Win Districts, Scale & Serve'),
@@ -595,14 +690,33 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
   subHeader('How the ROI Model Works'),
   p('ThriveWell\'s growth is measured by new district training and coaching contracts. Each district engagement is a multi-year relationship: an initial training contract, followed by ongoing coaching and technical support, and expansion to additional school sites. The investment figures below use Technijian\'s published service rates. District contract values are illustrative — Jennifer knows her own pricing; Technijian does not.'),
-  spacer(100),
-  subHeader('Entry Investment — Phase 1 (Y1)', { color: TEAL }),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is rarely the technology — it is the lack of measurement. Surveys of business adopters consistently find that a majority of organizations now use AI in some form, but only a minority report a clear financial impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. ThriveWell carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(120),
+  calloutBox(
+    'The Cost of Waiting',
+    [
+      'AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter ThriveWell is not cited, the assistants learn to answer "trauma-informed PD in California" with someone else — and that default, once set, is harder and more expensive to dislodge than to claim now.',
+      'California\'s funding window is the same shape. The CYBHI/CCSPP dollars are being allocated now; the districts that find a credible partner first will spend them first. The cost of waiting is not zero — it is a competitor becoming the default answer, and a funding cycle spent elsewhere.',
+    ],
+    'C0392B'
+  ),
+  spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Visibility Pilot', { color: TEAL }),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up ThriveWell\'s AI-search and organic visibility, sharpens the AI growth strategy in a working session, and proves the lift before any larger build is discussed.'),
   buildTable(
     [{ label: 'Service', weight: 4 }, { label: 'Structure', weight: 3 }, { label: 'Y1 Investment', weight: 2 }],
     [
@@ -612,6 +726,15 @@ docChildren.push(
       [{ text: 'TOTAL — Entry Phase', bold: true }, '', { text: '$34,988', bold: true, color: CORE_BLUE }],
     ],
     { headerColor: TEAL }
+  ),
+  spacer(140),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, ThriveWell ranks on page one for at least one high-intent query (such as "trauma-informed professional development California") AND is cited by at least one major AI assistant (Google SGE, Perplexity, or ChatGPT) for a restorative-discipline / trauma-informed PD query.',
+      'Our commitment: the entry program is month-to-month after the initial term — no long lock-in, no obligation to continue if it does not hit the metric by day 90. If the pilot has not moved the needle by then, we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
   ),
   spacer(160),
   subHeader('Full Growth Engine — Phase 2 (Y1+)', { color: CORE_BLUE }),
@@ -653,9 +776,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'ThriveWell 90/180/365 Roadmap', 600, 1.78),
   diagramCaption('Figure 4 — 90-Day Foundation, 180-Day Acceleration, 365-Day Scale'),
@@ -679,9 +802,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins', CORE_ORANGE, '14'),
   spacer(100),
   p('These actions require no contract and no budget — Jennifer can begin them this week. Each one builds the foundation that paid infrastructure accelerates.'),
   spacer(80),
@@ -704,9 +827,9 @@ docChildren.push(
     'A verified Google Business Profile for "ThriveWell Schools" in Berkeley, CA adds a local SEO anchor, enables Google reviews from past district clients, and surfaces ThriveWell in Google Maps results for K-12 education consultants in Northern California.', CORE_ORANGE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 15 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
   p('These discovery questions allow Technijian to refine the investment model, confirm the GTM motion, and identify the highest-priority first move. They are not requests for information ThriveWell is obligated to share — they are the questions that make the engagement more precise.'),
   buildTable(
@@ -723,9 +846,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(120),
+  p('The honest answers to the questions ThriveWell\'s leadership is most likely asking right now.'),
+  spacer(100),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We work mostly by referral and word of mouth. Why add this now?', bold: true }, 'Referrals are a strength — keep them. What they cannot do is reach the districts that just won wellness funding or changed leadership this quarter and are searching right now. AI account intelligence and search visibility find those districts while the funding window is open, so referrals are no longer the only source of new work.'],
+      [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — SEO content, account monitoring, grant-narrative drafts — not autonomous "agents" doing your job. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is district and student-behavior data safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything district-facing or grant-bound, led by a CISSP-certified team. Data governance is built into the engagement, FERPA-aware from day one.'],
+      [{ text: 'It is mostly just me. Do I have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give you back hours and remove the geographic ceiling, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $35K for Year 1 at published rates — no hidden fees, no large up-front build. The full engine (the later expansion, including the online platform) is profiled in Section 12, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE }
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('This blueprint is the starting point for a conversation — not a commitment. The next step is a 30-minute call to walk through the three motions, answer the calibration questions, and identify which move creates the most value fastest for ThriveWell.'),
   spacer(80),
@@ -752,9 +895,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is a California-based technology services firm serving businesses, nonprofits, and professional services organizations across the United States. Our work spans managed IT, cybersecurity, AI implementation, custom software development, and digital marketing — united by a commitment to technology as a solution, not a complication.'),
   p('We serve clients who need a partner that understands both the technology and the domain — a firm that can build the infrastructure, implement the AI, and understand why the restorative justice lens matters. Our team includes engineers, AI specialists, marketers, and developers who build for results, not for demos.'),

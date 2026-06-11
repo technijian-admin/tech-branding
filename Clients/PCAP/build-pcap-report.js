@@ -71,8 +71,10 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
-  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
+  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true, pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })] });
   const visualTable = new Table({
     width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: [120, CONTENT_W - 120], borders: noBorders,
@@ -227,7 +229,7 @@ docChildren.push(
 );
 
 // ---------- TOC ----------
-docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }), pageBreak());
+docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }));
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
 docChildren.push(
@@ -253,7 +255,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: Pet Care Plus’ internal numbers (monthly new customers, booking-conversion rate, average lifetime value, occupancy, and membership-eligible regulars) were not part of this draft. Every projection below is labeled estimated, and pricing shows real published rates where they exist and "to be determined in discovery" everywhere else. A short discovery call — the questions are in Section 14 — replaces estimates with real baselines.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: Pet Care Plus’ internal numbers (monthly new customers, booking-conversion rate, average lifetime value, occupancy, and membership-eligible regulars) were not part of this draft. Every projection below is labeled estimated, and pricing shows real published rates where they exist and "to be determined in discovery" everywhere else. A short discovery call — the questions are in Section 15 — replaces estimates with real baselines.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 HOW PET CARE PLUS WINS & KEEPS CUSTOMERS ----------
@@ -492,6 +494,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a West Loop owner asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Best dog boarding and daycare in Chicago’s West Loop, with a pool?"', [
+    'TODAY — the AI assistant answers with whichever resorts have the strongest content and review signals it can read: it tends to name the reputation leader four blocks away and a national chain, and often does NOT surface Pet Care Plus — even though Pet Care Plus has Chicago’s only heated saltwater pool, true 24/7 staffing, and 28 years under one owner. The most differentiated resort in the market is invisible at the exact moment the owner is forming a shortlist.',
+    'AFTER AEO — the same query returns Pet Care Plus as a cited option ("Pet Care Plus in the West Loop offers Chicago’s only in-ground heated saltwater pool, 24/7 staffing, and cat boarding…"), with the pool and cat-boarding pages and a growing review base as the evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result would be captured as a baseline in discovery.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every month Pet Care Plus is not the cited answer, the assistants learn to answer "best dog boarding in the West Loop" with someone else — and that default, once set in the retrieval and review data, is harder and more expensive to dislodge than to claim now. No Chicago competitor has claimed the answer-engine position yet; that window is widest before a rival does. The booking leak runs in parallel: every new lead that fills a form and waits a day is demand the ads already paid for, cooling off toward a competitor that books instantly. The cost of waiting is not zero — it is a rival becoming the default answer and the easier place to book.'),
 );
 
 // ---------- 09 TECHNIJIAN CAPABILITIES ----------
@@ -536,11 +549,96 @@ docChildren.push(
     'For Pet Care Plus it automates the routine front-desk load, runs win-back on lapsing daycare regulars, drives puppy-to-daycare-to-grooming cross-sell, and ties the whole program to the analytics and call-tracking baselines.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across content, reviews, and the front desk: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, sensitive replies, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — content, review and front-desk replies, summarization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, tagging and enriching thousands of records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Pet Care Plus pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single pool or cat-boarding content page is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Grows Pet Care Plus', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for Pet Care Plus Leadership', CORE_BLUE, '10'),
+  spacer(100),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Pet Care Plus sits today, how to adopt it without risk, and what comparable businesses are already doing. The goal is that Jennifer, Chris, and the team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "text a one-tap review link to every owner the day after a stay." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the booking inbox overnight and answer routine questions, escalating anything unusual." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Pet Care Plus starts with simple automations that pay off in the first 90 days — instant booking, the review engine, speed-to-lead — and adds autonomous assistants only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Pet Care Plus Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run local businesses — including Pet Care Plus — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with the Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Pet Care Plus Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'Digital marketing is running (the My SEO program, ads, analytics) but AI is not yet woven into how the business gets found, books, and retains', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — booking, reviews, front-desk comms — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and operations with dashboards and a membership engine', ''],
+      ['5. Transformational', 'AI is the default way the business runs and competes locally', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Pet Care Plus is already at the Emerging stage: a search-marketing program is live and producing data. This report is the plan to reach Operational — AI working in the growth engine (booking, reviews, answer-engine) and inside the front desk — within roughly nine months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a business that holds customer and pet records like Pet Care Plus, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything customer-facing — the AI drafts the reply, hours, or post; a person approves before it goes out'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — customer details, payment data, and booking records never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create gaps', 'Every AI tool inventoried with owner, vendor, and data source — and reviews and replies kept truthful and policy-compliant, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Businesses Are Already Doing', { color: CORE_BLUE }),
+  bullet('Local pet care: multi-service resorts and daycares are using AI to answer routine inquiries and book around the clock, recovering staff time and capturing demand that used to wait for a callback.'),
+  bullet('Local service businesses: home and personal-service operators are using answer-engine optimization to become the cited result when owners ask AI assistants "where’s the best place near me for X" — capturing demand competitors never see.'),
+  bullet('Membership-led operators: recurring-revenue brands are using automated review velocity and win-back to lift map-pack rank and re-engage lapsing regulars, turning one-time customers into members.'),
+  p('These are representative directions of travel across comparable businesses, not guarantees; Pet Care Plus’ own numbers would be confirmed in discovery. Technijian’s specific capabilities and the productized services appear in Section 9, and the engine in Section 11.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Pet Care Plus Front-Desk Coordinator', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A coordinator fields a booking by phone or a web form, checks availability by hand, calls the new lead back (sometimes the next day), answers the same questions about hours, vaccine rules, and the pool, and tries to remember to ask happy owners for a review — all while caring for the dogs in front of them.',
+    'WITH AI: New leads book themselves online in real time; a second-fast text-back answers and confirms; an AI assistant handles routine hours, availability, and vaccine questions around the clock and escalates anything unusual; review asks and stay-photo updates go out automatically. The coordinator reviews and approves — and spends the recovered time on the pets and the people, not the keyboard.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but Pet Care Plus assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI-and-marketing hire is scarce and costly for a single resort, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team that already runs your search marketing — at a fraction of a hire, with CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Grows Pet Care Plus', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get found (own local search and AI answers, build review velocity, and tell the pool and cat-boarding stories), book faster (replace the 24-hour callback with instant booking and second-fast response), and keep and grow (a membership program, a branded app, and win-back and cross-sell that compound the regulars). Every part builds on the search foundation Technijian already runs for Pet Care Plus.'),
   spacer(160),
@@ -575,11 +673,11 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('This section shows where the value comes from and what the program costs. Pricing shows real published Technijian rates where they exist and "to be determined in discovery" everywhere else — we quote what we can stand behind. The return is shown as the method we will measure, not an invented multiple; the discovery questions in Section 14 replace estimates with Pet Care Plus’ real baselines from its own analytics and call tracking.'),
+  p('This section shows where the value comes from and what the program costs. Pricing shows real published Technijian rates where they exist and "to be determined in discovery" everywhere else — we quote what we can stand behind. The return is shown as the method we will measure, not an invented multiple; the discovery questions in Section 15 replace estimates with Pet Care Plus’ real baselines from its own analytics and call tracking.'),
   spacer(140),
   subHeader('Projected Lift (Estimated)'),
   buildTable(
@@ -609,8 +707,8 @@ docChildren.push(
   spacer(60),
   p('Illustrative until discovery — no number we can’t back. Revenue is attributed to the program, not guaranteed; targets are set from Pet Care Plus’ own analytics and call-tracking baselines.', { italics: true, size: 18 }),
   spacer(160),
-  subHeader('Technijian Service Investment Map (Land-and-Expand)'),
-  p('Lead with a small entry program built on the search foundation already running; add the custom build and advisory as a later expansion, once the entry proves the lift. Published rates are shown where they exist; the rest is scoped in discovery.'),
+  subHeader('The Entry — The 90-Day AI Booking & Visibility Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped entry program built on the search foundation already running — not an open-ended new engagement. The pilot stands up instant booking and speed-to-lead, turns on the review engine, and claims the answer-engine position, and it proves the lift before any custom build or advisory is discussed. Add the My Dev build and the membership program as a later expansion, once the entry proves out. Published rates are shown where they exist; the rest is scoped in discovery.'),
   buildTable(
     [ { label: 'Service', weight: 2.8 }, { label: 'Scope', weight: 3.8 }, { label: 'Monthly', weight: 1.6 }, { label: 'Investment', weight: 1.6 } ],
     [
@@ -618,7 +716,7 @@ docChildren.push(
       ['My SEO — Add-ons (optional)', 'AI Search Optimization, PR, or Content Syndication, only if added to the current program', '$150–$200/mo*', 'Optional'],
       ['My AI Lead Gen — Capture & Speed-to-Lead (Starter)', 'Second-fast text-back, AI front desk, nurture to booking — the main new entry cost', '$1,499/mo*', '+ $2,500 setup'],
       [{ text: 'My AI — Review/Reputation Engine + AI Readiness Workshop', }, 'Review-velocity program + leadership alignment and roadmap', 'TBD', { text: 'TBD — discovery', color: CORE_ORANGE }],
-      [{ text: 'ENTRY PROGRAM SUBTOTAL', bold: true }, { text: 'Builds on the My SEO already in place; the new cost is the Lead Gen Starter + the TBD items scoped in discovery', bold: true }, { text: '', bold: true }, { text: 'In place + new', bold: true, color: CORE_BLUE }],
+      [{ text: '90-DAY PILOT SUBTOTAL', bold: true }, { text: 'Builds on the My SEO already in place; the new cost is the Lead Gen Starter + the TBD items scoped in discovery', bold: true }, { text: '', bold: true }, { text: 'In place + new', bold: true, color: CORE_BLUE }],
       [{ text: 'My Dev — Custom Build (Phase 2)', }, 'Instant booking + branded webcam/report-card app + membership/Pool Club portal', '—', { text: 'TBD — discovery', color: CORE_ORANGE }],
       [{ text: 'My Dev — Managed App Services (Phase 2)', }, 'Hosting, monitoring, and support for the app + membership platform', 'TBD', { text: 'TBD — discovery', color: CORE_ORANGE }],
       [{ text: 'My AI — Fractional AI Advisor (Phase 2)', }, 'Program leadership across search, booking, and retention', 'TBD', { text: 'TBD — discovery', color: CORE_ORANGE }],
@@ -627,6 +725,15 @@ docChildren.push(
   ),
   spacer(60),
   p('* Pet Care Plus is already engaged on My SEO, so that program is in place — this plan expands its scope (AEO, the review engine, the technical fix, and content) within the current relationship; optional add-ons run $150–$200/mo each. The main new entry cost is My AI Lead Gen Starter at $1,499/mo plus a one-time $2,500 setup (real published rates). My AI, My Dev, the membership build, managed services, and the workshop have no published rate and are scoped in discovery — the Year-1 total is finalized then.', { italics: true, size: 18 }),
+  spacer(160),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, every new inbound lead can book instantly (no 24-hour callback) and gets a second-fast response, AND the automated review engine is live and measurably growing Google review volume month over month.',
+      'Our commitment: the new entry scope is month-to-month — no long lock-in, no obligation to continue if it doesn’t hit the metric by day 90. If the pilot has not moved the needle, you are under no obligation to expand, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
   spacer(160),
   calloutBox(
     'The Math That Matters',
@@ -639,9 +746,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 270-day cadence: fix the front door and the booking flow first, then grow demand and automate the front desk, then build the retention engine — the membership and the app. The cheapest, highest-visibility wins land in the first ninety days; the bigger builds get realistic runway.'),
   spacer(200),
@@ -674,14 +781,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Membership / Pool Club + App', 'Launch the membership program and the branded booking-and-webcam app; bring photo-update automation into production.'],
-      ['3.2 — Cross-Sell + ROI Dashboard', 'Turn on puppy-to-daycare-to-grooming cross-sell journeys and deliver the ROI dashboard against the Section 14 baselines.'],
+      ['3.2 — Cross-Sell + ROI Dashboard', 'Turn on puppy-to-daycare-to-grooming cross-sell journeys and deliver the ROI dashboard against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions Pet Care Plus can take immediately — before any expanded engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -706,11 +813,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 15 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This strategy builds on what Technijian already sees in Pet Care Plus’ analytics and ads — but the numbers in Sections 11 and 12 are deliberately conservative until we confirm a few baselines. The good news: most of these are already in the call-tracking and analytics dashboards. These are the questions that move the model the most:'),
+  p('This strategy builds on what Technijian already sees in Pet Care Plus’ analytics and ads — but the numbers in Sections 12 and 13 are deliberately conservative until we confirm a few baselines. The good news: most of these are already in the call-tracking and analytics dashboards. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [ { label: 'Topic', weight: 2.4 }, { label: 'What We’d Confirm', weight: 4.4 }, { label: 'Why It Matters', weight: 3.2 } ],
@@ -736,9 +843,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions Pet Care Plus is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'You already run our SEO and ads. Why expand now?', bold: true }, 'Because the foundation is working, the next dollar is in the layer on top of it: instant booking, the review engine, the answer-engine position, and a membership program. We are not replacing anything that is live — we are compounding it. That is the whole reason this is an expansion, not a restart.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this plan starts with simple, proven automations that pay back fast — instant booking, review velocity, speed-to-lead — not autonomous "agents" running the business. We use the simplest tool that works, measure it against your own analytics, and only expand what earns its place.'],
+      [{ text: 'Is our customer and pet data safe?', bold: true }, 'Yes. Customer details, payment data, and booking records never touch a public AI model; we deploy private, governed systems with human review on anything customer-facing, led by a CISSP-certified team. Data governance is part of the program, not an afterthought.'],
+      [{ text: 'We’re a busy team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give the front desk back hours, not add work. Technijian runs the build and the cadence; your involvement is a short check-in and reviewing what we draft. The AI front desk and automation are there to take load off, not pile it on.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry expands a program already running, and the first new piece is a fixed-price 90-day pilot with a defined success metric (Section 12). If it has not moved the needle by day 90, you are under no obligation to continue the new scope — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The My SEO program is already in place. The main new entry cost is My AI Lead Gen Starter at $1,499/mo plus a one-time $2,500 setup — real published rates. My AI, My Dev, the membership build, and the workshop have no published rate and are scoped honestly in discovery (Section 12); we do not print a number we cannot stand behind.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('Pet Care Plus has the hard things: twenty-eight years under one owner, a 4.7 Google rating, the only heated saltwater pool in Chicago, true 24/7 care, and a real cat suite. What it has not yet done is make that strength as visible, as bookable, and as repeatable online as it is in person — and that is exactly where AI helps.'),
   p('The opportunity is concrete and low-risk: open booking to new leads, build the reviews and content owners choose by, claim the AI-answer position no rival has, and turn loyal regulars into members. Because Technijian already runs the search marketing, this is the rare growth program that starts on a stack the partner already manages and measures.'),
@@ -746,7 +873,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — instant booking for new leads, the review engine, and the technical fix — live inside 30 days.',
     ],
@@ -763,9 +890,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000 — and already Pet Care Plus’ search-marketing partner. We build and operate the AI systems that help regional businesses compete at scale, with security and compliance built in, not bolted on.'),
   spacer(140),
@@ -801,6 +928,7 @@ docChildren.push(
   p('3. Competitors — Tucker Pup’s Pet Resort; Wag Hotels (West Loop); Found Chicago; Urban Pooch; K9 University; PUPS Pet Club; Chicago Canine Academy (public listings, Google/Yelp).', { size: 20 }),
   p('4. Industry — IBISWorld (Pet Grooming & Boarding); Mordor Intelligence and MarkWide (pet care & daycare); Clarkston Consulting and IBPSA (2026 trends); Vetstoria and PetDesk (owner behavior); Gingr, MoeGo, DaySmart, Anolla (operations & AI); HubSpot / CXL / Gartner (answer-engine optimization).', { size: 20 }),
   p('5. Technijian capabilities & service pricing — My SEO published tiers ($500–$1,500/mo plus add-ons), My AI Lead Gen ($1,499 Starter + $2,500 setup); My AI and My Dev are scoped per engagement; documented Proven Result (Multi-Agent SEO + Answer-Engine Platform). Existing engagement per Technijian SEO and client-portal records.', { size: 20 }),
+  p('6. AI field guide (Section 10) — MIT Sloan Management Review (AI literacy for executives); Anthropic, "Building Effective Agents" (automation vs. agent distinction); a widely-used five-stage AI maturity model consistent with the Gartner and Google Cloud AI Adoption frameworks; U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage). Industry figures in Section 4 are public analyst estimates and would be confirmed against Pet Care Plus’ own data in discovery.', { size: 20 }),
 );
 
 // =====================================================================

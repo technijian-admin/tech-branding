@@ -73,10 +73,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -371,7 +374,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -398,7 +400,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: this blueprint was built from public information. The firm’s internal numbers — active retainer clients, the association and PAC book, the number of jurisdictions tracked, and filing volume — were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call. The specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: this blueprint was built from public information. The firm’s internal numbers — active retainer clients, the association and PAC book, the number of jurisdictions tracked, and filing volume — were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call. The specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE FIRM — THREE PILLARS ----------
@@ -623,6 +625,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a park owner or developer asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who can help me close or convert a mobile home park in California?"', [
+    'TODAY — the AI assistant answers with whichever firms and resources have the strongest content and signals it can read: it names a couple of statewide law firms and general consultants, points to the Government Code section 65863.7 process, and does NOT mention Talley and Associates — even though Talley has done this work since 1981, has the expert-witness record, and knows the politics jurisdiction by jurisdiction. The firm is invisible at the exact moment a buyer is forming a shortlist.',
+    'AFTER GEO — the same query returns Talley as a cited option ("Talley and Associates has specialized in California mobile-home-park conversions and the Conversion Impact Report process since 1981…"), with the authority explainers and a credible site as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result would be captured as the baseline at engagement start.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter Talley is not cited, the assistants learn to answer "how to close a mobile home park in California" with someone else — and that default, once set in the training and retrieval data, is far harder and more expensive to dislodge than to claim now. No competitor owns this niche today; the nearest rival, Curt Pringle & Associates, runs a thin site with no content. That window is widest before anyone builds an AI presence. The cost of waiting is not zero — it is a competitor, or a generalist law firm, becoming the default answer in the one conversation Talley has actually earned.'),
 );
 
 // ---------- 08 THE INSTITUTIONAL-KNOWLEDGE RISK ----------
@@ -702,16 +715,101 @@ docChildren.push(
     'For Talley this keeps client strategy and the knowledge base private and access-controlled — the data governance that sits behind any AI-assisted compliance and document work.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across authority content, legislative monitoring, and compliance drafting: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors (Claude, GPT-4o, and Gemini) and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final position-letter voice, compliance-critical answers, deepest reasoning on a sworn filing', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — authority content, bill summaries, account dossiers, Impact Report first passes', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, tagging agendas and ordinances across roughly eighty jurisdictions', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Talley pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single mobile-home-park explainer, for example, is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms Talley’s Growth Engine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for Talley Leadership', CORE_BLUE, '10'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Talley sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Vickie and the team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "summarize this bill and flag what it means for a park-owner client." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch every jurisdiction agenda and decide what to surface." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Talley starts with simple automations that pay off in the first 90 days — bill summaries, deadline tracking, knowledge capture — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Talley Sits Today — The AI Maturity Ladder'),
+  p('Most established, relationship-driven firms — including Talley — sit at the first rung of the widely-used five-stage AI maturity model (a model consistent with the Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Talley Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      [{ text: '1. Foundational', bold: true }, { text: 'Little or no AI; manual, people-dependent processes — the firm’s knowledge and monitoring live in two principals’ heads', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['2. Emerging', 'A first AI tool or two in use, but AI is not yet woven into growth or operations', ''],
+      ['3. Operational', 'AI runs specific workflows day-to-day — monitoring, content, compliance — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and operations with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Talley sits at the Foundational stage today — no AI in the practice, and the firm’s expertise undocumented. This report is the plan to reach Operational — AI working in the growth engine and inside the firm — within twelve months. The first move (capturing the institutional knowledge) is also the highest-conviction one.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a regulated firm like Talley, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client-facing or sworn — AI drafts, a person at the firm reviews and signs every FPPC/PAC filing and Impact Report'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — client strategy and the knowledge base never touch a public model; lobbying disclosures are already public record'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — FPPC-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Professional-services firms: relationship-driven firms are capturing decades of founder knowledge into a secure, queryable base before key people retire — protecting continuity and enterprise value.'),
+  bullet('Government-affairs and advocacy: advocacy teams are using legislative-monitoring AI to catch a threatening bill the week it moves rather than the month it passes — getting ahead of it instead of reacting.'),
+  bullet('Regulated, document-heavy businesses: firms with deadline-driven filings are turning multi-day document and compliance assembly into a minutes-long, audit-ready draft — responding to more matters with the same team.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Talley’s own numbers would be confirmed in discovery. Technijian’s specific, documented results from prior builds appear in Section 9 (Capability Proof).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Talley Associate'),
+  calloutBox('Before vs. After AI', [
+    'TODAY: An associate learns of a hostile bill or a new rent-control ordinance by chance, scrambles to reconstruct which clients it touches, hunts through old files for the last time the firm fought a similar fight in that city, and drafts a position letter from a blank page — all while the filing deadlines for a dozen PAC clients sit on a manual calendar.',
+    'WITH AI: A monitor flags the bill the week it moves and maps it to the affected clients automatically; the knowledge base answers "what did we argue the last time we converted a park in this city, and who was on the council?" in seconds; an AI assistant drafts the first-pass position letter and tracks every state and local deadline — the associate reviews, sharpens, and the principal signs. The expertise is captured in a system, so it survives a retirement and makes a new hire productive in months.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but Talley assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms Talley’s Growth Engine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get known (make 45 years of expertise findable where buyers and the public now search), monitor and mobilize (watch every bill and agenda that can touch a client and surface it the week it moves), and capture and scale (institutionalize the firm’s knowledge and automate the association and compliance work that consumes senior time). The first builds authority, the second is the account-based engine, and the third protects and scales the firm.'),
   spacer(160),
   diagramImage(DIAGRAM_ARCH_BUF, 'Talley AI Growth Engine', 600, 1.61),
-  diagramCaption('Figure 10.0 — The Engine: Get Known, Monitor & Mobilize, and Capture & Scale'),
+  diagramCaption('Figure 11.0 — The Engine: Get Known, Monitor & Mobilize, and Capture & Scale'),
   spacer(160),
   buildTable(
     [
@@ -747,12 +845,43 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The model below is built from public information and conservative assumptions, because the firm’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 14 replace them with real baselines. The logic is deliberately modest — a relationship firm does not need a flood of leads, it needs capacity, memory, and reach — and it holds across a wide range of inputs.'),
-  spacer(140),
+  p('The model below is built from public information and conservative assumptions, because the firm’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 15 replace them with real baselines. The logic is deliberately modest — a relationship firm does not need a flood of leads, it needs capacity, memory, and reach — and it holds across a wide range of inputs.'),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Industry surveys find that a large majority of companies now use AI in some form, but only a minority report a clear profit impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. Talley carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Visibility Pilot'),
+  p('Start with one clearly-scoped program rather than an open-ended engagement. The pilot fixes the digital foundation, stands up Talley’s answer-engine presence in the mobile-home-park and land-use niche, and begins capturing the institutional knowledge — and it proves the lift before any larger build is discussed.'),
+  buildTable(
+    [{ label: 'What’s Included', weight: 3 }, { label: 'Detail', weight: 4 }, { label: 'Investment', weight: 2 }],
+    [
+      [{ text: 'My SEO — Authority & Answer-Engine (GEO)', bold: true }, 'A modern website to replace the DIY site; the first MHP and land-use authority explainers; GEO/AEO setup so AI answers begin to cite the firm', '$1,500/mo = $18,000/yr'],
+      [{ text: 'My AI — Executive AI Workshop', bold: true }, 'A leadership session for Vickie and the team: AI roadmap, priorities, and the knowledge-capture kickoff', '$5,000 one-time'],
+      [{ text: 'My AI — Fractional AI Advisor (Starter)', bold: true }, 'Monthly strategy sessions: authority-content direction, monitoring priorities, and the knowledge-capture program', '$2,000/mo = $24,000/yr'],
+      [{ text: 'ENTRY PROGRAM — YEAR 1', bold: true }, 'Fixed scope, published rates, no large up-front build', { text: '~$47,000', bold: true, color: CORE_BLUE }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, the firm has a credible modern site live and is cited by at least one major AI answer engine (Google AI, ChatGPT, or Perplexity) for a high-intent mobile-home-park or property-rights query — a corner no competitor has claimed.',
+      'Our commitment: the entry program is month-to-month after the initial term — no long lock-in, no obligation to continue if it doesn’t hit the metric by day 90. If the pilot has not moved the needle, we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
     [
@@ -821,14 +950,14 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence suited to a regulated professional-services firm: capture the knowledge and fix the foundation first, then stand up the monitoring and the authority content, then scale the operations and turn the knowledge base into a true succession asset. Real gains — a working knowledge base, a credible site, live monitoring — are visible inside the first ninety days; the deeper builds are given realistic runway.'),
   spacer(200),
   diagramImage(DIAGRAM_TIMELINE_BUF, 'Talley 90-180-365 Day Roadmap', 600, 2.30),
-  diagramCaption('Figure 12.0 — Talley Growth Program: 90 / 180 / 365-Day Roadmap'),
+  diagramCaption('Figure 13.0 — Talley Growth Program: 90 / 180 / 365-Day Roadmap'),
   spacer(160),
   subHeader('Phase 1 — Foundation & Capture (Days 1–90)', { color: CORE_BLUE }),
   p('Start with the highest-conviction move — capturing the knowledge — and fix the digital foundation.'),
@@ -856,14 +985,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Association Portal & Ops Automation', 'Bring member communications, dues, events, and board reporting automation into production for MHET and CMPA, and put document drafting (Impact Reports, position letters) to work.'],
-      ['3.2 — Scale & Succession', 'Deepen the knowledge base into a true succession asset; run account dossiers and targeted outreach across the named universe; and deliver an ROI dashboard against the Section 14 baselines.'],
+      ['3.2 — Scale & Succession', 'Deepen the knowledge base into a true succession asset; run account dossiers and targeted outreach across the named universe; and deliver an ROI dashboard against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions Talley can take immediately — before any Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -888,11 +1017,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE THIS PLAN ----------
+// ---------- 15 QUESTIONS TO CALIBRATE THIS PLAN ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with Talley’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with Talley’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -923,9 +1052,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions Talley leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We don’t really do marketing — won’t this turn us into a lead-gen shop?', bold: true }, 'No. This is account-based, not a funnel. The firm keeps winning on relationships and referrals; we simply make sure that when a park owner or a board first searches, Talley is the cited expert that comes up — and we capture and automate the back-office work that consumes senior time. Whoever helps with the website today can keep doing so; we add the AI layer no marketing shop provides.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — knowledge capture, bill summaries, deadline tracking — not autonomous "agents" doing the firm’s job. We use the simplest tool that works, measure it, and only expand what earns its place. The lobbying still happens at city hall, by your team.'],
+      [{ text: 'Is our data — client strategy, the knowledge base — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything sworn or client-facing, led by a CISSP-certified team. Lobbying disclosures are already public record, so monitoring carries little confidentiality risk — but client strategy is locked down with role-based access and audit trails.'],
+      [{ text: 'We’re a small team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give the team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing and signing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle by day 90 — a credible site live and a first AI-answer citation in the niche — you are under no obligation to continue, and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is approximately $47K for Year 1 at published rates — no hidden fees, no large up-front build. The full Year-1 program, profiled in Section 12, runs about $108,600 and is phased so you prove the capacity gains before scaling.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('Talley already has the hard things: 45 years of relationships at the staff and elected level, a mastery of mobile-home-park and land-use law few firms can match, and a named book of property owners, developers, and associations across four counties. What it has not yet done is make that expertise visible where buyers now search, watch every bill and city hall that can affect a client, or capture the institutional knowledge that today lives in two people’s heads.'),
   p('The opportunity is concrete: get known as the cited authority in a niche no competitor has claimed, monitor and mobilize across every jurisdiction so nothing affecting a client slips by, and capture and scale the firm’s knowledge and association work so senior time goes to the relationships that win. A focused, account-based program does all three — and the relationships, the judgment, and the presence at the dais stay exactly where they belong, with the team.'),
@@ -933,7 +1082,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the knowledge base, the new site, and the legislative monitoring — live inside 30 days of signature.',
     ],
@@ -956,9 +1105,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help regional firms compete at scale — with security and compliance built in, not bolted on.'),
   spacer(140),

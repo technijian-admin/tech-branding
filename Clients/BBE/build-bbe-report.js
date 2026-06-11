@@ -79,10 +79,13 @@ function p(text, opts = {}) {
 }
 
 function sectionHeader(text, color = CORE_BLUE) {
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -374,8 +377,7 @@ docChildren.push(
 // ─────────────── TOC ───────────────
 docChildren.push(
   new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 400, after: 200 }, children: [new TextRun({ text: 'Table of Contents', size: 36, bold: true, color: CORE_BLUE, font: FONT_HEAD })] }),
-  new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak()
+  new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' })
 );
 
 // ─────────────── 01 EXECUTIVE SUMMARY ───────────────
@@ -386,7 +388,7 @@ docChildren.push(
     { number: '33', label: 'Years serving SoCal commercial construction', color: CORE_BLUE },
     { number: '98', label: 'BuildZoom score — top 16% in California', color: TEAL },
     { number: '58', label: 'LinkedIn followers — the gap to fill', color: CRITICAL },
-    { number: '38%', label: 'GCs now using AI to screen and qualify subs', color: CORE_ORANGE },
+    { number: '~38%', label: 'GC firms reporting AI adoption in 2026 (industry research)', color: CORE_ORANGE },
   ])
 );
 docChildren.push(spacer(200));
@@ -407,7 +409,6 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 02 ABOUT BOBERG ENGINEERING ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('02 — About Boberg Engineering & Contracting'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -430,13 +431,12 @@ docChildren.push(buildTable(
 ));
 
 // ─────────────── 03 THE COMMERCIAL CONSTRUCTION LANDSCAPE ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('03 — The Commercial Construction Landscape'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('Southern California\'s commercial construction market is one of the largest and most active in the country. Industrial and logistics real estate demand — driven by e-commerce, near-shoring, and the Inland Empire\'s position as a global logistics hub — continues to push new warehouse and distribution development at a pace that keeps earthwork subs at capacity. The medical and retail sectors add additional project velocity, particularly in the 91 and 241 corridors where Boberg operates.'),
   p('For earthwork subcontractors, the business development cycle is distinctly account-based. General contractors and developers do not respond to broad marketing campaigns; they maintain a curated sub roster and invite bids selectively. New entrants to that roster come in one of two ways: through a relationship initiated by someone the estimator already trusts, or through a pre-qualification discovery process that increasingly happens online — BuildZoom scores, ConstructConnect profiles, and Google searches.'),
-  p('The construction technology landscape is shifting beneath that process. AI adoption among commercial contractors and their subs has doubled in the past 18 months — reaching 38 percent of GC firms in 2026. AI-powered bid management systems now achieve 85 to 90 percent accuracy compared to manually prepared estimates, and GCs are increasingly using platforms like ConstructConnect and DowntoBid to identify, score, and invite qualified subs algorithmically. Subs who are not visible in these systems — or who take five days to return a bid when a competitor returns one in one day — are quietly sliding off invite lists.')
+  p('The construction technology landscape is shifting beneath that process. Industry research reports a sharp rise in AI adoption among commercial contractors — on the order of roughly 38 percent of GC firms by 2026 — and AI-assisted bid-management tools are reported to reach the high-80s to ~90 percent accuracy against manually prepared estimates. GCs are increasingly using platforms like ConstructConnect and DowntoBid to identify, score, and invite qualified subs algorithmically. Subs who are not visible in these systems — or who take five days to return a bid when a competitor returns one in one day — are quietly sliding off invite lists.')
 );
 docChildren.push(spacer(120));
 docChildren.push(calloutBox(
@@ -446,7 +446,6 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 04 THE CUSTOMER: WHO HIRES BOBERG ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('04 — The Customer: Four Buyer Personas'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -507,7 +506,6 @@ docChildren.push(personaCard(
 ));
 
 // ─────────────── 05 COMPETITIVE LANDSCAPE ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('05 — Competitive Landscape'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -534,7 +532,6 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 06 HOW GCS ACTUALLY HIRE EARTHWORK SUBS ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('06 — Strategic Procurement Dynamics: How GCs Choose Their Subs'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -557,7 +554,6 @@ docChildren.push(
 );
 
 // ─────────────── 07 DIGITAL PRESENCE GAP ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('07 — The Digital Presence Gap'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -579,12 +575,33 @@ docChildren.push(buildTable(
 docChildren.push(spacer(160));
 docChildren.push(calloutBox(
   'The Pre-Qualification Moment Is Already Digital',
-  'A 2026 survey of GC pre-construction teams found that 74 percent check a sub\'s online presence before extending a bid invite — and 42 percent have removed a sub from consideration based on weak or absent digital signals. The BuildZoom score and track record that Boberg has earned in the field need to be visible where estimators look.',
+  'GC pre-construction teams increasingly vet a sub online — BuildZoom score, a quick Google search, a LinkedIn glance — before extending a bid invite, and a weak or absent digital footprint can quietly cost a sub the invitation. The BuildZoom score and track record that Boberg has earned in the field need to be visible where estimators look.',
   CORE_ORANGE
 ));
+docChildren.push(spacer(160));
+docChildren.push(subHeader('AI Search Reality Check', { color: CORE_ORANGE }));
+docChildren.push(
+  p('Here is the gap made concrete. When a GC estimator or developer asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:')
+);
+docChildren.push(spacer(80));
+docChildren.push(calloutBox(
+  'Prompt: "Best commercial earthwork and grading subcontractor for an Inland Empire warehouse project?"',
+  [
+    'TODAY — the AI assistant answers with whichever firms have the strongest content and third-party signals it can read: it names a couple of older, more-visible SoCal grading contractors and does NOT mention Boberg — even though Boberg has a 98 BuildZoom score (top 16% in California) and a Hillwood industrial track record. Boberg is invisible at the exact moment the estimator is forming a shortlist.',
+    'AFTER GEO — the same query returns Boberg as a cited option ("Boberg Engineering & Contracting, a Corona-based commercial earthwork sub with a BuildZoom score of 98 and industrial site-prep experience for national developers…"), with the project portfolio and BuildZoom profile as the supporting evidence the assistant points to.',
+  ],
+  CORE_ORANGE
+));
+docChildren.push(
+  p('(Illustrative of current AI-search behavior for this query class; the live result would be captured as part of the discovery baseline.)', { italics: true, size: 18 })
+);
+docChildren.push(spacer(160));
+docChildren.push(subHeader('The Cost of Waiting', { color: CRITICAL }));
+docChildren.push(
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter Boberg is not cited, the assistants — and the GC estimators who increasingly trust them — learn to answer "best earthwork sub in the Inland Empire" with someone else, and that default, once set in the training and retrieval data, is far harder and more expensive to dislodge than to claim now. Among the seven named SoCal competitors researched for this report, none yet shows an AI-search or bid-intelligence presence; that window is widest before one of them builds it. The cost of waiting is not zero — it is a competitor becoming the default answer, and Boberg sliding off invite lists it never knew it was on.')
+);
 
 // ─────────────── 08 TECHNIJIAN CAPABILITY PROOF ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('08 — Technijian Capability Proof'));
 docChildren.push(spacer(160));
 docChildren.push(
@@ -614,10 +631,118 @@ docChildren.push(capabilityBox(
   'Technijian\'s AI-Native SDLC v7.0 delivers custom workflow tools, calculators, and CRM-adjacent systems in weeks rather than months. For a niche B2B client, Technijian built a custom account tracking and pipeline tool tailored to their specific sales motion — not a re-skinned generic CRM.',
   'No off-the-shelf CRM tracks a commercial earthwork sub\'s bid pipeline the right way — by project type, GC relationship, estimator contact, win/loss rate, and proposal turnaround time. My Dev can build a Bid Intelligence Platform custom-fitted to how Boberg actually works: ConstructConnect/Dodge feed ingestion, GC account profiles, bid history, and proposal draft automation in one tool.'
 ));
-
-// ─────────────── 09 HOW AI TRANSFORMS BOBERG'S GROWTH ENGINE ───────────────
+docChildren.push(spacer(160));
+docChildren.push(subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('A fair question about running AI across content, bid intelligence, and proposals: won\'t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.')
+);
 docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('09 — How AI Transforms Boberg\'s Bid & Growth Engine'));
+docChildren.push(buildTable(
+  [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+  [
+    [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, compliance-critical answers, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+    [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — earthwork content, outreach personalization, proposal drafting, GC account scoring', { text: '~30–40%', color: TEAL }],
+    [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, scope extraction from plans, enriching and tagging thousands of bid records', { text: '~50–60%', color: BRAND_GREY }],
+  ],
+  { headerColor: DARK_CHARCOAL }
+));
+docChildren.push(
+  p('The result: Boberg pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single bid proposal, for example, has scope extracted from the civil plans by a low-cost model, the draft built and tightened by a mid model, and a final accuracy-and-language pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI-engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 })
+);
+
+// ─────────────── 09 UNDERSTANDING AI — FIELD GUIDE ───────────────
+docChildren.push(...sectionHeader('09 — Understanding AI: A Field Guide for Boberg Engineering Leadership'));
+docChildren.push(spacer(140));
+docChildren.push(
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Boberg sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Chad, Matthew, and the Boberg team can judge every recommendation that follows on its merits.')
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('What AI Actually Is — and Isn\'t', { color: CORE_BLUE }));
+docChildren.push(
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:')
+);
+docChildren.push(bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this earthwork bid from the plan takeoff and our standard language." This is where almost all near-term value lives.'));
+docChildren.push(bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the bid portals and flag the projects worth our time." This comes later, where it earns its place.'));
+docChildren.push(
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. Boberg starts with simple automations that pay off in the first 90 days, and adds autonomous agents only where the value is proven — which is exactly how the roadmap in this report is sequenced.')
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('Where Boberg Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }));
+docChildren.push(
+  p('Most established, well-run firms — including Boberg — sit at the first rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.')
+);
+docChildren.push(spacer(80));
+docChildren.push(buildTable(
+  [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Boberg Today', weight: 1.4, align: AlignmentType.CENTER }],
+  [
+    [{ text: '1. Foundational', bold: true }, { text: 'Little or no AI; bids, account tracking, and knowledge are manual and people-dependent', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+    ['2. Emerging', 'First AI tools appear — content drafting, a bid-portal alert, a knowledge search — used in spots, not yet systematic', ''],
+    ['3. Operational', 'AI runs specific workflows day-to-day — bid intelligence, proposal drafting, content — with measured results', ''],
+    ['4. Scaled', 'AI is embedded across growth and operations with governance and dashboards', ''],
+    ['5. Transformational', 'AI is the default way the business bids, sells, and runs', ''],
+  ],
+  { headerColor: CORE_BLUE }
+));
+docChildren.push(
+  p('Boberg sits at Foundational today — strong in the field, with the AI layer not yet built. This report is the plan to reach Operational — AI working in the bid-and-growth engine and inside the back office — within twelve months.', { spaceBefore: 80 })
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }));
+docChildren.push(
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a commercial construction firm like Boberg, three risks matter most, and each has a concrete control:')
+);
+docChildren.push(spacer(80));
+docChildren.push(buildTable(
+  [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+  [
+    ['Hallucination', 'AI can state a confident, wrong answer — a wrong quantity or a missed exclusion on a bid', 'Human-in-the-loop review on anything client-facing or contractually binding — AI drafts, an estimator approves'],
+    ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — bid pricing, GC relationship notes, and project history never touch a public model'],
+    ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — led by a CISSP-certified team'],
+  ],
+  { headerColor: DARK_CHARCOAL }
+));
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('What Comparable Organizations Are Already Doing', { color: CORE_BLUE }));
+docChildren.push(bullet('Construction subcontractors: firms are using bid-portal monitoring and AI scoring to see qualified projects earlier and bid only the work that fits — responding faster than competitors still working from email alerts.'));
+docChildren.push(bullet('Document-heavy trades: contractors are turning multi-day proposal and takeoff assembly into a same-day, scope-complete draft — submitting more clean bids with the same estimating team.'));
+docChildren.push(bullet('Regional B2B service firms: companies are using AI search optimization to become the cited answer when buyers ask AI tools "who is the best [trade] contractor in [region]?" — capturing demand competitors never see.'));
+docChildren.push(
+  p('These are representative directions of travel across comparable industries, not guarantees; Boberg\'s own numbers would be confirmed in discovery. Technijian\'s specific, measured results from prior builds appear in Section 8 (Capability Proof) and Section 10.', { italics: true, size: 19, spaceBefore: 40 })
+);
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('A Day in the Life — A Boberg Estimator', { color: CORE_BLUE }));
+docChildren.push(calloutBox(
+  'Before vs. After AI',
+  [
+    'TODAY: An estimator learns about a project when the bid invite lands in the inbox — often the same day competitors got it. They take five days to read the civil plans, hand-build the earthwork takeoff, write the proposal from scratch, and chase down the qualifications and exclusions from memory and old bids.',
+    'WITH AI: A pre-scored alert flags the project 24–48 hours early — project type, GC, size, location, margin profile. An AI assistant extracts the earthwork scope from the plans and drafts the bid in Boberg\'s standard language — qualifications, alternates, unit-price ranges, exclusions — in minutes; the estimator reviews and approves. The bid goes out clean in a day instead of five, and 33 years of estimating know-how is captured in the system instead of one person\'s head.',
+  ],
+  CORE_BLUE
+));
+docChildren.push(spacer(140));
+
+docChildren.push(subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }));
+docChildren.push(buildTable(
+  [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+  [
+    ['DIY tools', 'Inexpensive, but Boberg assembles, secures, and governs everything — and owns the three risks above alone'],
+    ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+    [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security', bold: true }],
+  ],
+  { headerColor: CORE_BLUE }
+));
+docChildren.push(
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 })
+);
+
+// ─────────────── 10 HOW AI TRANSFORMS BOBERG'S GROWTH ENGINE ───────────────
+docChildren.push(...sectionHeader('10 — How AI Transforms Boberg\'s Bid & Growth Engine'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('Boberg\'s growth engine is account-based, not volume-driven. The opportunity is not to spray marketing at a broad anonymous market — it is to be the sub that specific GC estimators think of first, the sub that developers call before the GC is even selected, and the sub that turns bid wins into preferred-sub relationships. AI accelerates all three motions at once.'),
@@ -625,7 +750,7 @@ docChildren.push(
 );
 docChildren.push(spacer(100));
 docChildren.push(diagramImage(DIAGRAM_ARCH_BUF, 'AI Bid & Growth Engine Architecture', 580));
-docChildren.push(diagramCaption('Figure 9.0 — Boberg AI Growth Engine: Inbound Authority · Outbound Intelligence · Internal Efficiency'));
+docChildren.push(diagramCaption('Figure 10.0 — Boberg AI Growth Engine: Inbound Authority · Outbound Intelligence · Internal Efficiency'));
 docChildren.push(spacer(160));
 
 docChildren.push(subHeader('Inbound — Authority: Get Found Before the Bid Invite'));
@@ -673,8 +798,7 @@ docChildren.push(buildTable(
 ));
 
 // ─────────────── 10 BUSINESS IMPACT & SERVICE INVESTMENT ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('10 — Business Impact & Service Investment'));
+docChildren.push(...sectionHeader('11 — Business Impact & Service Investment'));
 docChildren.push(spacer(160));
 
 docChildren.push(subHeader('KPI Lift Projections'));
@@ -715,16 +839,22 @@ docChildren.push(calloutBox(
 ));
 docChildren.push(spacer(160));
 
+docChildren.push(subHeader('The Entry Offer — The 90-Day AI Bid-Visibility Pilot', { color: CORE_BLUE }));
+docChildren.push(spacer(80));
+docChildren.push(
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up Boberg\'s AI-search presence, the pre-qualification authority that gets BBE onto more invite lists, and the bid-monitoring configuration — and proves the lift before any larger build (the My Dev Bid Intelligence Platform) is discussed.')
+);
+docChildren.push(spacer(120));
 docChildren.push(subHeader('Service Investment Map — Land and Expand'));
 docChildren.push(spacer(100));
 docChildren.push(
-  p('The investment is structured land-and-expand: the Entry Program is the easy yes — quick-win recurring services that pay for themselves fast, with no large up-front build. The Expansion adds the custom platform and deeper intelligence layer once the entry proves the lift.', { italics: true, size: 20 })
+  p('The investment is structured land-and-expand: the 90-Day AI Bid-Visibility Pilot is the easy yes — quick-win recurring services that pay for themselves fast, with no large up-front build. The Expansion adds the custom platform and deeper intelligence layer once the entry proves the lift.', { italics: true, size: 20 })
 );
 docChildren.push(spacer(100));
 docChildren.push(buildTable(
   [{ label: 'Service', weight: 2.5 }, { label: 'Tier / Description', weight: 3 }, { label: 'Monthly', weight: 1.5 }, { label: 'Y1 Total', weight: 1.5 }],
   [
-    [{ text: 'ENTRY PROGRAM — Phase 1', bold: true, color: CORE_BLUE }, { text: 'Quick-win recurring services — no large build required', bold: true, color: CORE_BLUE }, { text: '—', bold: true, color: CORE_BLUE }, { text: '—', bold: true, color: CORE_BLUE }],
+    [{ text: 'THE 90-DAY AI BID-VISIBILITY PILOT — Phase 1', bold: true, color: CORE_BLUE }, { text: 'Quick-win recurring services — no large build required', bold: true, color: CORE_BLUE }, { text: '—', bold: true, color: CORE_BLUE }, { text: '—', bold: true, color: CORE_BLUE }],
     ['My SEO', 'Tier 2 + AI Search Optimization + PR + Content Syndication', '$1,550/mo', '$18,600'],
     ['My AI Workshop', 'Executive AI Workshop — map targets, define bid criteria, build AI strategy (1× upfront)', '—', '$5,000'],
     ['My AI Advisor', 'Fractional AI Advisor — Starter, 2 hrs/mo. Account intelligence setup, bid monitoring configuration, quarterly strategy sessions', '$1,000/mo', '$12,000'],
@@ -740,10 +870,18 @@ docChildren.push(spacer(120));
 docChildren.push(
   p('All investment figures are estimated and confirmed at formal quote. Labor rates (for any ad-hoc or project work): US Tech Support $125/hr contracted; US vCIO/Strategy $225/hr contracted. Investment shown is client-facing; full quote provided at discovery meeting.', { size: 18, italics: true })
 );
+docChildren.push(spacer(160));
+docChildren.push(calloutBox(
+  'The Pilot Bar — and Our Commitment',
+  [
+    'Success metric: within 90 days, Boberg is the cited or top-ranked answer for at least one high-intent GC-estimator query (e.g. "commercial earthwork contractor Inland Empire" / "Corona grading contractor") in Google and at least one AI assistant (ChatGPT, Perplexity, or Copilot), AND bid-portal monitoring is live and delivering pre-scored project alerts to Chad.',
+    'Our commitment: the entry program is month-to-month, with no lock-in. If the pilot has not hit the metric above by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it. You carry the upside, not the risk.',
+  ],
+  CORE_ORANGE
+));
 
-// ─────────────── 11 IMPLEMENTATION ROADMAP ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('11 — Implementation Roadmap'));
+// ─────────────── 12 IMPLEMENTATION ROADMAP ───────────────
+docChildren.push(...sectionHeader('12 — Implementation Roadmap'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('The roadmap is paced for a commercial construction business that cannot slow down operations during implementation. The Entry Program launches in Phase 1 with no disruption to Boberg\'s bid and operations cycle; the intelligence systems build on that foundation in Phase 2; and the custom platform engagement begins in Phase 3 after Phase 1 ROI is established.'),
@@ -751,7 +889,7 @@ docChildren.push(
 );
 docChildren.push(spacer(100));
 docChildren.push(diagramImage(DIAGRAM_TIMELINE_BUF, 'Implementation Timeline', 580));
-docChildren.push(diagramCaption('Figure 11.0 — 270-Day Implementation Roadmap: Foundation → Intelligence → Growth'));
+docChildren.push(diagramCaption('Figure 12.0 — 270-Day Implementation Roadmap: Foundation → Intelligence → Growth'));
 docChildren.push(spacer(160));
 docChildren.push(buildTable(
   [{ label: 'Phase', weight: 1.5 }, { label: 'Period', weight: 1 }, { label: 'Key Milestones', weight: 4 }, { label: 'Outcome', weight: 2 }],
@@ -763,8 +901,7 @@ docChildren.push(buildTable(
 ));
 
 // ─────────────── 12 QUICK WINS ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('12 — Quick Wins: Week 1, No Contract Required'));
+docChildren.push(...sectionHeader('13 — Quick Wins: Week 1, No Contract Required'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('The actions below cost nothing and require no Technijian engagement. They close the most visible gaps in Boberg\'s digital presence and lay the groundwork for the AI systems to build on. Each is completable in a day or less:')
@@ -782,14 +919,33 @@ docChildren.push(buildTable(
   ]
 ));
 
-// ─────────────── 13 CONCLUSION + CTA ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('13 — Conclusion & Next Step'));
+// ─────────────── 14 QUESTIONS WE USUALLY GET (FAQ) ───────────────
+docChildren.push(...sectionHeader('14 — Questions We Usually Get'));
+docChildren.push(spacer(160));
+docChildren.push(
+  p('The honest answers to the questions Boberg leadership is most likely asking right now.')
+);
+docChildren.push(spacer(120));
+docChildren.push(buildTable(
+  [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+  [
+    [{ text: 'We already work with a marketing or web person. Why add Technijian?', bold: true }, 'Keep them — if traditional web and SEO work is being done, this sits alongside it. We add the layer most general agencies do not: AI-search optimization (GEO) so estimators\' AI tools cite Boberg, plus bid-portal intelligence, account dossiers, and proposal automation no marketing firm provides. We run alongside your existing help, not over it.'],
+    [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — proposal drafting, bid-portal alerts, authority content — not autonomous "agents" running your bids. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+    [{ text: 'Is our data — bid pricing, GC relationships, project history — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything client-facing or contractually binding, led by a CISSP-certified team. Data governance is part of the complimentary Nexus Assess in the entry program.'],
+    [{ text: 'We\'re a lean shop. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your estimators back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional advisor model means no new hire to manage.'],
+    [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 11), month-to-month with no lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+    [{ text: 'What does it really cost?', bold: true }, 'The entry program — the 90-Day AI Bid-Visibility Pilot — is about $35.6K for Year 1 at published rates: no hidden fees, no large up-front build. The full engine (the custom Bid Intelligence Platform and deeper intelligence) is profiled in Section 11, but only after the pilot proves the lift.'],
+  ],
+  { headerColor: CORE_BLUE }
+));
+
+// ─────────────── 15 CONCLUSION + CTA ───────────────
+docChildren.push(...sectionHeader('15 — Conclusion & Next Step'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('Boberg Engineering has earned its reputation one completed pad at a time over 33 years. The field performance is not the problem. The problem is that the estimator who just received a new warehouse project in Ontario has three subs in their head — and Boberg may not be one of them, not because the work is not good, but because the digital shelf is empty.'),
   p('AI solves that problem on both sides of the bid funnel: the authority and discoverability that gets BBE onto more invite lists, and the bid intelligence and proposal speed that turns more invitations into awards. The entry program is designed to prove this on a small budget before any large build is committed.'),
-  p('The first step is a 30-minute conversation. Technijian will review Boberg\'s current bid pipeline, target GC list, and field capacity — and deliver a calibrated first-year plan with real numbers before any commitment is made. The full 30-page blueprint is available on request.')
+  p('The first step is a 30-minute conversation. Technijian will review Boberg\'s current bid pipeline, target GC list, and field capacity — and deliver a calibrated first-year plan with real numbers before any commitment is made. The full blueprint is available on request.')
 );
 docChildren.push(spacer(160));
 docChildren.push(calloutBox(
@@ -802,8 +958,7 @@ docChildren.push(calloutBox(
 ));
 
 // ─────────────── 14 ABOUT TECHNIJIAN ───────────────
-docChildren.push(spacer(100));
-docChildren.push(...sectionHeader('14 — About Technijian'));
+docChildren.push(...sectionHeader('16 — About Technijian'));
 docChildren.push(spacer(160));
 docChildren.push(
   p('Technijian is a Southern California managed IT services and AI strategy firm founded in 2000. Headquartered in Irvine with a delivery center in Panchkula, India, Technijian serves clients across the commercial construction, professional services, healthcare, and logistics sectors with three AI-native service lines:')
@@ -832,7 +987,6 @@ docChildren.push(buildTable(
 ));
 
 // ─────────────── APPENDIX — WORKS CITED ───────────────
-docChildren.push(spacer(100));
 docChildren.push(...sectionHeader('Appendix — Works Cited'));
 docChildren.push(spacer(160));
 docChildren.push(buildTable(
@@ -858,6 +1012,10 @@ docChildren.push(buildTable(
     ['18', 'Technijian My SEO content files', 'Pricing tiers and service definitions'],
     ['19', 'Technijian My AI content files', 'Pricing and service definitions'],
     ['20', 'Technijian skills/technijian-biz-dev-blueprint/SKILL.md', 'Blueprint methodology, voice rules, investment defaults'],
+    ['21', 'MIT Sloan Management Review — AI literacy for executives', 'Section 9: framing AI literacy as "what AI can do," not how to build it'],
+    ['22', 'Anthropic — Building Effective Agents', 'Section 9: the automation (workflow) vs. agent distinction'],
+    ['23', 'AI maturity models (Gartner; Google Cloud AI Adoption Framework)', 'Section 9: the widely-used five-stage maturity ladder concept'],
+    ['24', 'U.S. NIST AI Risk Management Framework (Govern/Map/Measure/Manage)', 'Section 9: responsible-AI controls for the three risks'],
   ]
 ));
 

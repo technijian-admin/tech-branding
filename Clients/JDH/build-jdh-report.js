@@ -60,7 +60,8 @@ const CONTENT_W = PAGE_W - MARGIN * 2;
 
 // ---------- Helpers ----------
 function spacer(size = 200) {
-  return new Paragraph({ spacing: { before: size, after: 0 }, children: [new TextRun('')] });
+  // keepNext: a spacer binds to the following element so it can never orphan onto a blank page.
+  return new Paragraph({ keepNext: true, spacing: { before: size, after: 0 }, children: [new TextRun('')] });
 }
 function pageBreak() { return new Paragraph({ children: [new PageBreak()] }); }
 function p(text, opts = {}) {
@@ -73,12 +74,24 @@ function p(text, opts = {}) {
   });
 }
 
+const NUM_BULLETS = 'bullets';
+function bullet(text, opts = {}) {
+  return new Paragraph({
+    numbering: { reference: NUM_BULLETS, level: 0 },
+    spacing: { before: 40, after: 80, line: 300 },
+    children: [new TextRun({ text, size: 22, color: BRAND_GREY, font: FONT_BODY, ...opts })],
+  });
+}
+
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -364,7 +377,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-1' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -391,7 +403,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: this blueprint was built from public information plus Technijian’s own internal records of the JDH environment. JDH’s confidential business numbers — quote volume, win rate, average part-program value and margin, named-account concentration, current revenue — were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: this blueprint was built from public information plus Technijian’s own internal records of the JDH environment. JDH’s confidential business numbers — quote volume, win rate, average part-program value and margin, named-account concentration, current revenue — were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 HOW A CONTRACT MANUFACTURER WINS ----------
@@ -628,6 +640,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When an OEM sourcing or NPI engineer asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who is a tariff-resilient, minority-owned supplier for cast and forged industrial components?"', [
+    'TODAY — the AI assistant answers with whichever suppliers have the strongest content and third-party signals it can read: it names a couple of large precision players and a domestic foundry, and does NOT mention JDH Pacific — even though JDH holds the NMSDC minority-owned certification, the China + India + Mexico + US multi-origin footprint, and thirty-five years of Fortune-500 supply. JDH is invisible at the exact moment the buyer is forming a shortlist.',
+    'AFTER AEO — the same query returns JDH as a cited option ("JDH Pacific is an NMSDC-certified minority-owned contract manufacturer of cast, forged, and machined components with a multi-origin US, Mexico, China, and India supply chain…"), with the authority content, the surfaced MBE certification, and the supplier awards as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live baseline is captured in Quick Win 1.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('Answer-engine visibility compounds, and it rewards whoever optimizes first. Every quarter JDH is not cited, the assistants learn to answer "offshore casting supplier" or "minority-owned forging supplier" with someone else — and that default, once set in the training and retrieval data, is far harder and more expensive to dislodge than to claim now. The 2025-2026 reshoring and tariff-rebalance window is the moment OEM sourcing teams are actively re-sourcing, and the supplier they find first in an AI answer is the one that gets the RFQ. The cost of waiting is not zero — it is a competitor becoming the default answer, and the re-source program JDH never sees.'),
 );
 
 // ---------- 08 THE SILENT MARGIN LEAK ----------
@@ -719,11 +742,111 @@ docChildren.push(
     'For JDH it is the OEM account-intelligence engine: track the sourcing, commodity, and supplier-diversity managers at the named OEM accounts; watch for triggers (reshoring announcements, new product programs, tariff actions, plant expansions, supplier-diversity initiatives); and deliver pre-meeting dossiers the sales team can act on the day a program opens.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across quoting, qualification docs, account intelligence, and content: will the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.7 },
+      { label: 'What It Does', weight: 3.3 },
+      { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER },
+    ],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — the compliance-critical quote and HTS sign-off pass, the final brand-voice pass, the deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true, align: AlignmentType.CENTER }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — quote and should-cost drafting, content, outreach personalization, summarization, scoring', { text: '~30–40%', color: TEAL, align: AlignmentType.CENTER }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — drawing and spec extraction, classification, enriching and tagging thousands of part and account records', { text: '~50–60%', color: BRAND_GREY, align: AlignmentType.CENTER }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: JDH pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single draft quote, for example, has its drawing extracted by a low-cost model, its should-cost reasoned and tightened by a mid model, and its final accuracy-and-compliance pass run by a frontier model with a 3-model council check — instead of one premium model doing all three at roughly triple the cost. This is the AI-engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms JDH’s Growth Engine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for JDH Leadership', CORE_BLUE, '10'),
+  spacer(100),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where JDH sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Donald, Daniel, and the JDH team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this quote and should-cost from this drawing and the matching quote history." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the named OEM accounts and flag the ones with a reshoring or cost-down trigger." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. JDH starts with simple automations that pay off in the first ninety days — quote drafting, cert-package assembly — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where JDH Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run companies — including JDH — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with the Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Stage', weight: 1.6 },
+      { label: 'What It Looks Like', weight: 4 },
+      { label: 'JDH Today', weight: 1.4, align: AlignmentType.CENTER },
+    ],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', align: AlignmentType.CENTER }],
+      [{ text: '2. Emerging', bold: true }, { text: 'A managed, modern IT environment is in place (servers, security, Microsoft 365, Sage, PC-DMIS) but AI is not yet woven into how JDH quotes, qualifies, or sources', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — quote drafting, cert assembly, account intelligence — with measured results', { text: '', align: AlignmentType.CENTER }],
+      ['4. Scaled', 'AI is embedded across growth and operations with governance and dashboards, and rolled across the China, India, and Mexico sites', { text: '', align: AlignmentType.CENTER }],
+      ['5. Transformational', 'AI is the default way the business quotes, qualifies, and competes', { text: '', align: AlignmentType.CENTER }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('JDH has the foundation most firms lack — a managed, secure, modern IT environment already in place. This report is the plan to reach Operational — AI working in the quote race and inside the qualification and sourcing workflow — within roughly nine months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a manufacturer-importer like JDH, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Risk', weight: 1.8 },
+      { label: 'What It Means', weight: 3.4 },
+      { label: 'How Technijian Controls It', weight: 3.4 },
+    ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything customer-facing or compliance-bound — AI drafts the quote, the HTS classification, and the cert package; a JDH engineer or a licensed broker signs'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — quote history, drawings, cost data, and customer records never touch a public model; the same security posture Technijian already runs for JDH'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — trade-compliance and supplier-quality-audit-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Industrial manufacturing: contract manufacturers and metal-parts suppliers are using AI to read RFQ packages and drawings and draft quotes, compressing a multi-day quote into hours and responding to more programs with the same engineering team.'),
+  bullet('Regulated, document-heavy B2B: suppliers facing PPAP, FAI, and customer-scorecard paperwork are turning multi-day qualification-document assembly into a minutes-long, audit-ready draft — with a qualified engineer signing the result.'),
+  bullet('Global sourcing & trade: importers exposed to Section 301 and shifting duties are using AI to monitor trade policy and model landed cost by origin, turning supply-chain complexity into a marketed buyer benefit rather than a back-office scramble.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; JDH’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 9 (Capability Proof) and Section 12 (Business Impact).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A JDH Quoting Engineer'),
+  calloutBox('Before vs. After AI', [
+    'TODAY: An RFQ lands with a drawing, a spec, and a BOM. The engineer reads the drawing by hand, hunts for a similar prior part in spreadsheets and memory, rebuilds the should-cost, drafts the quote, and — if the program is won — assembles the PPAP / FAI / COA package from PC-DMIS results by hand. The hard quotes get deferred; the OEM awards the program to whoever quoted first.',
+    'WITH AI: The AI reads the drawing and spec, surfaces the matching part from thirty-five years of indexed quote history, and drafts the quote and should-cost in minutes; a three-model council checks it; the engineer reviews, adjusts, and signs. The qualification package assembles itself from the real inspection data for the engineer to sign. The expertise is captured in a system, so the same standard holds across the team and survives a busy week or a departure — and the engineer spends the recovered hours on more quotes and better design feedback.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [
+      { label: 'Path', weight: 1.6 },
+      { label: 'Reality', weight: 5 },
+    ],
+    [
+      ['DIY tools', 'Inexpensive, but JDH assembles, secures, and governs everything — and owns the three risks above alone, on top of running the plant'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — already running JDH’s servers, security, M365, Sage, and PC-DMIS, with proven builds and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms JDH’s Growth Engine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get found and specified (own answer-engine authority on supplier-discovery queries, with an executive LinkedIn cadence on reshoring and tariff resilience), win the quote race (point AI at the RFQs, drawings, qualification packages, and tariff classification so quotes go out in hours and certs assemble themselves for a human to sign), and hold and grow (recall thirty-five years of quote and tooling history, protect quoted margin against tariff swings, and keep every supplier scorecard green). The first fills the top of the named-account funnel, the second is the quoting and qualification core, and the third protects and compounds the order book.'),
   spacer(160),
@@ -765,11 +888,11 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — answer-engine authority, named-account intelligence, and a strategy workshop — and expands into the custom AI Quote & Quality-Doc engine, the tariff dashboard, and the fractional AI advisor only as the results prove out. The model below is built from public information and conservative assumptions, because JDH’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 14 replace them with real baselines.'),
+  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — answer-engine authority, named-account intelligence, and a strategy workshop — and expands into the custom AI Quote & Quality-Doc engine, the tariff dashboard, and the fractional AI advisor only as the results prove out. The model below is built from public information and conservative assumptions, because JDH’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 15 replace them with real baselines.'),
   spacer(140),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
@@ -811,7 +934,8 @@ docChildren.push(
   spacer(60),
   p('The ratio is measured against the entry program only — the easiest possible place to start. It does not count the larger gains the custom AI Quote & Quality-Doc engine adds (quote-velocity compounding, the supplier-diversity channel maturing, and the re-quote win-rate lift), nor the Phase-3 reuse of the engine across the China, India, and Mexico sites. Average program value and margin are illustrative placeholders and are replaced with JDH’s actual book in discovery. All figures are projected, not guaranteed.', { italics: true, size: 18 }),
   spacer(160),
-  subHeader('Service Investment Map — Start Small, Expand as It Proves Out'),
+  subHeader('The Entry Offer — The 90-Day AI Visibility Pilot'),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up JDH’s answer-engine visibility on supplier-discovery queries, the named-account intelligence on the OEM accounts that matter, and the strategy workshop that scopes the build — and it proves the lift before any larger build is discussed.'),
   buildTable(
     [
       { label: 'Service', weight: 3.2 },
@@ -823,12 +947,21 @@ docChildren.push(
       ['My AI — Readiness + Executive Workshop (one-time)', 'A one-day session with Donald, Daniel, the quality lead, and engineering — quote and qualification workflow tour, build scoping, trade-compliance and quality governance baseline', { text: '—', align: AlignmentType.CENTER }, { text: '$5,000', align: AlignmentType.CENTER }],
       ['My SEO — Tier 3 + AI Search Optimization', 'Own answer-engine citations on supplier-discovery queries; authority content on tariff-resilient and minority-owned sourcing; executive LinkedIn cadence', { text: '$1,200', align: AlignmentType.CENTER }, { text: '$14,400', align: AlignmentType.CENTER }],
       ['My AI Lead Gen — Named-Account ABM (Starter)', 'Track OEM sourcing, commodity, and supplier-diversity managers; trigger monitoring (reshoring, new programs, tariff actions); per-account dossiers', { text: '$1,000', align: AlignmentType.CENTER }, { text: '$12,000', align: AlignmentType.CENTER }],
-      [{ text: 'ENTRY PROGRAM — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,200/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
+      [{ text: 'THE 90-DAY AI VISIBILITY PILOT — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,200/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
       ['My Dev — AI Quote & Quality-Doc Engine (Phase 2 build)', 'AI RFQ / drawing intelligence + quote drafting + should-cost + PPAP / FAI / COA assembly + tariff / landed-cost dashboard + quote-history memory, integrated with Sage + PC-DMIS', { text: '—', align: AlignmentType.CENTER }, { text: '~$72,000', align: AlignmentType.CENTER }],
       ['My Dev — Managed App Services (Phase 2)', 'Hosting, monitoring, audit-log review, and iteration of the engine', { text: '$800', align: AlignmentType.CENTER }, { text: '$9,600', align: AlignmentType.CENTER }],
       ['My AI — Fractional AI Advisor (Phase 2)', 'Program leadership, trade-compliance and quality governance, model performance review, team training', { text: '$2,000', align: AlignmentType.CENTER }, { text: '$24,000', align: AlignmentType.CENTER }],
       [{ text: 'FULL ENGINE — Entry + Expansion', bold: true }, { text: 'Recurring $5,000/mo + build', bold: true }, { text: '', bold: true }, { text: '~$137,000', bold: true, color: CORE_BLUE, align: AlignmentType.CENTER }],
     ],
+  ),
+  spacer(160),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, JDH is cited by at least one major AI assistant (Google AI, ChatGPT, or Perplexity) for a high-intent supplier-discovery query (for example, "minority-owned casting and forging supplier" or "tariff-resilient China and Mexico sourcing partner"), AND a working named-account intelligence queue is delivering pre-meeting dossiers to Daniel’s team.',
+      'Our commitment: the entry program is month-to-month, with no lock-in. If the pilot has not hit the metric above by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. JDH carries the upside, not the risk.',
+    ],
+    CORE_ORANGE
   ),
   spacer(160),
   calloutBox(
@@ -842,9 +975,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 270-day cadence that mirrors the land-and-expand plan — and because Technijian already runs the environment, the start is fast. Begin with the low-commitment entry: get found and specified and stand up the named-account intelligence. Then build the AI quote and qualification engine and the tariff dashboard. Then hold, grow, and scale across the sites. Real gains — answer-engine citations, named-account dossiers, the surfaced MBE channel — are visible inside the first ninety days, before the larger build; the deeper engine and the multi-site roll-out are given realistic runway.'),
   spacer(200),
@@ -879,14 +1012,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Supplier-Scorecard Automation + Margin Protection', 'Automate the COA-on-every-lot flow to keep OEM supplier ratings green. Stand up the quoted-margin protection that flags jobs a duty or policy shift has eroded before the PO is accepted. Add an account-renewal and re-order intelligence view per account.'],
-      ['3.2 — Roll Across Sites + Productize (SCALE)', 'Roll the quote and qualification engine and the memory layer across the China, India, and Mexico operations. Productize the tariff-intelligence and supplier-diversity reporting as a repeatable managed module. Deliver an ROI dashboard measured against the Section 14 baselines.'],
+      ['3.2 — Roll Across Sites + Productize (SCALE)', 'Roll the quote and qualification engine and the memory layer across the China, India, and Mexico operations. Productize the tariff-intelligence and supplier-diversity reporting as a repeatable managed module. Deliver an ROI dashboard measured against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Six actions JDH can take immediately — before any new Technijian engagement beyond the IT services already in place. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -915,11 +1048,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 15 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information plus Technijian’s internal records of the JDH IT environment. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with JDH’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information plus Technijian’s internal records of the JDH IT environment. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with JDH’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -953,9 +1086,32 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions JDH leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [
+      { label: 'Question', weight: 3 },
+      { label: 'Our Honest Answer', weight: 5 },
+    ],
+    [
+      [{ text: 'We already have whoever handles our website and marketing. Why add this?', bold: true }, 'Keep them — this does not replace web maintenance. We add the layer most marketing help does not: answer-engine optimization so AI assistants cite JDH on supplier-discovery queries, the surfaced MBE and supplier-award credibility, and the named-account intelligence and AI quoting engine no general marketing provider builds. And because Technijian already runs your IT, the AI layer plugs into the Sage and PC-DMIS environment we already operate.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — quote drafting and cert-package assembly — not autonomous "agents" running your business. We use the simplest tool that works, measure it, and only expand what earns its place. The same document-intelligence engine already runs for FINRA broker-dealers; this is that discipline applied to your RFQs and qualification docs.'],
+      [{ text: 'Is our data — quotes, drawings, cost history, customer records — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything compliance-bound, led by a CISSP-certified team. It is the same security posture Technijian already runs for JDH — CrowdStrike, Huntress, and the rest — extended to the AI layer.'],
+      [{ text: 'We’re a lean engineering and quality team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your engineers and quality team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short workshop, a monthly strategy session, and reviewing and signing what the AI drafts. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 12), month-to-month with no lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry program is about $32K for Year 1 — My SEO with AI search optimization, named-account intelligence, and the strategy workshop — at published or estimated rates, with no large up-front build. The custom AI Quote & Quality-Doc engine (the full engine) is profiled in Section 12, but only comes after the pilot proves the lift. Productized "My X" services beyond My SEO are estimated and confirmed at quote.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('JDH already has the hard things: joint-venture foundries, a four-country supply chain, an in-house quality department and machine shop, NMSDC minority-owned certification, a thirty-five-year track record with Fortune-500 OEMs, and a Technijian team that already runs its servers, security, Microsoft 365, Sage, and PC-DMIS environment. What it has not yet done is add the AI operating layer that turns those assets into faster quotes, surfaced supplier-diversity spend, and tariff resilience marketed as a buyer benefit — and that is where this program starts.'),
   p('The opportunity is concrete: get found and specified as the supplier OEM sourcing and design engineers ask about first, win the quote race by turning drawings and RFQs into accurate quotes and qualification packages in hours, and hold and grow by recalling thirty-five years of history, protecting quoted margin against tariff swings, and keeping every supplier scorecard green. A focused, account-based program does all three — and it stays inside the trade-compliance and quality-integrity boundary that makes the speed defensible to a Fortune-500 supplier-quality reviewer.'),
@@ -963,7 +1119,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope — easy to schedule, because the team already meets with JDH on IT.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope — easy to schedule, because the team already meets with JDH on IT.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — answer-engine authority, named-account intelligence, and the strategy workshop — live inside 30 days of go-ahead, with no large build required to start.',
     ],
@@ -985,10 +1141,13 @@ docChildren.push(
     })]})],
   }),
 );
+// Plain landing paragraph after a section-ending table — prevents Word from orphaning a blank
+// page between the table and the next section's pageBreakBefore heading (2026-06-10).
+docChildren.push(new Paragraph({ spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '', size: 2 })] }));
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed-services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000 — and JDH’s managed-IT and hosting partner today. We build and operate the AI systems that help capable operators compete at speed, with security and compliance built in, not bolted on. Technology as a solution.'),
   spacer(140),
@@ -1034,7 +1193,6 @@ docChildren.push(
 // =====================================================================
 // DOCUMENT ASSEMBLY
 // =====================================================================
-const NUM_BULLETS = 'bullets';
 const doc = new Document({
   numbering: { config: [{
     reference: NUM_BULLETS,

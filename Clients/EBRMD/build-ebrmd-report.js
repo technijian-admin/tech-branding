@@ -71,10 +71,12 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
-    keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    keepNext: true, pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -367,7 +369,6 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -394,7 +395,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('Note on figures: the practice’s internal metrics (consult volume and conversion, referral counts, average case value, current My SEO scope) were not available for this draft. Every projection below is labeled estimated and calibrates to real numbers after a short discovery call — the questions are listed in Section 13.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('Note on figures: the practice’s internal metrics (consult volume and conversion, referral counts, average case value, current My SEO scope) were not available for this draft. Every projection below is labeled estimated and calibrates to real numbers after a short discovery call — the questions are listed in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE TWO GROWTH ENGINES ----------
@@ -422,7 +423,7 @@ docChildren.push(
     ],
   ),
   spacer(120),
-  p('The rest of this blueprint follows that structure: Section 4 answers the lead-gen question directly, Section 5 details the referral engine (Engine B), and Section 6 details the consumer engine (Engine A) on top of the My SEO already in place.'),
+  p('The rest of this blueprint follows that structure: Section 4 answers the lead-gen question directly, Section 6 details the referral engine (Engine B), and Section 7 details the consumer engine (Engine A) on top of the My SEO already in place.'),
 );
 
 // ---------- 03 WHERE THE DEMAND LIVES ----------
@@ -449,7 +450,7 @@ docChildren.push(
   ),
   spacer(160),
   subHeader('Referral Demand — The Practices That Send Cases'),
-  p('A facial plastic surgeon earns a meaningful share of surgical volume from other providers. This universe is finite, local, and listed in public records — which is what makes it a perfect fit for My AI Lead Gen (Section 5):'),
+  p('A facial plastic surgeon earns a meaningful share of surgical volume from other providers. This universe is finite, local, and listed in public records — which is what makes it a perfect fit for My AI Lead Gen (Section 6):'),
   buildTable(
     [
       { label: 'Referral Source', weight: 3 },
@@ -473,7 +474,7 @@ docChildren.push(
   p('This is the question that prompted the blueprint, so it deserves a direct answer rather than a sales pitch: yes — but for one engine, not both. Getting this right is what separates a program that works from money spent in the wrong place.'),
   spacer(140),
   subHeader('For Consumer Patients — No (and here’s why)'),
-  p('My AI Lead Gen is an outbound engine: it harvests named targets from public business data, enriches them, and runs personalized outreach. That model does not fit individual patients. You cannot ethically or practically build a list of "people who want a facelift," privacy and HIPAA aside — and nobody chooses an elective $15K–$40K surgery because they received a cold message. Consumer growth is won by being found and trusted at the moment someone is already searching, then nurturing them to a booked consult. That is Engine A (Section 6), built on the My SEO already running — not outbound lead gen.'),
+  p('My AI Lead Gen is an outbound engine: it harvests named targets from public business data, enriches them, and runs personalized outreach. That model does not fit individual patients. You cannot ethically or practically build a list of "people who want a facelift," privacy and HIPAA aside — and nobody chooses an elective $15K–$40K surgery because they received a cold message. Consumer growth is won by being found and trusted at the moment someone is already searching, then nurturing them to a booked consult. That is Engine A (Section 7), built on the My SEO already running — not outbound lead gen.'),
   spacer(120),
   subHeader('For Professional Referrals — Yes, and It’s a Strong Fit'),
   p('Referral sources are exactly what My AI Lead Gen was built to find. Every dermatology, Mohs, med-spa, dental, and optometry practice in Orange County is a named business in public records (the NPI registry, Google Business, and more). My AI Lead Gen harvests that universe, enriches and scores it, and delivers outreach-ready, personalized sequences — replacing the cold-list tax of tools like Apollo or ZoomInfo. Pointed at referrers, it builds a pipeline of relationships, each of which can send cases for years.'),
@@ -489,9 +490,81 @@ docChildren.push(
   ),
 );
 
-// ---------- 05 THE REFERRAL ENGINE ----------
+// ---------- 05 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('The Referral Engine (Engine B)', CORE_BLUE, '05'),
+  ...sectionHeader('Understanding AI — A Field Guide for Robinson Facial Plastic Surgery Leadership', CORE_BLUE, '05'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where the practice sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Dr. Robinson and the team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn\'t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "text every post-op patient a review request three days after surgery." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the referral pipeline and flag which derm practices to follow up with." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic\'s guidance on building AI systems) is to use the simplest thing that works. Robinson Facial starts with simple automations that pay off in the first 90 days — review velocity, consult capture, referral harvesting — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Robinson Facial Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run practices — including Robinson Facial — sit at the first or second rung of the widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Robinson Today', weight: 1.6, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent marketing and intake', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'A live My SEO program is in place, but AI is not yet woven into reputation, capture, nurture, or referral growth', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — review velocity, consult nurture, referral outreach — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across both growth engines with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the practice markets, captures, and grows', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Robinson Facial is already at the Emerging stage: the My SEO program is live. This report is the plan to reach Operational — AI working across both the consumer engine and the referral engine — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government\'s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a medical practice like Robinson Facial, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything patient-facing or medical — AI drafts candidacy and procedure copy, Dr. Robinson or the coordinator approves'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — patient information and any PHI never touch a public model; HIPAA-aware handling by design'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing', { color: CORE_BLUE }),
+  bullet('Elective-procedure practices: aesthetic and dental practices are running systematic post-visit review requests to lift local ranking and trust — turning years of happy-but-silent patients into a visible reputation.'),
+  bullet('Local service providers: businesses are using AI search optimization (GEO) to become the cited answer when prospects ask AI assistants "best [procedure] near me" — capturing demand competitors never see.'),
+  bullet('Referral-driven B2B: relationship-led businesses are using account-based AI outreach to systematically court a finite, named referral universe instead of leaving it to chance.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Robinson Facial\'s own numbers would be confirmed in discovery. Technijian\'s specific capabilities and prior builds appear in Section 10 (Capability Proof).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Robinson Facial Patient Coordinator', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A coordinator answers consult inquiries by phone and a single web form, repeats the same candidacy, cost, and financing questions all day, manually remembers to follow up with patients still deliberating, and rarely has time to ask happy post-op patients for a review — so the reputation gap stays open and warm consults go cold.',
+    'WITH AI: A 24/7 consult assistant answers candidacy/cost/financing on drface.com and books consults; nurture sequences keep deliberating patients warm automatically; a review-request goes to every happy patient on schedule; and the referral list and outreach are drafted for the coordinator to approve. The coordinator spends time on patients, not on repetitive chasing — and nothing falls through the cracks.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but the practice assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI marketing lead typically costs $180K+/year and is scarce, and one person cannot cover SEO/GEO, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds and CISSP-led security, already trusted via the live My SEO program', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 06 THE REFERRAL ENGINE ----------
+docChildren.push(
+  ...sectionHeader('The Referral Engine (Engine B)', CORE_BLUE, '06'),
   spacer(100),
   p('This is the new growth channel My AI Lead Gen opens. The diagram below shows the referral universe it harvests and the priority order it works — with dermatologists and Mohs surgeons first, because facial reconstruction is a direct line into Dr. Robinson’s operating room.'),
   spacer(160),
@@ -524,9 +597,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 06 THE CONSUMER ENGINE ----------
+// ---------- 07 THE CONSUMER ENGINE ----------
 docChildren.push(
-  ...sectionHeader('The Consumer Engine (Engine A) — Building on My SEO', CORE_ORANGE, '06'),
+  ...sectionHeader('The Consumer Engine (Engine A) — Building on My SEO', CORE_ORANGE, '07'),
   spacer(100),
   p('The practice already runs My SEO, so this engine is about extending what’s working — not starting over. Four additions turn existing search visibility into more booked surgeries, and the first is the highest-ROI move available to the practice today.'),
   spacer(140),
@@ -555,9 +628,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 07 COMPETITIVE LANDSCAPE ----------
+// ---------- 08 COMPETITIVE LANDSCAPE ----------
 docChildren.push(
-  ...sectionHeader('Competitive Landscape', CORE_BLUE, '07'),
+  ...sectionHeader('Competitive Landscape', CORE_BLUE, '08'),
   spacer(100),
   p('Orange County facial plastic surgery is one of the most competitive aesthetic markets in the country, concentrated in Newport Beach. Robinson’s clinical credentials are fully competitive; the gap is digital reputation and visibility — which is precisely what this program closes.'),
   spacer(140),
@@ -587,11 +660,19 @@ docChildren.push(
     ],
     CORE_BLUE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a prospective patient asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Who is the best facial plastic surgeon in Orange County for a facelift?"', [
+    'TODAY — the AI assistant answers with whichever surgeons have the strongest content and review signals it can read: it names the dominant Newport Beach brands (hundreds of reviews, heavy content) and does NOT mention Dr. Robinson — even though his 21 years, dual board certification, and fellowship training are fully competitive. Robinson is invisible at the exact moment the patient is forming a shortlist.',
+    'AFTER GEO + reviews — the same query returns Robinson as a cited option ("Dr. Ernest B. Robinson is a dual board-certified, fellowship-trained facial plastic surgeon in Aliso Viejo with 21+ years of experience…"), with the procedure pages and a deeper review base as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result would be captured as the GEO baseline at the discovery call.)', { italics: true, size: 18 }),
 );
 
-// ---------- 08 THE PATIENT & REFERRAL CUSTOMER ----------
+// ---------- 09 THE PATIENT & REFERRAL CUSTOMER ----------
 docChildren.push(
-  ...sectionHeader('The Patient & Referral Customer', CORE_ORANGE, '08'),
+  ...sectionHeader('The Patient & Referral Customer', CORE_ORANGE, '09'),
   spacer(100),
   p('Robinson serves a handful of distinct segments across the two engines. Each is reached differently — which is the whole point of separating consumer capture from referral lead gen.'),
   spacer(160),
@@ -656,9 +737,9 @@ docChildren.push(
   diagramCaption('Figure 8.0 — Patient & Referral Segments: Revenue Value vs. Volume'),
 );
 
-// ---------- 09 TECHNIJIAN CAPABILITY PROOF ----------
+// ---------- 10 TECHNIJIAN CAPABILITY PROOF ----------
 docChildren.push(
-  ...sectionHeader('Technijian Capability Proof', CORE_BLUE, '09'),
+  ...sectionHeader('Technijian Capability Proof', CORE_BLUE, '10'),
   spacer(100),
   p('Robinson already knows Technijian delivers — the My SEO program is live. The platforms below are the rest of the toolkit, each delivered and operating for real clients, and each mapped to a specific engine in this plan.'),
   spacer(160),
@@ -691,14 +772,59 @@ docChildren.push(
     'Technijian’s AI-native SDLC delivers custom web apps 3–5x faster than traditional development — funnels, integrations, and automations built around a real workflow.',
     'It builds the consult-to-surgery nurture flows, the booking/lead routing, and the referral-status touchpoints that keep referring practices informed and loyal.'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task', { color: CORE_BLUE }),
+  p('A fair question about running AI across SEO content, review generation, nurture, and referral outreach: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass on patient-facing copy, candidacy/medical-claim wording, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — procedure content, referral-outreach personalization, review responses, nurture sequences, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging thousands of OC referral-practice records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Robinson Facial pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single procedure explainer is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '10'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
   spacer(100),
-  p('The model below is built from public and industry benchmarks because Robinson’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 13 replace them with real baselines. Because a single facial surgery case is high-value, the ROI holds at modest case counts — the two engines simply need to add a handful of cases each.'),
-  spacer(140),
+  p('The model below is built from public and industry benchmarks because Robinson’s internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 14 replace them with real baselines. Because a single facial surgery case is high-value, the ROI holds at modest case counts — the two engines simply need to add a handful of cases each.'),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Industry research (McKinsey State of AI, 2025) finds roughly 88% of companies now use AI, but only about 39% see a real profit impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. Robinson Facial carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Visibility & Reputation Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up the reputation engine and the GEO layer on top of the live My SEO, plus the consult-capture assistant, and proves the lift before the referral engine or the larger build is discussed.'),
+  buildTable(
+    [{ label: 'What\'s Included', weight: 3 }, { label: 'Detail', weight: 4 }, { label: 'Investment', weight: 2 }],
+    [
+      [{ text: 'My AI — Reputation Engine', bold: true }, 'Systematic post-visit review requests to close the ~32-vs-hundreds gap; monitoring and response', '$1,500/mo'],
+      [{ text: 'My SEO — GEO Extension', bold: true }, 'GEO/AI-citation layer + procedure content on top of the My SEO already running', '$750/mo'],
+      [{ text: 'My Dev — Consult Capture (Chat.AI)', bold: true }, 'Consult-assistant integration + booking funnel on drface.com (one-time build)', '$20,000 one-time'],
+      [{ text: 'Discovery & Baseline', bold: true }, 'Calibration call: real consult volume, conversion, referral counts, case value', 'Included'],
+      [{ text: '90-DAY PILOT', bold: true }, 'Fixed scope, published rates, no referral-engine spend until proven', { text: '~$6,750 + build', bold: true, color: CORE_BLUE }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, Robinson Facial has at least 25 net-new Google reviews from happy patients AND the consult-capture assistant is live and booking consults on drface.com.',
+      'Our commitment: the pilot is month-to-month, no lock-in, and there is no obligation to continue if it doesn’t hit the metric by day 90. If it has not moved the needle, you are under no obligation to continue — and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
     [
@@ -765,11 +891,14 @@ docChildren.push(
     ],
     CORE_BLUE
   ),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('Two things compound against the practice every quarter it waits. First, AI-search visibility rewards whoever optimizes first: each quarter Robinson Facial is not the cited answer for "best facelift surgeon Orange County," the assistants learn to answer with a Newport Beach competitor — and that default, once set in the retrieval data, is harder and more expensive to dislodge than to claim now. Second, the reputation gap stays open: every month of happy-but-unasked patients is local ranking and compare-time trust ceded to surgeons with hundreds of reviews. The referral universe is finite, too — the dermatologists and Mohs surgeons a competitor courts first are no longer available to court. The cost of waiting is not zero; it is a competitor becoming the default answer and the default referral partner.'),
 );
 
-// ---------- 11 IMPLEMENTATION ROADMAP ----------
+// ---------- 12 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '11'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence: strengthen the consumer engine first (where the fastest wins are), stand up the referral engine next, then scale both. Meaningful results — more reviews, more captured consults — are visible inside the first 90 days.'),
   spacer(200),
@@ -802,14 +931,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Both Engines Compounding', 'Consult-to-surgery conversion rising; a steady, growing referral case flow from the worked list.'],
-      ['3.2 — Optimize & Report', 'Double down on the procedures and referrers that convert. ROI dashboard delivered against the Section 13 baselines.'],
+      ['3.2 — Optimize & Report', 'Double down on the procedures and referrers that convert. ROI dashboard delivered against the Section 14 baselines.'],
     ],
   ),
 );
 
-// ---------- 12 QUICK WINS ----------
+// ---------- 13 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '12'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
   spacer(100),
   p('Five actions Robinson Facial can take immediately — before any new engagement. Each creates value this week and leads into the larger program.'),
   spacer(140),
@@ -834,11 +963,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 13 QUESTIONS TO CALIBRATE THIS PLAN ----------
+// ---------- 14 QUESTIONS TO CALIBRATE THIS PLAN ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '13'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 10 and 11 are deliberately conservative — a short discovery call replaces them with Robinson’s real baselines and sharpens the whole program. These questions move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative — a short discovery call replaces them with Robinson’s real baselines and sharpens the whole program. These questions move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -871,9 +1000,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 14 WHAT HAPPENS NEXT ----------
+// ---------- 15 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '15'),
+  spacer(160),
+  p('The honest answers to the questions Robinson Facial leadership is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already run My SEO with Technijian. Why add more?', bold: true }, 'Keep it — it is working, and we do not re-bill it here. This plan adds the layers it does not cover: the GEO/AI-citation layer on top of it, the reputation engine that closes the review gap, consult capture and nurture, and the My AI Lead Gen referral engine. Everything is additive to the program already running.'],
+      [{ text: 'Isn\'t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — review velocity, consult capture, referral harvesting — not autonomous "agents" running your practice. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is our data — patient information — safe?', bold: true }, 'Yes. Sensitive data and any PHI never touch a public AI model; we deploy private, governed systems with human review on anything patient-facing or medical, led by a CISSP-certified team. Review and nurture run on consenting, post-visit contact only.'],
+      [{ text: 'We\'re a small team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give the coordinator back hours, not add work. Technijian runs the build and the cadence; your involvement is a short review of what we draft and approving outreach in Dr. Robinson’s voice. There is no new hire to manage.'],
+      [{ text: 'What if it doesn\'t work?', bold: true }, 'The entry program is a fixed-price 90-day pilot with a defined success metric (Section 11), month-to-month with no lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The 90-day pilot is roughly $6,750 plus the one-time capture build, at published rates — no hidden fees. The full added program is profiled in Section 11, but only the referral engine and the rest are added after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 16 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '16'),
   spacer(100),
   p('Robinson Facial Plastic Surgery has the hardest thing to build already: 21 years of dual-board-certified, fellowship-trained results. What it is missing is a digital reputation that matches that surgical one, and a referral engine worthy of Dr. Robinson’s Mohs-reconstruction credential. Both are buildable now, on top of the My SEO already in place and on systems Technijian has already delivered.'),
   p('And the question that started this is answered: yes, My AI Lead Gen can grow the business — as the referral engine, courting the dermatologists, Mohs surgeons, and med spas that send surgical cases, while the consumer engine captures and converts the patients already searching. Two engines, each with the right tool.'),
@@ -881,7 +1030,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 13 questions and confirm scope against the existing My SEO program.',
+      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm scope against the existing My SEO program.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — review engine, GEO layer, and the Chat.AI consult assistant — live inside 14 days of signature.',
     ],
@@ -904,9 +1053,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 15 ABOUT TECHNIJIAN ----------
+// ---------- 17 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '15'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '17'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help local businesses compete at scale — and Robinson Facial already runs our My SEO program.'),
   spacer(140),
@@ -943,6 +1092,11 @@ docChildren.push(
   p('4. My AI Lead Gen — mechanics + pricing (Harvest → Enrich → Score → Deliver; Starter $1,499 / Professional $3,499 / Enterprise $6,999 per month)', { size: 20 }),
   p('5. Mohs reconstruction referral pattern — dermatology / Mohs surgery to facial reconstructive surgeon (clinical referral line)', { size: 20 }),
   p('6. Technijian service pricing — My SEO, My AI, My AI Lead Gen, My Dev, Chat.AI rate cards; Technijian SEO + GEO strategy methodology', { size: 20 }),
+  p('7. MIT Sloan Management Review — AI literacy for executives (Section 5: framing AI literacy as "what AI can do," not how to build it)', { size: 20 }),
+  p('8. Anthropic — Building Effective Agents (Section 5: the automation/workflow vs. agent distinction)', { size: 20 }),
+  p('9. AI maturity models — a widely-used five-stage model consistent with the Gartner AI Maturity Model and Google Cloud AI Adoption Framework (Section 5: the maturity ladder concept)', { size: 20 }),
+  p('10. U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage) — Section 5: responsible-AI controls for the three risks', { size: 20 }),
+  p('11. McKinsey — The State of AI, 2025 (Section 11: ~88% of companies use AI, ~39% see profit impact — AI as a stage-gated managed investment)', { size: 20 }),
 );
 
 // =====================================================================

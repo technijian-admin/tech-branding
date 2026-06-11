@@ -69,8 +69,10 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
-  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
+  const headingPara = new Paragraph({ heading: HeadingLevel.HEADING_1, keepNext: true, pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })] });
   const visualTable = new Table({
     width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: [120, CONTENT_W - 120], borders: noBorders,
@@ -225,7 +227,7 @@ docChildren.push(
 );
 
 // ---------- TOC ----------
-docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }), pageBreak());
+docChildren.push(new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }));
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
 docChildren.push(
@@ -251,7 +253,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: Christian Brothers’ internal numbers (lead volume, average project value, close rate, review velocity, and the builder pipeline) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: Christian Brothers’ internal numbers (lead volume, average project value, close rate, review velocity, and the builder pipeline) were not available for this draft. Every projection below is labeled estimated and conservative, and calibrates to real numbers after a short discovery call — the specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 THE TWO-CHANNEL MODEL ----------
@@ -497,6 +499,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a San Diego homeowner asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "Best flooring store in San Diego for luxury vinyl plank?"', [
+    'TODAY — the AI assistant answers with whichever firms have the strongest reviews, portfolios, and third-party signals it can read: it names the high-review rivals (the 200-to-369-review players) and the multi-showroom retailers, and does NOT mention Christian Brothers — even though Christian Brothers has 37 years, in-house install, a showroom, and a BIA ICON award. Christian Brothers is invisible at the exact moment the buyer is forming a shortlist.',
+    'AFTER the program — the same query can return Christian Brothers as a cited option ("Christian Brothers Flooring & Interiors, a 37-year San Diego County flooring and design firm with in-house install and an award-winning design center…"), with the city-by-product pages, the review velocity, and the visual portfolio as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is part of the Phase 1 baseline audit. The "Orange County" geo-defect actively works against Christian Brothers here.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('Local AI-search and review signals compound, and they reward whoever optimizes first. Every quarter Christian Brothers is not found, the assistants and the map pack learn to answer "best flooring store in San Diego" with someone else — and the review-volume gap (37 vs. the rivals’ 200-to-369) widens, because a competitor adding reviews every week pulls further ahead the longer the gap stays open. Meanwhile the "Orange County" tagline keeps telling Google the company is in the wrong county. The cost of waiting is not zero — it is a competitor becoming the default answer, and a wider gap to close later than it is to close now.'),
 );
 
 // ---------- 09 TECHNIJIAN CAPABILITIES ----------
@@ -541,11 +554,96 @@ docChildren.push(
     'For Christian Brothers it builds the room visualizer, AI mood-boards, lead capture and CRM nurture, online booking, and the selection-and-quote automation that wraps around the Studio Chateau tool the company already uses.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across search, the visualizer, lead gen, and the design workflow: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, the toughest reasoning, anything customer-facing where accuracy is non-negotiable', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — content, outreach personalization, mood-board concepts, summarization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging thousands of builder and project records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Christian Brothers pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, a single city-by-product page is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Grows Christian Brothers', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for CBI Leadership', CORE_BLUE, '10'),
+  spacer(100),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Christian Brothers sits today, how to adopt it without risk, and what comparable businesses are already doing. The goal is that the Castelli family and the Christian Brothers team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t', { color: CORE_BLUE }),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "draft this selection sheet from the buyer’s wish-list." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch San Diego permits and flag which builders are worth pursuing." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Christian Brothers starts with simple automations that pay off in the first 90 days — the geo-fix, the review engine, the visualizer — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Christian Brothers Sits Today — The AI Maturity Ladder', { color: CORE_BLUE }),
+  p('Most established, well-run companies — including Christian Brothers — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with the Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'CBI Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'Licensed tools are in use (Studio Chateau selections, Birdeye reviews, Setmore booking) but AI is not yet woven into growth or operations', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — local search, reviews, the visualizer, builder intelligence — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across both channels with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the business runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Christian Brothers already uses capable licensed tools, which puts it at the Emerging stage. This report is the plan to reach Operational — AI working in the growth engine and inside the design workflow — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages', { color: CORE_BLUE }),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a customer-facing business like Christian Brothers, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client-facing — a designer or owner approves AI-drafted content, quotes, and selections before they go out'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — customer, project, and builder data never touch a public model; this is the same security foundation Technijian already runs for CBI'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source, led by a CISSP-certified team — the same discipline already applied to your IT'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Businesses Are Already Doing', { color: CORE_BLUE }),
+  bullet('Local home-services firms: flooring and remodel retailers are adding room visualizers and review-generation engines to win the homeowner who decides online before ever calling — capturing leads competitors never see.'),
+  bullet('Multi-location retailers: showroom businesses are using local search and answer-engine optimization to become the cited answer when a buyer asks AI tools "best flooring store near me?" — turning organic search into booked consults.'),
+  bullet('Account-based B2B: relationship-driven firms are monitoring public signals (permits, starts, leadership changes) to reach the right accounts first, instead of waiting for a reactive, lumpy pipeline.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Christian Brothers’ own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 9 (Technijian Capabilities) and Section 11 (How AI Grows Christian Brothers).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Christian Brothers Designer', { color: CORE_BLUE }),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A designer fields a homeowner inquiry, manually checks availability and books the consult, builds a mood-board by hand, walks the buyer through the Studio Chateau selections, then re-keys those choices into an estimate and chases the quote — much of it from experience held in a few people’s heads, with admin crowding out selling.',
+    'WITH AI: The lead is captured and the consult booked automatically; an AI assistant drafts a starting mood-board and palette in minutes; the room visualizer lets the buyer picture the floor before the meeting; and selection-to-quote automation turns the wish-list into a priced estimate the designer reviews and approves. The expertise is captured in a system, so the same standard holds across both channels and survives a new hire.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself', { color: CORE_BLUE }),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but Christian Brothers assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — and Technijian already runs your IT, so the program plugs into a stack we know and protect', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Grows Christian Brothers', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get found (capture homeowner demand with local search, reviews, portfolio, and a visualizer), win builders (account intelligence and proof that grow the high-margin design-center channel), and convert and serve (capture and nurture leads, speed the selections, and automate quoting). Every part of it builds on the IT and security foundation Technijian already runs for Christian Brothers.'),
   spacer(160),
@@ -580,13 +678,44 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The model below is built from public and industry benchmarks because Christian Brothers’ internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 14 replace them with real baselines. The logic holds across a wide range of inputs, because the two levers — more homeowner projects and more builder partnerships — are large relative to the program cost.'),
+  p('The model below is built from public and industry benchmarks because Christian Brothers’ internal numbers were not available for this draft. Every figure is estimated and conservative; the discovery questions in Section 15 replace them with real baselines. The logic holds across a wide range of inputs, because the two levers — more homeowner projects and more builder partnerships — are large relative to the program cost.'),
   spacer(140),
-  subHeader('Projected Lift (Estimated)'),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Industry research (McKinsey State of AI) finds the large majority of companies now use AI, but only about a third see a real profit impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. Christian Brothers carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
+  subHeader('The Entry Offer — The 90-Day AI Visibility Pilot', { color: CORE_BLUE }),
+  p('Start with one clearly-scoped program — not an open-ended engagement. The pilot fixes the free geography defect, turns on review velocity, and stands up the local-search and portfolio foundation, proving the homeowner-lead lift before the larger builds (the visualizer and builder intelligence) are scoped.'),
+  buildTable(
+    [{ label: 'What’s Included', weight: 3 }, { label: 'Detail', weight: 4 }, { label: 'Investment', weight: 2 }],
+    [
+      [{ text: 'My SEO — Local Search, Reviews & Portfolio', bold: true }, 'Geo-fix off "Orange County," city/product pages, both Google profiles, review engine, and portfolio across Houzz / Instagram / Pinterest', '$1,500/mo'],
+      [{ text: 'My AI — Executive AI Workshop', bold: true }, 'Half-day session: AI roadmap, use-case scoring, and a 90-day quick-wins plan for Castelli-family leadership', '$5,000 one-time'],
+      [{ text: 'My IT (in place)', bold: true }, 'The managed IT and security Technijian already provides — the trusted foundation the program plugs into', 'Existing'],
+      [{ text: 'ENTRY PROGRAM — 90-DAY PILOT', bold: true }, 'Fixed scope, published rates, no large up-front build', { text: '~$9,500', bold: true, color: CORE_BLUE }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, the "Orange County" geo-defect is corrected and both Google Business Profiles rank for San Diego flooring queries, AND a working review engine has measurably lifted review velocity past its current pace toward the rivals’ levels.',
+      'Our commitment: the entry program is month-to-month — no lock-in. If the pilot has not moved the needle on the metric above by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk — and because we already run your IT, there is no new firm to onboard.',
+    ],
+    CORE_ORANGE
+  ),
+  spacer(160),
+  subHeader('Projected Lift — The Full Program (Estimated)', { color: CORE_BLUE }),
   buildTable(
     [ { label: 'Measure', weight: 3 }, { label: 'Estimated Current', weight: 2.4 }, { label: 'With the Program', weight: 2.4 }, { label: 'Direction', weight: 1.8 } ],
     [
@@ -616,16 +745,17 @@ docChildren.push(
   spacer(60),
   p('* Placeholder average flooring/finishes project value, blended across remodel and new-home work — calibrates to Christian Brothers’ actual average in discovery. ** Estimated incremental revenue from builder design-center partnerships won or deepened (recurring across a community’s homes). Revenue is attributed to the program, not guaranteed; all figures depend on actual close rate, project value, and builder pipeline.', { italics: true, size: 18 }),
   spacer(160),
-  subHeader('Technijian Service Investment Map'),
+  subHeader('Technijian Service Investment Map — Full Engine (the later expansion)'),
+  p('The 90-Day Visibility Pilot above is the ask. The full engine below is the expansion — engaged only once the pilot proves the lift — and is what the Year-1 ROI model is built against.'),
   buildTable(
     [ { label: 'Service', weight: 2.8 }, { label: 'Scope', weight: 3.6 }, { label: 'Monthly', weight: 1.4 }, { label: 'Y1 Total', weight: 1.4 } ],
     [
-      ['My SEO — Local Search, Reviews & Portfolio', 'Geo-fix + city/product pages, both Google profiles, review engine, and portfolio across Houzz / Instagram / Pinterest', '$1,500/mo', '$18,000'],
+      ['My SEO — Local Search, Reviews & Portfolio (Pilot)', 'Geo-fix + city/product pages, both Google profiles, review engine, and portfolio across Houzz / Instagram / Pinterest', '$1,500/mo', '$18,000'],
       ['My AI Lead Gen — Builder Account Intelligence', 'Monitor San Diego communities, starts, and permits; rank and profile builders to pursue (Starter tier)', '$1,499/mo', '$18,000'],
       ['My AI — Fractional AI Advisor', 'Program lead across the visualizer, automation, and search work', '$2,000/mo', '$24,000'],
       ['My Dev — Custom Build (one-time, phased)', 'Room visualizer, AI mood-boards, lead capture and CRM, online booking, and selection/quote automation', '—', '$35,000'],
       ['My AI — Executive AI Workshop (one-time)', 'Leadership alignment and an AI roadmap', '—', '$5,000'],
-      [{ text: 'YEAR-1 TOTAL INVESTMENT', bold: true }, { text: 'Recurring $4,999/mo + builds', bold: true }, { text: '', bold: true }, { text: '~$100,000', bold: true, color: CORE_BLUE }],
+      [{ text: 'FULL ENGINE — YEAR-1 TOTAL', bold: true }, { text: 'Recurring $4,999/mo + builds', bold: true }, { text: '', bold: true }, { text: '~$100,000', bold: true, color: CORE_BLUE }],
     ],
   ),
   spacer(160),
@@ -640,9 +770,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 365-day cadence: fix the foundation and the public front door first, then capture homeowner demand with the visualizer and portfolio, then grow the builder channel and automate. The cheapest, highest-visibility wins land in the first ninety days; the bigger builds get realistic runway.'),
   spacer(200),
@@ -675,14 +805,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Builder Account Intelligence', 'Turn on monitoring of San Diego communities, starts, and permits, and build the design-center proof library to win partnerships.'],
-      ['3.2 — Automate & Optimize', 'Bring lead capture and CRM nurture and selection/quote automation into production, and deliver the ROI dashboard against the Section 14 baselines.'],
+      ['3.2 — Automate & Optimize', 'Bring lead capture and CRM nurture and selection/quote automation into production, and deliver the ROI dashboard against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions Christian Brothers can take immediately — before any expanded engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -707,11 +837,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 15 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with Christian Brothers’ real baselines and sharpens the whole program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with Christian Brothers’ real baselines and sharpens the whole program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [ { label: 'Topic', weight: 2.4 }, { label: 'What We’d Confirm', weight: 4.4 }, { label: 'Why It Matters', weight: 3.2 } ],
@@ -738,9 +868,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions Christian Brothers’ leadership is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have a marketing person / agency. Why add Technijian?', bold: true }, 'Keep them — we are not here to replace good marketing. We add the AI layer most agencies do not build: answer-engine optimization so AI tools cite you, the room visualizer, builder account intelligence, and the internal selection/quote automation. We already run your IT, so this plugs in alongside whatever marketing you have, not over it.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven moves that pay back fast — the free geo-fix, a review engine, a visualizer rivals already run — not autonomous "agents" doing your job. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is our data — customer, project, and builder information — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything client-facing, led by a CISSP-certified team. This is the same security foundation Technijian already runs for your IT today.'],
+      [{ text: 'We’re a lean team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give your designers back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly check-in plus reviewing what we draft. There is no new hire to manage, and no new firm to onboard since we already support your systems.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry program is a fixed-scope 90-day pilot with a defined success metric (Section 12), month-to-month with no lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The 90-Day Visibility Pilot is roughly $9,500 at published rates — no large up-front build. The full engine (the later expansion, profiled in Section 12) runs about $100K in Year 1, but only after the pilot proves the lift. You decide whether to expand based on real results, not a leap of faith.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('Christian Brothers has the hard things: thirty-seven years, a BBB A+, a BIA ICON award, in-house install, a showroom, and a design-center program most flooring shops do not have. What it has not yet done is make that strength as visible and as easy to act on online as it is in person — and that is exactly where AI helps.'),
   p('The opportunity is concrete and low-risk: fix a free geography defect, build the reviews and visual portfolio homeowners choose by, add the visualizer rivals already have, and pursue the builder relationships deliberately with account intelligence. Because Technijian already runs the IT and security underneath, this is the rare growth program that starts on a stack the partner already knows and protects.'),
@@ -748,7 +898,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — the geo-SEO fix, both Google profiles, and the review engine — live inside 30 days.',
     ],
@@ -765,9 +915,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000 — and already Christian Brothers’ IT-support partner. We build and operate the AI systems that help regional businesses compete at scale, with security and compliance built in, not bolted on.'),
   spacer(140),
@@ -804,6 +954,7 @@ docChildren.push(
   p('3. Competitors — Metro Flooring, West Coast Flooring Center, Geneva Flooring, Floor Store & Design Center, Empire Today, Express Flooring; Roomvo (room-visualizer benchmark)', { size: 20 }),
   p('4. Industry — Inside San Diego (8,782 permits, 2024); Oakwood Escrow (new-construction share of sales); Mordor / Data Insights (vinyl flooring market); Harvard JCHS LIRA (renovation spending); True Future Media / ACHR (91% rely on reviews; discovery channels)', { size: 20 }),
   p('5. Technijian capabilities & service pricing — My SEO, My AI Lead Gen, My Dev, My AI, and My IT; documented Proven Results (Multi-Agent SEO + Answer-Engine Platform; AI Document Intelligence for FINRA broker-dealers)', { size: 20 }),
+  p('6. AI education layer (Section 10) — MIT Sloan Management Review (AI literacy for executives); Anthropic, "Building Effective Agents" (the automation-vs-agent distinction); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud AI Adoption frameworks); U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage); McKinsey State of AI (AI-as-a-managed-investment / measurement discipline)', { size: 20 }),
 );
 
 // =====================================================================

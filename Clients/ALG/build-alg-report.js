@@ -73,10 +73,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -371,7 +374,7 @@ docChildren.push(
 // ---------- TOC ----------
 docChildren.push(
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-2' }),
-  pageBreak(),
+  // No trailing pageBreak() — Section 01's pageBreakBefore separates TOC from Section 1.
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -398,7 +401,7 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
-  p('A note on figures: this blueprint was built from public information. Algro’s internal numbers — current named-account roster, average first-year value of a won account by persona, GFSI / kosher / halal status at the US facility, current sales engine, and tariff-exposure book — were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 14.', { italics: true, size: 20, spaceBefore: 60 }),
+  p('A note on figures: this blueprint was built from public information. Algro’s internal numbers — current named-account roster, average first-year value of a won account by persona, GFSI / kosher / halal status at the US facility, current sales engine, and tariff-exposure book — were not available for this draft. Every projection below is labeled estimated and conservative and calibrates to real numbers after a short discovery call. The specific questions are in Section 15.', { italics: true, size: 20, spaceBefore: 60 }),
 );
 
 // ---------- 02 HOW A B2B RICE IMPORTER WINS ----------
@@ -621,7 +624,7 @@ docChildren.push(
     [
       ['algrointernational.com', 'Clean product catalogue and contact form; some sub-pages return 404; no buyer self-service or thought leadership', 'Buyer-side conversational layer; a category-authority resource library on tariffs, FSMA 204, multi-origin compliance; case studies if relationships allow'],
       ['Certification documentation', 'Quality and CCOF NOP organic stamps on the home page; no public buyer-side documentation portal', 'A buyer-credentialing portal where invited procurement contacts pull current certifications, COAs, and SDS without an email round-trip'],
-      ['LinkedIn presence', 'About 1,018 followers (small for the category); no visible publishing cadence', 'A regular cadence on tariffs, FSMA, organic supply, and multi-origin compliance — signed off by Deepak and Sinem, drafted by the content engine'],
+      ['LinkedIn presence', 'A modest follower base of roughly a thousand (small for the category, per the public page at time of research); no visible publishing cadence', 'A regular cadence on tariffs, FSMA, organic supply, and multi-origin compliance — signed off by Deepak and Sinem, drafted by the content engine'],
       ['Parent (bielfood.com)', 'A late-2010s static site under-using the 1969 / 54-country / BRC story', 'A US-market translation of the parent authority into category-leading content the US sales team can attach to RFP responses'],
       ['AI-search visibility', 'Below the citation surface on procurement queries (organic basmati private-label, USDA NOP IQF rice California, FSMA-204 rice importer)', 'Multi-Agent SEO + AEO targeting the exact procurement queries — the Technijian-built capability sits here'],
       ['Buyer documentation operations', 'Best understood as a small team plus shared drives plus email; no indexed library, no auto-draft of buyer responses', 'The buyer-documentation engine: index every certificate, every plan, every prior RFP response; auto-draft new responses in the buyer’s format'],
@@ -637,6 +640,17 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the gap made concrete. When a procurement researcher asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox('Prompt: "USDA NOP certified organic basmati private-label supplier in California, FSMA-204-ready?"', [
+    'TODAY — the AI assistant answers with whichever suppliers have the strongest content and third-party signals it can read: it names the category giants (LT Foods / Royal, KRBL / India Gate, Riviana) and a couple of larger private-label houses, and does NOT mention Algro — even though Algro holds the CCOF NOP organic certificate in California and the multi-origin specialty range the query is actually asking for. Algro is invisible at the exact moment the buyer is forming a shortlist.',
+    'AFTER AEO — the same query returns Algro as a cited option (“Algro International is a USDA NOP organic, multi-origin specialty-rice supplier in Irvine, CA, with FSVP and FSMA-204-ready documentation…”), with the certification library and the category content as the supporting evidence the assistant points to.',
+  ], CORE_ORANGE),
+  p('(Illustrative of current AI-search behavior for this query class; the live result is captured as the Quick Wins baseline in Section 14.)', { italics: true, size: 18 }),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter Algro is not cited, the assistants learn to answer “organic basmati private-label supplier” with someone else — and that default, once set in the training and retrieval data, is far harder and more expensive to dislodge than to claim now. The tariff, FSMA-204, and multi-origin compliance conversation is genuinely under-covered today; that is a window a thirteen-person team can own before a multi-billion-dollar competitor re-platforms onto AI-buyer-experience. The cost of waiting is not zero — it is a competitor becoming the default answer, and an RFP cycle’s worth of awards going to whoever responded first.'),
 );
 
 // ---------- 08 THE SILENT MARGIN LEAK ----------
@@ -723,11 +737,96 @@ docChildren.push(
     'For Algro it is the named-account intelligence engine: track Costco PL, Sysco category buyers, Cava procurement, Saffron Road sourcing, and the rest of the named universe; watch for triggers (new PL launches, category buyer changes, recall events at competitors, FSVP-supplier-change postings); and deliver pre-meeting dossiers the sales team can act on.',
     'service'
   ),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across content, named-account outreach, and the buyer-documentation load: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [{ label: 'Tier', weight: 1.7 }, { label: 'What It Does', weight: 3.3 }, { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER }],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass, compliance-bound answers a buyer audit will read, the deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — RFP response drafts, category content, outreach personalization, summarization, scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — extracting from certificates and COAs, classifying and tagging thousands of documents, enrichment', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Algro pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. For example, an RFP response is extracted by a low-cost model, drafted and tightened by a mid model, and given a final accuracy-and-format pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. Where the answer is compliance-bound, a multi-model council (the ScamShield pattern above) cross-checks it before it is sent. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 10 AI GROWTH ENGINE ----------
+// ---------- 10 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms Algro’s Growth Engine', CORE_BLUE, '10'),
+  ...sectionHeader('Understanding AI — A Field Guide for Algro International Leadership', CORE_BLUE, '10'),
+  spacer(140),
+  p('This section exists to make the rest of this report easy to evaluate. No jargon, no hype — just what AI is, where Algro sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that Deepak, Sinem, and the Algro team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, “draft this buyer’s RFP response from our indexed certification library.” This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, “watch the tariff signal and flag which accounts need a re-priced origin-mix proposal.” This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Algro starts with simple automations that pay off in the first ninety days — the AEO authority and the documentation engine — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this report is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Algro Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run companies — including Algro — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Stage', weight: 1.6 }, { label: 'What It Looks Like', weight: 4 }, { label: 'Algro Today', weight: 1.4, align: AlignmentType.CENTER }],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent documentation and outreach', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'An existing Technijian security relationship and clean systems, but AI is not yet woven into the buyer-side growth or documentation work', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — AEO authority, RFP drafting, tariff signal — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and the documentation engine with governance and dashboards', ''],
+      ['5. Transformational', 'AI is the default way the buyer-experience runs and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Algro is well-positioned: the systems are clean and a security relationship is already in place, which puts it at the Emerging stage. This report is the plan to reach Operational — AI working in the growth engine and inside the buyer-documentation workflow — within the first program year.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a regulated, audit-heavy operator like Algro, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [{ label: 'Risk', weight: 1.8 }, { label: 'What It Means', weight: 3.4 }, { label: 'How Technijian Controls It', weight: 3.4 }],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything buyer-facing or compliance-bound — AI drafts, a person approves; the GFSI / food-safety determination is never the AI’s to make'],
+      ['Data leakage', 'Sensitive data pasted into public tools can escape', 'Private, governed AI deployments — FSVP plans, lot COAs, buyer pricing, and certificate libraries never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit gaps', 'Every AI tool inventoried with owner, vendor, and data source — FSMA / FSVP / NOP-ready, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Regulated B2B suppliers: document-heavy businesses are turning multi-day RFP and compliance assembly into a minutes-long, audit-ready draft — responding to more opportunities with the same team.'),
+  bullet('Food and ingredient importers: multi-origin operators are using AI to maintain a digital chain of custody and answer buyer audits same-day instead of over multiple rounds.'),
+  bullet('Specialty manufacturers: under-covered category players are using AI-search optimization to become the cited answer when buyers ask AI tools “who supplies this, certified, at this origin?” — capturing demand competitors never see.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Algro’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 9 (Capability Proof) and the operational sections of this report.', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — An Algro Sales & Quality Coordinator'),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A coordinator receives a 120-question retail RFP, opens a shared drive, hunts for the current FSVP plan, the right lot COAs, the NOP and kosher and halal letters, and last quarter’s prior response, and re-keys each answer into the buyer’s exact template by hand — across India, Thai, and US-domestic origins, mostly from process held in a few people’s heads.',
+    'WITH AI: The RFP is auto-drafted in the buyer’s format from an indexed library of every certificate, plan, and prior response in minutes; the coordinator reviews, corrects, and approves. The expertise is captured in a system, so the same complete, in-format answer holds for every account and survives a new hire or a second facility.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [{ label: 'Path', weight: 1.6 }, { label: 'Reality', weight: 5 }],
+    [
+      ['DIY tools', 'Inexpensive, but Algro assembles, secures, and governs everything — and owns the three risks above alone'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds, an existing Algro security relationship, and CISSP-led security', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 11 AI GROWTH ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms Algro’s Growth Engine', CORE_BLUE, '11'),
   spacer(100),
   p('The engine runs three motions at once: get cited and discovered (own AI-search authority on procurement queries and the under-covered tariff, FSMA, and multi-origin compliance conversation), win the documentation race (auto-draft RFP responses, index the certification library, run multi-origin traceability, watch the tariff signal), and hold the account and expand (sales-pipeline memory, per-SKU automation, account-renewal intelligence, and reuse of the same engine for Simply So and BIEL exports). The first fills the top of the named-account funnel, the second is the documentation core, and the third protects and scales the order book.'),
   spacer(160),
@@ -769,11 +868,20 @@ docChildren.push(
   ),
 );
 
-// ---------- 11 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 12 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '11'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '12'),
   spacer(100),
-  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — AI-search authority, named-account intelligence, and a strategy workshop — and expands into the buyer-documentation engine, the traceability layer, and the tariff signal monitor only as the results prove out. The model below is built from public information and conservative assumptions, because Algro’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 14 replace them with real baselines.'),
+  p('The plan is built to start small and expand. Rather than ask for the full program up front, it begins with a focused, low-commitment entry that pays for itself on the highest near-term levers — AI-search authority, named-account intelligence, and a strategy workshop — and expands into the buyer-documentation engine, the traceability layer, and the tariff signal monitor only as the results prove out. The model below is built from public information and conservative assumptions, because Algro’s internal numbers were not available for this draft. Every figure is estimated; the discovery questions in Section 15 replace them with real baselines.'),
+  spacer(120),
+  calloutBox(
+    'AI as a Managed Investment — Not a Leap of Faith',
+    [
+      'The reason most AI spending disappoints is not the technology — it is the lack of measurement. Industry research (McKinsey, State of AI) finds roughly 88% of companies now use AI, but only about 39% see a real profit impact; the difference is discipline, not budget.',
+      'Technijian runs every engagement with stage-gates: we track adoption, then operational improvement, then financial benefit against total cost — and if a pilot does not clear its cost at the gate, we stop and re-scope. Algro carries the upside, not blind risk.',
+    ],
+    CORE_ORANGE
+  ),
   spacer(140),
   subHeader('Projected KPI Lift (Estimated)'),
   buildTable(
@@ -794,7 +902,10 @@ docChildren.push(
     ],
   ),
   spacer(160),
-  subHeader('Year-1 ROI Model — The Entry Program (Estimated, Conservative)'),
+  subHeader('The Entry Offer — The 90-Day AI Lead-Gen Pilot'),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot stands up Algro’s AI-search authority on procurement queries and the named-account ABM intelligence engine, and proves the lift before any larger build is discussed. The ROI below is modeled against this entry program alone.'),
+  spacer(120),
+  subHeader('Year-1 ROI Model — The Entry Pilot (Estimated, Conservative)'),
   p('Value is modeled on the two highest-conviction levers — additional RFP responses completed at the same win rate, and accounts protected from renewal loss — not on pricing changes, because pricing stays out of scope. The entry program alone (AI-search authority, named-account intelligence, and the strategy workshop) drives the lift below; the expansion build adds the buyer-documentation engine and the tariff signal that push both levers further.', { size: 20 }),
   buildTable(
     [
@@ -805,7 +916,7 @@ docChildren.push(
     ],
     [
       ['Additional RFP responses completed / year', { text: '+4', align: AlignmentType.CENTER }, { text: '+8', align: AlignmentType.CENTER }, { text: '+12', align: AlignmentType.CENTER }],
-      ['Implied wins at ~15% category baseline win-rate', { text: '~1', align: AlignmentType.CENTER }, { text: '~1.5', align: AlignmentType.CENTER }, { text: '~2', align: AlignmentType.CENTER }],
+      ['Implied wins at a ~10–15% assumed category win-rate', { text: '~1', align: AlignmentType.CENTER }, { text: '~1.5', align: AlignmentType.CENTER }, { text: '~2', align: AlignmentType.CENTER }],
       ['Avg first-year revenue per won account (illustrative)', { text: '$40K', align: AlignmentType.CENTER }, { text: '$60K', align: AlignmentType.CENTER }, { text: '$80K', align: AlignmentType.CENTER }],
       ['Added revenue from faster RFP response', { text: '+$40K', align: AlignmentType.CENTER }, { text: '+$90K', align: AlignmentType.CENTER }, { text: '+$160K', align: AlignmentType.CENTER }],
       ['Accounts protected from renewal loss', { text: '+1', align: AlignmentType.CENTER }, { text: '+2', align: AlignmentType.CENTER }, { text: '+3', align: AlignmentType.CENTER }],
@@ -830,7 +941,7 @@ docChildren.push(
       ['My AI — AI Readiness + Executive Workshop (one-time)', 'A half-day session with Deepak, Sinem, and the sales lead — AI buyer-experience roadmap, FSMA-204 readiness, and tariff-signal monitoring kickoff', { text: '—', align: AlignmentType.CENTER }, { text: '$5,000', align: AlignmentType.CENTER }],
       ['My SEO — AI-Search Authority + Reputation', 'Own AI-search citations on procurement queries; the LinkedIn cadence on tariffs, FSMA, and multi-origin compliance', { text: '$1,250', align: AlignmentType.CENTER }, { text: '$15,000', align: AlignmentType.CENTER }],
       ['My AI Lead Gen — Named-Account ABM (Starter)', 'Track named accounts; trigger monitoring; per-account dossiers across retail PL, foodservice, and industrial CPG', { text: '$1,000', align: AlignmentType.CENTER }, { text: '$12,000', align: AlignmentType.CENTER }],
-      [{ text: 'ENTRY PROGRAM — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
+      [{ text: 'THE 90-DAY AI LEAD-GEN PILOT — Phase 1 (start here)', bold: true }, { text: 'Recurring $2,250/mo + workshop', bold: true }, { text: '', bold: true }, { text: '~$32,000', bold: true, color: CORE_ORANGE, align: AlignmentType.CENTER }],
       ['My Dev — AI Buyer-Documentation Engine + Traceability + Tariff Monitor (Phase 2 build)', 'The custom build — RFP / RFI auto-drafting, FSVP / HARPC / COA / cert library, multi-origin chain of custody, tariff signal monitor, buyer-side conversational layer', { text: '—', align: AlignmentType.CENTER }, { text: '$48,000', align: AlignmentType.CENTER }],
       ['My Dev — Managed App Services (Phase 2)', 'Hosting, monitoring, and iteration of the buyer-documentation engine', { text: '$800', align: AlignmentType.CENTER }, { text: '$9,600', align: AlignmentType.CENTER }],
       ['My AI — Fractional AI Advisor (Phase 2)', 'Program leadership, food-safety / FSMA / tariff governance, model performance review', { text: '$2,000', align: AlignmentType.CENTER }, { text: '$24,000', align: AlignmentType.CENTER }],
@@ -839,9 +950,18 @@ docChildren.push(
   ),
   spacer(160),
   calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, Algro is cited by at least one major AI assistant (ChatGPT, Perplexity, or Google AI) for a high-intent procurement query (for example, “USDA NOP organic basmati private-label supplier in California” or “FSMA-204-ready rice importer”), AND a named-account dossier pipeline is live and feeding the sales team.',
+      'Our commitment: the entry pilot is month-to-month after the initial term — no long lock-in, no obligation to continue if it does not hit the metric by day 90. If it has not moved the needle, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. You carry the upside, not the risk.',
+    ],
+    PASS
+  ),
+  spacer(160),
+  calloutBox(
     'Land Small, Then Expand',
     [
-      'Start with the roughly $32,000 entry program — AI-search authority, named-account ABM intelligence, and the strategy workshop — that pays for itself on faster RFP responses and renewal protection, with no large build to begin.',
+      'Start with the roughly $32,000 entry pilot — AI-search authority, named-account ABM intelligence, and the strategy workshop — that pays for itself on faster RFP responses and renewal protection, with no large build to begin.',
       'Expand into the full engine (the buyer-documentation and traceability build, the tariff signal monitor, the fractional AI advisor) only once the entry proves the lift. That one-time build is then a portfolio platform.',
       'Phase 3 is reuse: the same engine carries Simply So consumer-brand demand-gen and the BIEL parent’s 54-country export markets — without re-paying the build. Treat as upside, not Year-1 ask.',
     ],
@@ -849,9 +969,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 12 IMPLEMENTATION ROADMAP ----------
+// ---------- 13 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', TEAL, '12'),
+  ...sectionHeader('Implementation Roadmap', TEAL, '13'),
   spacer(100),
   p('The roadmap runs on a 90 / 180 / 270-day cadence that mirrors the land-and-expand plan: start with the low-commitment entry — get cited and capture the named-account inbound — then add the buyer-documentation engine and the traceability layer, then hold and expand. Real gains — AI-search citations, named-account dossiers, an indexed certification library — are visible inside the first ninety days, before the larger build; the deeper engine and the portfolio reuse are given realistic runway.'),
   spacer(200),
@@ -884,14 +1004,14 @@ docChildren.push(
     [{ label: 'Milestone', weight: 3 }, { label: 'Deliverables', weight: 7 }],
     [
       ['3.1 — Sales-Pipeline Memory + Renewal Intelligence', 'Index every buyer conversation, sample shipment, audit finding, and recipe-development discussion in the Weaviate + Obsidian memory layer. Add account-renewal intelligence — volume drift, price-hold expirations, audit-cycle triggers — and a per-account dashboard.'],
-      ['3.2 — Portfolio Reuse Kickoff', 'Begin the reuse track: the same AEO authority and conversational layer for the Simply So consumer brand; the same documentation engine extended to support the BIEL parent’s 54-country export documentation. Deliver an ROI dashboard measured against the Section 14 baselines.'],
+      ['3.2 — Portfolio Reuse Kickoff', 'Begin the reuse track: the same AEO authority and conversational layer for the Simply So consumer brand; the same documentation engine extended to support the BIEL parent’s 54-country export documentation. Deliver an ROI dashboard measured against the Section 15 baselines.'],
     ],
   ),
 );
 
-// ---------- 13 QUICK WINS ----------
+// ---------- 14 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '13'),
+  ...sectionHeader('Quick Wins — Start This Week', CORE_ORANGE, '14'),
   spacer(100),
   p('Five actions Algro can take immediately — before any new Technijian engagement. Each creates value this week and leads naturally into the larger program.'),
   spacer(140),
@@ -916,11 +1036,11 @@ docChildren.push(
     CORE_BLUE),
 );
 
-// ---------- 14 QUESTIONS TO CALIBRATE ----------
+// ---------- 15 QUESTIONS TO CALIBRATE ----------
 docChildren.push(
-  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '14'),
+  ...sectionHeader('Questions to Calibrate This Plan', DARK_CHARCOAL, '15'),
   spacer(100),
-  p('This blueprint was built from public information. The numbers in Sections 11 and 12 are deliberately conservative estimates — a short discovery call replaces them with Algro’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
+  p('This blueprint was built from public information. The numbers in Sections 12 and 13 are deliberately conservative estimates — a short discovery call replaces them with Algro’s real baselines and sharpens the entire program. These are the questions that move the model the most:'),
   spacer(140),
   buildTable(
     [
@@ -953,9 +1073,29 @@ docChildren.push(
   ),
 );
 
-// ---------- 15 WHAT HAPPENS NEXT ----------
+// ---------- 16 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '15'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '16'),
+  spacer(100),
+  p('The honest answers to the questions Algro leadership is most likely asking right now.'),
+  spacer(140),
+  buildTable(
+    [{ label: 'Question', weight: 3 }, { label: 'Our Honest Answer', weight: 5 }],
+    [
+      [{ text: 'We already have a sales and marketing motion. Why add this?', bold: true }, 'Keep it — the relationships and trade-show work are doing their job. We add the layer they do not: AI-search authority (AEO) on procurement queries, the buyer-documentation engine that auto-drafts RFP responses, and the named-account intelligence a thirteen-person team cannot sustain by hand. We run alongside the existing motion, not over it.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this blueprint starts with simple, proven automations that pay back fast — auto-drafting documentation, getting cited in AI search — not autonomous “agents” running the business. We use the simplest tool that works, measure it, and only expand what earns its place.'],
+      [{ text: 'Is our data — certificates, COAs, buyer pricing, FSVP plans — safe?', bold: true }, 'Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything compliance-bound, led by a CISSP-certified team. You already trust Technijian on the IT and security side — this is the same discipline extended to the buyer-documentation work.'],
+      [{ text: 'We’re a lean team. Do we have the bandwidth to manage this?', bold: true }, 'The point is the opposite — to give the team back the hours the documentation tax consumes, not add work. Technijian runs the build and the cadence; your involvement is a short monthly strategy session plus reviewing what we draft. The fractional model means no new hire to manage.'],
+      [{ text: 'What if it doesn’t work?', bold: true }, 'The entry is a fixed-price 90-day pilot with a defined success metric (Section 12), month-to-month with no long lock-in. If it has not moved the needle by day 90, you are under no obligation to continue — and we will tell you honestly whether it is worth it.'],
+      [{ text: 'What does it really cost?', bold: true }, 'The entry pilot is approximately $32K for Year 1 at published rates — no hidden fees, no large up-front build. We also route AI across roughly seven models by task (Section 9), so the run cost stays a fraction of wiring everything to one premium model. The full engine (the later expansion) is profiled in Section 12, but only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 17 WHAT HAPPENS NEXT ----------
+docChildren.push(
+  ...sectionHeader('What Happens Next', DARK_CHARCOAL, '17'),
   spacer(100),
   p('Algro already has the hard things: the parent-company milling base since 1969, the US-arm specialty product line, the USDA NOP organic certification, three certified North American facilities, and an existing Technijian managed-services and cybersecurity relationship. What it has not yet done is add the AI buyer-experience layer that decides which supplier responds to the next big RFP in days instead of weeks — and that is where this program starts.'),
   p('The opportunity is concrete: get cited and discovered as the supplier procurement finds first, win the buyer documentation race by auto-drafting responses against an indexed library in the buyer’s exact format, and hold the account and expand by watching renewal triggers proactively and reusing the same engine across Simply So and the BIEL parent export. A focused, account-based program does all three — and it stays inside the food-safety, antitrust, and pricing boundaries that decide which AI is even safe to deploy in this category.'),
@@ -963,7 +1103,7 @@ docChildren.push(
   calloutBox(
     'Recommended Next Steps',
     [
-      'Step 1: A 30-minute discovery call to answer the Section 14 questions and confirm program scope.',
+      'Step 1: A 30-minute discovery call to answer the Section 15 questions and confirm program scope.',
       'Step 2: Technijian returns a calibrated ROI model and a fixed-scope Statement of Work within 5 business days.',
       'Step 3: Phase 1 kickoff — AEO authority, named-account ABM intelligence, and the strategy workshop — live inside 30 days of signature, with no large build required to start.',
     ],
@@ -986,9 +1126,9 @@ docChildren.push(
   }),
 );
 
-// ---------- 16 ABOUT TECHNIJIAN ----------
+// ---------- 18 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '16'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '18'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California, serving small and mid-sized businesses since 2000. We build and operate the AI systems that help right-sized operators compete at scale — with security and compliance built in, not bolted on. Algro is an existing Technijian managed-services and cybersecurity client; this blueprint is the expansion into the AI buyer-experience layer.'),
   spacer(140),
@@ -1048,7 +1188,7 @@ const doc = new Document({
     paragraphStyles: [
       { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal',
         run: { size: 2, bold: true, color: 'FFFFFF', font: FONT_HEAD },
-        paragraph: { spacing: { before: 480, after: 120 }, outlineLevel: 0 } },
+        paragraph: { spacing: { before: 0, after: 120 }, pageBreakBefore: true, outlineLevel: 0 } },
       { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal',
         run: { size: 26, bold: true, color: CORE_BLUE, font: FONT_HEAD },
         paragraph: { spacing: { before: 280, after: 120 }, outlineLevel: 1 } },

@@ -79,10 +79,13 @@ function p(text, opts = {}) {
 
 function sectionHeader(text, color = CORE_BLUE, num = '') {
   const label = num ? `${num}  ${text}` : text;
+  // pageBreakBefore: every section starts on a fresh page (Ravi, 2026-06-10).
+  // Native Word page-break-before avoids the blank-page artifacts that standalone pageBreak() paragraphs cause.
   const headingPara = new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    spacing: { before: 480, after: 120, line: 240 },
+    pageBreakBefore: true,
+    spacing: { before: 0, after: 120, line: 240 },
     children: [new TextRun({ text: label, size: 2, color: 'FFFFFF', font: FONT_HEAD })],
   });
   const visualTable = new Table({
@@ -416,7 +419,7 @@ docChildren.push(
 docChildren.push(
   new Paragraph({ spacing: { after: 200 }, children: [new TextRun({ text: 'Table of Contents', size: 32, bold: true, color: CORE_BLUE, font: FONT_HEAD })] }),
   new TableOfContents('Table of Contents', { hyperlink: true, headingStyleRange: '1-1' }),
-  pageBreak(),
+  // No trailing pageBreak(): Section 01's pageBreakBefore separates TOC from Section 1.
 );
 
 // ---------- 01 EXECUTIVE SUMMARY ----------
@@ -511,6 +514,9 @@ docChildren.push(
     ],
     CORE_ORANGE
   ),
+  spacer(160),
+  subHeader('The Cost of Waiting', { color: CRITICAL }),
+  p('Pursuit advantage and AI-search authority both compound, and both reward whoever moves first. Every quarter Danielian assembles pursuits by hand is a quarter its proposals are slower than they need to be — and on the inbound side, every quarter the firm is not the cited answer to "best architect for an SB 79 transit project" or "BTR feasibility in California," the AI assistants learn to answer with a rival. That default, once set in the retrieval data, is harder and more expensive to dislodge than to claim now. The 2026 housing-law window is widest before competitors build their own AI presence; the cost of waiting is not zero — it is a slower pursuit engine and a competitor becoming the default answer.'),
 );
 
 // ---------- 04 THE DANIELIAN BUYER UNIVERSE ----------
@@ -640,11 +646,111 @@ docChildren.push(
     ],
   ),
   p('The lead-generation engagement is the same market and the same public-records terrain as Danielian’s developer pursuits. The infrastructure engagement is the kind of secure, hybrid foundation a three-office firm needs before rolling AI out firmwide. Neither is an architecture-design build — that craft stays with Danielian.', { size: 18, italics: true, spaceBefore: 60 }),
+  spacer(200),
+  subHeader('How We Keep AI Affordable — Seven Models, Routed by Task'),
+  p('A fair question about running AI across pursuits, authority content, and the knowledge graph: won’t the token bill be enormous? Not the way Technijian builds it. We do not wire every task to one expensive model — our platform routes across roughly seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the cheapest model that can do it well.'),
+  buildTable(
+    [
+      { label: 'Tier', weight: 1.7 },
+      { label: 'What It Does', weight: 3.3 },
+      { label: 'Share of Work', weight: 1.5, align: AlignmentType.CENTER },
+    ],
+    [
+      [{ text: 'Frontier (premium)', bold: true }, 'The hardest judgment only — final brand-voice pass on a proposal, compliance-critical answers, deepest reasoning', { text: '~5–10%', color: CORE_BLUE, bold: true }],
+      [{ text: 'Workhorse (balanced)', bold: true }, 'The bulk of drafting and reasoning — pursuit copy, outreach personalization, summarization, precedent scoring', { text: '~30–40%', color: TEAL }],
+      [{ text: 'Lightweight (low-cost)', bold: true }, 'High-volume mechanical work — classification, extraction, enriching and tagging thousands of project and parcel records', { text: '~50–60%', color: BRAND_GREY }],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  p('The result: Danielian pays premium-model prices only for the small slice of work that warrants them — typically a 60–80% lower run cost than routing everything to one top-tier model, with no quality loss where it counts. A single SOQ section is drafted by a low-cost model, tightened and fact-checked by a mid model, and given a final brand-and-accuracy pass by a frontier model — instead of one premium model doing all three at roughly triple the cost. This is the kind of AI engineering depth a partner brings that wiring everything to one chatbot does not.', { spaceBefore: 80 }),
 );
 
-// ---------- 07 AI GROWTH + INTEGRATION ENGINE ----------
+// ---------- 07 UNDERSTANDING AI — FIELD GUIDE ----------
 docChildren.push(
-  ...sectionHeader('How AI Transforms Danielian’s Engine', CORE_BLUE, '07'),
+  ...sectionHeader('Understanding AI — A Field Guide for Danielian Associates Leadership', CORE_BLUE, '07'),
+  spacer(140),
+  p('This section exists to make the rest of this strategy easy to evaluate. No jargon, no hype — just what AI is, where Danielian sits today, how to adopt it without risk, and what comparable organizations are already doing. The goal is that John, Victor, Deborah, and the leadership team can judge every recommendation that follows on its merits.'),
+  spacer(140),
+
+  subHeader('What AI Actually Is — and Isn’t'),
+  p('As MIT Sloan puts it, a leader needs to know what AI can and cannot do — not how to build it. In practice, the only distinction that matters for planning is this:'),
+  bullet('Automation (workflows): the AI follows a path you define — predictable and low-risk. For example, "assemble this SOQ from the booking brief, the matched past projects, and the right resumes." This is where almost all near-term value lives.'),
+  bullet('Agents: the AI decides the steps itself — more flexible, and it needs human oversight. For example, "watch the named developer universe and flag the accounts worth a pursuit this quarter." This comes later, where it earns its place.'),
+  p('The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that works. Danielian starts with simple automations that pay off in the first quarter — proposal assembly, precedent search — and adds autonomous agents only where the value is proven, which is exactly how the roadmap in this strategy is sequenced.'),
+  spacer(140),
+
+  subHeader('Where Danielian Sits Today — The AI Maturity Ladder'),
+  p('Most established, well-run firms — including Danielian — sit at the first or second rung of a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks). The leaders in any field are only one or two rungs higher, and the gap closes in months, not years.'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Stage', weight: 1.6 },
+      { label: 'What It Looks Like', weight: 4 },
+      { label: 'Danielian Today', weight: 1.4, align: AlignmentType.CENTER },
+    ],
+    [
+      ['1. Foundational', 'Little or no AI; manual, people-dependent processes', { text: '', color: CORE_BLUE }],
+      [{ text: '2. Emerging', bold: true }, { text: 'A named Chief Technology Manager and early tools exist, but AI is not yet woven into pursuits, the archive, or production', bold: true }, { text: '◀ You are here', bold: true, color: CORE_ORANGE }],
+      ['3. Operational', 'AI runs specific workflows day-to-day — proposals, precedent search, entitlement research — with measured results', ''],
+      ['4. Scaled', 'AI is embedded across growth and the studio with governance and Scorecard dashboards', ''],
+      ['5. Transformational', 'AI is the default way the firm pursues, designs-around, and competes', ''],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Danielian is well-positioned: a named Chief Technology Manager and an EOS operating system already put it at the Emerging stage. This strategy is the plan to reach Operational — AI working in the pursuit engine and inside the studio — within twelve months.', { spaceBefore: 80 }),
+  spacer(140),
+
+  subHeader('Adopting AI Responsibly — Three Risks Every Leader Manages'),
+  p('The U.S. government’s NIST AI Risk Management Framework gives leaders a simple mental model — Govern, Map, Measure, Manage. For a design firm handling client and entitlement material, three risks matter most, and each has a concrete control:'),
+  spacer(80),
+  buildTable(
+    [
+      { label: 'Risk', weight: 1.8 },
+      { label: 'What It Means', weight: 3.4 },
+      { label: 'How Technijian Controls It', weight: 3.4 },
+    ],
+    [
+      ['Hallucination', 'AI can state a confident, wrong answer', 'Human-in-the-loop review on anything client-facing or compliance-bound — AI drafts, a licensed professional approves; no AI output is ever stamped'],
+      ['Data leakage', 'Sensitive material pasted into public tools can escape', 'Private, governed AI deployments — client briefs, entitlement filings, and the project archive never touch a public model'],
+      ['Compliance & accountability', 'Untracked AI tools create audit and governance gaps', 'Every AI tool inventoried with owner, vendor, and data source — set as an EOS Scorecard item, led by a CISSP-certified team'],
+    ],
+    { headerColor: DARK_CHARCOAL },
+  ),
+  spacer(140),
+
+  subHeader('What Comparable Organizations Are Already Doing'),
+  bullet('Design and engineering firms: document-heavy practices are turning multi-day proposal, SOQ, and qualification assembly into a minutes-long, reviewable draft — responding to more pursuits with the same team.'),
+  bullet('Professional-services studios: firms with decades of project history are making that archive searchable in plain language, so the right precedent surfaces on demand instead of living in a retiring principal’s memory.'),
+  bullet('Regulated, relationship-led B2B: account-based firms are using signal monitoring to know when a named buyer is in-market — capturing pursuit timing competitors never see.'),
+  p('These are representative directions of travel across comparable industries, not guarantees; Danielian’s own numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear in Section 06 (Capability Proof).', { italics: true, size: 19, spaceBefore: 40 }),
+  spacer(140),
+
+  subHeader('A Day in the Life — A Danielian Pursuit Lead'),
+  calloutBox('Before vs. After AI', [
+    'TODAY: A pursuit lead learns an RFQ is due, hunts through folders and senior PMs’ memories for the right past projects, re-keys resumes and references, rebuilds project sheets by hand, and assembles the qualifications package over several days — pulling licensed architects off design to help.',
+    'WITH AI: The pursuit brief drops into the system; an AI assistant proposes precedent-matched projects from the 6,353-project archive, drafts the SOQ sections and tailored resumes, and returns an assembled package in hours; the pursuit lead and principal review, sharpen, and approve. The studio’s knowledge is captured in a system, so the same standard holds across Orange County, Los Angeles, and Nashville and survives a principal’s retirement.',
+  ], CORE_BLUE),
+  spacer(140),
+
+  subHeader('Why a Partner — vs. Hiring or Doing It Yourself'),
+  buildTable(
+    [
+      { label: 'Path', weight: 1.6 },
+      { label: 'Reality', weight: 5 },
+    ],
+    [
+      ['DIY tools', 'Inexpensive, but Danielian assembles, secures, and governs everything — and owns the three risks above alone, on top of running a studio'],
+      ['Hire in-house', 'A capable AI leader typically costs $180K+/year and is scarce, and one person cannot cover strategy, build, security, and governance'],
+      [{ text: 'Partner (Technijian)', bold: true }, { text: 'Strategy, build, security, and governance in one team at a fraction of a hire — with proven builds in this market and CISSP-led security, plugged into the Chief Technology Manager seat that already exists', bold: true }],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+  p('Sources cited in this section: MIT Sloan Management (AI literacy); Anthropic (AI system design); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud frameworks); U.S. NIST AI Risk Management Framework. Full references in the Appendix.', { italics: true, size: 18, spaceBefore: 100 }),
+);
+
+// ---------- 08 AI GROWTH + INTEGRATION ENGINE ----------
+docChildren.push(
+  ...sectionHeader('How AI Transforms Danielian’s Engine', CORE_BLUE, '08'),
   spacer(100),
   p('The engine runs three motions, and because this is an account-based business, every motion aims at named buyers rather than a broad funnel. AI sits underneath the human relationship layer — it surfaces the right developers, arms the pursuit, and removes the non-design drag — but the trust between Danielian and a developer, and the craft of the design itself, are what win and keep the work. Stating that plainly is the point.'),
   spacer(60),
@@ -672,6 +778,18 @@ docChildren.push(
       ['Internal', 'Early massing / yield studies', 'Generative feasibility options the designers choose from — human-in-the-loop', 'My AI / My Dev'],
     ],
   ),
+  spacer(160),
+  subHeader('AI Search Reality Check', { color: CORE_ORANGE }),
+  p('Here is the inbound gap made concrete. When a developer asks an AI assistant the question below today, this is the shape of the answer they get — illustrative of how AI search resolves this query right now:'),
+  calloutBox(
+    'Prompt: "Best architecture firm for a transit-oriented multifamily / BTR project in Orange County under SB 79?"',
+    [
+      'TODAY — the AI assistant answers with whichever firms have the strongest content and third-party signals it can read: it names a couple of the larger multi-office firms and a planning resource or two, and does NOT mention Danielian — even though Danielian has 57 years, 6,353 projects, and the wide-shallow-lot and middle-housing heritage that fits this exact question. Danielian is invisible at the moment a developer is forming a shortlist.',
+      'AFTER AEO — the same query returns Danielian as a cited option ("Danielian Associates is a residential architecture and planning firm with deep multifamily and BTR experience and a track record in transit-adjacent and middle-housing design…"), with the authority content and project archive as the supporting evidence the assistant points to.',
+    ],
+    CORE_ORANGE
+  ),
+  p('(Illustrative of current AI-search behavior for this query class, not a captured screenshot; the live result is part of the Nexus Assess baseline.)', { italics: true, size: 18 }),
   spacer(140),
   calloutBox(
     'The Honest Boundary',
@@ -684,9 +802,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 08 THE EOS INTEGRATION PLAN ----------
+// ---------- 09 THE EOS INTEGRATION PLAN ----------
 docChildren.push(
-  ...sectionHeader('The EOS Integration Plan', TEAL, '08'),
+  ...sectionHeader('The EOS Integration Plan', TEAL, '09'),
   spacer(100),
   p('Danielian runs on EOS — Rocks, the Level-10 cadence, the Scorecard, the Accountability Chart. That is an advantage: it means an AI program can be installed in the firm’s own operating language rather than bolted on as a side project. We do not propose "digital transformation." We propose a quarter of AI Rocks with measurable Scorecard metrics, owned by the seats that already exist.'),
   spacer(80),
@@ -716,9 +834,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 09 BUSINESS IMPACT & SERVICE INVESTMENT ----------
+// ---------- 10 BUSINESS IMPACT & SERVICE INVESTMENT ----------
 docChildren.push(
-  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '09'),
+  ...sectionHeader('Business Impact & Service Investment', CORE_BLUE, '10'),
   spacer(100),
   p('The investment below is built land-and-expand: a small, easy-to-approve entry that pays for itself on the pursuit and efficiency lift alone, and a clearly-labeled later expansion that builds the full engine once the entry proves out. Every figure is an estimate that calibrates to Danielian’s real numbers — pursuit volume, win rate, and hours-to-proposal — at a discovery call.'),
   spacer(140),
@@ -740,7 +858,8 @@ docChildren.push(
   ),
   p('Baselines read "estimated" on purpose — discovery replaces every one with Danielian’s actual figures. The point is the direction and the levers, which are concrete.', { size: 18, italics: true, spaceBefore: 60 }),
   spacer(140),
-  subHeader('The Entry — the easy yes'),
+  subHeader('The Entry — The 90-Day AI Pursuit Pilot'),
+  p('Start with one clearly-scoped, fixed-price program — not an open-ended engagement. The pilot sets the AI program as an EOS Rock, stands up the AEO authority foundation, and proves the pursuit and efficiency lift on one live RFQ before any larger build is discussed.'),
   buildTable(
     [
       { label: 'Service', weight: 2.8 },
@@ -756,6 +875,15 @@ docChildren.push(
     ],
   ),
   p('My SEO is shown at its published Tier-3 authority rate. My AI advisory and workshop figures are estimates confirmed at quote. The fuller program below is the expansion, not the ask.', { size: 18, italics: true, spaceBefore: 60 }),
+  spacer(120),
+  calloutBox(
+    'The Pilot Bar — and Our Commitment',
+    [
+      'Success metric: within 90 days, the proposal-automation pilot demonstrably cuts hours-to-proposal on at least one live Danielian pursuit — a concrete before/after the BD team can see and the CFO can score.',
+      'Our commitment: the entry program is month-to-month — no lock-in. If the pilot has not hit that metric by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth continuing. Danielian carries the upside, not the risk.',
+    ],
+    CORE_ORANGE
+  ),
   spacer(120),
   subHeader('The Expansion — once the entry proves out'),
   buildTable(
@@ -808,9 +936,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 10 IMPLEMENTATION ROADMAP ----------
+// ---------- 11 IMPLEMENTATION ROADMAP ----------
 docChildren.push(
-  ...sectionHeader('Implementation Roadmap', CORE_ORANGE, '10'),
+  ...sectionHeader('Implementation Roadmap', CORE_ORANGE, '11'),
   spacer(100),
   p('The roadmap is paced for a busy studio: land the entry fast, prove the pursuit and efficiency lift on real work, then scale firmwide across Orange County, Los Angeles, and Nashville. No phase asks Danielian to absorb more than it comfortably can while still running its business — and each phase maps to an EOS quarter.'),
   spacer(160),
@@ -833,9 +961,9 @@ docChildren.push(
   bullet('Run AI Rocks on the Scorecard every quarter — the program becomes how the firm operates, not a project.'),
 );
 
-// ---------- 11 QUICK WINS ----------
+// ---------- 12 QUICK WINS ----------
 docChildren.push(
-  ...sectionHeader('Quick Wins — No Commitment Required', TEAL, '11'),
+  ...sectionHeader('Quick Wins — No Commitment Required', TEAL, '12'),
   spacer(100),
   p('A handful of things Danielian can do right away with no contract and no spend — each a genuine improvement on its own, and each a natural on-ramp to the program. The first is the marquee: a complete, no-cost assessment.'),
   spacer(80),
@@ -850,9 +978,32 @@ docChildren.push(
   leadBullet('Publish one authority piece on a 2026 housing-law angle. ', 'An SB 79 or ADU explainer developers are searching for — the first brick in AI-answer authority.'),
 );
 
-// ---------- 12 NEXT STEPS & DISCOVERY ----------
+// ---------- 13 QUESTIONS WE USUALLY GET (FAQ) ----------
 docChildren.push(
-  ...sectionHeader('Next Steps & Discovery', DARK_CHARCOAL, '12'),
+  ...sectionHeader('Questions We Usually Get', CORE_BLUE, '13'),
+  spacer(100),
+  p('The honest answers to the questions Danielian leadership is most likely asking right now.'),
+  spacer(120),
+  buildTable(
+    [
+      { label: 'Question', weight: 3 },
+      { label: 'Our Honest Answer', weight: 5 },
+    ],
+    [
+      [{ text: 'We already have a marketing partner / handle our own BD. Why add Technijian?', bold: true }, 'Keep what works — your relationships and pursuits are yours. We add the layer most firms do not have: AI-search authority (AEO), pursuit and proposal automation, the institutional knowledge graph, and account intelligence on your named developer universe. We sit under your relationship layer, not over it.'],
+      [{ text: 'Isn’t AI mostly hype right now?', bold: true }, 'A lot of it is. That is why this strategy starts with simple, proven automations that pay back fast — proposal assembly and precedent search — not autonomous "agents" running the studio. We use the simplest tool that works, measure it on a Scorecard, and only expand what earns its place.'],
+      [{ text: 'Will AI replace our designers — or end up stamping work?', bold: true }, 'No. AI augments the licensed architects and planners; it does not design, and it never stamps. It removes the non-design drag — proposal assembly, precedent and code research, knowledge retrieval — so your people spend more time on design and in front of clients. The craft stays Danielian’s.'],
+      [{ text: 'Is our data — client briefs, the project archive, entitlement work — safe?', bold: true }, 'Yes. Sensitive material never touches a public AI model; we deploy private, governed systems with human review on anything client-facing or compliance-bound, led by a CISSP-certified team. Data governance is part of the complimentary Nexus Assess in the entry program.'],
+      [{ text: 'We run lean across three offices. Do we have the bandwidth for this?', bold: true }, 'The point is the opposite — to give your team back hours, not add work. Technijian runs the build and the cadence; your involvement is a short monthly session plus reviewing what we draft. It plugs into the Chief Technology Manager seat you already have, so no new hire to manage.'],
+      [{ text: 'What if it doesn’t work — and what does it really cost?', bold: true }, 'The entry program is roughly $41K for Year 1 at published rates — a fixed-scope 90-day pilot with one success metric (Section 10), month-to-month with no lock-in. If it has not moved hours-to-proposal by day 90, you are under no obligation to continue, and we will tell you honestly whether it is worth it. The full engine is the later expansion, only after the pilot proves the lift.'],
+    ],
+    { headerColor: CORE_BLUE },
+  ),
+);
+
+// ---------- 14 NEXT STEPS & DISCOVERY ----------
+docChildren.push(
+  ...sectionHeader('Next Steps & Discovery', DARK_CHARCOAL, '14'),
   spacer(100),
   p('The path from here is short and low-risk. The entry is small on purpose; discovery replaces every estimate in this document with Danielian’s real numbers.'),
   spacer(60),
@@ -879,9 +1030,9 @@ docChildren.push(
   ]),
 );
 
-// ---------- 13 ABOUT TECHNIJIAN ----------
+// ---------- 15 ABOUT TECHNIJIAN ----------
 docChildren.push(
-  ...sectionHeader('About Technijian', BRAND_GREY, '13'),
+  ...sectionHeader('About Technijian', BRAND_GREY, '15'),
   spacer(100),
   p('Technijian is an AI-native managed services and technology firm headquartered in Irvine, California — five minutes from Danielian in the Spectrum — serving small and mid-sized businesses since 2000. We design, build, and operate secure infrastructure with security and compliance built in, and a dedicated team assigned to each client.'),
   spacer(160),
@@ -920,9 +1071,9 @@ docChildren.push(
   ),
 );
 
-// ---------- 14 APPENDIX ----------
+// ---------- 16 APPENDIX ----------
 docChildren.push(
-  ...sectionHeader('Appendix — Sources & Notes', BRAND_GREY, '14'),
+  ...sectionHeader('Appendix — Sources & Notes', BRAND_GREY, '16'),
   spacer(100),
   p('This strategy draws on public sources about Danielian Associates and the residential design market, California housing legislation, and AEC AI-adoption research, plus Technijian’s own service definitions and production AI work. Company figures for Danielian (headcount, pursuit volume, win rate) are public-signal estimates confirmed at discovery.'),
   spacer(60),
@@ -932,6 +1083,7 @@ docChildren.push(
   bullet('AEC AI-adoption research (2025–2026) — Deltek Clarity A&E Study (53% AI adoption; 94% increasing usage); industry surveys on the readiness gap (75% expect profitability lift, ~20% feel highly prepared); analyses showing ~40% of design-development tasks automatable.'),
   bullet('Competitive references — KTGY, AO Architects, William Hezmalhalch Architects (WHA), Bassenian Lagoni and regional residential peers; public positioning material.'),
   bullet('Technijian service definitions and production AI work — My AI, My AI Lead Gen, My SEO, My Dev, My IT, My Compliance; AI Document Intelligence, institutional knowledge systems, and the multi-agent SEO/AEO platform.'),
+  bullet('AI literacy and adoption frameworks (Section 07) — MIT Sloan Management Review (AI literacy: "what AI can do," not how to build it); Anthropic, "Building Effective Agents" (the automation/workflow vs. agent distinction); a widely-used five-stage AI maturity model (consistent with Gartner and Google Cloud AI-adoption frameworks); U.S. NIST AI Risk Management Framework (Govern / Map / Measure / Manage) for responsible-AI controls.'),
   spacer(140),
   p('Note on scope: Technijian has not delivered an architecture-specific AI build. The capabilities in this strategy are proven patterns from other document-heavy, regulated fields, mapped to Danielian’s workflows — presented as near-term builds, never as completed architecture work. All projections are estimated and conservative pending discovery.', { italics: true, size: 20 }),
 );

@@ -166,7 +166,11 @@ def bullet(text, bold_lead=None, color=NEARBLACK):
 
 def h1(num, title):
     p = doc.add_heading(level=1)
-    p.paragraph_format.space_before = Pt(14)
+    # Every section starts on a fresh page (Ravi, 2026-06-10). Native page-break-before
+    # avoids the blank-page artifacts that manual page breaks cause. The first h1 after
+    # the TOC relies on this too — toc() no longer adds its own trailing page break.
+    p.paragraph_format.page_break_before = True
+    p.paragraph_format.space_before = Pt(0)
     r = p.add_run(("%s  %s" % (num, title)) if num else title)
     set_run(r, 15, BLUE, True)
     # orange bottom rule
@@ -398,7 +402,8 @@ def toc():
     r3.append(t3); fld.append(r3)
     r4 = OxmlElement("w:r"); fc3 = OxmlElement("w:fldChar"); fc3.set(qn("w:fldCharType"), "end"); r4.append(fc3); fld.append(r4)
     doc.paragraphs[-1]._p.addnext(fld)
-    doc.add_page_break()
+    # No trailing page break here — the first section h1 (page_break_before=True) starts the next page,
+    # so the TOC never shares a page with Section 1.
 
 # ================================================================ build
 add_footer(); add_running_header()
@@ -472,21 +477,23 @@ h2("Three things we added after June 2")
 callout("What changed in Revision 2", [
     ("Inbound is necessary but not sufficient.  ",
      "SEO brings warmer leads in. To grow without adding headcount you also need outbound that runs "
-     "itself — so we added an AI Lead Generation engine (Section 12, Pillar 3)."),
+     "itself — so we added an AI Lead Generation engine (Section 13, Pillar 3)."),
     ("Reach the buyer who is replacing the phone call.  ",
      "Derek flagged a generational shift: younger buyers at construction, trucking and tree-service "
      "firms research on social, video and AI — not cold calls. The content + social engine (Pillar 2) "
      "is built for them."),
     ("Multiply the salesperson, don’t replace them.  ",
-     "Pilot has already cut new-customer onboarding from 27 days to 3 with AI. The internal-AI plan "
+     "Pilot — SC Fuels’ parent — has cut new-customer onboarding from 27 days to 3 with AI (as Derek shared on "
+     "June 2). The internal-AI plan "
      "(Pillar 4) targets the same wins for SC Fuels — Salesforce opportunity progression and the credit "
      "process — so reps spend time on relationships, not paperwork."),
 ], accent=ORANGE)
 
-body("The rest of this report walks the audit findings first (Sections 2–11), then lays out the four-pillar "
-     "AI growth engine and how it works alongside WebFX (Section 12), the coordinated operating model and the "
-     "optional path to consolidate (Section 13), the investment picture against what agencies like WebFX "
-     "typically charge (Section 14), a sequenced roadmap (Section 15), and no-commitment quick wins (Section 16).")
+body("The rest of this report walks the audit findings first (Sections 2–11), then a plain-English AI primer "
+     "for leadership (Section 12), the four-pillar AI growth engine and how it works alongside WebFX "
+     "(Section 13), the coordinated operating model and the optional path to consolidate (Section 14), the "
+     "investment picture against what agencies like WebFX typically charge (Section 15), a sequenced roadmap "
+     "(Section 16), and no-commitment quick wins (Section 17).")
 secbreak()
 
 # ================================================================ 2 WHAT WE HEARD
@@ -537,7 +544,7 @@ data_table(
         ["Service Territory", "15 western states"],
         ["Customers", "11,000+ commercial and enterprise customers"],
         ["Tagline", "Your Single Choice for Petroleum Products"],
-        ["Google Business Profile", "Verified — 4.5 stars / 20 reviews — Orange, CA"],
+        ["Google Business Profile", "Verified — 4.5-star rating — Orange, CA HQ"],
         ["Current marketing partner", "WebFX (SEO/analytics) + InsightView + FleetSeek → Salesforce CRM"],
     ],
     widths=[28, 72])
@@ -619,7 +626,7 @@ data_table(
 callout("The honest framing", [
     "This is not a case for firing WebFX. It is a case for adding the AI layer they do not provide — outbound "
     "lead gen, AI search, and internal automation — and, separately, for confirming what you pay WebFX today "
-    "so you can decide later whether to consolidate. We model that economics in Section 14 using published "
+    "so you can decide later whether to consolidate. We model that economics in Section 15 using published "
     "rates only; we have not assumed your actual WebFX spend.",
 ], accent=TEAL)
 secbreak()
@@ -667,7 +674,7 @@ data_table(
     widths=[34, 18, 48])
 body("The 5,400 keywords sitting in positions 51–100 are the single biggest lever. Moving even 500 of them "
      "into the top 20 with targeted content could add 5,000–10,000 monthly visits — the kind of volume that "
-     "an AI content factory (Section 12, Pillar 1) is purpose-built to produce at scale.")
+     "an AI content factory (Section 13, Pillar 1) is purpose-built to produce at scale.")
 secbreak()
 
 # ================================================================ 6 PAID
@@ -770,7 +777,7 @@ data_table(
         ["Plain-text email exposed", "FAIL", "info@scfuels.com in raw HTML — replace with form"],
         ["SPF email record", "FAIL", "No SPF DNS record — spoofing & deliverability risk"],
         ["HTTP/2", "FAIL", "Serving on HTTP/1 — Nginx supports HTTP/2; config change"],
-        ["GBP", "PASS", "Verified, 4.5 stars, 20 reviews — Orange CA"],
+        ["GBP", "PASS", "Verified, 4.5-star rating — Orange CA HQ"],
         ["YouTube channel", "WARN", "Linked but 4 subscribers / 526 views — underutilized"],
     ],
     widths=[28, 16, 56], status_col=1, font_sz=9.2)
@@ -800,8 +807,32 @@ data_table(
     ],
     widths=[26, 16, 58], status_col=1, font_sz=9.2)
 body("The remediation — llms.txt, static-HTML migration of business-critical copy, FAQ schema, and an "
-     "authority-content program — is detailed in Section 12, Pillar 1, and is core to the budgeted website "
+     "authority-content program — is detailed in Section 13, Pillar 1, and is core to the budgeted website "
      "rebuild Derek described.")
+spacer(6)
+h2("10.3  AI Search Reality Check")
+body("Here is the gap made concrete — illustrative of how AI search resolves a high-intent query in your "
+     "space right now:")
+callout("Prompt: “Who are the best bulk diesel & fleet fuel suppliers in the western US?”", [
+    ("Today.  ", "The AI assistant answers with whichever suppliers have content it can actually read and "
+     "cite — it names a few national distributors and card-network brands, and does not surface SC Fuels, "
+     "despite the billion-gallon scale, the Pilot backing, and the 15-state footprint. Because ~89% of the "
+     "site is JS-rendered with no llms.txt, the model effectively cannot see SC Fuels at the moment the buyer "
+     "is building a shortlist."),
+    ("After GEO.  ", "The same query returns SC Fuels as a cited option — “SC Fuels, a Pilot Company, delivers "
+     "bulk and cardlock fueling across 15 western states…” — with the service pages and FAQ schema as the "
+     "evidence the assistant points to."),
+], accent=ORANGE)
+body("(Illustrative of current AI-search behavior for this query class; the live result is part of the audit "
+     "baseline.)", size=8.5, color=GREY, italic=True)
+spacer(6)
+h2("10.4  The cost of waiting")
+body("AI-search visibility compounds, and it rewards whoever optimizes first. Every quarter SC Fuels is "
+     "unreadable to the models, the assistants learn to answer “best fuel supplier” with someone else — and "
+     "that default, once set in the training and retrieval data, is harder and costlier to dislodge than to "
+     "claim now. The website rebuild is already budgeted and the competitors named in Section 8 are not yet "
+     "GEO-optimized either; the cheapest, highest-leverage moment to own these answers is before any of them "
+     "do. The cost of waiting is not zero — it is a competitor becoming the default answer.", bold_lead="")
 secbreak()
 
 # ================================================================ 11 PERFORMANCE
@@ -820,11 +851,95 @@ data_table(
 body("Server response is excellent (0.1s) — the weight is front-end. The fixes are mostly configuration, not "
      "redevelopment: enable HTTP/2 (15–30% faster), turn on Brotli compression (CSS 1.86MB → ~0.5MB), and "
      "run images through a WebP/CDN pipeline (1.4MB → under 400KB). These pair naturally with the website "
-     "rebuild and are owned by Technijian in the operating model (Section 13).")
+     "rebuild and are owned by Technijian in the operating model (Section 14).")
 secbreak()
 
 # ================================================================ 12 THE ENGINE (4 pillars)
-h1("12.", "How Technijian’s AI-Driven Engine Gets SC Fuels There")
+h1("12.", "Understanding AI — A Field Guide for SC Fuels Leadership")
+body("Before the engine, a short primer — so the team can judge everything that follows on its merits, not on "
+     "the hype. No jargon: what AI is, where SC Fuels sits today, how to adopt it without risk, and what "
+     "comparable operators are already doing. This section is vendor-neutral and built on published frameworks "
+     "from MIT, the U.S. NIST, Anthropic, McKinsey, and widely-used AI maturity models.")
+
+h2("What AI actually is — and isn’t")
+body("As MIT Sloan frames it, a leader needs to know what AI can and cannot do — not how to build it. For "
+     "planning, the only distinction that matters is this:")
+bullet("the AI follows a path you define — predictable, low-risk (“draft this bid response from these specs”). "
+       "Almost all near-term value lives here.", bold_lead="Automation (workflows): ")
+bullet("the AI decides the steps itself — more flexible, needs human oversight (“watch the pipeline and flag "
+       "stalled deals”). This comes later, where it earns its place.", bold_lead="Agents: ")
+body("The operating principle (Anthropic’s guidance on building AI systems) is to use the simplest thing that "
+     "works. We start SC Fuels with simple automations that pay off in the first 90 days and add autonomous "
+     "agents only where the value is proven — which is exactly how this report’s roadmap is sequenced.")
+
+h2("Where SC Fuels sits today — the AI maturity ladder")
+body("Most established, well-run companies — including SC Fuels — sit at the first or second rung of the "
+     "widely-used five-stage AI maturity model (consistent with Gartner’s and Google Cloud’s frameworks). The "
+     "leaders are only one or two rungs higher, and the gap closes in "
+     "months. SC Fuels has an advantage: parent Pilot is already operating AI (the 27→3-day onboarding win "
+     "Derek cited on June 2), so the benchmark is in the family.")
+data_table(
+    ["Stage", "What it looks like", "SC Fuels today"],
+    [
+        ["1. Foundational", "Little or no AI; manual, people-dependent processes", ""],
+        ["2. Emerging", "Strong data tools in place (InsightView, FleetSeek, Salesforce) but AI not yet woven into growth or operations", "YOU ARE HERE"],
+        ["3. Operational", "AI runs specific workflows day-to-day — content, outbound, credit, compliance — with measured results", ""],
+        ["4. Scaled", "AI embedded across growth and operations with governance and dashboards", ""],
+        ["5. Transformational", "AI is the default way the business runs and competes", ""],
+    ],
+    widths=[22, 56, 22], font_sz=9, status_col=2)
+body("This report is the plan to reach Operational — AI working in the growth engine and inside the business — "
+     "within twelve months.", size=9.5, color=GREY, italic=True)
+
+h2("Adopting AI responsibly — three risks every leader manages")
+body("The U.S. NIST AI Risk Management Framework gives leaders a simple model — Govern, Map, Measure, Manage. "
+     "For SC Fuels, three risks matter most, each with a concrete control:")
+data_table(
+    ["Risk", "What it means", "How Technijian controls it"],
+    [
+        ["Hallucination", "AI can state a confident, wrong answer", "Human-in-the-loop on anything customer-facing or compliance-bound — AI drafts, a person approves"],
+        ["Data leakage", "Sensitive data pasted into public tools can escape", "Private, governed deployments — customer, pricing, and credit data never touch a public model"],
+        ["Compliance & accountability", "Untracked AI tools create audit gaps", "Every AI tool inventoried with owner, vendor, and data source — important for LCFS/RIN/IFTA and financial controls; CISSP-led"],
+    ],
+    widths=[20, 36, 44], font_sz=9)
+
+h2("What comparable operators are already doing")
+bullet("a national distributor uses AI demand-and-route forecasting to cut delivery cost and stockouts across a "
+       "multi-state network.", bold_lead="Fuel & logistics distribution: ")
+bullet("a document-heavy firm turned multi-day RFP and compliance assembly into a minutes-long, audit-ready "
+       "draft — competing on far more bids with the same team.", bold_lead="Bid-driven B2B: ")
+bullet("an operator gave each rep an AI assistant that watches the CRM and drafts personalized outreach, so one "
+       "person covers several times the accounts.", bold_lead="Field sales: ")
+body("These are representative directions of travel across comparable industries, not guarantees; SC Fuels’ own "
+     "numbers would be confirmed in discovery. Technijian’s specific, measured results from prior builds appear "
+     "in Section 13 (the four pillars) and the efficiency table in Section 13.", size=9.5, color=GREY, italic=True)
+
+h2("A day in the life — an SC Fuels sales rep")
+callout("Before vs. after AI", [
+    ("Today.  ", "The rep researches prospects by hand across FleetSeek and InsightView, writes each outreach from "
+     "scratch, manually nudges stalled Salesforce opportunities, waits on a manual credit review to activate a "
+     "new account, and assembles RFP responses over days."),
+    ("With AI.  ", "AI scores and sorts prospects against the ICP, drafts personalized outreach per account, flags "
+     "stalled deals with a next-best action, accelerates the credit packet to a same-day yes/no, and auto-drafts "
+     "RFP responses from a reusable library — so the rep spends time on relationships, not paperwork, and covers "
+     "2–4× the accounts."),
+], accent=BLUE)
+
+h2("Why a partner — vs. hiring or doing it yourself")
+data_table(
+    ["Path", "Reality"],
+    [
+        ["DIY tools", "Inexpensive, but SC Fuels assembles, secures, and governs everything — and owns the three risks above alone"],
+        ["Hire in-house", "A capable AI leader typically costs $180K+/year and is scarce; one person cannot cover strategy, build, security, and governance"],
+        ["Partner (Technijian)", "Strategy, build, security, and governance in one team at a fraction of a hire — proven builds, CISSP-led security, and it complements WebFX rather than replacing your stack"],
+    ],
+    widths=[20, 80], font_sz=9.5)
+body("Sources cited: MIT Sloan (AI literacy); Anthropic (AI system design); Gartner (AI maturity model); "
+     "U.S. NIST AI Risk Management Framework; McKinsey (measuring AI value, Section 15).",
+     size=8.5, color=GREY, italic=True)
+secbreak()
+
+h1("13.", "How Technijian’s AI-Driven Engine Gets SC Fuels There")
 body("This is the heart of Revision 2. The engine has four pillars. Pillars 1–2 strengthen what brings buyers "
      "in (and overlap with what WebFX does — we can support or run it). Pillars 3–4 are net-new: the outbound "
      "and internal AI that no SEO agency provides, and that Derek’s goals actually require. Each pillar lists "
@@ -857,7 +972,10 @@ bullet("Maps to My SEO (Tiers 2–3) + the AI Search Optimization add-on.", bold
 
 # ---- Pillar 2
 h2("Pillar 2 — AI-Driven Content & Social (reach the younger buyer)")
-body("Answer Derek’s generational-shift question directly — meet buyers on social, video and audio.")
+body("Answer Derek’s generational-shift question directly — meet buyers on social, video and audio. SC Fuels "
+     "already holds the channels (verified June 2026: ~6,300 LinkedIn followers plus active YouTube, Facebook, "
+     "Instagram, and X accounts) — what is missing is a consistent, AI-fed content cadence to make them work. "
+     "This pillar activates existing channels rather than starting from zero.")
 bullet("One source blog becomes a video (AI presenter), short social clips, a two-person podcast, and "
        "syndicated posts — across YouTube, LinkedIn, TikTok, Instagram, Facebook, Spotify and Apple.",
        bold_lead="Blog → video → social → podcast factory.  ")
@@ -897,13 +1015,64 @@ bullet("An AI strategy roadmap, executive workshop, and a fractional AI advisor 
 bullet("Maps to My AI (Strategy, Executive Workshop, Fractional Advisor) + My Dev for custom builds (new "
        "AI-ready website, credit & CRM automation). Scoped at discovery.", bold_lead="Technijian service.  ", color=GREY)
 
+spacer(6)
+h2("Inside SC Fuels — where internal AI cuts cost and recovers hours")
+body("Pillar 4 is not abstract. SC Fuels runs on a set of repeatable internal workflows — dispatch, credit, "
+     "billing, compliance, RFPs, and acquisition onboarding — that today lean on people moving information by "
+     "hand between FleetSeek, InsightView, Salesforce, the portal, and spreadsheets. Each is a place AI removes "
+     "cost and recovers hours, independent of any new revenue. The right-hand column is a system Technijian has "
+     "already built and run for a real client, so these are proven patterns, not theory.")
+data_table(
+    ["SC Fuels workflow today", "AI integration", "Proven Technijian result"],
+    [
+        ["Credit intake & decisioning — manual review of new commercial accounts; Derek named this as a process he wants refined",
+         "AI-assisted credit packets: pull and summarize the application, flag risk, draft a consistent yes/no recommendation for a human to approve",
+         "AI document intelligence cut complex questionnaire turnaround from days to minutes with 60–80% less manual review"],
+        ["Municipal / fleet RFP response — incumbent-favored bids answered by hand; Derek called the government sector a “glaring hole”",
+         "AI discovers relevant RFPs and auto-drafts responses from a reusable answer library — so the same team competes on far more bids",
+         "Same document-AI engine auto-populates vendor due-diligence in minutes; lets a lean team respond to more bids, faster"],
+        ["Salesforce opportunity progression — deals stall; InsightView, FleetSeek and Salesforce are not tied together",
+         "AI watches the pipeline: next-best-action, stalled-deal alerts, auto-summaries — so one rep covers 2–4× the accounts",
+         "AI lead-scoring engine sorted prospects into hot/warm/watch and produced 50 hot leads for a client from public data alone"],
+        ["LCFS / RIN / IFTA & renewable-fuel compliance — recurring regulatory paperwork assembled manually across 15 states",
+         "Compliance automation turns recurring filings into a scheduled job: data pulled, forms drafted, audit-ready records generated",
+         "Custom AI-native apps (My Dev) delivered 3–5× faster turn recurring paperwork into automated, scheduled workflows"],
+        ["Customer portal & service — 11,000+ accounts call/email for rebates, e-receipts, quotes, and order status",
+         "AI assistant on the existing portal: self-serve quoting, account questions, and keep-full/reorder prompts without a phone call",
+         "AI-native portal builds with an embedded assistant cut self-serve friction and deflect routine support contacts"],
+        ["Acquisition onboarding — integrating Downs (2025) and Lutz (2025) customers, cards, and SOPs into SC Fuels systems",
+         "Knowledge system captures process and account data into a searchable AI layer, so each integration ramps in weeks, not quarters",
+         "Knowledge-graph build captured years of institutional process into one searchable AI assistant for a knowledge-heavy operation"],
+    ],
+    widths=[33, 34, 33], font_sz=8.5)
+spacer(4)
+body("What it adds up to (conservative — confirm against real volumes at discovery):", bold_lead="In plain numbers.  ")
+data_table(
+    ["Efficiency lever", "Conservative impact"],
+    [
+        ["Rep hours recovered from credit, RFP, and Salesforce automation", "Each rep covers 2–4× the accounts — Derek’s core goal — with no new headcount"],
+        ["Faster credit decisions and account activation", "Match the kind of win Pilot already booked: new-customer onboarding 27 days → 3 days"],
+        ["More bids answered with the same team", "Every incremental fleet/municipal win is six figures in lifetime account value"],
+        ["Compliance paperwork (LCFS / RIN / IFTA) automated", "Hundreds of staff hours/year redirected, with lower audit and penalty exposure"],
+        ["Routine portal/support contacts deflected", "Service staff time redirected from order-status calls to higher-value account work"],
+    ],
+    widths=[44, 56], font_sz=9, zebra=True)
+callout("The efficiency thesis", [
+    "Pillars 1–3 grow the top line. Pillar 4 protects the bottom line — it lets SC Fuels add business "
+    "without adding overhead, and de-risks the knowledge that today lives in a few experienced people as the "
+    "company integrates Downs, Lutz, and the next acquisition.",
+    "All figures are conservative estimates from SC Fuels’ published operating model and Technijian’s prior "
+    "builds; a short operational discovery would replace them with SC Fuels’ real hours and volumes before any "
+    "scope is set.",
+], accent=BLUE)
+
 spacer(4)
 body("Together, these four pillars are the engine. The next section shows how it runs alongside WebFX, and "
-     "Section 14 shows what it costs.", italic=True, color=GREY)
+     "Section 15 shows what it costs.", italic=True, color=GREY)
 secbreak()
 
 # ================================================================ 13 OPERATING MODEL
-h1("13.", "How It Works With WebFX — and the Optional Path to Consolidate")
+h1("14.", "How It Works With WebFX — and the Optional Path to Consolidate")
 body("The recommended model keeps WebFX where it is strong and gives Technijian the AI layers it is built "
      "for. Clear lanes, no overlap, no turf war.")
 data_table(
@@ -929,12 +1098,12 @@ callout("Complement now — consolidate later, if you choose", [
 secbreak()
 
 # ================================================================ 14 INVESTMENT
-h1("14.", "Investment — and How It Compares")
+h1("15.", "Investment — and How It Compares")
 body("Pricing discipline: every Technijian figure below is a published rate. Where a number depends on scope "
      "(custom builds, the website rebuild, internal-AI automation), we say “scoped at discovery” rather than "
      "guess. We have not assumed your current WebFX spend — confirming it is a discovery item.")
 
-h2("14.1  Technijian published rates")
+h2("15.1  Technijian published rates")
 data_table(
     ["Service", "What it covers", "Published rate"],
     [
@@ -949,7 +1118,7 @@ data_table(
     ],
     widths=[24, 52, 24], font_sz=9)
 
-h2("14.2  How that compares to a full-service agency")
+h2("15.2  How that compares to a full-service agency")
 data_table(
     ["", "WebFX (public ranges)", "Technijian (published)"],
     [
@@ -970,26 +1139,69 @@ callout("Reading the comparison fairly", [
      "the first move is confirming what you pay WebFX today against what you receive."),
 ], accent=PASS, fill="EEF7EE")
 
-h2("14.3  Land-and-expand — sequence the investment")
+h2("15.3  The entry offer — the 90-Day AI Lead-Gen Pilot")
+body("Start with one clearly-scoped, fixed-price pilot — not an open-ended engagement. It layers the AI "
+     "outbound engine and the AI-search (GEO) quick wins on top of your current setup, with nothing to unwind.")
+data_table(
+    ["What's included (90 days)", "Detail", "Investment"],
+    [
+        ["My AI Lead Gen — Starter", "1 pipeline, ICP scoring, ~500 enriched leads/mo, personalized outreach drafts for the team", "$1,499 / mo"],
+        ["AI-search quick wins", "/llms.txt, FAQ-schema pages, static-HTML migration of key copy — fixes the Grade-F GEO so AI assistants can read SC Fuels", "My SEO add-on (published)"],
+        ["Free Nexus Assess", "No-cost IT & security baseline (internal + external scan, dark-web check, M365 review) — prioritized roadmap", "Included"],
+        ["Pilot total", "Fixed scope, published rates, month-to-month, no large up-front build", "Low thousands / mo"],
+    ],
+    widths=[26, 52, 22], font_sz=9)
+callout("The pilot bar — and our commitment", [
+    ("Success metric.  ", "Within 90 days, the AI Lead Gen engine delivers a working stream of ICP-scored, "
+     "contact-ready opportunities into the reps' hands (hot/warm/watch), and SC Fuels begins appearing in "
+     "AI-search answers for target queries it is invisible for today."),
+    ("Our commitment.  ", "The pilot is month-to-month with no long lock-in. If it has not produced a usable "
+     "pipeline and measurable AI-search movement by day 90, you are under no obligation to continue — and we "
+     "will tell you honestly whether it is worth it. You carry the upside, not the risk."),
+], accent=ORANGE)
+spacer(6)
+body("Won't running AI across content, lead gen, and credit cost a fortune in tokens?", bold_lead="How we keep the AI bill down.  ")
+body("No — because we don't wire every task to one expensive model. Technijian's platform routes across roughly "
+     "seven models, spanning three AI vendors and three capability tiers, and sends each sub-task to the "
+     "cheapest model that can do it well: lightweight models handle high-volume work (enriching and scoring "
+     "thousands of leads, classification, extraction), balanced models do the drafting and reasoning, and a "
+     "frontier model is reserved for the ~5–10% that needs deep judgment (final brand voice, compliance-critical "
+     "answers). Where quality is non-negotiable, three models peer-review the same output. The result is "
+     "typically a 60–80% lower run cost than routing everything to one premium model, with no quality loss where "
+     "it counts — for example, a blog is drafted by a low-cost model, tightened by a mid model, and given a "
+     "final brand-and-accuracy pass by a frontier model, instead of one premium model doing all three at roughly "
+     "triple the cost. It is the kind of AI-engineering depth a partner brings that wiring everything to one "
+     "chatbot does not.")
+
+h2("15.4  Land-and-expand — sequence the investment")
 data_table(
     ["Phase", "What", "Approx. economics"],
     [
-        ["Entry (now)", "AI Lead Gen + AI Search/GEO + content factory layered on the current setup — no big build", "Published recurring rates"],
-        ["Expansion", "AI-ready website rebuild (already budgeted) + Salesforce/credit AI", "Scoped at discovery (My Dev/My AI)"],
+        ["Entry (now)", "The 90-Day AI Lead-Gen Pilot above — AI outbound + AI-search quick wins on the current setup", "Published recurring rates"],
+        ["Expansion", "AI-ready website rebuild (already budgeted) + Salesforce/credit AI + full content factory", "Scoped at discovery (My Dev/My AI)"],
         ["Consolidate (optional)", "Move SEO/site to Technijian fixed-fee My SEO once the engine proves out", "Typically below enterprise-agency rates"],
     ],
     widths=[22, 56, 22], font_sz=9)
-h2("14.4  The ROI logic")
+h2("15.5  The ROI logic")
 body("We model ROI as method, not a promised multiple. A single new enterprise fleet account is worth $100K+ "
      "in annual revenue. The entire entry-phase program runs in the low thousands per month. The engine "
      "therefore only needs to help land a small number of incremental accounts per year — or retain a few "
      "at-risk ones, or free enough rep time to cover more territory — to return many times its cost. Closed-loop "
      "attribution (WebFX’s MarketingCloudFX today, plus Technijian’s lead-engine metrics) keeps that honest.")
+callout("AI as a managed investment — not a leap of faith", [
+    "The reason most AI spend disappoints is not the technology — it is the lack of measurement. Industry "
+    "research finds roughly 88% of companies use AI but only about 39% see a real profit impact; the difference "
+    "is discipline, not budget.",
+    ("Stage-gated.  ", "Technijian runs every engagement against gates — adoption, then operational improvement, "
+     "then financial benefit versus total cost. If a pilot does not clear its cost at the gate, we stop and "
+     "re-scope. SC Fuels carries the upside, not blind risk — the same way Derek described Pilot proving its 27→3-day onboarding "
+     "win before scaling it."),
+], accent=ORANGE)
 secbreak()
 
 # ================================================================ 15 ROADMAP
-h1("15.", "Prioritized Roadmap")
-h2("15.1  Immediate — within 30 days (quick technical wins + engine kickoff)")
+h1("16.", "Prioritized Roadmap")
+h2("16.1  Immediate — within 30 days (quick technical wins + engine kickoff)")
 data_table(
     ["Action", "Owner", "Type"],
     [
@@ -1001,7 +1213,7 @@ data_table(
         ["Stand up My AI Lead Gen pilot (1 vertical)", "Technijian", "NEW"],
     ],
     widths=[52, 24, 24], status_col=2, font_sz=9.3)
-h2("15.2  Build — 60–90 days (the engine + the rebuild)")
+h2("16.2  Build — 60–90 days (the engine + the rebuild)")
 data_table(
     ["Action", "Owner", "Type"],
     [
@@ -1013,7 +1225,7 @@ data_table(
         ["Begin AI-ready website rebuild", "Technijian/Dev", "STRATEGIC"],
     ],
     widths=[52, 24, 24], status_col=2, font_sz=9.3)
-h2("15.3  Scale — 3–6 months (internal AI + authority)")
+h2("16.3  Scale — 3–6 months (internal AI + authority)")
 data_table(
     ["Action", "Owner", "Type"],
     [
@@ -1028,7 +1240,7 @@ data_table(
 secbreak()
 
 # ================================================================ 16 QUICK WINS
-h1("16.", "Quick Wins — No Commitment Required")
+h1("17.", "Quick Wins — No Commitment Required")
 body("Five things SC Fuels can do this week, with or without an engagement:")
 bullet("Run a free Nexus Assess. Technijian’s no-cost IT & security assessment (internal + external "
        "vulnerability, dark-web credential check, and a Microsoft 365 review) returns a prioritized "
@@ -1042,8 +1254,30 @@ bullet("List your 10 best closed accounts. They become the ICP seed for the AI L
        "for anonymized case-study content.", bold_lead="5.  ")
 secbreak()
 
-# ================================================================ 17 NEXT STEPS
-h1("17.", "Conclusion & Next Steps")
+# ================================================================ 18 FAQ
+h1("18.", "Questions We Usually Get")
+body("The honest answers to the questions the SC Fuels team is most likely asking.")
+data_table(
+    ["Question", "Our honest answer"],
+    [
+        ["We already pay WebFX. Why add Technijian?",
+         "Keep them — they do good work on traditional SEO. We add the layers they don't: AI-search (GEO), AI-driven outbound lead gen, and internal AI (Salesforce, credit). We run alongside WebFX; consolidating anything later is optional and only if the engine proves out."],
+        ["Isn't AI mostly hype right now?",
+         "A lot of it is. That's why we start with simple, proven automations that pay back fast — not autonomous agents. Your own parent, Pilot, already booked a concrete AI win (the 27→3-day onboarding Derek cited). Same discipline, applied to your growth and ops."],
+        ["Is our data — customer, pricing, credit — safe?",
+         "Yes. Sensitive data never touches a public AI model; we deploy private, governed systems with human review on anything customer- or compliance-facing, led by a CISSP-certified team. The free Nexus Assess baselines your security posture first."],
+        ["We're busy. Do we have bandwidth for another vendor?",
+         "The goal is to give your reps time back, not add work. Technijian runs the build and cadence; the team reviews what the AI drafts. The pilot is designed to slot in beside WebFX, InsightView, FleetSeek, and Salesforce — not replace your stack."],
+        ["What if it doesn't work?",
+         "The entry is a fixed-price 90-day pilot with a defined success metric (Section 15), month-to-month, no long lock-in. If it hasn't produced a usable pipeline and AI-search movement by day 90, you're under no obligation to continue."],
+        ["Will this disrupt the website rebuild we already budgeted?",
+         "No — it accelerates it. The AI-search quick wins (llms.txt, FAQ schema, static-HTML) are exactly what the rebuild should bake in from day one, so the pilot de-risks the rebuild rather than competing with it."],
+    ],
+    widths=[30, 70], font_sz=9)
+secbreak()
+
+# ================================================================ 19 NEXT STEPS
+h1("19.", "Conclusion & Next Steps")
 body("SC Fuels enters mid-2026 with a genuinely strong digital foundation — dominant brand rankings, a real "
      "retention moat in the portals, and a capable SEO partner in WebFX. The audit also shows a clear pattern: "
      "the site reflects 2020-era practices in a 2026, AI-first search world, and there is no AI-driven outbound "
