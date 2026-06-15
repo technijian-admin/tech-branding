@@ -18,6 +18,8 @@
     --gray:   #6B7280;
     --border: #E5EAF0;
     --jian:   #7C3AED;
+    --jian-light:#EDE9FE;
+    --green:  #15803D;
     --meraki: #0E7490;
     --sophos: #B45309;
   }
@@ -26,8 +28,9 @@
     font-family: 'Inter', sans-serif;
     background: #cdd4dc;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 24px;
     padding: 32px;
   }
 
@@ -37,14 +40,16 @@
     background: #fff;
     overflow: hidden;
     box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    position: relative;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
   }
 
   /* ── HEADER ── */
   .op-header {
-    background: var(--dark);
-    padding: 18px 40px;
+    background: linear-gradient(135deg, var(--dark) 0%, #2D1B69 100%);
+    padding: 9px 34px 11px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,15 +67,15 @@
   .op-header::before {
     content: '';
     position: absolute;
-    width: 280px; height: 280px;
+    width: 300px; height: 300px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
-    top: -140px; right: 60px;
+    background: radial-gradient(circle, rgba(124,58,237,0.30) 0%, transparent 70%);
+    top: -150px; right: 120px;
   }
   .header-left { position: relative; z-index: 2; }
-  .header-logo { height: 28px; display: block; margin-bottom: 6px; }
+  .header-logo { height: 25px; display: block; margin-bottom: 6px; }
   .header-title {
-    font-size: 26px;
+    font-size: 27px;
     font-weight: 900;
     color: #fff;
     letter-spacing: -0.5px;
@@ -79,16 +84,30 @@
   .header-title .my { color: rgba(255,255,255,0.4); }
   .header-title .jian { color: #A78BFA; }
   .header-tagline {
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 2px;
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 1.8px;
     text-transform: uppercase;
-    margin-top: 3px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .header-stamp {
+    display: inline-block;
+    margin-top: 6px;
+    background: rgba(124,58,237,0.35);
+    border: 1px solid rgba(167,139,250,0.5);
+    color: #C4B5FD;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    padding: 2px 9px;
+    border-radius: 10px;
   }
   .header-right {
     position: relative; z-index: 2;
     display: flex;
-    gap: 20px;
+    gap: 16px;
+    align-items: center;
   }
   .header-stat { text-align: center; }
   .header-stat .hs-val {
@@ -98,375 +117,366 @@
     line-height: 1;
   }
   .header-stat .hs-lbl {
-    font-size: 9px;
-    color: rgba(255,255,255,0.45);
-    margin-top: 2px;
-    letter-spacing: 0.5px;
+    font-size: 8px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 3px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    font-weight: 600;
   }
   .header-divider {
     width: 1px;
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.14);
     align-self: stretch;
   }
 
-  /* ── MODULE CARDS ROW ── */
-  .modules-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    padding: 14px 40px;
-    flex-shrink: 0;
+  /* ── SECTION LABEL (reusable) ── */
+  .sec-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
   }
-  .mod-card {
-    border-radius: 10px;
-    padding: 14px;
+  .sec-label .sl-accent { color: var(--jian); }
+  .sec-label .sl-note {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-transform: none;
+    color: var(--gray);
+    margin-left: auto;
+  }
+
+  /* ── PER-USER PRICING ROW ── */
+  .tiers-section { padding: 4px 34px 0; flex-shrink: 0; }
+  .tiers-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+  .tier-card {
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 9px 12px 8px;
+    position: relative;
+    background: #fff;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border);
   }
-  .mod-card-jian   { background: #F5F3FF; border-color: #C4B5FD; }
-  .mod-card-m365   { background: #EFF6FF; border-color: #BFDBFE; }
-  .mod-card-meraki { background: #ECFEFF; border-color: #A5F3FC; }
-  .mod-card-sophos { background: #FFF7ED; border-color: #FED7AA; }
-
-  .mc-badge {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
+  .tier-card.popular {
+    border: 2px solid var(--jian);
+    background: linear-gradient(180deg, #FAF8FF 0%, #fff 60%);
+    box-shadow: 0 3px 14px rgba(124,58,237,0.14);
+  }
+  .pop-badge {
+    position: absolute;
+    top: -9px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--jian);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 4px;
+    padding: 2px 10px;
+    border-radius: 9px;
+    white-space: nowrap;
   }
-  .mc-badge-jian   { color: var(--jian); }
-  .mc-badge-m365   { color: var(--blue); }
-  .mc-badge-meraki { color: var(--meraki); }
-  .mc-badge-sophos { color: var(--sophos); }
-
-  .mc-name {
-    font-size: 13px;
+  .tc-name {
+    font-size: 13.5px;
     font-weight: 800;
     color: var(--dark);
-    line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .mc-price {
-    font-size: 26px;
-    font-weight: 900;
     line-height: 1;
-    margin-bottom: 2px;
   }
-  .mc-price-jian   { color: var(--jian); }
-  .mc-price-m365   { color: var(--blue); }
-  .mc-price-meraki { color: var(--meraki); }
-  .mc-price-sophos { color: var(--sophos); }
-
-  .mc-unit {
+  .tc-name .nb {
+    font-size: 8px;
+    font-weight: 800;
+    color: var(--jian);
+    background: var(--jian-light);
+    padding: 1px 5px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .tc-price-row { display: flex; align-items: baseline; gap: 4px; margin: 3px 0 1px; }
+  .tc-price {
+    font-size: 27px;
+    font-weight: 900;
+    color: var(--jian);
+    line-height: 0.9;
+  }
+  .tc-per { font-size: 9.5px; color: var(--gray); font-weight: 600; }
+  .tc-annual { font-size: 8.5px; color: var(--green); font-weight: 700; margin-bottom: 4px; }
+  .tc-divider { height: 1px; background: var(--border); margin-bottom: 4px; }
+  .tc-features { list-style: none; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .tc-features li {
     font-size: 9px;
-    color: var(--gray);
-    margin-bottom: 8px;
-  }
-  .mc-divider {
-    height: 1px;
-    margin-bottom: 8px;
-  }
-  .mc-divider-jian   { background: #C4B5FD; }
-  .mc-divider-m365   { background: #BFDBFE; }
-  .mc-divider-meraki { background: #A5F3FC; }
-  .mc-divider-sophos { background: #FED7AA; }
-
-  .mc-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-  }
-  .mc-features li {
-    font-size: 11px;
     color: #374151;
     display: flex;
     gap: 5px;
     align-items: flex-start;
-    line-height: 1.35;
+    line-height: 1.22;
   }
-  .mc-features li::before {
-    content: '\2022';
-    flex-shrink: 0;
-    font-size: 10px;
-    margin-top: 1px;
+  .tc-features li::before { content: '\2713'; color: var(--jian); font-weight: 800; flex-shrink: 0; font-size: 9px; }
+  .tiers-foot {
+    margin-top: 4px;
+    background: var(--jian-light);
+    border-radius: 7px;
+    padding: 4px 12px;
+    font-size: 9.5px;
+    color: #4C1D95;
+    font-weight: 600;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
   }
-  .mc-bullet-jian   li::before { color: var(--jian); }
-  .mc-bullet-m365   li::before { color: var(--blue); }
-  .mc-bullet-meraki li::before { color: var(--meraki); }
-  .mc-bullet-sophos li::before { color: var(--sophos); }
+  .tiers-foot strong { color: var(--jian); font-weight: 800; }
+  .tiers-foot .tf-sep { width: 1px; height: 12px; background: #C4B5FD; }
 
-  /* ── ROI INFOGRAPHIC STRIP ── */
+  /* ── RESOURCE ADD-ONS STRIP ── */
+  .addons-section { padding: 4px 34px 0; flex-shrink: 0; }
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .addon {
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 5px 8px;
+    background: var(--light);
+    text-align: center;
+    position: relative;
+  }
+  .addon.new { border-color: #C4B5FD; background: #FAF8FF; }
+  .addon-tag {
+    position: absolute;
+    top: -7px; right: 6px;
+    background: var(--jian);
+    color: #fff;
+    font-size: 6.5px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    padding: 1px 5px;
+    border-radius: 6px;
+  }
+  .addon-price { font-size: 16px; font-weight: 900; color: var(--blue); line-height: 1; }
+  .addon.new .addon-price { color: var(--jian); }
+  .addon-name { font-size: 9px; font-weight: 700; color: var(--dark); line-height: 1.1; margin-top: 2px; }
+  .addon-comp { font-size: 7.5px; color: var(--gray); line-height: 1.1; margin-top: 1px; }
+
+  /* ── 3-COLUMN MID GRID (Does | Compliance+SIEM+Comms) ── */
+  .mid-section { padding: 4px 34px 0; flex-shrink: 0; }
+  .does-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .does-card {
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 4px 9px;
+    background: #fff;
+  }
+  .dc-head { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .dc-icon {
+    width: 16px; height: 16px; border-radius: 5px;
+    background: var(--jian-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0;
+  }
+  .dc-title { font-size: 11px; font-weight: 800; color: var(--dark); line-height: 1; }
+  .dc-cad { font-size: 8px; font-weight: 700; color: var(--jian); text-transform: uppercase; letter-spacing: 0.4px; }
+  .dc-desc { font-size: 8.5px; color: #4B5563; line-height: 1.2; margin-top: 1px; }
+
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .cap-card {
+    border-radius: 7px;
+    padding: 6px 10px;
+    color: #fff;
+  }
+  .cap-compliance { background: linear-gradient(135deg, var(--jian) 0%, #5B21B6 100%); }
+  .cap-siem { background: linear-gradient(135deg, var(--dark) 0%, #2D1B69 100%); }
+  .cap-comms { background: linear-gradient(135deg, var(--blue) 0%, #075985 100%); }
+  .cc-title { font-size: 11px; font-weight: 800; line-height: 1; margin-bottom: 3px; display:flex; align-items:center; gap:6px; }
+  .cc-title .cc-em { font-size: 13px; }
+  .cc-line { font-size: 8.5px; line-height: 1.2; color: rgba(255,255,255,0.88); display: flex; gap: 5px; }
+  .cc-line::before { content: '\2022'; color: rgba(255,255,255,0.6); flex-shrink: 0; }
+  .cc-stat { font-weight: 800; color: #fff; }
+
+  /* ── WHAT JIAN MONITORS BAND ── */
+  .monitors-section { padding: 4px 34px 0; flex-shrink: 0; }
+  .monitors-band {
+    background: linear-gradient(135deg, var(--dark) 0%, #16213E 100%);
+    border-radius: 9px;
+    padding: 8px 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .monitors-band::before {
+    content: '';
+    position: absolute;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,170,200,0.18) 0%, transparent 70%);
+    top: -120px; left: 40%;
+  }
+  .mb-head {
+    display: flex; align-items: baseline; gap: 8px;
+    margin-bottom: 5px; position: relative; z-index: 2;
+  }
+  .mb-title { font-size: 11px; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
+  .mb-sub { font-size: 8.5px; color: rgba(255,255,255,0.5); margin-left: auto; font-weight: 600; }
+  .mb-layers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    position: relative; z-index: 2;
+  }
+  .mb-layer {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 4px 7px;
+  }
+  .mbl-name { font-size: 8.5px; font-weight: 800; color: #fff; line-height: 1.05; margin-bottom: 1px; }
+  .mbl-src { font-size: 7.5px; color: rgba(255,255,255,0.62); line-height: 1.18; }
+
+  /* ── WORKED-EXAMPLE / ROI STRIP ── */
+  .roi-section { padding: 4px 34px 0; flex-shrink: 0; }
   .roi-strip {
     background: var(--light);
-    margin: 0 40px;
-    border-radius: 10px;
-    padding: 12px 20px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 16px;
     display: grid;
-    grid-template-columns: 1.4fr 1px 1fr 1px 1fr 1px 1fr;
+    grid-template-columns: 1.25fr 1px 1fr 1px 1fr 1px 1fr;
     gap: 0;
     align-items: center;
-    flex-shrink: 0;
   }
-  .roi-main {
-    padding-right: 20px;
-  }
+  .roi-main { padding-right: 14px; }
   .roi-main .rm-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
     text-transform: uppercase;
     color: var(--jian);
     margin-bottom: 4px;
   }
   .roi-main .rm-headline {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 900;
     color: var(--dark);
-    line-height: 1.2;
+    line-height: 1.12;
     margin-bottom: 3px;
   }
-  .roi-main .rm-sub {
-    font-size: 11px;
-    color: var(--gray);
-    line-height: 1.4;
-  }
+  .roi-main .rm-sub { font-size: 8.5px; color: var(--gray); line-height: 1.3; }
   .roi-divider { background: var(--border); align-self: stretch; }
-  .roi-stat {
-    text-align: center;
-    padding: 0 16px;
-  }
-  .roi-stat .rs-val {
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 1;
-    margin-bottom: 2px;
-  }
-  .roi-stat .rs-lbl { font-size: 10px; color: var(--gray); line-height: 1.3; }
-
-  /* ── SAVINGS BAR SECTION ── */
-  .savings-section {
-    padding: 12px 40px;
-    flex-shrink: 0;
-  }
-  .savings-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 10px;
-  }
-  .savings-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-  .savings-bar-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .sbr-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--dark);
-    width: 120px;
-    flex-shrink: 0;
-  }
-  .sbr-bar-wrap {
-    flex: 1;
-    height: 18px;
-    background: #F3F4F6;
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-  }
-  .sbr-bar {
-    height: 100%;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    padding-left: 8px;
-    font-size: 10px;
-    font-weight: 700;
-    color: #fff;
-    white-space: nowrap;
-  }
-  .sbr-val {
-    font-size: 11px;
-    font-weight: 700;
-    width: 90px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  /* ── HOW IT WORKS ── */
-  .how-section {
-    padding: 10px 40px;
-    flex-shrink: 0;
-  }
-  .how-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 10px;
-  }
-  .how-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-  .how-step {
-    background: var(--light);
-    border-radius: 8px;
-    padding: 10px 12px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .step-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--jian);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .step-text {
-    font-size: 11px;
-    color: #374151;
-    line-height: 1.45;
-  }
-  .step-text strong { display: block; font-weight: 700; color: var(--dark); margin-bottom: 1px; }
-
-  /* ── BUNDLE + CTA FOOTER ── */
-  .footer-row {
-    display: grid;
-    grid-template-columns: 1fr 1px 1.2fr;
-    gap: 0;
-    margin: 10px 40px;
-    background: var(--dark);
-    border-radius: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .bundle-panel {
-    padding: 14px 20px;
-  }
-  .bundle-panel .bp-title {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--teal);
-    margin-bottom: 8px;
-  }
-  .bundle-items {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .bundle-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .bundle-pct {
-    font-size: 18px;
-    font-weight: 900;
-    color: #fff;
-    line-height: 1;
-    width: 52px;
-    flex-shrink: 0;
-  }
-  .bundle-desc {
-    font-size: 11px;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.35;
-  }
-  .footer-divider { background: rgba(255,255,255,0.1); }
-  .cta-panel {
-    padding: 14px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .cta-panel .cp-title {
-    font-size: 17px;
-    font-weight: 900;
-    color: #fff;
-    line-height: 1.2;
-    margin-bottom: 5px;
-  }
-  .cta-panel .cp-sub {
-    font-size: 11px;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.5;
-    margin-bottom: 8px;
-  }
-  .cta-contacts {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .cta-contact-item {
-    font-size: 12px;
-    color: rgba(255,255,255,0.75);
-    font-weight: 600;
-  }
-  .free-trial-badge {
-    display: inline-block;
-    background: rgba(124,58,237,0.4);
-    border: 1px solid rgba(167,139,250,0.4);
-    color: #C4B5FD;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 3px 10px;
-    border-radius: 12px;
-    margin-bottom: 6px;
-    align-self: flex-start;
-  }
-
-  /* ── ROI STAT VALUE COLORS ── */
+  .roi-stat { text-align: center; padding: 0 10px; }
+  .roi-stat .rs-val { font-size: 23px; font-weight: 900; line-height: 1; margin-bottom: 3px; }
+  .roi-stat .rs-lbl { font-size: 8.5px; color: #4B5563; line-height: 1.25; }
+  .roi-stat .rs-lbl em { color: var(--gray); font-style: italic; }
   .rs-val-jian   { color: var(--jian); }
   .rs-val-meraki { color: var(--meraki); }
   .rs-val-sophos { color: var(--sophos); }
 
-  /* ── SAVINGS BAR VARIANTS ── */
-  .sbr-bar-manual { width: 100%; background: #E5EAF0; color: #6B7280; }
-  .sbr-bar-suite  { width: 42%; background: linear-gradient(90deg, var(--jian), var(--blue)); }
-  .sbr-val-gray   { color: var(--gray); }
-  .sbr-val-jian   { color: var(--jian); }
+  /* ── FOOTER ── */
+  .footer-section { padding: 5px 34px 9px; flex-shrink: 0; margin-top: auto; }
+  .footer-row {
+    display: grid;
+    grid-template-columns: 1fr 1px 1.15fr;
+    gap: 0;
+    background: linear-gradient(135deg, var(--dark) 0%, #2D1B69 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .footer-row::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--jian), var(--teal), var(--orange));
+  }
+  .bundle-panel { padding: 10px 18px; }
+  .bp-title {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .bundle-items { display: flex; flex-direction: column; gap: 4px; }
+  .bundle-item { display: flex; align-items: center; gap: 9px; }
+  .bundle-val {
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    width: 58px;
+    flex-shrink: 0;
+  }
+  .bundle-desc { font-size: 8.5px; color: rgba(255,255,255,0.6); line-height: 1.25; }
+  .footer-divider { background: rgba(255,255,255,0.1); }
+  .cta-panel {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .trial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(124,58,237,0.4);
+    border: 1px solid rgba(167,139,250,0.45);
+    color: #C4B5FD;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    padding: 3px 11px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    align-self: flex-start;
+  }
+  .cp-title { font-size: 14px; font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 4px; }
+  .cp-title .acc { color: #A78BFA; }
+  .cp-sub { font-size: 8.5px; color: rgba(255,255,255,0.6); line-height: 1.3; margin-bottom: 6px; }
+  .cta-contacts { display: flex; gap: 14px; flex-wrap: wrap; }
+  .cta-contact-item { font-size: 11px; color: rgba(255,255,255,0.82); font-weight: 700; }
+  .cta-contact-item .ci-icon { color: var(--teal); margin-right: 3px; }
 
   @media print {
     html, body { margin: 0; padding: 0; background: #fff; display: block; }
-    .page { box-shadow: none; }
+    .page { box-shadow: none; break-after: page; }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- HEADER -->
+  <!-- ── HEADER ── -->
   <div class="op-header">
     <div class="header-left">
       <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian" class="header-logo">
       <div class="header-title">
         <span class="my">My </span><span class="jian">Jian</span> the AI Agent
       </div>
-      <div class="header-tagline">40% of Name-Brand. Same Protection. One Platform.</div>
+      <div class="header-tagline">40% of Name-Brand Price. Same Protection. One Platform.</div>
+      <span class="header-stamp">V4 &middot; EFFECTIVE 2026-06-15</span>
     </div>
     <div class="header-right">
       <div class="header-stat">
@@ -480,176 +490,264 @@
       </div>
       <div class="header-divider"></div>
       <div class="header-stat">
-        <div class="hs-val">~45%</div>
-        <div class="hs-lbl">IT hours cut</div>
+        <div class="hs-val">31</div>
+        <div class="hs-lbl">compliance evaluators</div>
       </div>
       <div class="header-divider"></div>
       <div class="header-stat">
-        <div class="hs-val">$9</div>
-        <div class="hs-lbl">per user / mo</div>
+        <div class="hs-val">~45%</div>
+        <div class="hs-lbl">IT hours cut</div>
       </div>
     </div>
   </div>
 
-  <!-- LINE ITEM PRICING CARDS -->
-  <div class="modules-row">
-    <div class="mod-card mod-card-jian mc-bullet-jian">
-      <div class="mc-badge mc-badge-jian">Per User &mdash; Jian for M365</div>
-      <div class="mc-name">Standard &middot; Compliance Pro</div>
-      <div class="mc-price mc-price-jian">$9 / $24</div>
-      <div class="mc-unit">per user / mo &mdash; 25-seat min &middot; bot-only $99/mo flat</div>
-      <div class="mc-divider mc-divider-jian"></div>
-      <ul class="mc-features">
-        <li><strong>Standard $9:</strong> Full platform + HIPAA/SOC 2/PCI</li>
-        <li><strong>Compliance Pro $24:</strong> + CMMC + custom + CSM</li>
-        <li>@Jian Teams Self-Service bot for all seats</li>
-        <li>Branded monthly M365 report + SIEM + MITRE</li>
-        <li>vs. Vanta + M365 + Moveworks ~$60/user</li>
-      </ul>
+  <!-- ── PER-USER PRICING ── -->
+  <div class="tiers-section">
+    <div class="sec-label"><span class="sl-accent">Per-User</span> Jian for M365 &mdash; the people / identity layer
+      <span class="sl-note">Annual = 2 months free (17% off)</span>
     </div>
-    <div class="mod-card mod-card-m365 mc-bullet-m365">
-      <div class="mc-badge mc-badge-m365">Per Firewall &mdash; Jian for Firewall</div>
-      <div class="mc-name">Sophos &middot; Meraki firewall SOC</div>
-      <div class="mc-price mc-price-m365">$99</div>
-      <div class="mc-unit">per firewall / mo &mdash; vs. Arctic Wolf $300–$500</div>
-      <div class="mc-divider mc-divider-m365"></div>
-      <ul class="mc-features">
-        <li>IPS / IDS / ATP / web filter / traffic</li>
-        <li>MITRE-tagged firewall event correlation</li>
-        <li>Auto CP ticket on every new alert</li>
-        <li>Branded monthly Sophos / Meraki report</li>
-        <li>Cross-correlated with M365 events</li>
-        <li>20&ndash;33% of Arctic Wolf price</li>
-      </ul>
+    <div class="tiers-row">
+      <!-- Core -->
+      <div class="tier-card">
+        <div class="tc-name">Jian Core</div>
+        <div class="tc-price-row"><span class="tc-price">$9</span><span class="tc-per">/user/mo</span></div>
+        <div class="tc-annual">$90/user/yr annual</div>
+        <div class="tc-divider"></div>
+        <ul class="tc-features">
+          <li>Autonomous 24&times;7 monitor + triage + ticketing</li>
+          <li>@Jian Teams self-service bot</li>
+          <li>Branded monthly report</li>
+          <li>HIPAA / SOC 2 / PCI evidence + MITRE tags</li>
+          <li>SIEM correlation</li>
+        </ul>
+      </div>
+      <!-- Plus (popular) -->
+      <div class="tier-card popular">
+        <div class="pop-badge">&#9733; Most Popular</div>
+        <div class="tc-name">Jian Plus <span class="nb">NEW</span></div>
+        <div class="tc-price-row"><span class="tc-price">$16</span><span class="tc-per">/user/mo</span></div>
+        <div class="tc-annual">$160/user/yr annual</div>
+        <div class="tc-divider"></div>
+        <ul class="tc-features">
+          <li>Everything in Core, <strong>plus:</strong></li>
+          <li>Real-time cross-platform SIEM correlation</li>
+          <li>Priority shift-aware routing</li>
+          <li>Expanding Tier-1 auto-remediation catalog</li>
+          <li>Weekly reporting + lite custom @Jian skills</li>
+        </ul>
+      </div>
+      <!-- Compliance -->
+      <div class="tier-card">
+        <div class="tc-name">Jian Compliance</div>
+        <div class="tc-price-row"><span class="tc-price">$24</span><span class="tc-per">/user/mo</span></div>
+        <div class="tc-annual">$240/user/yr annual</div>
+        <div class="tc-divider"></div>
+        <ul class="tc-features">
+          <li>Everything in Plus, <strong>plus:</strong></li>
+          <li>CMMC + custom (SOX/GLBA/FINRA/NIST/FedRAMP)</li>
+          <li>Dedicated CISSP-certified CSM &middot; 99.5% SLA</li>
+          <li>Cross-client correlator + audit-firm liaison</li>
+          <li>On-demand reports</li>
+        </ul>
+      </div>
     </div>
-    <div class="mod-card mod-card-meraki mc-bullet-meraki">
-      <div class="mc-badge mc-badge-meraki">Per Meraki Org &amp; Other Resources</div>
-      <div class="mc-name">Network &middot; vCenter &middot; DNS &middot; Web</div>
-      <div class="mc-price mc-price-meraki">$29+</div>
-      <div class="mc-unit">$79 Meraki org &middot; $99 vCenter &middot; $39 DNS &middot; $29 zone</div>
-      <div class="mc-divider mc-divider-meraki"></div>
-      <ul class="mc-features">
-        <li><strong>$79</strong> Meraki Network (vs. Auvik $250)</li>
-        <li><strong>$99</strong> vCenter (vs. vROps Premium $150+)</li>
-        <li><strong>$39</strong> Cisco Umbrella DNS</li>
-        <li><strong>$29</strong> Cloudflare zone</li>
-        <li><strong>$1.50/$3.50</strong> per workstation / server EDR</li>
-        <li>Pay only for the resources you have</li>
-      </ul>
-    </div>
-    <div class="mod-card mod-card-sophos mc-bullet-sophos">
-      <div class="mc-badge mc-badge-sophos">Per Environment &mdash; Jian for Backup</div>
-      <div class="mc-name">Veeam <strong>+ NAKIVO</strong> (vendor-agnostic)</div>
-      <div class="mc-price mc-price-sophos">$59</div>
-      <div class="mc-unit">per environment / mo &mdash; covers Veeam &amp; NAKIVO</div>
-      <div class="mc-divider mc-divider-sophos"></div>
-      <ul class="mc-features">
-        <li>Veeam VBR + 365 + ONE supported</li>
-        <li><strong>NAKIVO supported</strong> (Liongard isn't)</li>
-        <li>Backup posture + runway alerts</li>
-        <li>Ransomware-event MITRE correlation</li>
-        <li>Branded monthly backup report</li>
-        <li>One price, any backup vendor mix</li>
-      </ul>
+    <div class="tiers-foot">
+      <span><strong>25 seats / $299/mo</strong> platform min</span>
+      <span class="tf-sep"></span>
+      <span><strong>Bot Only $99/mo</strong> flat (&le;25 users, no platform)</span>
+      <span class="tf-sep"></span>
+      <span><strong>Enterprise / MSP:</strong> white-label, multi-tenant, NFR &mdash; contact sales</span>
     </div>
   </div>
 
-  <!-- WORKED-EXAMPLE STRIP -->
-  <div class="roi-strip">
-    <div class="roi-main">
-      <div class="rm-label">Three Real Quotes at 40% of Name-Brand</div>
-      <div class="rm-headline">Tell us your stack.<br>We&rsquo;ll quote ~40% of comp.</div>
-      <div class="rm-sub">Per-user for people, per-resource for infrastructure. Every line ~40% (or less) of name-brand. Bundle 4+ services for 10% more off, annual saves another 17%.</div>
+  <!-- ── RESOURCE ADD-ONS ── -->
+  <div class="addons-section">
+    <div class="sec-label"><span class="sl-accent">Per-Resource</span> Add-Ons &mdash; the expansion engine, every line ~40% of name-brand
+      <span class="sl-note">Pay only for the resources you have</span>
     </div>
-    <div class="roi-divider"></div>
-    <div class="roi-stat">
-      <div class="rs-val rs-val-jian">$383</div>
-      <div class="rs-lbl">20-user law firm<br>1 firewall + 1 backup<br><em>vs. ~$960 name-brand</em></div>
-    </div>
-    <div class="roi-divider"></div>
-    <div class="roi-stat">
-      <div class="rs-val rs-val-meraki">$1,453</div>
-      <div class="rs-lbl">50-user dental, HIPAA<br>2 FW + 2 Meraki + 1 backup<br><em>vs. ~$5,550 name-brand</em></div>
-    </div>
-    <div class="roi-divider"></div>
-    <div class="roi-stat">
-      <div class="rs-val rs-val-sophos">$5,822</div>
-      <div class="rs-lbl">250-user multi-site<br>5 FW + 3 Meraki + 2 backups<br><em>vs. ~$28,350 name-brand</em></div>
-    </div>
-  </div>
-
-  <!-- SAVINGS BAR COMPARISON -->
-  <div class="savings-section">
-    <div class="savings-title">Per-Line Comparison &mdash; Jian vs. Name-Brand</div>
-    <div class="savings-bars">
-      <div class="savings-bar-row">
-        <div class="sbr-label">Firewall SOC</div>
-        <div class="sbr-bar-wrap">
-          <div class="sbr-bar sbr-bar-manual">Arctic Wolf: $300&ndash;$500/site</div>
-        </div>
-        <div class="sbr-val sbr-val-gray">$300+</div>
+    <div class="addons-grid">
+      <div class="addon">
+        <div class="addon-price">$99</div>
+        <div class="addon-name">Firewall</div>
+        <div class="addon-comp">per Sophos/Meraki FW &middot; vs Arctic Wolf $300&ndash;500</div>
       </div>
-      <div class="savings-bar-row">
-        <div class="sbr-label">Jian for Firewall</div>
-        <div class="sbr-bar-wrap">
-          <div class="sbr-bar sbr-bar-suite">$99/firewall &mdash; 20-33% of Arctic Wolf</div>
-        </div>
-        <div class="sbr-val sbr-val-jian">$99</div>
+      <div class="addon new">
+        <div class="addon-tag">NEW</div>
+        <div class="addon-price">$99</div>
+        <div class="addon-name">SQL Server</div>
+        <div class="addon-comp">per instance &middot; health/jobs/blocking</div>
       </div>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS -->
-  <div class="how-section">
-    <div class="how-title">How Jian Works &mdash; Zero-Footprint Setup</div>
-    <div class="how-steps">
-      <div class="how-step">
-        <div class="step-num">1</div>
-        <div class="step-text"><strong>Tell us your stack</strong>How many users, firewalls, Meraki orgs, backup environments. Quote within an hour, every line ~40% of name-brand.</div>
+      <div class="addon">
+        <div class="addon-price">$99</div>
+        <div class="addon-name">vCenter</div>
+        <div class="addon-comp">per vCenter &middot; vs vROps Premium $150+</div>
       </div>
-      <div class="how-step">
-        <div class="step-num">2</div>
-        <div class="step-text"><strong>Connect read-only APIs</strong>M365, Sophos, Meraki, Veeam, NAKIVO, Umbrella, Huntress, vCenter &mdash; whichever you have. No agents.</div>
+      <div class="addon">
+        <div class="addon-price">$79</div>
+        <div class="addon-name">Meraki Network</div>
+        <div class="addon-comp">per Meraki org &middot; vs Auvik $250</div>
       </div>
-      <div class="how-step">
-        <div class="step-num">3</div>
-        <div class="step-text"><strong>Jian watches 24×7</strong>15-min alert tier, MITRE-tagged, cross-platform correlated. Tickets open themselves with channel-per-ticket Teams flow.</div>
+      <div class="addon new">
+        <div class="addon-tag">NEW</div>
+        <div class="addon-price">$79</div>
+        <div class="addon-name">Network / SNMP</div>
+        <div class="addon-comp">per site &middot; vs Auvik $250</div>
       </div>
-      <div class="how-step">
-        <div class="step-num">4</div>
-        <div class="step-text"><strong>Reports + audit binder on the 1st</strong>Branded DOCX per integration. HIPAA / SOC 2 / PCI evidence accrues continuously. ~45% of proactive IT hours, gone.</div>
+      <div class="addon">
+        <div class="addon-price">$59</div>
+        <div class="addon-name">Backup</div>
+        <div class="addon-comp">Veeam + NAKIVO, per env &middot; vendor-agnostic</div>
+      </div>
+      <div class="addon">
+        <div class="addon-price">$39</div>
+        <div class="addon-name">DNS</div>
+        <div class="addon-comp">per Umbrella tenant &middot; vs Cisco $80+</div>
+      </div>
+      <div class="addon">
+        <div class="addon-price">$29</div>
+        <div class="addon-name">Web / Cloudflare</div>
+        <div class="addon-comp">per zone &middot; WAF / L7 / cert health</div>
+      </div>
+      <div class="addon">
+        <div class="addon-price">$1.50</div>
+        <div class="addon-name">EDR Workstation</div>
+        <div class="addon-comp">overlay /endpoint &middot; vs Huntress $6</div>
+      </div>
+      <div class="addon">
+        <div class="addon-price">$3.50</div>
+        <div class="addon-name">EDR Server</div>
+        <div class="addon-comp">overlay /server &middot; vs CrowdStrike $10&ndash;15</div>
       </div>
     </div>
   </div>
 
-  <!-- BUNDLE + CTA FOOTER -->
-  <div class="footer-row">
-    <div class="bundle-panel">
-      <div class="bp-title">Starter Bundles &amp; Discounts</div>
-      <div class="bundle-items">
-        <div class="bundle-item">
-          <div class="bundle-pct">$349</div>
-          <div class="bundle-desc">Jian Starter (25 + 1 FW + 1 backup)</div>
-        </div>
-        <div class="bundle-item">
-          <div class="bundle-pct">17%</div>
-          <div class="bundle-desc">annual prepay (any service)</div>
-        </div>
-        <div class="bundle-item">
-          <div class="bundle-pct">10–25%</div>
-          <div class="bundle-desc">volume tier auto-applied at $1k/$5k/$15k/$50k+/mo</div>
-        </div>
+  <!-- ── WHAT JIAN DOES ── -->
+  <div class="mid-section">
+    <div class="sec-label"><span class="sl-accent">What Jian Does</span> &mdash; autonomous monitor &middot; triage &middot; report (all times Pacific)</div>
+    <div class="does-grid">
+      <div class="does-card">
+        <div class="dc-head"><div class="dc-icon">&#128276;</div><div><div class="dc-title">Alert</div><div class="dc-cad">Every 15 min</div></div></div>
+        <div class="dc-desc">Real-time critical-event detection &rarr; opens P1/P2 ticket + Teams channel + Adaptive Card.</div>
+      </div>
+      <div class="does-card">
+        <div class="dc-head"><div class="dc-icon">&#129504;</div><div><div class="dc-title">Diagnose</div><div class="dc-cad">Daily 14:00</div></div></div>
+        <div class="dc-desc">The judgment pass &mdash; decides what warrants a ticket + recommended fix + MITRE tag.</div>
+      </div>
+      <div class="does-card">
+        <div class="dc-head"><div class="dc-icon">&#128202;</div><div><div class="dc-title">Activity</div><div class="dc-cad">Daily 14:30</div></div></div>
+        <div class="dc-desc">Daily roll-up into a per-client posture summary &mdash; feeds reports + the learning loop.</div>
+      </div>
+      <div class="does-card">
+        <div class="dc-head"><div class="dc-icon">&#128290;</div><div><div class="dc-title">Counts</div><div class="dc-cad">Daily 05:00</div></div></div>
+        <div class="dc-desc">Observed-vs-billed reconciliation &mdash; surfaces under-billing &amp; license waste.</div>
       </div>
     </div>
-    <div class="footer-divider"></div>
-    <div class="cta-panel">
-      <div class="free-trial-badge">Custom Quote in One Business Hour</div>
-      <div class="cp-title">Pay per user. Pay per resource.<br>40% of name-brand. Every line.</div>
-      <div class="cp-sub">Standard 25-seat min ($225/mo) + 1 firewall ($99) = $324/mo. Or Jian Starter Bundle $349 flat. No long contract on monthly plans. Pilot and trial terms available &mdash; contact sales.</div>
-      <div class="cta-contacts">
-        <div class="cta-contact-item">sales@technijian.com</div>
-        <div class="cta-contact-item">(949) 379-8499</div>
-        <div class="cta-contact-item">technijian.com</div>
+    <div class="cap-grid">
+      <div class="cap-card cap-compliance">
+        <div class="cc-title"><span class="cc-em">&#9989;</span> Compliance Engine</div>
+        <div class="cc-line"><span><span class="cc-stat">31 evaluators</span> across <span class="cc-stat">5 frameworks</span> (HIPAA, SOC 2, CMMC, PCI-DSS + baseline)</span></div>
+        <div class="cc-line"><span>Continuous evidence + branded monthly report + tamper-evident audit log</span></div>
+        <div class="cc-line"><span>Never claims a control passes without evidence</span></div>
+      </div>
+      <div class="cap-card cap-siem">
+        <div class="cc-title"><span class="cc-em">&#128737;</span> SIEM &amp; Correlation</div>
+        <div class="cc-line"><span><span class="cc-stat">858 MITRE</span> techniques, refreshed daily from official STIX</span></div>
+        <div class="cc-line"><span>Real-time (15-min) + retrospective re-scan of the prior 7 days</span></div>
+        <div class="cc-line"><span>Correlates Inky, Sophos, M365, CrowdStrike, Huntress</span></div>
+      </div>
+      <div class="cap-card cap-comms">
+        <div class="cc-title"><span class="cc-em">&#128172;</span> Communicates</div>
+        <div class="cc-line"><span><span class="cc-stat">Email</span> &mdash; morning summary, rich HTML security alerts, weekly report</span></div>
+        <div class="cc-line"><span><span class="cc-stat">MS Teams</span> @Jian bot &mdash; channel-per-ticket + self-service</span></div>
+        <div class="cc-line"><span><span class="cc-stat">Client Portal</span> &mdash; idempotent tickets + auto time entries</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WHAT JIAN MONITORS ── -->
+  <div class="monitors-section">
+    <div class="monitors-band">
+      <div class="mb-head">
+        <div class="mb-title">What Jian Monitors</div>
+        <div class="mb-sub">Read-only API connections &middot; no agents &middot; 40+ platforms across every layer</div>
+      </div>
+      <div class="mb-layers">
+        <div class="mb-layer"><div class="mbl-name">Identity / M365</div><div class="mbl-src">22 workloads &mdash; sign-ins, Entra, Secure Score</div></div>
+        <div class="mb-layer"><div class="mbl-name">Email Security</div><div class="mbl-src">Inky Phish Fence &middot; EasyDMARC</div></div>
+        <div class="mb-layer"><div class="mbl-name">Endpoint / EDR</div><div class="mbl-src">CrowdStrike Falcon &middot; Huntress</div></div>
+        <div class="mb-layer"><div class="mbl-name">Firewall / Network</div><div class="mbl-src">Sophos &middot; Meraki &middot; OpManager &middot; Cisco</div></div>
+        <div class="mb-layer"><div class="mbl-name">DNS</div><div class="mbl-src">Cisco Umbrella DNS-layer</div></div>
+        <div class="mb-layer"><div class="mbl-name">Web / Edge</div><div class="mbl-src">Cloudflare WAF / L7 / cert</div></div>
+        <div class="mb-layer"><div class="mbl-name">Backup / DR</div><div class="mbl-src">Veeam + NAKIVO &mdash; vendor-agnostic</div></div>
+        <div class="mb-layer"><div class="mbl-name">Database</div><div class="mbl-src">Microsoft SQL Server</div></div>
+        <div class="mb-layer"><div class="mbl-name">Virtualization</div><div class="mbl-src">vCenter host/datastore/VM</div></div>
+        <div class="mb-layer"><div class="mbl-name">Voice</div><div class="mbl-src">3CX license / trunk / SIP</div></div>
+        <div class="mb-layer"><div class="mbl-name">Remote Access</div><div class="mbl-src">ScreenConnect agents / sessions</div></div>
+        <div class="mb-layer"><div class="mbl-name">Archiving / DLP</div><div class="mbl-src">MailStore &middot; Teramind</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WORKED-EXAMPLE / ROI STRIP ── -->
+  <div class="roi-section">
+    <div class="roi-strip">
+      <div class="roi-main">
+        <div class="rm-label">Three Real Quotes vs Name-Brand</div>
+        <div class="rm-headline">Tell us your stack.<br>We quote ~40% of comp.</div>
+        <div class="rm-sub">Per-user for people, per-resource for infrastructure. Labor savings figured conservatively on published rates.</div>
+      </div>
+      <div class="roi-divider"></div>
+      <div class="roi-stat">
+        <div class="rs-val rs-val-jian">$383</div>
+        <div class="rs-lbl">20-user law firm<br>Core 25 + 1 FW + 1 backup<br><em>vs ~$960 &middot; 40%</em></div>
+      </div>
+      <div class="roi-divider"></div>
+      <div class="roi-stat">
+        <div class="rs-val rs-val-meraki">$1,453</div>
+        <div class="rs-lbl">50-user dental, HIPAA<br>Compliance 50 + 2 FW + 2 Meraki + backup<br><em>vs ~$5,550 &middot; 26%</em></div>
+      </div>
+      <div class="roi-divider"></div>
+      <div class="roi-stat">
+        <div class="rs-val rs-val-sophos">$5,822</div>
+        <div class="rs-lbl">250-user multi-site<br>Compliance 250 + 5 FW + 3 Meraki + 2 backup<br><em>vs ~$28,350 &middot; 21%</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer-section">
+    <div class="footer-row">
+      <div class="bundle-panel">
+        <div class="bp-title">Starter Bundles &amp; Discounts</div>
+        <div class="bundle-items">
+          <div class="bundle-item">
+            <div class="bundle-val">$349</div>
+            <div class="bundle-desc">Jian Starter &mdash; Core 25 + 1 FW + 1 backup</div>
+          </div>
+          <div class="bundle-item">
+            <div class="bundle-val">$1,495</div>
+            <div class="bundle-desc">Jian Pro &mdash; Compliance 50 + 2 FW + backup + Meraki</div>
+          </div>
+          <div class="bundle-item">
+            <div class="bundle-val">$2,695</div>
+            <div class="bundle-desc">Jian Enterprise &mdash; Compliance 100 + 3 FW + backup + 2 Meraki + DNS</div>
+          </div>
+          <div class="bundle-item">
+            <div class="bundle-val">17% / 25%</div>
+            <div class="bundle-desc">annual prepay 17% off &middot; volume 10&ndash;25% (stack)</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="cta-panel">
+        <div class="trial-badge">&#128640; 14-DAY FREE TRIAL &middot; NO CARD &middot; FREE JIAN WATCH</div>
+        <div class="cp-title">Pay per user. Pay per resource.<br><span class="acc">40% of name-brand.</span> Every line.</div>
+        <div class="cp-sub">Watch ONE resource free, forever, with Jian Watch &mdash; upgrade to act. No long contract on monthly plans.</div>
+        <div class="cta-contacts">
+          <div class="cta-contact-item"><span class="ci-icon">&#9993;</span>sales@technijian.com</div>
+          <div class="cta-contact-item"><span class="ci-icon">&#9742;</span>(949) 379-8499</div>
+          <div class="cta-contact-item"><span class="ci-icon">&#127760;</span>technijian.com</div>
+        </div>
       </div>
     </div>
   </div>

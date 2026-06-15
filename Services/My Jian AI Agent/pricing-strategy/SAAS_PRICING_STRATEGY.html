@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaS Pricing & Packaging Strategy — My Jian AI Agent — Technijian</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --blue:#006DB6; --orange:#F67D4B; --dark:#1A1A2E; --teal:#1EAAC8;
+    --light:#F4F8FC; --gray:#6B7280; --border:#E5EAF0;
+    --jian:#7C3AED; --jian-light:#EDE9FE; --green:#15803D; --red:#B91C1C; --amber:#B45309;
+  }
+  html,body{ background:#cdd4dc; }
+  body{ font-family:'Inter',sans-serif; color:#283042; line-height:1.5; }
+  .doc{ max-width:8.5in; margin:0 auto; background:#fff; box-shadow:0 4px 32px rgba(0,0,0,.18); }
+  .pad{ padding:30px 46px; }
+
+  /* HERO */
+  .hero{ background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); color:#fff; padding:40px 46px 34px; position:relative; overflow:hidden; }
+  .hero::before{ content:''; position:absolute; width:520px; height:520px; border-radius:50%;
+    background:radial-gradient(circle,rgba(124,58,237,.32) 0%,transparent 70%); top:-260px; right:-120px; }
+  .hero::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:4px;
+    background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); }
+  .hero-top{ display:flex; align-items:center; gap:16px; position:relative; z-index:2; margin-bottom:26px; }
+  .hero-top img{ height:30px; }
+  .hero-divider{ width:1px; height:32px; background:rgba(255,255,255,.2); }
+  .hero-kicker{ color:#A78BFA; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+  .hero h1{ font-size:34px; font-weight:900; letter-spacing:-1px; line-height:1.05; position:relative; z-index:2; }
+  .hero h1 .accent{ color:#A78BFA; }
+  .hero .sub{ font-size:15px; color:rgba(255,255,255,.78); margin-top:14px; max-width:620px; position:relative; z-index:2; line-height:1.5; }
+  .hero .meta{ margin-top:22px; display:flex; gap:26px; flex-wrap:wrap; position:relative; z-index:2; font-size:11.5px; color:rgba(255,255,255,.6); }
+  .hero .meta b{ color:#fff; font-weight:700; }
+
+  /* SECTIONS */
+  h2{ font-size:13px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--jian);
+    border-bottom:2px solid var(--jian-light); padding-bottom:6px; margin:0 0 14px; }
+  h2 .n{ color:var(--border); margin-right:8px; }
+  h3{ font-size:15px; font-weight:800; color:var(--dark); margin:18px 0 8px; }
+  p{ font-size:12.5px; margin-bottom:10px; }
+  p.lead{ font-size:13.5px; }
+  ul,ol{ margin:0 0 12px 18px; }
+  li{ font-size:12.5px; margin-bottom:5px; }
+  .muted{ color:var(--gray); }
+  .section{ break-inside:avoid; }
+
+  /* CALLOUT */
+  .callout{ border-radius:10px; padding:16px 20px; margin:14px 0; font-size:12.5px; line-height:1.55; }
+  .callout.purple{ background:var(--jian-light); border:1px solid #C4B5FD; }
+  .callout.purple b, .callout.purple strong{ color:var(--jian); }
+  .callout.amber{ background:#FFF7ED; border:1px solid #FED7AA; }
+  .callout.amber b{ color:var(--amber); }
+  .callout .big{ font-size:14px; font-weight:800; color:var(--dark); display:block; margin-bottom:4px; }
+
+  /* TABLES */
+  table{ width:100%; border-collapse:collapse; font-size:11px; margin:6px 0 14px; }
+  thead{ display:table-header-group; }
+  th{ background:var(--dark); color:rgba(255,255,255,.88); font-size:9.5px; font-weight:700; letter-spacing:.4px;
+    text-transform:uppercase; padding:7px 8px; text-align:left; vertical-align:bottom; }
+  td{ padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.4; }
+  tr:nth-child(even) td{ background:var(--light); }
+  tr.hl td{ background:#F5F3FF; font-weight:600; }
+  td.price,.price{ color:var(--jian); font-weight:800; }
+  td.good{ color:var(--green); font-weight:700; }
+  td.bad{ color:var(--red); font-weight:700; }
+  .ck{ color:var(--green); font-weight:800; } .x{ color:var(--red); font-weight:800; } .mid{ color:var(--amber); font-weight:800; }
+
+  /* RECO TABLE */
+  .reco td:first-child{ font-weight:700; color:var(--dark); width:20%; }
+
+  /* TIER CARDS */
+  .tiers{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 6px; }
+  .tier{ border:1px solid var(--border); border-radius:12px; padding:16px 16px 18px; background:#fff; position:relative; break-inside:avoid; }
+  .tier.pop{ border:2px solid var(--jian); box-shadow:0 8px 24px rgba(124,58,237,.16); }
+  .tier .badge{ position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--jian); color:#fff;
+    font-size:8.5px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; padding:3px 10px; border-radius:10px; }
+  .tier .tn{ font-size:13px; font-weight:900; color:var(--dark); letter-spacing:.3px; }
+  .tier .tp{ font-size:26px; font-weight:900; color:var(--jian); margin:6px 0 2px; line-height:1; }
+  .tier .tp small{ font-size:11px; color:var(--gray); font-weight:600; }
+  .tier .ta{ font-size:10px; color:var(--gray); margin-bottom:10px; }
+  .tier .who{ font-size:10.5px; color:var(--blue); font-weight:700; min-height:28px; margin-bottom:8px; }
+  .tier ul{ margin:0 0 0 14px; }
+  .tier li{ font-size:10.5px; margin-bottom:4px; line-height:1.35; }
+  .anchor-note{ text-align:center; font-size:10.5px; color:var(--gray); margin-top:6px; }
+
+  /* MINI STAT STRIP */
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:10px 0 14px; }
+  .stat{ background:var(--dark); border-radius:8px; padding:12px 14px; color:#fff; }
+  .stat .v{ font-size:20px; font-weight:900; line-height:1; color:#fff; }
+  .stat .v .u{ font-size:11px; color:#A78BFA; }
+  .stat .l{ font-size:9.5px; color:rgba(255,255,255,.6); margin-top:5px; text-transform:uppercase; letter-spacing:.5px; line-height:1.3; }
+
+  /* FOOTER */
+  .footer{ background:linear-gradient(135deg,var(--jian) 0%,var(--blue) 100%); color:#fff; padding:22px 46px; position:relative; overflow:hidden; }
+  .footer::before{ content:''; position:absolute; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,.06); right:-60px; top:-80px; }
+  .footer .fl{ font-size:15px; font-weight:800; position:relative; z-index:2; }
+  .footer .ft{ font-size:11.5px; color:rgba(255,255,255,.75); margin-top:4px; position:relative; z-index:2; max-width:560px; line-height:1.5; }
+  .footer .fc{ margin-top:12px; font-size:11.5px; position:relative; z-index:2; }
+
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media print{
+    @page{ size:Letter; margin:0.5in; }
+    html,body{ background:#fff; }
+    .doc{ box-shadow:none; max-width:none; }
+    .hero{ margin:-0.5in -0.5in 0; } /* full-bleed top */
+    .footer{ margin:0 -0.5in -0.5in; }
+    .pad{ padding:22px 4px; }
+    .section{ break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
+      <div class="hero-divider"></div>
+      <div class="hero-kicker">SaaS Pricing &amp; Packaging Strategy · Confidential</div>
+    </div>
+    <h1>My Jian AI Agent — <span class="accent">Pricing Strategy</span></h1>
+    <div class="sub">The structure is right. The anchor is wrong, and money is on the table. Keep the hybrid value metric, re-anchor the story to the real category, and monetize what's already built but unsold.</div>
+    <div class="meta">
+      <span><b>Prepared for</b> Robert "Ravi" Jain</span>
+      <span><b>Date</b> 2026-06-15</span>
+      <span><b>Method</b> Ramanujam · Poyar · Campbell · a16z</span>
+      <span><b>Competitor data</b> fetched 2026-06-15</span>
+    </div>
+  </div>
+
+  <!-- EXEC SUMMARY -->
+  <div class="pad">
+  <div class="section">
+    <h2><span class="n">01</span>Executive Summary</h2>
+    <p class="lead">My Jian is an <b>autonomous 24×7 AI IT-operations / SOC agent</b> — 36 diagnose + 31 remediate agents across 43 platform routes, MITRE + cross-platform SIEM correlation, 31 compliance evaluators, 58 live clients, ~28K LLM decisions/day with 99.6% gated to $0. Priced today (V3.1) as a hybrid <b>per-M365-user ($9 / $24) + per-resource</b> (firewall $99, backup $59…), anchored at <i>"40% of name-brand."</i> The internal engineering model instead values each agent <b>floor (token) → ceiling (labor), $150–500/agent.</b></p>
+
+    <div class="stats">
+      <div class="stat"><div class="v">~$0.30<span class="u">/client/mo</span></div><div class="l">Steady-state token COGS</div></div>
+      <div class="stat"><div class="v">85–92<span class="u">%</span></div><div class="l">Target gross margin</div></div>
+      <div class="stat"><div class="v">~$250<span class="u">/client/mo</span></div><div class="l">Conservative labor saved</div></div>
+      <div class="stat"><div class="v">$20–378K<span class="u">/yr</span></div><div class="l">What AI-SOC rivals charge</div></div>
+    </div>
+
+    <div class="callout purple">
+      <span class="big">The single most important finding</span>
+      Jian is priced against the wrong competitive set. V3.1 benchmarks MSP point-tools (Auvik $250, Liongard $50–100, Huntress $6). Jian's <b>true category is agentic AIOps / AI-SOC</b>, where comparable capability costs <b>$20K–$378K/yr</b> (Prophet $20–42K, Dropzone $36K, Torq $59–378K, Microsoft Security Copilot ~$105K, Arctic Wolf $80–96K, Moveworks/Aisera $90–130K+). A typical Jian client at $383–$5,822/mo sits at <b>5–25% of comparable</b> — the value story is <b>2–5× stronger than the collateral claims.</b>
+    </div>
+
+    <h3>The seven moves</h3>
+    <ol>
+      <li><b>Keep the hybrid value metric</b> (per-user + per-resource). Keep <b>per-agent internal</b> — it's a costing tool that <i>sets</i> resource prices, not a buyer metric.</li>
+      <li><b>Re-anchor the value narrative to AI-SOC</b>, not MSP tools. The receipts justify it.</li>
+      <li><b>Monetize what's built but unsold</b> — the mssql agent models <b>~$1,272/client/mo</b> of labor value and has <b>no SKU</b>. Add <b>Jian for SQL Server</b> + <b>Network/SNMP Monitoring</b> now.</li>
+      <li><b>Add a middle tier</b> — $9 → $24 is a 2.7× cliff with no "land here". Insert <b>Jian Plus $16/user/mo.</b></li>
+      <li><b>Formalize the MSP / white-label wholesale program</b> as a named SKU — the channel is wide open.</li>
+      <li><b>Protect the small-account floor</b> — bare 25-seat Core = $225 &lt; $165–315 cost-to-serve. Set a <b>$299/mo platform minimum.</b></li>
+      <li><b>Hold list low for deliberate land-grab — then raise on a published cadence</b> as reference customers accrue.</li>
+    </ol>
+
+    <table class="reco">
+      <thead><tr><th>Lever</th><th>Today (V3.1)</th><th>Recommended</th></tr></thead>
+      <tbody>
+        <tr><td>Per-user tiers</td><td>2 ($9 / $24)</td><td class="price">3 ($9 / $16 / $24) + Enterprise/MSP anchor</td></tr>
+        <tr><td>Resource SKUs</td><td>8</td><td class="price">10 (+ SQL Server $99, + Network/SNMP $79)</td></tr>
+        <tr><td>Value anchor</td><td>"40% of MSP name-brand"</td><td class="price">"A fraction of a $100K AI-SOC — with the receipts"</td></tr>
+        <tr><td>Entry motion</td><td>ad-hoc pilot</td><td class="price">14-day full trial + free "Jian Watch" tier</td></tr>
+        <tr><td>MSP channel</td><td>discount footnote</td><td class="price">named white-label wholesale program</td></tr>
+        <tr><td>Floor protection</td><td>25-seat min ($225)</td><td class="price">$299/mo platform minimum</td></tr>
+        <tr><td>Expansion</td><td>seats + resources</td><td class="price">+ tier upgrades + frameworks + Autopilot + MSP growth</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VALUE METRIC -->
+  <div class="section">
+    <h2><span class="n">02</span>The Value Metric — keep the hybrid, keep per-agent internal</h2>
+    <p>The value metric is the single highest-leverage decision. Scored against the standard test, the <b>two-axis hybrid wins</b>: per-M365-user for the identity layer, per-monitored-resource for the infrastructure layer. The per-agent model fails the buyer-facing tests but is invaluable internally.</p>
+    <table>
+      <thead><tr><th>Test</th><th>Per-user</th><th>Per-resource</th><th>Per-agent (internal)</th></tr></thead>
+      <tbody>
+        <tr><td>Aligned with value</td><td class="mid">◑ people layer only</td><td class="ck">● tracks the work</td><td class="mid">◑ seller-framed</td></tr>
+        <tr><td>Predictable</td><td class="ck">●</td><td class="ck">●</td><td class="mid">◑</td></tr>
+        <tr><td>Scalable (NRR engine)</td><td class="ck">● seats grow</td><td class="ck">● estate grows</td><td class="x">✗ finite agent types</td></tr>
+        <tr><td>Simple (one sentence)</td><td class="ck">●</td><td class="ck">● per line</td><td class="x">✗ buyers don't know "agents"</td></tr>
+        <tr><td>Measurable</td><td class="ck">● license count</td><td class="ck">● auto-counted</td><td class="ck">●</td></tr>
+        <tr class="hl"><td>Verdict</td><td><b>Keep — identity</b></td><td><b>Keep — infra + NRR</b></td><td><b>Internal only</b></td></tr>
+      </tbody>
+    </table>
+    <div class="callout amber">
+      <b>Why per-agent stays internal — but earns its keep:</b> the floor→ceiling model is the right tool to set resource list prices and to catch under-monetized capability. It already surfaced the biggest gap — the <b>mssql agent's ~$1,272/client/mo labor value with no retail SKU.</b> Translate ceilings into resource prices; never put "per agent" on a quote.
+    </div>
+  </div>
+
+  <!-- RECOMMENDED PRICING -->
+  <div class="section">
+    <h2><span class="n">03</span>Recommended Pricing — 3 tiers + an anchor</h2>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tn">JIAN CORE</div>
+        <div class="tp">$9<small>/user/mo</small></div>
+        <div class="ta">$90/user/yr · 25-seat / $299 min</div>
+        <div class="who">Any SMB wanting 24×7 coverage — the land magnet</div>
+        <ul>
+          <li>Autonomous monitoring, triage, ticketing</li>
+          <li>@Jian Teams bot</li>
+          <li>Branded monthly report</li>
+          <li>Baseline compliance (HIPAA/SOC2/PCI)</li>
+          <li>MITRE-tagged events</li>
+        </ul>
+      </div>
+      <div class="tier pop">
+        <div class="badge">★ Most popular · NEW</div>
+        <div class="tn">JIAN PLUS</div>
+        <div class="tp">$16<small>/user/mo</small></div>
+        <div class="ta">$160/user/yr · the target tier</div>
+        <div class="who">Growing / multi-platform SMB — "act, don't just alert"</div>
+        <ul>
+          <li>Everything in Core, plus:</li>
+          <li>Real-time cross-platform SIEM correlation</li>
+          <li>Priority shift-aware routing</li>
+          <li>Expanding Tier-1 auto-remediation</li>
+          <li>Weekly reporting + lite custom skills</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tn">JIAN COMPLIANCE</div>
+        <div class="tp">$24<small>/user/mo</small></div>
+        <div class="ta">$240/user/yr</div>
+        <div class="who">Regulated verticals — HIPAA/CMMC/finance/gov</div>
+        <ul>
+          <li>Everything in Plus, plus:</li>
+          <li>CMMC + custom frameworks (SOX/GLBA/NIST/FedRAMP)</li>
+          <li>Dedicated CISSP CSM</li>
+          <li>99.5% SLA + audit-firm liaison</li>
+          <li>Cross-client correlator, on-demand reports</li>
+        </ul>
+      </div>
+    </div>
+    <div class="anchor-note">500+ seats or an MSP reselling Jian? → <b>Enterprise / MSP</b> (contact sales): white-label, multi-tenant, NFR, volume &amp; multi-year.</div>
+
+    <h3>Resource add-ons — the expansion engine (keep all 8, add 2)</h3>
+    <table>
+      <thead><tr><th>Jian Service</th><th>Price</th><th>Status</th><th>Name-brand comp</th></tr></thead>
+      <tbody>
+        <tr><td>Jian for Firewall (per firewall)</td><td class="price">$99/mo</td><td>keep</td><td class="muted">Arctic Wolf $300–500</td></tr>
+        <tr class="hl"><td><b>Jian for SQL Server (per instance)</b></td><td class="price">$99/mo</td><td><b>NEW — biggest gap (~$1,272/client/mo value)</b></td><td class="muted">— (unsold today)</td></tr>
+        <tr><td>Jian for vCenter (per vCenter)</td><td class="price">$99/mo</td><td>keep</td><td class="muted">vROps Premium $150+</td></tr>
+        <tr><td>Jian for Meraki Network (per org)</td><td class="price">$79/mo</td><td>keep</td><td class="muted">Auvik $250</td></tr>
+        <tr class="hl"><td><b>Jian for Network / SNMP (per site)</b></td><td class="price">$79/mo</td><td><b>NEW — OpManager agent</b></td><td class="muted">Auvik $250</td></tr>
+        <tr><td>Jian for Backup (Veeam + NAKIVO)</td><td class="price">$59/mo</td><td>keep (disclosed exception)</td><td class="muted">Liongard $50–100 (no NAKIVO)</td></tr>
+        <tr><td>Jian for DNS (Umbrella tenant)</td><td class="price">$39/mo</td><td>keep</td><td class="muted">Umbrella add-ons $80+</td></tr>
+        <tr><td>Jian for Web / Cloudflare (zone)</td><td class="price">$29/mo</td><td>keep</td><td class="muted">CF paid + labor</td></tr>
+        <tr><td>Jian for Endpoint EDR — WS / Server</td><td class="price">$1.50 / $3.50</td><td>keep</td><td class="muted">Huntress $6 / CRWD $10–15</td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:11px;">Most resource SKUs carry 1.5–3× headroom vs the AI-SOC comparable. Hold for land-grab; raise on cadence. Bundles unchanged: Starter $349 · Pro $1,495 · Enterprise $2,695. <b>Fix before next publish:</b> stale $3,295 Enterprise reference in spec §16 (operative = $2,695) and the Price Sheet "V3.0" header mislabel.</p>
+  </div>
+
+  <!-- WORKED EXAMPLES -->
+  <div class="section">
+    <h2><span class="n">04</span>Worked Examples <span class="muted" style="font-size:10px; letter-spacing:0; text-transform:none;">(arithmetic verified)</span></h2>
+    <table>
+      <thead><tr><th>Profile</th><th>Build</th><th>Monthly</th><th>Annual −17%</th><th>vs name-brand stack</th><th>vs AI-SOC category</th></tr></thead>
+      <tbody>
+        <tr><td>Small — 20-user law firm</td><td class="muted">Core 25×$9 ($225) + 1 FW + 1 backup</td><td class="price">$383</td><td>$3,818</td><td class="good">40%</td><td class="good">~10–38%</td></tr>
+        <tr><td>Medium — 50-user dental (HIPAA)</td><td class="muted">Compliance 50×$24 + 2 FW + 2 Meraki + 1 backup = $1,615, −10%</td><td class="price">$1,453</td><td>$14,479</td><td class="good">26%</td><td class="good">~17% of MS Copilot</td></tr>
+        <tr><td>Mid-market — 250-user multi-site</td><td class="muted">Compliance 250×$24 + 5 FW + 3 Meraki + 2 backup = $6,850, −15%</td><td class="price">$5,822</td><td>$58,007</td><td class="good">21%</td><td class="good">~45–73%</td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:11px;">Conservative labor offset (~$250/client/mo) covers the Small bill ~0.65×; by-size labor ($1,050–9,000/mo) yields 1.4–5.7× ROI before any risk-reduction value.</p>
+  </div>
+
+  <!-- COMPETITIVE -->
+  <div class="section">
+    <h2><span class="n">05</span>Competitive Landscape <span class="muted" style="font-size:10px; letter-spacing:0; text-transform:none;">("—" = not public, itself a signal · fetched 2026-06-15)</span></h2>
+    <table>
+      <thead><tr><th>Competitor</th><th>Model / value metric</th><th>Entry</th><th>Mid</th><th>Enterprise</th><th>Public?</th></tr></thead>
+      <tbody>
+        <tr><td>Dropzone AI</td><td>flat / per AI analyst (investigations)</td><td>$36K/yr</td><td>—</td><td>—</td><td class="x">No</td></tr>
+        <tr><td>Prophet Security</td><td>usage / per investigation</td><td>~$20K/yr</td><td>—</td><td>~$42K/yr</td><td class="x">No</td></tr>
+        <tr><td>Simbian</td><td>usage / per alert</td><td>$10K/yr</td><td>—</td><td>—</td><td class="mid">AWS</td></tr>
+        <tr><td>Torq HyperSOC</td><td>base + per-workflow + agent-compute</td><td>~$59K/yr</td><td>~$86–179K</td><td>~$274–378K</td><td class="x">No</td></tr>
+        <tr><td>Microsoft Security Copilot</td><td>consumption (SCU/hr)</td><td>$4/SCU/hr</td><td>~$105K eval</td><td>$0 w/E5 +$6 overage</td><td class="ck">Yes</td></tr>
+        <tr><td>CrowdStrike Charlotte AI</td><td>credits, add-on to Falcon</td><td>—</td><td>—</td><td>—</td><td class="x">No</td></tr>
+        <tr><td>Moveworks (→ServiceNow)</td><td>per-employee/yr</td><td>—</td><td>~$130K ACV</td><td>$1M+</td><td class="x">No</td></tr>
+        <tr><td>Aisera (→Automation Anywhere)</td><td>per-seat → consumption</td><td>—</td><td>~$90–108K/yr</td><td>$200K–1.2M</td><td class="x">No</td></tr>
+        <tr><td>Arctic Wolf (MDR)</td><td>quote / per user-node</td><td>~$40K/yr</td><td>~$80–96K</td><td>$200–500K+</td><td class="x">No</td></tr>
+        <tr><td>Vanta / Drata (compliance)</td><td>tiered / employees + frameworks</td><td>$7.5–9.5K/yr</td><td>$20–25K</td><td>$57–60K+</td><td class="x">No</td></tr>
+        <tr class="hl"><td><b>My Jian</b></td><td><b>hybrid per-user + per-resource</b></td><td><b>$383/mo</b></td><td>$1,453/mo</td><td>$5,822/mo</td><td class="ck"><b>Yes — line-item</b></td></tr>
+      </tbody>
+    </table>
+    <div class="two">
+      <div>
+        <h3>Insights</h3>
+        <ul>
+          <li><b>Opacity is the norm — transparency is Jian's moat.</b> 6/7 AI-SOC vendors hide prices; /pricing 404s are routine. Jian is the only player with published, verifiable, auto-true-up-able line items.</li>
+          <li><b>Nobody is openly priced below ~$10K/yr.</b> Jian's $4.6K/yr entry owns undefended white space.</li>
+          <li><b>Opaque units (SCU/credit/Assist) prevent comparison.</b> Jian meters on units the buyer counts — a trust win.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>White space we take</h3>
+        <ul>
+          <li><b>Don't fight Microsoft on E5-bundled basic triage.</b> Win on non-MS estates, cross-platform correlation, deeper remediation, consolidation.</li>
+          <li><b>Absorb compliance.</b> Vanta/Drata charge $20–25K/yr to watch evidence Jian already holds — bundle it.</li>
+          <li><b>Incumbents price <i>humans.</i></b> Jian does the analyst work autonomously — far below their loaded rate at ~90% margin. Anchor to <i>work eliminated.</i></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NRR + UNIT ECON -->
+  <div class="section">
+    <h2><span class="n">06</span>Expansion, Retention &amp; Unit Economics</h2>
+    <div class="two">
+      <div>
+        <h3>The NRR engine — target &gt;120%</h3>
+        <table>
+          <thead><tr><th>Vector</th><th>Trigger</th></tr></thead>
+          <tbody>
+            <tr><td>Seat growth</td><td class="muted">client hires</td></tr>
+            <tr><td>Resource attach/growth</td><td class="muted">M&amp;A, new sites (Jian auto-detects)</td></tr>
+            <tr><td>Tier upgrade Core→Plus→Compliance</td><td class="muted">"want it to act" / audit</td></tr>
+            <tr><td>+Framework (CMMC, SOX…)</td><td class="muted">vertical requirement</td></tr>
+            <tr><td>Autopilot outcome add-on (V2)</td><td class="muted">remediation adoption grows</td></tr>
+            <tr><td>MSP-client growth</td><td class="muted">partner signs their clients</td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="font-size:11px;">Surface upgrade nudges in the branded monthly report ("Jian found an unmonitored SQL instance"). Grandfather existing clients 12 mo on any raise; raise new-customer prices first.</p>
+      </div>
+      <div>
+        <h3>Unit economics &amp; guardrails</h3>
+        <table>
+          <thead><tr><th>Metric</th><th>Value</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Direct COGS/client/mo</td><td>~$12 (LLM $5 + infra $7)</td><td class="ck">✓</td></tr>
+            <tr><td>Software gross margin</td><td>~95%</td><td class="ck">✓</td></tr>
+            <tr><td>Loaded cost-to-serve</td><td>$165–315/client/mo</td><td class="mid">~</td></tr>
+            <tr><td>Blended GM (Yr-3)</td><td>85–92%</td><td class="ck">✓</td></tr>
+            <tr class="hl"><td>Small-account floor</td><td>25-seat Core = $225 &lt; cost-to-serve</td><td class="bad">⚠ fix</td></tr>
+          </tbody>
+        </table>
+        <div class="callout amber" style="margin-top:6px;">
+          <b>Fix:</b> set a <b>$299/mo platform minimum</b> (or require ≥1 resource attach). Most clients attach already (Small = $383); this closes the bare-Core loss case. Token COGS isn't the risk — amortized eng-maintenance is, and it <i>improves</i> with scale.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLLOUT -->
+  <div class="section">
+    <h2><span class="n">07</span>Rollout — sequence the changes</h2>
+    <table>
+      <thead><tr><th>Wave</th><th>Do</th><th>Why now</th></tr></thead>
+      <tbody>
+        <tr><td><b>Now (zero-risk)</b></td><td>Add SQL Server + Network/SNMP SKUs · fix $3,295/"V3.0" bugs · set $299 minimum · publish 14-day trial + free Jian-Watch</td><td>pure upside, no existing-customer impact</td></tr>
+        <tr><td><b>Next (structural)</b></td><td>Launch the $16 Plus tier (3-tier page) · re-anchor collateral to AI-SOC category · stand up MSP wholesale program</td><td>lifts blended ARPA &amp; opens the channel</td></tr>
+        <tr><td><b>Then (optimize)</b></td><td>Run experiments #1/#3/#8, then #2 · Gabor-Granger on SQL/vCenter · publish the raise cadence</td><td>price to data, not to gut</td></tr>
+        <tr><td><b>V2 (capture)</b></td><td>Ship Autopilot outcome add-on · add <code>work_type</code> tag for true per-client margin</td><td>recapture automation value the category monetizes</td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:11px;">Companion files: <b>pricing-page-mockup.md</b> (the 3-tier page + resource calculator + FAQ) and <b>pricing-experiments.md</b> (10 prioritized A/B tests — new visitors only, never renewal price).</p>
+  </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="fl">Keep the magnet. Monetize the gaps. Anchor the story to the real category.</div>
+    <div class="ft">Jian already does the work of ~1.6 FTE across the fleet at ~$0.30/client/mo in tokens. The job now is to price like the autonomous-SOC platform it is — transparently, so buyers can verify every line — and let seats, resources, tiers, frameworks, and the MSP channel compound into NRR &gt;120%.</div>
+    <div class="fc"><b>sales@technijian.com</b> · (949) 379-8499 · technijian.com</div>
+  </div>
+
+</div>
+</body>
+</html>
