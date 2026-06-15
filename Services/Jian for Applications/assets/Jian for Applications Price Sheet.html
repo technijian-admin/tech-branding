@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jian for Applications — Price Sheet — Technijian</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --blue:#006DB6; --orange:#F67D4B; --dark:#1A1A2E; --teal:#1EAAC8;
+    --light:#F4F8FC; --gray:#6B7280; --border:#E5EAF0;
+    --jian:#7C3AED; --jian-light:#EDE9FE; --green:#15803D; --amber:#B45309;
+  }
+  body { font-family:'Inter',sans-serif; background:#cdd4dc; display:flex; flex-direction:column; align-items:center; gap:24px; padding:32px; }
+  .page { width:8.5in; height:11in; background:#fff; overflow:hidden; box-shadow:0 4px 32px rgba(0,0,0,0.18); position:relative; flex-shrink:0; display:flex; flex-direction:column; }
+
+  .op-header { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); padding:11px 34px 13px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; position:relative; overflow:hidden; }
+  .op-header::after { content:''; position:absolute; left:0; right:0; bottom:0; height:3px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); }
+  .op-header::before { content:''; position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.30) 0%,transparent 70%); top:-150px; right:120px; }
+  .header-left { position:relative; z-index:2; }
+  .header-logo { height:25px; display:block; margin-bottom:7px; }
+  .header-title { font-size:26px; font-weight:900; color:#fff; letter-spacing:-0.5px; line-height:1; }
+  .header-title .jian { color:#A78BFA; } .header-title .for { color:rgba(255,255,255,0.45); font-weight:800; }
+  .header-title .ps { color:rgba(255,255,255,0.55); font-weight:700; font-size:18px; }
+  .header-tagline { font-size:10.5px; color:rgba(255,255,255,0.6); letter-spacing:1.4px; text-transform:uppercase; margin-top:5px; font-weight:600; }
+  .header-stamp { display:inline-block; margin-top:7px; background:rgba(124,58,237,0.35); border:1px solid rgba(167,139,250,0.5); color:#C4B5FD; font-size:9px; font-weight:800; letter-spacing:1.2px; padding:2px 9px; border-radius:10px; }
+  .header-right { position:relative; z-index:2; text-align:right; }
+  .hr-line { font-size:9.5px; color:rgba(255,255,255,0.7); font-weight:600; line-height:1.5; }
+  .hr-line strong { color:#fff; font-weight:800; }
+
+  .sec-label { font-size:10px; font-weight:800; letter-spacing:1.6px; text-transform:uppercase; color:var(--gray); margin-bottom:6px; display:flex; align-items:baseline; gap:8px; }
+  .sec-label .sl-accent { color:var(--jian); }
+  .sec-label .sl-note { font-size:9px; font-weight:600; letter-spacing:0.2px; text-transform:none; color:var(--gray); margin-left:auto; }
+
+  /* PRICING TABLE */
+  .tbl-section { padding:13px 34px 0; flex-shrink:0; }
+  .ptable { width:100%; border-collapse:separate; border-spacing:7px 0; table-layout:fixed; }
+  .ptable col.feat { }
+  .ptable th, .ptable td { vertical-align:top; }
+  .ptable .rowlabel { width:108px; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:var(--gray); text-align:right; padding:9px 8px 0 0; }
+  .tier-head { border-radius:9px 9px 0 0; padding:10px 12px 8px; background:var(--light); border:1px solid var(--border); border-bottom:none; }
+  .tier-head.feat { background:linear-gradient(180deg,#F3EEFF 0%,#FAF8FF 100%); border:2px solid var(--jian); border-bottom:none; position:relative; }
+  .th-badge { position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--jian); color:#fff; font-size:7.5px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; padding:2px 9px; border-radius:9px; white-space:nowrap; }
+  .th-name { font-size:16px; font-weight:900; color:var(--dark); line-height:1; }
+  .th-for { font-size:8px; color:var(--gray); font-weight:600; margin-top:3px; line-height:1.2; min-height:19px; }
+  .pcell { padding:8px 12px; background:#fff; border-left:1px solid var(--border); border-right:1px solid var(--border); }
+  .pcell.feat { border-left:2px solid var(--jian); border-right:2px solid var(--jian); }
+  .pcell.last { border-bottom:1px solid var(--border); border-radius:0 0 9px 9px; }
+  .pcell.last.feat { border-bottom:2px solid var(--jian); }
+  .bigp { font-size:21px; font-weight:900; color:var(--jian); line-height:0.9; }
+  .bigp.build { font-size:18px; color:var(--dark); }
+  .smp { font-size:8px; color:var(--gray); font-weight:600; margin-top:2px; }
+  .feat-list { list-style:none; display:flex; flex-direction:column; gap:3px; }
+  .feat-list li { font-size:8.5px; color:#374151; line-height:1.25; display:flex; gap:4px; align-items:flex-start; }
+  .feat-list li::before { content:'\2713'; color:var(--jian); font-weight:800; flex-shrink:0; font-size:8px; }
+  .ent-note { font-size:8.5px; color:var(--gray); text-align:center; margin-top:7px; }
+  .ent-note strong { color:var(--dark); }
+
+  /* MECHANICS */
+  .mech-section { padding:11px 34px 0; flex-shrink:0; }
+  .mech-band { background:var(--jian-light); border-radius:9px; padding:8px 16px; display:flex; gap:0; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+  .mech-item { font-size:9.5px; color:#4C1D95; font-weight:600; padding:0 10px; }
+  .mech-item strong { color:var(--jian); font-weight:800; }
+  .mech-sep { width:1px; height:16px; background:#C4B5FD; }
+
+  /* ORX + COMPETITIVE: two columns */
+  .lower { padding:12px 34px 0; flex-shrink:0; display:grid; grid-template-columns:1.05fr 1fr; gap:16px; }
+  .orx-box { }
+  .orx-table { width:100%; border-collapse:collapse; margin-top:2px; }
+  .orx-table th { background:var(--dark); color:#fff; font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; padding:5px 8px; text-align:left; }
+  .orx-table th:last-child, .orx-table td:last-child { text-align:right; }
+  .orx-table th:first-child { border-radius:7px 0 0 0; } .orx-table th:last-child { border-radius:0 7px 0 0; }
+  .orx-table td { font-size:9px; color:#374151; padding:5px 8px; border-bottom:1px solid var(--border); }
+  .orx-table td strong { color:var(--dark); font-weight:800; }
+  .orx-table tr.tot td { background:var(--jian-light); font-weight:800; color:#4C1D95; border-bottom:none; }
+  .orx-table tr.bundle td { background:var(--jian); color:#fff; font-weight:800; }
+  .orx-val { font-size:9px; color:var(--gray); margin-top:6px; line-height:1.34; }
+  .orx-val strong { color:var(--amber); font-weight:800; }
+
+  .why-card { background:var(--light); border:1px solid var(--border); border-radius:8px; padding:7px 11px; margin-bottom:6px; }
+  .why-card .wt { font-size:9.5px; font-weight:800; color:var(--dark); margin-bottom:2px; }
+  .why-card .wd { font-size:8.5px; color:#4B5563; line-height:1.28; }
+  .why-card .wd strong { color:var(--jian); font-weight:800; }
+
+  /* FOOTER */
+  .footer-section { padding:10px 34px 12px; flex-shrink:0; margin-top:auto; }
+  .footer-row { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); border-radius:11px; overflow:hidden; position:relative; padding:13px 24px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+  .footer-row::after { content:''; position:absolute; left:0; right:0; top:0; height:3px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); }
+  .cta-title { font-size:16px; font-weight:900; color:#fff; line-height:1.16; position:relative; z-index:2; }
+  .cta-title .acc { color:#A78BFA; }
+  .cta-sub { font-size:8.5px; color:rgba(255,255,255,0.6); margin-top:5px; line-height:1.3; max-width:360px; position:relative; z-index:2; }
+  .cta-contacts { display:flex; flex-direction:column; gap:5px; position:relative; z-index:2; flex-shrink:0; }
+  .cta-contact-item { font-size:11px; color:rgba(255,255,255,0.88); font-weight:700; white-space:nowrap; }
+  .cta-contact-item .ci-icon { color:var(--teal); margin-right:5px; }
+
+  @media print { html,body { margin:0; padding:0; background:#fff; display:block; } .page { box-shadow:none; break-after:page; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="op-header">
+    <div class="header-left">
+      <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian" class="header-logo">
+      <div class="header-title"><span class="jian">Jian</span> <span class="for">for</span> Applications <span class="ps">&mdash; Price Sheet</span></div>
+      <div class="header-tagline">Develop once. Watch every month. Priced like a SaaS, not a project.</div>
+      <span class="header-stamp">EFFECTIVE 2026-06-15</span>
+    </div>
+    <div class="header-right">
+      <div class="hr-line"><strong>Two parts, always:</strong></div>
+      <div class="hr-line">one-time <strong>build</strong> + monthly <strong>watch</strong></div>
+      <div class="hr-line">per agent &middot; tiered by complexity</div>
+    </div>
+  </div>
+
+  <!-- PRICING TABLE -->
+  <div class="tbl-section">
+    <div class="sec-label"><span class="sl-accent">The Tiers</span> one agent watches one app / data source / integration
+      <span class="sl-note">Annual = 2 months free (~17% off)</span>
+    </div>
+    <table class="ptable">
+      <colgroup><col style="width:108px"><col><col><col><col></colgroup>
+      <tr>
+        <td class="rowlabel"></td>
+        <td class="tier-head"><div class="th-name">Essential</div><div class="th-for">A single feed, job or data source</div></td>
+        <td class="tier-head feat"><div class="th-badge">&#9733; Most Apps Start Here</div><div class="th-name">Professional</div><div class="th-for">A full line-of-business application</div></td>
+        <td class="tier-head"><div class="th-name">Platform</div><div class="th-for">A deep, multi-system revenue flow</div></td>
+        <td class="tier-head"><div class="th-name">Enterprise</div><div class="th-for">A portfolio of apps, org-wide</div></td>
+      </tr>
+      <tr>
+        <td class="rowlabel">Build<br>(one-time)</td>
+        <td class="pcell"><div class="bigp build">$6,000</div><div class="smp">one-time</div></td>
+        <td class="pcell feat"><div class="bigp build">$15,000</div><div class="smp">one-time</div></td>
+        <td class="pcell"><div class="bigp build">$30,000</div><div class="smp">one-time</div></td>
+        <td class="pcell"><div class="bigp build">Custom</div><div class="smp">scoped</div></td>
+      </tr>
+      <tr>
+        <td class="rowlabel">Subscription</td>
+        <td class="pcell"><div class="bigp">$249<span class="smp" style="display:inline">/mo</span></div><div class="smp">$2,490/yr annual</div></td>
+        <td class="pcell feat"><div class="bigp">$499<span class="smp" style="display:inline">/mo</span></div><div class="smp">$4,990/yr annual</div></td>
+        <td class="pcell"><div class="bigp">$899<span class="smp" style="display:inline">/mo</span></div><div class="smp">$8,990/yr annual</div></td>
+        <td class="pcell"><div class="bigp">Custom</div><div class="smp">+ SLA &amp; CSM</div></td>
+      </tr>
+      <tr>
+        <td class="rowlabel">What it<br>watches</td>
+        <td class="pcell last"><ul class="feat-list"><li>Health &amp; recency</li><li>Threshold detections</li><li>Branded alerts</li><li>Monthly report</li></ul></td>
+        <td class="pcell last feat"><ul class="feat-list"><li>Everything in Essential</li><li><strong>Multi-source</strong> business logic</li><li>End-to-end record tracing</li><li>Ready-to-act worklists</li></ul></td>
+        <td class="pcell last"><ul class="feat-list"><li>Everything in Professional</li><li>Full <strong>SP&rarr;API&rarr;MCP</strong></li><li>Multi-system correlation</li><li>Priority routing</li></ul></td>
+        <td class="pcell last"><ul class="feat-list"><li>Everything in Platform</li><li>Multiple apps</li><li>Custom SLA + frameworks</li><li>Dedicated CSM</li></ul></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- MECHANICS -->
+  <div class="mech-section">
+    <div class="mech-band">
+      <span class="mech-item"><strong>Annual</strong> &mdash; 2 months free</span><span class="mech-sep"></span>
+      <span class="mech-item"><strong>Platform bundle</strong> &mdash; 3+ agents on one app, &minus;15% monthly</span><span class="mech-sep"></span>
+      <span class="mech-item"><strong>$499/mo</strong> minimum engagement</span><span class="mech-sep"></span>
+      <span class="mech-item"><strong>Managed Ops</strong> &mdash; from $2,500/mo (separate)</span>
+    </div>
+  </div>
+
+  <!-- LOWER: ORX example + why these prices -->
+  <div class="lower">
+    <div class="orx-box">
+      <div class="sec-label"><span class="sl-accent">Worked Example</span> ORX claims platform</div>
+      <table class="orx-table">
+        <thead><tr><th>Agent</th><th>Tier</th><th>Build</th><th>/mo</th></tr></thead>
+        <tbody>
+          <tr><td>Waystar clearinghouse</td><td>Platform</td><td>$30,000</td><td>$899</td></tr>
+          <tr><td>OXPLive feed watchdog</td><td>Pro</td><td>$15,000</td><td>$499</td></tr>
+          <tr><td>DaisyBill 837 MCP</td><td>Pro</td><td>$15,000</td><td>$499</td></tr>
+          <tr class="tot"><td colspan="2">&Agrave; la carte</td><td>$60,000</td><td>$1,897</td></tr>
+          <tr class="bundle"><td colspan="2">Platform bundle (&minus;15% /mo)</td><td>$60,000</td><td>$1,612</td></tr>
+        </tbody>
+      </table>
+      <div class="orx-val">Protects the <strong>$180K</strong> billed-but-unsent leak, the <strong>9,295-claim</strong> feed-freeze gap &amp; <strong>~6,000</strong> rejections &mdash; one prevented event outweighs a year of watching.</div>
+    </div>
+    <div class="why-box">
+      <div class="sec-label"><span class="sl-accent">Why These Prices</span> the comparables</div>
+      <div class="why-card"><div class="wt">vs. a custom AI-agent build</div><div class="wd">Industry: <strong>$25K&ndash;$300K+</strong> to build one. Our engine does ~80% of the work &mdash; you fund only your app&rsquo;s logic, so build starts at <strong>$6,000</strong>.</div></div>
+      <div class="why-card"><div class="wt">vs. APM (Datadog / New Relic)</div><div class="wd"><strong>$500&ndash;$1,500+/mo</strong> of host/span telemetry for one platform &mdash; and blind to &ldquo;billed but never sent.&rdquo; We watch the <strong>money</strong>, not the plumbing.</div></div>
+      <div class="why-card"><div class="wt">vs. AMS / RCM software</div><div class="wd">Maintenance runs <strong>15&ndash;20% of build/yr</strong>; RCM tools hide behind &ldquo;% of collections.&rdquo; Ours is a <strong>transparent flat fee</strong>.</div></div>
+    </div>
+  </div>
+
+  <!-- FOOTER CTA -->
+  <div class="footer-section">
+    <div class="footer-row">
+      <div>
+        <div class="cta-title">Start with a <span class="acc">free 2-week pilot</span><br>on one data source.</div>
+        <div class="cta-sub">We watch one feed read-only for two weeks &mdash; then quote the build and the tier. No build fee until you&rsquo;ve seen it catch something.</div>
+      </div>
+      <div class="cta-contacts">
+        <div class="cta-contact-item"><span class="ci-icon">&#9993;</span>sales@technijian.com</div>
+        <div class="cta-contact-item"><span class="ci-icon">&#9742;</span>(949) 379-8499</div>
+        <div class="cta-contact-item"><span class="ci-icon">&#127760;</span>technijian.com</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

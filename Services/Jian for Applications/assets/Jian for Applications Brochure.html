@@ -15,174 +15,182 @@
   body { font-family:'Inter',sans-serif; background:#cdd4dc; display:flex; flex-direction:column; align-items:center; gap:24px; padding:32px; }
   .page { width:8.5in; height:11in; background:#fff; overflow:hidden; box-shadow:0 4px 32px rgba(0,0,0,0.18); position:relative; flex-shrink:0; display:flex; flex-direction:column; }
 
-  /* PAGE HEADER (content pages) */
-  .pg-header { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); padding:10px 40px 11px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; position:relative; overflow:hidden; }
+  /* PAGE HEADER */
+  .pg-header { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); padding:12px 40px 13px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; position:relative; overflow:hidden; }
   .pg-header::after { content:''; position:absolute; left:0; right:0; bottom:0; height:3px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); }
   .pgh-left { display:flex; align-items:center; gap:11px; position:relative; z-index:2; }
-  .pgh-logo { height:21px; }
-  .pgh-kicker { font-size:9px; font-weight:800; letter-spacing:1.4px; text-transform:uppercase; color:#A78BFA; border-left:1px solid rgba(255,255,255,0.22); padding-left:11px; }
-  .pgh-sec { font-size:12px; font-weight:800; color:#fff; position:relative; z-index:2; }
+  .pgh-logo { height:22px; }
+  .pgh-kicker { font-size:9.5px; font-weight:800; letter-spacing:1.4px; text-transform:uppercase; color:#A78BFA; border-left:1px solid rgba(255,255,255,0.22); padding-left:11px; }
+  .pgh-sec { font-size:13px; font-weight:800; color:#fff; position:relative; z-index:2; }
 
   /* PAGE FOOTER */
-  .pg-footer { margin-top:auto; flex-shrink:0; padding:8px 40px 12px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); }
-  .pgf-brand { font-size:8.5px; color:var(--gray); font-weight:600; }
+  .pg-footer { flex-shrink:0; padding:9px 40px 13px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); }
+  .pgf-brand { font-size:9px; color:var(--gray); font-weight:600; }
   .pgf-brand strong { color:var(--jian); font-weight:800; }
-  .pgf-num { font-size:8.5px; color:var(--gray); font-weight:700; }
+  .pgf-num { font-size:9px; color:var(--gray); font-weight:700; }
 
-  .body-pad { padding:24px 44px 18px; flex:1; display:flex; flex-direction:column; justify-content:center; gap:15px; }
-  .sec-label { font-size:10px; font-weight:800; letter-spacing:1.6px; text-transform:uppercase; color:var(--gray); margin-bottom:7px; display:flex; align-items:baseline; gap:8px; }
+  /* BODY — fills top-to-bottom via space-between over grouped blocks */
+  .body-pad { padding:24px 46px 18px; flex:1; display:flex; flex-direction:column; justify-content:space-between; gap:12px; min-height:0; }
+  .blk { display:flex; flex-direction:column; gap:9px; }
+  .sec-label { font-size:10.5px; font-weight:800; letter-spacing:1.6px; text-transform:uppercase; color:var(--gray); display:flex; align-items:baseline; gap:8px; }
   .sec-label .sl-accent { color:var(--jian); }
-  .lead { font-size:12px; line-height:1.45; color:#374151; }
+  .lead { font-size:13.5px; line-height:1.62; color:#374151; }
   .lead strong { color:var(--dark); font-weight:800; }
   .lead .hl { color:var(--jian); font-weight:800; }
 
-  /* ── COVER ── */
-  .cover { background:linear-gradient(140deg,#16132B 0%,#2D1B69 60%,#3B1E78 100%); justify-content:space-between; }
-  .cover::before { content:''; position:absolute; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.40) 0%,transparent 65%); top:-180px; right:-140px; }
-  .cover::after { content:''; position:absolute; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle,rgba(30,170,200,0.22) 0%,transparent 70%); bottom:-160px; left:-120px; }
-  .cover-top { padding:40px 50px 0; display:flex; align-items:center; gap:14px; position:relative; z-index:2; }
-  .cover-top img { height:30px; }
-  .cover-top .ct-word { font-size:12px; font-weight:700; letter-spacing:3px; color:rgba(255,255,255,0.65); text-transform:uppercase; }
-  .cover-mid { padding:0 50px; position:relative; z-index:2; }
-  .cover-eyebrow { display:inline-block; background:rgba(124,58,237,0.35); border:1px solid rgba(167,139,250,0.5); color:#C4B5FD; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:22px; }
-  .cover-title { font-size:62px; font-weight:900; color:#fff; line-height:0.98; letter-spacing:-1.5px; }
+  /* COVER */
+  .cover { justify-content:space-between; background:linear-gradient(140deg,#16132B 0%,#2D1B69 58%,#3B1E78 100%); }
+  .cover::before { content:''; position:absolute; width:580px; height:580px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.42) 0%,transparent 64%); top:-170px; right:-150px; }
+  .cover::after { content:''; position:absolute; width:440px; height:440px; border-radius:50%; background:radial-gradient(circle,rgba(30,170,200,0.24) 0%,transparent 70%); bottom:-150px; left:-120px; }
+  .cover-top { padding:44px 52px 0; display:flex; align-items:center; gap:14px; position:relative; z-index:2; }
+  .cover-top img { height:32px; }
+  .cover-top .ct-word { font-size:13px; font-weight:700; letter-spacing:3px; color:rgba(255,255,255,0.65); text-transform:uppercase; }
+  .cover-mid { padding:0 52px; position:relative; z-index:2; }
+  .cover-eyebrow { display:inline-block; background:rgba(124,58,237,0.35); border:1px solid rgba(167,139,250,0.5); color:#C4B5FD; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:6px 15px; border-radius:20px; margin-bottom:24px; }
+  .cover-title { font-size:70px; font-weight:900; color:#fff; line-height:0.97; letter-spacing:-1.8px; }
   .cover-title .acc { color:#A78BFA; }
-  .cover-sub { font-size:17px; color:rgba(255,255,255,0.82); font-weight:500; line-height:1.4; margin-top:18px; max-width:560px; }
-  .cover-promise { font-size:12.5px; color:rgba(255,255,255,0.58); line-height:1.5; margin-top:16px; max-width:540px; }
-  .cover-proof { position:relative; z-index:2; margin:0 50px 46px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.13); border-radius:14px; padding:16px 24px; display:flex; align-items:center; gap:0; }
-  .cp-tag { font-size:9.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal); writing-mode:vertical-rl; transform:rotate(180deg); margin-right:18px; }
+  .cover-sub { font-size:19px; color:rgba(255,255,255,0.85); font-weight:500; line-height:1.42; margin-top:22px; max-width:600px; }
+  .cover-promise { font-size:13.5px; color:rgba(255,255,255,0.62); line-height:1.55; margin-top:20px; max-width:560px; }
+  .cover-watches { display:flex; gap:9px; margin-top:24px; flex-wrap:wrap; }
+  .cw-chip { font-size:11px; font-weight:700; color:#C4B5FD; background:rgba(255,255,255,0.06); border:1px solid rgba(167,139,250,0.32); border-radius:20px; padding:6px 14px; }
+  .cover-proof { position:relative; z-index:2; margin:0 52px 48px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.13); border-radius:14px; padding:18px 26px; display:flex; align-items:center; }
+  .cp-tag { font-size:9.5px; font-weight:800; letter-spacing:1.3px; text-transform:uppercase; color:var(--teal); writing-mode:vertical-rl; transform:rotate(180deg); margin-right:20px; }
   .cp-stats { display:grid; grid-template-columns:1fr 1px 1fr 1px 1fr; gap:0; flex:1; align-items:center; }
-  .cp-stat { text-align:center; padding:0 14px; }
-  .cp-stat .v { font-size:30px; font-weight:900; color:#fff; line-height:1; }
+  .cp-stat { text-align:center; padding:0 16px; }
+  .cp-stat .v { font-size:32px; font-weight:900; color:#fff; line-height:1; }
   .cp-stat .v.acc { color:#A78BFA; }
-  .cp-stat .l { font-size:8.5px; color:rgba(255,255,255,0.6); margin-top:5px; line-height:1.25; }
+  .cp-stat .l { font-size:9px; color:rgba(255,255,255,0.62); margin-top:6px; line-height:1.3; }
   .cp-div { width:1px; background:rgba(255,255,255,0.14); align-self:stretch; }
-  .cover-bar { height:7px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); flex-shrink:0; }
+  .cover-bar { height:8px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); flex-shrink:0; }
 
-  /* generic cards */
-  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
-  .gap-card { border-radius:11px; padding:13px 16px; }
+  /* two-col problem/fix */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .gap-card { border-radius:12px; padding:17px 19px; }
   .gap-card.problem { background:#FEF2F2; border:1px solid #FECACA; }
   .gap-card.fix { background:#F5F3FF; border:1px solid #DDD6FE; }
-  .gc-tag { font-size:9px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:6px; }
+  .gc-tag { font-size:9.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:8px; }
   .gap-card.problem .gc-tag { color:var(--red); }
   .gap-card.fix .gc-tag { color:var(--jian); }
-  .gc-head { font-size:14px; font-weight:800; color:var(--dark); line-height:1.2; margin-bottom:7px; }
-  .gc-list { list-style:none; display:flex; flex-direction:column; gap:5px; }
-  .gc-list li { font-size:10px; color:#4B5563; line-height:1.32; display:flex; gap:7px; align-items:flex-start; }
+  .gc-head { font-size:16px; font-weight:800; color:var(--dark); line-height:1.22; margin-bottom:10px; }
+  .gc-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .gc-list li { font-size:11px; color:#4B5563; line-height:1.4; display:flex; gap:8px; align-items:flex-start; }
   .gap-card.problem .gc-list li::before { content:'\2715'; color:var(--red); font-weight:800; flex-shrink:0; }
   .gap-card.fix .gc-list li::before { content:'\2713'; color:var(--jian); font-weight:800; flex-shrink:0; }
 
   /* steps */
-  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:13px; }
-  .step { border:1px solid var(--border); border-radius:11px; padding:13px 15px; position:relative; background:#fff; }
-  .step .sn { position:absolute; top:13px; right:15px; font-size:30px; font-weight:900; color:var(--jian-light); line-height:1; }
-  .step .si { font-size:22px; margin-bottom:6px; }
-  .step .st { font-size:13px; font-weight:800; color:var(--dark); margin-bottom:4px; }
-  .step .sd { font-size:9.5px; color:#4B5563; line-height:1.34; }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .step { border:1px solid var(--border); border-radius:12px; padding:16px 17px; position:relative; background:#fff; }
+  .step .sn { position:absolute; top:14px; right:16px; font-size:34px; font-weight:900; color:var(--jian-light); line-height:1; }
+  .step .si { font-size:27px; margin-bottom:9px; }
+  .step .st { font-size:15px; font-weight:800; color:var(--dark); margin-bottom:6px; }
+  .step .sd { font-size:11px; color:#4B5563; line-height:1.45; }
 
-  .diff-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:13px; }
-  .diff { background:var(--light); border-radius:10px; padding:11px 14px; border-top:3px solid var(--jian); }
-  .diff .dt { font-size:11.5px; font-weight:800; color:var(--dark); margin-bottom:4px; }
-  .diff .dd { font-size:9.5px; color:#4B5563; line-height:1.34; }
+  .diff-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .diff { background:var(--light); border-radius:11px; padding:14px 16px; border-top:3px solid var(--jian); }
+  .diff .dt { font-size:13px; font-weight:800; color:var(--dark); margin-bottom:6px; }
+  .diff .dd { font-size:10.5px; color:#4B5563; line-height:1.45; }
+
+  .callout { background:linear-gradient(135deg,var(--jian) 0%,#5B21B6 100%); color:#fff; border-radius:12px; padding:15px 22px; font-size:13.5px; font-weight:700; text-align:center; line-height:1.4; }
+  .callout strong { color:#fff; font-weight:900; }
 
   /* ORX flow */
-  .flow { background:linear-gradient(135deg,var(--dark) 0%,#16213E 100%); border-radius:12px; padding:14px 18px; margin-top:12px; position:relative; overflow:hidden; }
-  .flow::before { content:''; position:absolute; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 70%); top:-140px; right:60px; }
-  .flow-title { font-size:10px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; position:relative; z-index:2; }
-  .flow-row { display:flex; align-items:center; gap:8px; position:relative; z-index:2; flex-wrap:wrap; }
-  .flow-box { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:8px; padding:7px 11px; text-align:center; flex:1; min-width:90px; }
-  .flow-box .fbn { font-size:10.5px; font-weight:800; color:#fff; line-height:1.1; }
-  .flow-box .fbd { font-size:8px; color:rgba(255,255,255,0.6); margin-top:2px; line-height:1.2; }
+  .flow { background:linear-gradient(135deg,var(--dark) 0%,#16213E 100%); border-radius:12px; padding:16px 20px; position:relative; overflow:hidden; }
+  .flow::before { content:''; position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 70%); top:-150px; right:60px; }
+  .flow-title { font-size:10.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal); margin-bottom:12px; position:relative; z-index:2; }
+  .flow-row { display:flex; align-items:center; gap:9px; position:relative; z-index:2; flex-wrap:wrap; }
+  .flow-box { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:9px; padding:10px 13px; text-align:center; flex:1; min-width:95px; }
+  .flow-box .fbn { font-size:11.5px; font-weight:800; color:#fff; line-height:1.1; }
+  .flow-box .fbd { font-size:8.5px; color:rgba(255,255,255,0.62); margin-top:3px; line-height:1.25; }
   .flow-box.sys { border-color:rgba(167,139,250,0.5); background:rgba(124,58,237,0.18); }
-  .flow-arrow { color:var(--teal); font-size:16px; font-weight:900; flex-shrink:0; }
-  .flow-note { font-size:8.5px; color:rgba(255,255,255,0.55); margin-top:9px; position:relative; z-index:2; line-height:1.3; }
+  .flow-arrow { color:var(--teal); font-size:17px; font-weight:900; flex-shrink:0; }
+  .flow-note { font-size:9.5px; color:rgba(255,255,255,0.6); margin-top:12px; position:relative; z-index:2; line-height:1.5; }
   .flow-note strong { color:#C4B5FD; }
 
-  /* big agent rows */
-  .agent-row { border:1px solid var(--border); border-radius:11px; padding:11px 15px; margin-top:9px; display:flex; gap:14px; align-items:flex-start; position:relative; }
-  .agent-row::before { content:''; position:absolute; left:0; top:12px; bottom:12px; width:3px; border-radius:3px; background:var(--jian); }
-  .ar-icon { width:34px; height:34px; border-radius:8px; background:var(--jian-light); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  /* agent rows */
+  .agent-row { border:1px solid var(--border); border-radius:12px; padding:14px 17px; display:flex; gap:15px; align-items:flex-start; position:relative; }
+  .agent-row::before { content:''; position:absolute; left:0; top:14px; bottom:14px; width:3px; border-radius:3px; background:var(--jian); }
+  .ar-icon { width:36px; height:36px; border-radius:9px; background:var(--jian-light); display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0; }
   .ar-body { flex:1; }
-  .ar-name { font-size:13px; font-weight:800; color:var(--dark); display:flex; align-items:baseline; gap:8px; }
-  .ar-name .ar-tag { font-size:8px; font-weight:800; color:var(--jian); background:var(--jian-light); padding:1px 7px; border-radius:6px; text-transform:uppercase; letter-spacing:0.5px; }
-  .ar-desc { font-size:9.5px; color:#4B5563; line-height:1.34; margin-top:3px; }
-  .ar-catch { font-size:9px; color:var(--dark); margin-top:4px; background:var(--light); border-left:3px solid var(--amber); border-radius:5px; padding:4px 9px; line-height:1.3; }
+  .ar-name { font-size:14px; font-weight:800; color:var(--dark); display:flex; align-items:baseline; gap:8px; }
+  .ar-name .ar-tag { font-size:8.5px; font-weight:800; color:var(--jian); background:var(--jian-light); padding:2px 8px; border-radius:6px; text-transform:uppercase; letter-spacing:0.5px; }
+  .ar-desc { font-size:10.5px; color:#4B5563; line-height:1.45; margin-top:4px; }
+  .ar-catch { font-size:10px; color:var(--dark); margin-top:6px; background:var(--light); border-left:3px solid var(--amber); border-radius:6px; padding:6px 11px; line-height:1.4; }
   .ar-catch strong { color:var(--amber); }
 
   /* findings table */
-  .ftable { width:100%; border-collapse:collapse; margin-top:11px; }
-  .ftable th { background:var(--dark); color:#fff; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:7px 10px; text-align:left; }
-  .ftable th:first-child { border-radius:8px 0 0 0; }
-  .ftable th:last-child { border-radius:0 8px 0 0; }
-  .ftable td { font-size:9.5px; color:#374151; padding:7px 10px; border-bottom:1px solid var(--border); line-height:1.3; vertical-align:top; }
+  .ftable { width:100%; border-collapse:collapse; }
+  .ftable th { background:var(--dark); color:#fff; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:10px 13px; text-align:left; }
+  .ftable th:first-child { border-radius:8px 0 0 0; } .ftable th:last-child { border-radius:0 8px 0 0; }
+  .ftable td { font-size:11px; color:#374151; padding:10px 13px; border-bottom:1px solid var(--border); line-height:1.35; vertical-align:top; }
   .ftable tr:nth-child(even) td { background:var(--light); }
   .ftable td strong { color:var(--dark); font-weight:800; }
-  .sev { font-size:8px; font-weight:800; padding:1px 6px; border-radius:5px; white-space:nowrap; }
+  .sev { font-size:8.5px; font-weight:800; padding:2px 7px; border-radius:5px; white-space:nowrap; }
   .sev.rev { background:#FEE2E2; color:var(--red); }
   .sev.rel { background:#FEF3C7; color:var(--amber); }
 
   /* comms + deliver */
-  .triband { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:11px; }
-  .tb-card { border-radius:9px; padding:9px 12px; color:#fff; }
+  .triband { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; }
+  .tb-card { border-radius:10px; padding:12px 15px; color:#fff; }
   .tb-card.c1 { background:linear-gradient(135deg,var(--jian) 0%,#5B21B6 100%); }
   .tb-card.c2 { background:linear-gradient(135deg,var(--blue) 0%,#075985 100%); }
   .tb-card.c3 { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); }
-  .tb-t { font-size:11px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:6px; }
-  .tb-l { font-size:8.5px; line-height:1.32; color:rgba(255,255,255,0.86); display:flex; gap:5px; }
+  .tb-t { font-size:12.5px; font-weight:800; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+  .tb-l { font-size:9.5px; line-height:1.4; color:rgba(255,255,255,0.87); display:flex; gap:5px; }
   .tb-l::before { content:'\2022'; color:rgba(255,255,255,0.6); }
-  .deliver { display:grid; grid-template-columns:repeat(2,1fr); gap:5px 22px; margin-top:11px; }
-  .deliver-item { font-size:9.5px; color:#374151; line-height:1.3; display:flex; gap:7px; align-items:flex-start; }
+  .deliver { display:grid; grid-template-columns:repeat(2,1fr); gap:9px 26px; }
+  .deliver-item { font-size:10.5px; color:#374151; line-height:1.4; display:flex; gap:8px; align-items:flex-start; }
   .deliver-item::before { content:'\2713'; color:var(--jian); font-weight:900; flex-shrink:0; }
   .deliver-item strong { color:var(--dark); font-weight:800; }
 
-  /* pricing page */
-  .price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-top:13px; }
-  .price-card { border:1px solid var(--border); border-radius:11px; padding:14px 16px; display:flex; flex-direction:column; position:relative; }
+  /* pricing */
+  .price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .price-card { border:1px solid var(--border); border-radius:12px; padding:15px 17px; display:flex; flex-direction:column; position:relative; }
   .price-card.featured { border:2px solid var(--jian); background:linear-gradient(180deg,#FAF8FF 0%,#fff 60%); box-shadow:0 4px 18px rgba(124,58,237,0.15); }
   .pc-badge { position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--jian); color:#fff; font-size:8.5px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:3px 12px; border-radius:9px; white-space:nowrap; }
   .pc-kicker { font-size:9px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--gray); }
-  .pc-name { font-size:17px; font-weight:900; color:var(--dark); line-height:1; margin-top:2px; }
-  .pc-price-row { display:flex; align-items:baseline; gap:5px; margin:8px 0 2px; }
-  .pc-price { font-size:27px; font-weight:900; color:var(--jian); line-height:0.9; }
-  .pc-per { font-size:10px; color:var(--gray); font-weight:600; }
-  .pc-divider { height:1px; background:var(--border); margin:8px 0; }
-  .pc-desc { font-size:10px; color:#4B5563; line-height:1.4; }
+  .pc-name { font-size:18px; font-weight:900; color:var(--dark); line-height:1; margin-top:3px; }
+  .pc-prices { display:flex; gap:18px; align-items:flex-end; margin:11px 0 3px; }
+  .pblock { display:flex; flex-direction:column; }
+  .pv { font-weight:900; line-height:0.9; }
+  .pv.build { font-size:20px; color:var(--dark); }
+  .pv.mo { font-size:28px; color:var(--jian); }
+  .pl { font-size:8.5px; color:var(--gray); font-weight:600; margin-top:3px; text-transform:uppercase; letter-spacing:0.3px; }
+  .pc-divider { height:1px; background:var(--border); margin:9px 0; }
+  .pc-desc { font-size:10.5px; color:#4B5563; line-height:1.48; }
   .pc-desc strong { color:var(--dark); font-weight:800; }
+  .price-foot-br { background:var(--jian-light); border-radius:10px; padding:11px 18px; font-size:10px; color:#4C1D95; font-weight:600; text-align:center; line-height:1.45; }
+  .price-foot-br strong { color:var(--jian); font-weight:800; }
 
-  .example { background:var(--jian-light); border-radius:11px; padding:13px 18px; margin-top:13px; display:flex; align-items:center; gap:18px; }
-  .ex-tag { font-size:9px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--jian); flex-shrink:0; }
-  .ex-body { flex:1; font-size:10.5px; color:#3B2A66; line-height:1.4; }
-  .ex-body strong { color:var(--jian); font-weight:800; }
-  .ex-fig { text-align:center; flex-shrink:0; }
-  .ex-fig .efv { font-size:24px; font-weight:900; color:var(--jian); line-height:1; }
-  .ex-fig .efl { font-size:8px; color:var(--gray); margin-top:3px; }
+  .example { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); border-radius:12px; padding:15px 20px; display:flex; align-items:center; gap:20px; position:relative; overflow:hidden; }
+  .example::before { content:''; position:absolute; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.22) 0%,transparent 70%); top:-130px; right:120px; }
+  .ex-tag { font-size:9.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal); flex-shrink:0; position:relative; z-index:2; }
+  .ex-body { flex:1; font-size:11px; color:rgba(255,255,255,0.82); line-height:1.45; position:relative; z-index:2; }
+  .ex-body strong { color:#fff; font-weight:800; }
+  .ex-fig { text-align:center; flex-shrink:0; position:relative; z-index:2; }
+  .ex-fig .efv { font-size:27px; font-weight:900; color:#A78BFA; line-height:1; }
+  .ex-fig .efl { font-size:9px; color:rgba(255,255,255,0.6); margin-top:5px; }
 
-  .incl { display:grid; grid-template-columns:repeat(2,1fr); gap:5px 22px; margin-top:13px; }
-  .incl-item { font-size:10px; color:#374151; line-height:1.3; display:flex; gap:7px; align-items:flex-start; }
-  .incl-item::before { content:'\2713'; color:var(--jian); font-weight:900; flex-shrink:0; }
-  .incl-item strong { color:var(--dark); font-weight:800; }
-
-  .cta-final { margin:14px 40px 0; background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); border-radius:13px; padding:18px 26px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .cta-final { margin:0 40px; background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); border-radius:13px; padding:20px 28px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-shrink:0; }
   .cta-final::after { content:''; position:absolute; left:0; right:0; top:0; height:4px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); }
-  .cf-title { font-size:19px; font-weight:900; color:#fff; line-height:1.15; }
+  .cf-title { font-size:20px; font-weight:900; color:#fff; line-height:1.16; position:relative; z-index:2; }
   .cf-title .acc { color:#A78BFA; }
-  .cf-sub { font-size:9.5px; color:rgba(255,255,255,0.62); margin-top:6px; line-height:1.35; max-width:330px; }
-  .cf-contacts { display:flex; flex-direction:column; gap:6px; flex-shrink:0; }
-  .cf-contact { font-size:12px; color:rgba(255,255,255,0.9); font-weight:700; white-space:nowrap; }
+  .cf-sub { font-size:10px; color:rgba(255,255,255,0.62); margin-top:7px; line-height:1.4; max-width:340px; position:relative; z-index:2; }
+  .cf-contacts { display:flex; flex-direction:column; gap:7px; flex-shrink:0; position:relative; z-index:2; }
+  .cf-contact { font-size:12.5px; color:rgba(255,255,255,0.9); font-weight:700; white-space:nowrap; }
   .cf-contact .ci { color:var(--teal); margin-right:6px; }
 
-  /* fill + readability tuning */
-  .lead { font-size:13px; line-height:1.52; }
-  .gc-head { font-size:14.5px; } .gc-list li { font-size:10px; }
-  .step .st { font-size:14px; } .step .sd { font-size:10px; }
-  .diff .dt { font-size:12px; } .diff .dd { font-size:10px; }
-  .ar-name { font-size:13px; } .ar-desc { font-size:9.8px; } .ar-catch { font-size:9.3px; }
-  .ftable td { font-size:10px; padding:8px 11px; }
-  .tb-l { font-size:9px; }
-  .deliver-item { font-size:10px; } .incl-item { font-size:10px; } .pc-desc { font-size:10px; }
-  .bottomline { background:linear-gradient(135deg,var(--jian) 0%,#5B21B6 100%); color:#fff; border-radius:11px; padding:12px 20px; font-size:12.5px; font-weight:700; text-align:center; line-height:1.4; }
-  .bottomline strong { color:#fff; font-weight:900; }
+  /* P3 fill — taller agent rows + flow */
+  .agent-row { padding:18px 20px; }
+  .ar-desc { font-size:11.5px; line-height:1.55; }
+  .ar-catch { font-size:10.5px; padding:8px 12px; }
+  .flow { padding:18px 22px; }
+  .flow-box { padding:12px 14px; }
+  .flow-note { font-size:10px; margin-top:15px; }
+  /* P5 card feature bullets */
+  .pc-feat { list-style:none; display:flex; flex-direction:column; gap:5px; margin-top:9px; }
+  .pc-feat li { font-size:9.5px; color:#4B5563; line-height:1.32; display:flex; gap:6px; align-items:flex-start; }
+  .pc-feat li::before { content:'\2713'; color:var(--jian); font-weight:800; flex-shrink:0; font-size:9px; }
+  .pc-feat li strong { color:var(--dark); font-weight:800; }
   @media print { html,body { margin:0; padding:0; background:#fff; display:block; } .page { box-shadow:none; break-after:page; } }
 </style>
 </head>
@@ -197,13 +205,19 @@
   <div class="cover-mid">
     <span class="cover-eyebrow">A Jian Capability</span>
     <div class="cover-title"><span class="acc">Jian</span> for<br>Applications</div>
-    <div class="cover-sub">Bespoke AI agents for the line-of-business applications your revenue actually runs on &mdash; watched, traced, and worklisted 24&times;7.</div>
-    <div class="cover-promise">Infrastructure monitoring stops at the server. Jian for Applications goes inside the app &mdash; the claims feed, the clearinghouse, the billing pipeline &mdash; and tells you the moment money stops moving.</div>
+    <div class="cover-sub">Bespoke AI agents for the line-of-business applications your revenue runs on &mdash; watched, traced and worklisted 24&times;7, on a reusable engine.</div>
+    <div class="cover-promise">Infrastructure monitoring stops at the server. Jian for Applications goes <em>inside</em> the app &mdash; the feed, the clearinghouse, the billing pipeline &mdash; and tells you the moment money stops moving.</div>
+    <div class="cover-watches">
+      <span class="cw-chip">Claims &amp; billing platforms</span>
+      <span class="cw-chip">Integration &amp; sync jobs</span>
+      <span class="cw-chip">EDI / clearinghouses</span>
+      <span class="cw-chip">Any revenue-critical app</span>
+    </div>
   </div>
   <div class="cover-proof">
-    <div class="cp-tag">Live Today</div>
+    <div class="cp-tag">Proven on ORX</div>
     <div class="cp-stats">
-      <div class="cp-stat"><div class="v acc">3</div><div class="l">agents live on the ORX claims platform</div></div>
+      <div class="cp-stat"><div class="v acc">3</div><div class="l">agents live on a real claims platform</div></div>
       <div class="cp-div"></div>
       <div class="cp-stat"><div class="v">$180K</div><div class="l">in billed-but-unsent claims surfaced</div></div>
       <div class="cp-div"></div>
@@ -216,20 +230,20 @@
 <!-- ══════════ PAGE 2 — THE IDEA ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo"><span class="pgh-kicker">Jian for Applications</span></div>
+    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Jian for Applications</span></div>
     <div class="pgh-sec">Why an app needs its own agent</div>
   </div>
   <div class="body-pad">
-    <div class="lead">Your RMM watches servers. Your SIEM watches security. Your backup tool watches backups. <strong>None of them can see a claims feed silently freeze, or 1,615 service lines billed in your system but never transmitted to the payer.</strong> That logic lives <span class="hl">inside the application</span> &mdash; so that&rsquo;s where the agent has to live.</div>
+    <div class="lead">Your RMM watches servers. Your SIEM watches security. Your backup tool watches backups. <strong>None of them can see a sync job silently freeze, or service lines billed in your system but never transmitted to the payer.</strong> That logic lives <span class="hl">inside the application</span> &mdash; so that&rsquo;s where the agent has to live.</div>
     <div class="two-col">
       <div class="gap-card problem">
         <div class="gc-tag">The blind spot</div>
         <div class="gc-head">Generic monitoring stops at the app&rsquo;s front door</div>
         <ul class="gc-list">
           <li>A sync job exits &ldquo;success&rdquo; (exit 0) but copies zero rows &mdash; the dashboard stays green for months</li>
-          <li>Lines added to a claim after its first batch are never sent &mdash; billed, never paid</li>
+          <li>Records added after a batch is sent are never transmitted &mdash; billed, never paid</li>
           <li>Rejections pile up in a queue no alert is watching</li>
-          <li>The one person who understood it all was a contractor &mdash; now gone</li>
+          <li>The one person who understood it all has left the building</li>
         </ul>
       </div>
       <div class="gap-card fix">
@@ -243,20 +257,23 @@
         </ul>
       </div>
     </div>
-
-    <div class="sec-label" style="margin-top:15px;"><span class="sl-accent">The model</span> Watch &rarr; Worklist &rarr; (optional) Operate</div>
-    <div class="steps">
-      <div class="step"><div class="sn">1</div><div class="si">&#128064;</div><div class="st">Watch</div><div class="sd">Read-only agents poll your app&rsquo;s data flow on a tight cadence, detecting freezes, leaks &amp; failures the moment they happen.</div></div>
-      <div class="step"><div class="sn">2</div><div class="si">&#128203;</div><div class="st">Worklist</div><div class="sd">Every finding becomes a branded alert + a precise, grouped worklist your team can act on &mdash; never just &ldquo;something&rsquo;s wrong.&rdquo;</div></div>
-      <div class="step"><div class="sn">3</div><div class="si">&#128295;</div><div class="st">Operate</div><div class="sd">Optionally, our engineers operate, fix &amp; modernize the application itself &mdash; the work a dev shop used to do.</div></div>
+    <div class="blk">
+      <div class="sec-label"><span class="sl-accent">The model</span> Watch &rarr; Worklist &rarr; (optional) Operate</div>
+      <div class="steps">
+        <div class="step"><div class="sn">1</div><div class="si">&#128064;</div><div class="st">Watch</div><div class="sd">Read-only agents poll your app&rsquo;s data flow on a tight cadence, detecting freezes, leaks &amp; failures the moment they happen.</div></div>
+        <div class="step"><div class="sn">2</div><div class="si">&#128203;</div><div class="st">Worklist</div><div class="sd">Every finding becomes a branded alert + a precise, grouped worklist your team can act on &mdash; never just &ldquo;something&rsquo;s wrong.&rdquo;</div></div>
+        <div class="step"><div class="sn">3</div><div class="si">&#128295;</div><div class="st">Operate</div><div class="sd">Optionally, our engineers operate, fix &amp; modernize the application itself &mdash; the work a dev shop used to do.</div></div>
+      </div>
     </div>
-
-    <div class="sec-label" style="margin-top:15px;"><span class="sl-accent">What makes it different</span></div>
-    <div class="diff-row">
-      <div class="diff"><div class="dt">Read-only &amp; alert-only</div><div class="dd">Jian watches and traces; it never auto-resubmits a claim or mutates billing. The judgment call stays human &mdash; because a duplicate claim is real money.</div></div>
-      <div class="diff"><div class="dt">Built on the MCP pattern</div><div class="dd">Each agent follows the SP &rarr; API &rarr; MCP reference architecture &mdash; the same one already running live in production for ORX&rsquo;s DaisyBill server.</div></div>
-      <div class="diff"><div class="dt">Same engine, your logic</div><div class="dd">The proven Jian monitor-triage-alert engine &mdash; trusted across 57+ managed environments &mdash; taught the specifics of your one application.</div></div>
+    <div class="blk">
+      <div class="sec-label"><span class="sl-accent">What makes it different</span></div>
+      <div class="diff-row">
+        <div class="diff"><div class="dt">Read-only &amp; alert-only</div><div class="dd">Jian watches and traces; it never auto-resubmits a transaction or mutates billing. The judgment call stays human &mdash; because a duplicate is real money.</div></div>
+        <div class="diff"><div class="dt">Built on the MCP pattern</div><div class="dd">Each agent follows the SP &rarr; API &rarr; MCP reference architecture &mdash; the same one already running live in production today.</div></div>
+        <div class="diff"><div class="dt">Same engine, your logic</div><div class="dd">The proven Jian monitor-triage-alert engine &mdash; trusted across 57+ managed environments &mdash; taught the specifics of your one application.</div></div>
+      </div>
     </div>
+    <div class="callout">The result &mdash; the failure that would silently cost you six figures becomes a <strong>ticket in 15 minutes</strong>, with the fix already attached.</div>
   </div>
   <div class="pg-footer"><div class="pgf-brand"><strong>Jian</strong> for Applications &middot; Technijian</div><div class="pgf-num">02</div></div>
 </div>
@@ -264,91 +281,96 @@
 <!-- ══════════ PAGE 3 — ORX CASE STUDY ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo"><span class="pgh-kicker">Flagship Case Study</span></div>
-    <div class="pgh-sec">ORX &mdash; the claims platform</div>
+    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Case Study &mdash; ORX</span></div>
+    <div class="pgh-sec">A revenue cycle, watched end-to-end</div>
   </div>
   <div class="body-pad">
-    <div class="lead"><strong>Team Post-Op, Inc. dba OrthoKinetix &mdash; powered by OrthoXpress</strong> is a California orthopedic DMEPOS biller. Revenue depends on claims being built, transmitted, accepted &amp; posted across <span class="hl">two payer worlds</span> &mdash; commercial / Medicare via Waystar, and CA workers&rsquo;-comp via DaisyBill. When the prior developer was off-boarded, Technijian took the platform end-to-end and put Jian on it.</div>
-
+    <div class="lead"><strong>OrthoKinetix, powered by OrthoXpress</strong> is a California orthopedic DMEPOS biller. Revenue depends on claims being built, transmitted, accepted &amp; posted across <span class="hl">two payer worlds</span> &mdash; commercial / Medicare via Waystar, and CA workers&rsquo;-comp via DaisyBill. When the prior developer was off-boarded, Technijian took the platform end-to-end and put three Jian agents on it.</div>
     <div class="flow">
       <div class="flow-title">The data flow Jian watches</div>
       <div class="flow-row">
-        <div class="flow-box sys"><div class="fbn">OXPLive</div><div class="fbd">ColdFusion + OrthoXpressDB &mdash; system of record</div></div>
+        <div class="flow-box sys"><div class="fbn">OXPLive</div><div class="fbd">system of record</div></div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-box"><div class="fbn">The Feed</div><div class="fbd">~30-min sync job</div></div>
         <div class="flow-arrow">&rarr;</div>
-        <div class="flow-box sys"><div class="fbn">OXPLiveNG</div><div class="fbd">.NET claims-management app</div></div>
+        <div class="flow-box sys"><div class="fbn">OXPLiveNG</div><div class="fbd">claims-management app</div></div>
         <div class="flow-arrow">&#8628;</div>
         <div class="flow-box"><div class="fbn">Waystar / DaisyBill</div><div class="fbd">837 clearinghouses &rarr; payers</div></div>
       </div>
       <div class="flow-note"><strong>The critical dependency:</strong> OXPLiveNG has no data of its own &mdash; it is entirely populated by the Feed. If the Feed stops, the app silently goes stale even while billing continues. <strong>That single failure is the root of almost every &ldquo;claims aren&rsquo;t showing&rdquo; report</strong> &mdash; and exactly what Jian&rsquo;s feed watchdog exists to catch.</div>
     </div>
-
-    <div class="sec-label" style="margin-top:13px;"><span class="sl-accent">Three agents</span> on one revenue cycle</div>
-    <div class="agent-row">
-      <div class="ar-icon">&#128260;</div>
-      <div class="ar-body">
-        <div class="ar-name">OXPLive Feed Watchdog <span class="ar-tag">Read-only</span></div>
-        <div class="ar-desc">Compares OXPLiveNG against the OrthoXpressDB system of record &mdash; job &amp; claim recency, source-vs-destination lag, and the open backfill gap. Traces any job or claim across both databases.</div>
-        <div class="ar-catch"><strong>Catch:</strong> a silent 95-day feed outage once froze ~9,295 claims out of the management app. The watchdog now flags a freeze within 15 minutes.</div>
+    <div class="blk">
+      <div class="sec-label"><span class="sl-accent">Three agents</span> on one revenue cycle</div>
+      <div class="agent-row">
+        <div class="ar-icon">&#128260;</div>
+        <div class="ar-body">
+          <div class="ar-name">OXPLive Feed Watchdog <span class="ar-tag">Read-only</span></div>
+          <div class="ar-desc">Compares OXPLiveNG against the OrthoXpressDB system of record &mdash; job &amp; claim recency, source-vs-destination lag, and the open backfill gap. Traces any job or claim across both databases.</div>
+          <div class="ar-catch"><strong>Catch:</strong> a silent 95-day feed outage once froze ~9,295 claims out of the management app. The watchdog now flags a freeze within 15 minutes.</div>
+        </div>
+      </div>
+      <div class="agent-row">
+        <div class="ar-icon">&#128228;</div>
+        <div class="ar-body">
+          <div class="ar-name">Waystar Clearinghouse Agent <span class="ar-tag">Read-only</span></div>
+          <div class="ar-desc">Monitors 837 submission, 999 / 277CA / 835 responses and the REST API. Detects the batching leak (lines added after first batch, never sent), groups rejections into fix buckets, and traces any claim end-to-end.</div>
+          <div class="ar-catch"><strong>Catch:</strong> ~1,615 service lines / ~$180K billed in the system but never transmitted &mdash; surfaced as a ready-to-resubmit worklist for the billing team.</div>
+        </div>
+      </div>
+      <div class="agent-row">
+        <div class="ar-icon">&#129658;</div>
+        <div class="ar-body">
+          <div class="ar-name">DaisyBill 837 MCP Agent <span class="ar-tag">Read-only</span></div>
+          <div class="ar-desc">Watches the live DaisyBill MCP server &mdash; bill-sync &amp; EDI-837 recency, MCP + core-API health endpoints, and bill / payment counts &mdash; the CA workers&rsquo;-comp half of the revenue cycle.</div>
+          <div class="ar-catch"><strong>Status:</strong> 85 syncs / 82 EDI runs / 0 failures historically &mdash; now continuously health-checked for any &gt;24h gap or 503.</div>
+        </div>
       </div>
     </div>
-    <div class="agent-row">
-      <div class="ar-icon">&#128228;</div>
-      <div class="ar-body">
-        <div class="ar-name">Waystar Clearinghouse Agent <span class="ar-tag">Read-only</span></div>
-        <div class="ar-desc">Monitors 837 submission, 999 / 277CA / 835 responses, and the REST API. Detects the batching leak (lines added after first batch, never sent), groups rejections into fix buckets, and traces any claim end-to-end.</div>
-        <div class="ar-catch"><strong>Catch:</strong> ~1,615 service lines / ~$180K billed in the system but never transmitted &mdash; surfaced as a ready-to-resubmit worklist for the billing team.</div>
-      </div>
-    </div>
-    <div class="agent-row">
-      <div class="ar-icon">&#129658;</div>
-      <div class="ar-body">
-        <div class="ar-name">DaisyBill 837 MCP Agent <span class="ar-tag">Read-only</span></div>
-        <div class="ar-desc">Watches the live DaisyBill MCP server &mdash; bill-sync &amp; EDI-837 recency, MCP + core-API health endpoints, and bill / payment counts &mdash; the CA workers&rsquo;-comp half of the revenue cycle.</div>
-        <div class="ar-catch"><strong>Status:</strong> 85 syncs / 82 EDI runs / 0 failures historically &mdash; now continuously health-checked for any &gt;24h gap or 503.</div>
-      </div>
-    </div>
+    <div class="callout">Three agents, one revenue cycle, <strong>zero silent failures</strong> &mdash; every freeze, leak and rejection now has a watcher and a worklist.</div>
   </div>
   <div class="pg-footer"><div class="pgf-brand"><strong>Jian</strong> for Applications &middot; Technijian</div><div class="pgf-num">03</div></div>
 </div>
 
-<!-- ══════════ PAGE 4 — FINDINGS, COMMS, DELIVERY ══════════ -->
+<!-- ══════════ PAGE 4 — IN OPERATION ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo"><span class="pgh-kicker">In Operation</span></div>
+    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">In Operation</span></div>
     <div class="pgh-sec">What Jian catches, says &amp; delivers</div>
   </div>
   <div class="body-pad">
-    <div class="lead">When Technijian took the ORX platform end-to-end, Jian inherited a register of known failure modes &mdash; and now watches every one of them, continuously. Here is what each agent catches, how it tells you, and what lands on your desk.</div>
-    <div class="sec-label"><span class="sl-accent">The failure register</span> what each agent watches for &amp; how it detects it</div>
-    <table class="ftable">
-      <thead><tr><th>Failure mode</th><th>Sev</th><th>How Jian detects it</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Feed freeze</strong> &mdash; the app silently goes stale</td><td><span class="sev rev">Revenue</span></td><td>Source-vs-destination lag; OXPLiveNG max date vs OrthoXpressDB</td></tr>
-        <tr><td><strong>Batching leak</strong> &mdash; lines billed but never sent</td><td><span class="sev rev">Revenue</span></td><td>Unbatched-line scan + submission trace vs non-matched charges</td></tr>
-        <tr><td><strong>Rejections aging</strong> &mdash; unworked denials</td><td><span class="sev rel">Reliability</span></td><td>Rejection summary grouped by exact fix bucket (payer, member ID&hellip;)</td></tr>
-        <tr><td><strong>WC sync / EDI paused</strong> &mdash; DaisyBill gap</td><td><span class="sev rel">Reliability</span></td><td>Sync-run &amp; EDI-837 recency + MCP / core-API health (503)</td></tr>
-      </tbody>
-    </table>
-
-    <div class="sec-label" style="margin-top:14px;"><span class="sl-accent">How Jian communicates</span> &mdash; never a silent failure, never a vague alarm</div>
-    <div class="triband">
-      <div class="tb-card c1"><div class="tb-t">&#9993; Email</div><div class="tb-l">Branded jian@ alerts, throttled</div><div class="tb-l">The worklist, not just the symptom</div><div class="tb-l">Routed to the right owner</div></div>
-      <div class="tb-card c2"><div class="tb-t">&#128172; Teams</div><div class="tb-l">Channel-per-issue @Jian bot</div><div class="tb-l">Status &amp; comments flow in-thread</div><div class="tb-l">Self-service questions answered</div></div>
-      <div class="tb-card c3"><div class="tb-t">&#127915; Client Portal</div><div class="tb-l">Idempotent ticket per finding</div><div class="tb-l">Shift-aware assignment</div><div class="tb-l">Auto time entries on the work</div></div>
+    <div class="lead">On every engagement, Jian inherits your application&rsquo;s failure modes and watches each one continuously. The register below is from the ORX deployment &mdash; the <em>shape</em> of it is what you get for your app: what each agent catches, how it tells you, and what lands on your desk.</div>
+    <div class="blk">
+      <div class="sec-label"><span class="sl-accent">The failure register</span> what each agent watches for &amp; how it detects it</div>
+      <table class="ftable">
+        <thead><tr><th>Failure mode</th><th>Sev</th><th>How Jian detects it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Feed freeze</strong> &mdash; the app silently goes stale</td><td><span class="sev rev">Revenue</span></td><td>Source-vs-destination lag; downstream max date vs the system of record</td></tr>
+          <tr><td><strong>Batching leak</strong> &mdash; lines billed but never sent</td><td><span class="sev rev">Revenue</span></td><td>Unbatched-line scan + submission trace vs non-matched charges</td></tr>
+          <tr><td><strong>Rejections aging</strong> &mdash; unworked denials</td><td><span class="sev rel">Reliability</span></td><td>Rejection summary grouped by exact fix bucket (payer, member ID&hellip;)</td></tr>
+          <tr><td><strong>Sync / EDI paused</strong> &mdash; a clearinghouse gap</td><td><span class="sev rel">Reliability</span></td><td>Sync-run &amp; EDI-837 recency + MCP / core-API health (503)</td></tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="sec-label" style="margin-top:14px;"><span class="sl-accent">What you get</span> &mdash; every engagement</div>
-    <div class="deliver">
-      <div class="deliver-item"><span><strong>24&times;7 continuous monitoring</strong> of your application&rsquo;s data flow &amp; health</span></div>
-      <div class="deliver-item"><span><strong>Actionable worklists</strong> grouped by exact fix, not raw error dumps</span></div>
-      <div class="deliver-item"><span><strong>End-to-end record tracing</strong> on demand &mdash; any claim, any job</span></div>
-      <div class="deliver-item"><span><strong>A living failure-modes &amp; maintenance handbook</strong> for your app</span></div>
-      <div class="deliver-item"><span><strong>Monthly activity &amp; health report</strong>, branded</span></div>
-      <div class="deliver-item"><span><strong>Credentials secured in vault</strong> &mdash; never in code, logs or tickets</span></div>
+    <div class="blk">
+      <div class="sec-label"><span class="sl-accent">How Jian communicates</span> &mdash; never a silent failure, never a vague alarm</div>
+      <div class="triband">
+        <div class="tb-card c1"><div class="tb-t">&#9993; Email</div><div class="tb-l">Branded jian@ alerts, throttled</div><div class="tb-l">The worklist, not just the symptom</div><div class="tb-l">Routed to the right owner</div></div>
+        <div class="tb-card c2"><div class="tb-t">&#128172; Teams</div><div class="tb-l">Channel-per-issue @Jian bot</div><div class="tb-l">Status &amp; comments flow in-thread</div><div class="tb-l">Self-service questions answered</div></div>
+        <div class="tb-card c3"><div class="tb-t">&#127915; Client Portal</div><div class="tb-l">Idempotent ticket per finding</div><div class="tb-l">Shift-aware assignment</div><div class="tb-l">Auto time entries on the work</div></div>
+      </div>
     </div>
-    <div class="bottomline">The bottom line &mdash; every revenue-impacting failure on this platform now has a <strong>watcher</strong>, a <strong>worklist</strong>, and an <strong>owner</strong>, 24&times;7.</div>
+    <div class="blk">
+      <div class="sec-label"><span class="sl-accent">What you get</span> &mdash; every engagement</div>
+      <div class="deliver">
+        <div class="deliver-item"><span><strong>24&times;7 continuous monitoring</strong> of your application&rsquo;s data flow &amp; health</span></div>
+        <div class="deliver-item"><span><strong>Actionable worklists</strong> grouped by exact fix, not raw error dumps</span></div>
+        <div class="deliver-item"><span><strong>End-to-end record tracing</strong> on demand &mdash; any transaction, any job</span></div>
+        <div class="deliver-item"><span><strong>A living failure-modes &amp; maintenance handbook</strong> for your app</span></div>
+        <div class="deliver-item"><span><strong>Monthly activity &amp; health report</strong>, branded</span></div>
+        <div class="deliver-item"><span><strong>Credentials secured in vault</strong> &mdash; never in code, logs or tickets</span></div>
+      </div>
+    </div>
+    <div class="callout">The bottom line &mdash; every revenue-impacting failure in your app gets a <strong>watcher</strong>, a <strong>worklist</strong>, and an <strong>owner</strong>, 24&times;7.</div>
   </div>
   <div class="pg-footer"><div class="pgf-brand"><strong>Jian</strong> for Applications &middot; Technijian</div><div class="pgf-num">04</div></div>
 </div>
@@ -356,58 +378,58 @@
 <!-- ══════════ PAGE 5 — PRICING + CTA ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo"><span class="pgh-kicker">Investment</span></div>
-    <div class="pgh-sec">Pricing &mdash; priced on revenue protected</div>
+    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Investment</span></div>
+    <div class="pgh-sec">Pricing &mdash; develop once, watch monthly</div>
   </div>
   <div class="body-pad">
-    <div class="lead">Three clean lines. You <span class="hl">land on the watch</span> &mdash; a low monthly fee per agent &mdash; and expand into full managed operations only as trust builds. Pricing is anchored to the revenue an app agent protects, not to headcount; one missed billing event dwarfs a year of watching.</div>
+    <div class="lead">Two parts, always: a one-time <strong>build</strong> to teach Jian your app, then a low <strong>monthly subscription</strong> to watch it. Three tiers by complexity &mdash; pick the depth your app needs and add agents as your stack grows. For context, a custom AI-agent build alone runs <span class="hl">$25K&ndash;$300K+</span> and full APM + AMS for one platform tops <span class="hl">$2,000/mo</span> &mdash; while still being blind to a single transaction.</div>
     <div class="price-grid">
       <div class="price-card">
-        <div class="pc-kicker">One-Time</div>
-        <div class="pc-name">Build</div>
-        <div class="pc-price-row"><span class="pc-price">$8K&ndash;$25K</span></div>
-        <div class="pc-per" style="margin-top:-2px;">per application agent</div>
+        <div class="pc-kicker">Single data source</div>
+        <div class="pc-name">Essential</div>
+        <div class="pc-prices">
+          <div class="pblock"><span class="pv build">$6,000</span><span class="pl">one-time build</span></div>
+          <div class="pblock"><span class="pv mo">$249</span><span class="pl">/mo watch</span></div>
+        </div>
         <div class="pc-divider"></div>
-        <div class="pc-desc">Teach Jian your app: discovery, <strong>SP &rarr; API &rarr; MCP</strong> integration, the detection logic, and the operating runbook. Scoped to your app&rsquo;s complexity.</div>
+        <div class="pc-desc">For one feed, job or data source.</div>
+        <ul class="pc-feat"><li>Health, recency &amp; threshold detection</li><li>Branded alerts + monthly report</li></ul>
       </div>
       <div class="price-card featured">
-        <div class="pc-badge">&#9733; The Recurring Line</div>
-        <div class="pc-kicker">Per Agent / Month</div>
-        <div class="pc-name">Run</div>
-        <div class="pc-price-row"><span class="pc-price">$250&ndash;$500</span><span class="pc-per">/ agent / mo</span></div>
+        <div class="pc-badge">&#9733; Most Apps Start Here</div>
+        <div class="pc-kicker">A full application</div>
+        <div class="pc-name">Professional</div>
+        <div class="pc-prices">
+          <div class="pblock"><span class="pv build">$15,000</span><span class="pl">one-time build</span></div>
+          <div class="pblock"><span class="pv mo">$499</span><span class="pl">/mo watch</span></div>
+        </div>
         <div class="pc-divider"></div>
-        <div class="pc-desc">Continuous 24&times;7 watch, branded alerts, worklists &amp; the monthly report. <strong>Bundle a whole platform</strong> &mdash; multiple agents on one application &mdash; for a single monthly figure.</div>
+        <div class="pc-desc">For a full line-of-business app &mdash; the tier most apps need.</div>
+        <ul class="pc-feat"><li>Multi-source <strong>business-logic</strong> detection</li><li>Record tracing + ready-to-act worklists</li></ul>
       </div>
       <div class="price-card">
-        <div class="pc-kicker">Optional</div>
-        <div class="pc-name">Managed Ops</div>
-        <div class="pc-price-row"><span class="pc-price">Retainer</span><span class="pc-per">/ T&amp;M</span></div>
+        <div class="pc-kicker">Deep integration</div>
+        <div class="pc-name">Platform</div>
+        <div class="pc-prices">
+          <div class="pblock"><span class="pv build">$30,000</span><span class="pl">one-time build</span></div>
+          <div class="pblock"><span class="pv mo">$899</span><span class="pl">/mo watch</span></div>
+        </div>
         <div class="pc-divider"></div>
-        <div class="pc-desc">Our engineers <strong>operate, fix &amp; modernize</strong> the application itself &mdash; the work a dev shop did &mdash; billed on your managed-services rate card.</div>
+        <div class="pc-desc">For deep, multi-system revenue flows.</div>
+        <ul class="pc-feat"><li>Full <strong>SP &rarr; API &rarr; MCP</strong> integration</li><li>Multi-system correlation &middot; <em>Enterprise = custom</em></li></ul>
       </div>
     </div>
-
     <div class="example">
-      <div class="ex-tag">Worked<br>example</div>
-      <div class="ex-body"><strong>ORX claims platform</strong> &mdash; three agents (OXPLive Feed + Waystar + DaisyBill) bundled as <strong>&ldquo;Jian for the ORX Claims Platform&rdquo;</strong>, plus a one-time build and an optional operations retainer for the platform takeover.</div>
-      <div class="ex-fig"><div class="efv">$750&ndash;$1,500</div><div class="efl">/ month &middot; 3-agent bundle</div></div>
+      <div class="ex-tag">ORX<br>example</div>
+      <div class="ex-body"><strong>The ORX claims platform</strong> &mdash; 3 agents (Waystar = Platform; OXPLive Feed + DaisyBill = Professional). A custom multi-agent build alone would run $100K&ndash;$500K; APM + AMS would top $2,000/mo and still not understand a claim.</div>
+      <div class="ex-fig"><div class="efv">$1,612<span style="font-size:14px;">/mo</span></div><div class="efl">+ $60,000 build &middot; 3-agent bundle (&minus;15%)</div></div>
     </div>
-
-    <div class="sec-label" style="margin-top:14px;"><span class="sl-accent">Every plan includes</span></div>
-    <div class="incl">
-      <div class="incl-item"><span>24&times;7 read-only monitoring &amp; tracing</span></div>
-      <div class="incl-item"><span>Branded email + Teams + Client Portal alerts</span></div>
-      <div class="incl-item"><span>Grouped, ready-to-act worklists</span></div>
-      <div class="incl-item"><span>Living failure-modes &amp; maintenance handbook</span></div>
-      <div class="incl-item"><span>Monthly activity &amp; health report</span></div>
-      <div class="incl-item"><span>Vault-secured credentials, least privilege</span></div>
-    </div>
+    <div class="price-foot-br">Annual = 2 months free &middot; 3+ agents on one app &minus;15% monthly &middot; $499/mo minimum &middot; Enterprise = custom &middot; <strong>Managed Operations</strong> (we operate / fix / modernize the app) = separate retainer from $2,500/mo</div>
   </div>
-
   <div class="cta-final">
     <div>
-      <div class="cf-title">Put an agent on the app<br><span class="acc">your revenue runs on.</span></div>
-      <div class="cf-sub">Scoped in days, watching in weeks &mdash; on the same engine trusted across 57+ managed environments. Indicative bands; final pricing confirmed on scoping.</div>
+      <div class="cf-title">Start with a <span class="acc">free 2-week pilot</span><br>on one data source.</div>
+      <div class="cf-sub">We watch one feed read-only for two weeks &mdash; then quote the build and the tier. Scoped in days, watching in weeks, on the engine trusted across 57+ managed environments.</div>
     </div>
     <div class="cf-contacts">
       <div class="cf-contact"><span class="ci">&#9993;</span>sales@technijian.com</div>
