@@ -191,6 +191,10 @@
   .pc-feat li { font-size:9.5px; color:#4B5563; line-height:1.32; display:flex; gap:6px; align-items:flex-start; }
   .pc-feat li::before { content:'\2713'; color:var(--jian); font-weight:800; flex-shrink:0; font-size:9px; }
   .pc-feat li strong { color:var(--dark); font-weight:800; }
+  .pc-annual { font-size:9.5px; color:var(--green); font-weight:700; margin-top:7px; }
+  .price-card { padding-top:17px; padding-bottom:18px; }
+  .example { padding:22px 24px; }
+  .ex-fig .efv { font-size:30px; }
   @media print { html,body { margin:0; padding:0; background:#fff; display:block; } .page { box-shadow:none; break-after:page; } }
 </style>
 </head>
@@ -199,8 +203,7 @@
 <!-- ══════════ PAGE 1 — COVER ══════════ -->
 <div class="page cover">
   <div class="cover-top">
-    <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian">
-    <span class="ct-word">Technijian</span>
+    <img src="technijian-logo-white.png" alt="Technijian">
   </div>
   <div class="cover-mid">
     <span class="cover-eyebrow">A Jian Capability</span>
@@ -230,7 +233,7 @@
 <!-- ══════════ PAGE 2 — THE IDEA ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Jian for Applications</span></div>
+    <div class="pgh-left"><img src="technijian-logo-white.png" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Jian for Applications</span></div>
     <div class="pgh-sec">Why an app needs its own agent</div>
   </div>
   <div class="body-pad">
@@ -281,7 +284,7 @@
 <!-- ══════════ PAGE 3 — ORX CASE STUDY ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Case Study &mdash; ORX</span></div>
+    <div class="pgh-left"><img src="technijian-logo-white.png" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Case Study &mdash; ORX</span></div>
     <div class="pgh-sec">A revenue cycle, watched end-to-end</div>
   </div>
   <div class="body-pad">
@@ -334,7 +337,7 @@
 <!-- ══════════ PAGE 4 — IN OPERATION ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">In Operation</span></div>
+    <div class="pgh-left"><img src="technijian-logo-white.png" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">In Operation</span></div>
     <div class="pgh-sec">What Jian catches, says &amp; delivers</div>
   </div>
   <div class="body-pad">
@@ -378,7 +381,7 @@
 <!-- ══════════ PAGE 5 — PRICING + CTA ══════════ -->
 <div class="page">
   <div class="pg-header">
-    <div class="pgh-left"><img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Investment</span></div>
+    <div class="pgh-left"><img src="technijian-logo-white.png" class="pgh-logo" alt="Technijian"><span class="pgh-kicker">Investment</span></div>
     <div class="pgh-sec">Pricing &mdash; develop once, watch monthly</div>
   </div>
   <div class="body-pad">
@@ -391,6 +394,7 @@
           <div class="pblock"><span class="pv build">$6,000</span><span class="pl">one-time build</span></div>
           <div class="pblock"><span class="pv mo">$249</span><span class="pl">/mo watch</span></div>
         </div>
+        <div class="pc-annual">or $2,490/yr &mdash; 2 months free</div>
         <div class="pc-divider"></div>
         <div class="pc-desc">For one feed, job or data source.</div>
         <ul class="pc-feat"><li>Health, recency &amp; threshold detection</li><li>Branded alerts + monthly report</li></ul>
@@ -403,6 +407,7 @@
           <div class="pblock"><span class="pv build">$15,000</span><span class="pl">one-time build</span></div>
           <div class="pblock"><span class="pv mo">$499</span><span class="pl">/mo watch</span></div>
         </div>
+        <div class="pc-annual">or $4,990/yr &mdash; 2 months free</div>
         <div class="pc-divider"></div>
         <div class="pc-desc">For a full line-of-business app &mdash; the tier most apps need.</div>
         <ul class="pc-feat"><li>Multi-source <strong>business-logic</strong> detection</li><li>Record tracing + ready-to-act worklists</li></ul>
@@ -414,6 +419,7 @@
           <div class="pblock"><span class="pv build">$30,000</span><span class="pl">one-time build</span></div>
           <div class="pblock"><span class="pv mo">$899</span><span class="pl">/mo watch</span></div>
         </div>
+        <div class="pc-annual">or $8,990/yr &mdash; 2 months free</div>
         <div class="pc-divider"></div>
         <div class="pc-desc">For deep, multi-system revenue flows.</div>
         <ul class="pc-feat"><li>Full <strong>SP &rarr; API &rarr; MCP</strong> integration</li><li>Multi-system correlation &middot; <em>Enterprise = custom</em></li></ul>
