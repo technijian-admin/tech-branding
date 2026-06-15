@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jian for Applications — Datasheet — Technijian</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue:#006DB6; --orange:#F67D4B; --dark:#1A1A2E; --teal:#1EAAC8;
+    --light:#F4F8FC; --gray:#6B7280; --border:#E5EAF0;
+    --jian:#7C3AED; --jian-light:#EDE9FE; --green:#15803D;
+    --red:#B91C1C; --amber:#B45309;
+  }
+  body { font-family:'Inter',sans-serif; background:#cdd4dc; display:flex; flex-direction:column; align-items:center; gap:24px; padding:32px; }
+  .page { width:8.5in; height:11in; background:#fff; overflow:hidden; box-shadow:0 4px 32px rgba(0,0,0,0.18); position:relative; flex-shrink:0; display:flex; flex-direction:column; }
+
+  /* HEADER */
+  .op-header { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); padding:11px 34px 13px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; position:relative; overflow:hidden; }
+  .op-header::after { content:''; position:absolute; left:0; right:0; bottom:0; height:3px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); }
+  .op-header::before { content:''; position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.30) 0%,transparent 70%); top:-150px; right:120px; }
+  .header-left { position:relative; z-index:2; }
+  .header-logo { height:25px; display:block; margin-bottom:7px; }
+  .header-title { font-size:27px; font-weight:900; color:#fff; letter-spacing:-0.5px; line-height:1; }
+  .header-title .jian { color:#A78BFA; }
+  .header-title .for { color:rgba(255,255,255,0.45); font-weight:800; }
+  .header-tagline { font-size:10.5px; color:rgba(255,255,255,0.6); letter-spacing:1.4px; text-transform:uppercase; margin-top:5px; font-weight:600; }
+  .header-stamp { display:inline-block; margin-top:7px; background:rgba(124,58,237,0.35); border:1px solid rgba(167,139,250,0.5); color:#C4B5FD; font-size:9px; font-weight:800; letter-spacing:1.2px; padding:2px 9px; border-radius:10px; }
+  .header-right { position:relative; z-index:2; display:flex; gap:15px; align-items:center; }
+  .header-stat { text-align:center; }
+  .header-stat .hs-val { font-size:21px; font-weight:900; color:#fff; line-height:1; }
+  .header-stat .hs-val.acc { color:#A78BFA; }
+  .header-stat .hs-lbl { font-size:7.5px; color:rgba(255,255,255,0.55); margin-top:3px; letter-spacing:0.4px; text-transform:uppercase; font-weight:600; }
+  .header-divider { width:1px; background:rgba(255,255,255,0.14); align-self:stretch; }
+
+  /* SECTION LABEL */
+  .sec-label { font-size:10px; font-weight:800; letter-spacing:1.6px; text-transform:uppercase; color:var(--gray); margin-bottom:5px; display:flex; align-items:baseline; gap:8px; }
+  .sec-label .sl-accent { color:var(--jian); }
+  .sec-label .sl-note { font-size:9px; font-weight:600; letter-spacing:0.2px; text-transform:none; color:var(--gray); margin-left:auto; }
+
+  /* INTRO */
+  .intro-section { padding:9px 34px 0; flex-shrink:0; }
+  .intro-band { background:var(--jian-light); border-radius:9px; padding:9px 15px; display:flex; gap:14px; align-items:center; }
+  .intro-band .ib-text { font-size:10.5px; line-height:1.34; color:#3B2A66; }
+  .intro-band .ib-text strong { color:var(--jian); font-weight:800; }
+  .intro-pills { display:flex; flex-direction:column; gap:4px; flex-shrink:0; }
+  .intro-pill { font-size:8.5px; font-weight:700; color:var(--jian); background:#fff; border:1px solid #C4B5FD; border-radius:20px; padding:3px 10px; white-space:nowrap; text-align:center; }
+
+  /* AGENT CARDS */
+  .agents-section { padding:9px 34px 0; flex-shrink:0; }
+  .agents-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+  .agent-card { border:1px solid var(--border); border-radius:9px; padding:9px 11px 9px; background:#fff; display:flex; flex-direction:column; position:relative; }
+  .agent-card::before { content:''; position:absolute; left:0; top:11px; bottom:11px; width:3px; border-radius:3px; background:var(--jian); }
+  .ac-head { display:flex; align-items:center; gap:7px; margin-bottom:5px; }
+  .ac-icon { width:24px; height:24px; border-radius:6px; background:var(--jian-light); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .ac-name { font-size:12px; font-weight:800; color:var(--dark); line-height:1.05; }
+  .ac-sub { font-size:8px; font-weight:700; color:var(--jian); text-transform:uppercase; letter-spacing:0.4px; }
+  .ac-desc { font-size:9px; color:#4B5563; line-height:1.3; margin-bottom:6px; flex:1; }
+  .ac-catch { background:var(--light); border-radius:6px; padding:5px 8px; border-left:3px solid var(--amber); }
+  .ac-catch .acl { font-size:7px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:var(--amber); margin-bottom:1px; }
+  .ac-catch .acv { font-size:8.5px; color:#374151; line-height:1.22; }
+  .ac-catch .acv strong { color:var(--dark); font-weight:800; }
+
+  /* ROI STRIP */
+  .roi-section { padding:9px 34px 0; flex-shrink:0; }
+  .roi-strip { background:linear-gradient(135deg,var(--dark) 0%,#16213E 100%); border-radius:9px; padding:9px 12px; display:grid; grid-template-columns:1.15fr 1px 1fr 1px 1fr 1px 1fr; gap:0; align-items:center; position:relative; overflow:hidden; }
+  .roi-strip::before { content:''; position:absolute; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle,rgba(124,58,237,0.20) 0%,transparent 70%); top:-120px; left:38%; }
+  .roi-intro { padding-right:12px; position:relative; z-index:2; }
+  .roi-intro .ri-label { font-size:8.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal); margin-bottom:3px; }
+  .roi-intro .ri-head { font-size:12.5px; font-weight:900; color:#fff; line-height:1.14; }
+  .roi-intro .ri-sub { font-size:8px; color:rgba(255,255,255,0.55); margin-top:3px; line-height:1.25; }
+  .roi-div { background:rgba(255,255,255,0.12); align-self:stretch; }
+  .roi-stat { text-align:center; padding:0 8px; position:relative; z-index:2; }
+  .roi-stat .rs-val { font-size:20px; font-weight:900; line-height:1; margin-bottom:3px; color:#fff; }
+  .roi-stat .rs-val.amber { color:#FBBF24; }
+  .roi-stat .rs-val.teal { color:#5EEAD4; }
+  .roi-stat .rs-lbl { font-size:7.5px; color:rgba(255,255,255,0.72); line-height:1.22; }
+
+  /* PRICING */
+  .price-section { padding:9px 34px 0; flex-shrink:0; }
+  .price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+  .price-card { border:1px solid var(--border); border-radius:9px; padding:9px 12px; background:#fff; display:flex; flex-direction:column; position:relative; }
+  .price-card.featured { border:2px solid var(--jian); background:linear-gradient(180deg,#FAF8FF 0%,#fff 60%); box-shadow:0 3px 14px rgba(124,58,237,0.14); }
+  .pc-badge { position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--jian); color:#fff; font-size:8px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:2px 10px; border-radius:9px; white-space:nowrap; }
+  .pc-kicker { font-size:8.5px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--gray); }
+  .pc-name { font-size:13px; font-weight:800; color:var(--dark); line-height:1; margin-top:1px; }
+  .pc-price-row { display:flex; align-items:baseline; gap:4px; margin:4px 0 1px; }
+  .pc-price { font-size:23px; font-weight:900; color:var(--jian); line-height:0.9; }
+  .pc-per { font-size:9px; color:var(--gray); font-weight:600; }
+  .pc-divider { height:1px; background:var(--border); margin:5px 0; }
+  .pc-desc { font-size:8.5px; color:#4B5563; line-height:1.3; }
+  .pc-desc strong { color:var(--dark); font-weight:800; }
+  .price-foot { margin-top:7px; background:var(--jian-light); border-radius:7px; padding:5px 13px; font-size:9px; color:#4C1D95; font-weight:600; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .price-foot strong { color:var(--jian); font-weight:800; }
+  .price-foot .pf-sep { width:1px; height:12px; background:#C4B5FD; }
+
+  /* GUARDRAILS */
+  .guard-section { padding:9px 34px 0; flex-shrink:0; }
+  .guard-band { background:var(--light); border:1px solid var(--border); border-radius:9px; padding:8px 14px; display:grid; grid-template-columns:repeat(2,1fr); gap:4px 22px; }
+  .guard-item { font-size:8.5px; color:#374151; line-height:1.28; display:flex; gap:6px; align-items:flex-start; }
+  .guard-item::before { content:'\2713'; color:var(--jian); font-weight:900; flex-shrink:0; font-size:9px; }
+  .guard-item strong { color:var(--dark); font-weight:800; }
+
+  /* FOOTER */
+  .footer-section { padding:8px 34px 11px; flex-shrink:0; margin-top:auto; }
+  .footer-row { background:linear-gradient(135deg,var(--dark) 0%,#2D1B69 100%); border-radius:10px; overflow:hidden; position:relative; padding:12px 22px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+  .footer-row::after { content:''; position:absolute; left:0; right:0; top:0; height:3px; background:linear-gradient(90deg,var(--jian),var(--teal),var(--orange)); }
+  .cta-left { position:relative; z-index:2; }
+  .cta-title { font-size:15px; font-weight:900; color:#fff; line-height:1.16; }
+  .cta-title .acc { color:#A78BFA; }
+  .cta-sub { font-size:8.5px; color:rgba(255,255,255,0.6); line-height:1.3; margin-top:4px; max-width:340px; }
+  .cta-contacts { display:flex; flex-direction:column; gap:5px; position:relative; z-index:2; flex-shrink:0; }
+  .cta-contact-item { font-size:11px; color:rgba(255,255,255,0.88); font-weight:700; white-space:nowrap; }
+  .cta-contact-item .ci-icon { color:var(--teal); margin-right:5px; }
+
+  @media print { html,body { margin:0; padding:0; background:#fff; display:block; } .page { box-shadow:none; break-after:page; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="op-header">
+    <div class="header-left">
+      <img src="https://technijian.com/wp-content/uploads/2023/08/Logo.jpg" alt="Technijian" class="header-logo">
+      <div class="header-title"><span class="jian">Jian</span> <span class="for">for</span> Applications</div>
+      <div class="header-tagline">Your line-of-business apps, watched like infrastructure.</div>
+      <span class="header-stamp">DATASHEET &middot; ORX CLAIMS PLATFORM &mdash; LIVE</span>
+    </div>
+    <div class="header-right">
+      <div class="header-stat"><div class="hs-val acc">3</div><div class="hs-lbl">app agents live</div></div>
+      <div class="header-divider"></div>
+      <div class="header-stat"><div class="hs-val">$180K</div><div class="hs-lbl">leak surfaced</div></div>
+      <div class="header-divider"></div>
+      <div class="header-stat"><div class="hs-val">9,295</div><div class="hs-lbl">claims gap caught</div></div>
+      <div class="header-divider"></div>
+      <div class="header-stat"><div class="hs-val">24&times;7</div><div class="hs-lbl">read-only watch</div></div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-section">
+    <div class="intro-band">
+      <div class="ib-text">
+        <strong>Jian for Applications</strong> puts a dedicated AI agent on the revenue-critical application your business runs on &mdash; the same autonomous monitor &middot; triage &middot; alert engine behind Jian, taught <em>your app's</em> business logic. It watches the data flow, traces any record end-to-end, and hands your team the exact worklist. <strong>Read-only and alert-only by design:</strong> Jian finds it &mdash; your people make the call.
+      </div>
+      <div class="intro-pills">
+        <div class="intro-pill">Built on the MCP pattern</div>
+        <div class="intro-pill">SP &rarr; API &rarr; MCP</div>
+        <div class="intro-pill">Credentials from vault</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENTS (ORX flagship) -->
+  <div class="agents-section">
+    <div class="sec-label"><span class="sl-accent">Flagship Deployment</span> ORX &mdash; OrthoKinetix / OrthoXpress claims platform
+      <span class="sl-note">Three live agents on one revenue cycle</span>
+    </div>
+    <div class="agents-grid">
+      <div class="agent-card">
+        <div class="ac-head"><div class="ac-icon">&#128260;</div><div><div class="ac-name">OXPLive Feed</div><div class="ac-sub">Watchdog</div></div></div>
+        <div class="ac-desc">Watches the OrthoXpressDB &rarr; OXPLiveNG claims feed &mdash; the platform's single most critical dependency. Detects feed-freeze, source-vs-destination lag, and the open claims-backfill gap.</div>
+        <div class="ac-catch"><div class="acl">What it now catches</div><div class="acv">A silent <strong>95-day feed outage</strong> once froze ~9,295 claims. The watchdog now flags a freeze in <strong>15 minutes</strong>.</div></div>
+      </div>
+      <div class="agent-card">
+        <div class="ac-head"><div class="ac-icon">&#128228;</div><div><div class="ac-name">Waystar</div><div class="ac-sub">Clearinghouse</div></div></div>
+        <div class="ac-desc">Commercial / Medicare 837 submission, responses &amp; REST API. Detects the batching leak (lines billed but never transmitted), buckets rejections for correction, and traces any claim end-to-end.</div>
+        <div class="ac-catch"><div class="acl">What it surfaced</div><div class="acv">~1,615 lines / <strong>~$180K</strong> billed but never sent &mdash; delivered as a ready-to-resubmit worklist.</div></div>
+      </div>
+      <div class="agent-card">
+        <div class="ac-head"><div class="ac-icon">&#129658;</div><div><div class="ac-name">DaisyBill</div><div class="ac-sub">WC 837 MCP</div></div></div>
+        <div class="ac-desc">California workers&rsquo;-comp e-billing via the live DaisyBill MCP server. Watches bill-sync &amp; EDI-837 recency, MCP + core-API health, and bill / payment counts.</div>
+        <div class="ac-catch"><div class="acl">Now health-checked</div><div class="acv"><strong>85 syncs / 82 EDI runs / 0 failures</strong> historically &mdash; now continuously watched for any &gt;24h gap or 503.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI -->
+  <div class="roi-section">
+    <div class="roi-strip">
+      <div class="roi-intro">
+        <div class="ri-label">Why an app agent pays for itself</div>
+        <div class="ri-head">One missed billing event<br>dwarfs a year of watching.</div>
+        <div class="ri-sub">Figures are real findings on the ORX claims platform.</div>
+      </div>
+      <div class="roi-div"></div>
+      <div class="roi-stat"><div class="rs-val amber">$180K</div><div class="rs-lbl">billed-but-unsent lines surfaced</div></div>
+      <div class="roi-div"></div>
+      <div class="roi-stat"><div class="rs-val">9,295</div><div class="rs-lbl">claims caught in the feed-freeze gap</div></div>
+      <div class="roi-div"></div>
+      <div class="roi-stat"><div class="rs-val teal">~6,000</div><div class="rs-lbl">rejected claims auto-bucketed to worklists</div></div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="price-section">
+    <div class="sec-label"><span class="sl-accent">Pricing</span> Three lines &mdash; priced on revenue protected, not headcount
+      <span class="sl-note">Indicative bands &middot; confirmed on scoping</span>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="pc-kicker">One-Time</div>
+        <div class="pc-name">Build</div>
+        <div class="pc-price-row"><span class="pc-price">$8K&ndash;$25K</span><span class="pc-per">/ app agent</span></div>
+        <div class="pc-divider"></div>
+        <div class="pc-desc">Teach Jian your app: discovery, <strong>SP &rarr; API &rarr; MCP</strong> integration, the detections, and the operating runbook.</div>
+      </div>
+      <div class="price-card featured">
+        <div class="pc-badge">&#9733; The Recurring Line</div>
+        <div class="pc-kicker">Per Agent / Month</div>
+        <div class="pc-name">Run</div>
+        <div class="pc-price-row"><span class="pc-price">$250&ndash;$500</span><span class="pc-per">/ agent / mo</span></div>
+        <div class="pc-divider"></div>
+        <div class="pc-desc">Continuous 24&times;7 watch, alerts, worklists &amp; monthly. <strong>Bundle a platform:</strong> ORX&rsquo;s 3 agents &asymp; <strong>$750&ndash;$1,500/mo</strong>.</div>
+      </div>
+      <div class="price-card">
+        <div class="pc-kicker">Optional</div>
+        <div class="pc-name">Managed Ops</div>
+        <div class="pc-price-row"><span class="pc-price">Retainer</span><span class="pc-per">/ T&amp;M</span></div>
+        <div class="pc-divider"></div>
+        <div class="pc-desc">We <strong>operate, fix &amp; modernize</strong> the app &mdash; the work a dev shop did &mdash; on your managed-services rate card.</div>
+      </div>
+    </div>
+    <div class="price-foot">
+      <span><strong>Watch &rarr; Worklist &rarr; (optional) Operate.</strong></span>
+      <span class="pf-sep"></span>
+      <span>Land on the watch, expand to operations as trust builds.</span>
+      <span class="pf-sep"></span>
+      <span><strong>Reusable</strong> for any line-of-business app.</span>
+    </div>
+  </div>
+
+  <!-- GUARDRAILS -->
+  <div class="guard-section">
+    <div class="sec-label"><span class="sl-accent">How it works</span> &mdash; the honesty guardrails</div>
+    <div class="guard-band">
+      <div class="guard-item"><span><strong>Read-only by default.</strong> Jian watches &amp; traces; it never auto-resubmits a claim &mdash; duplicate-claim / timely-filing risk is real money, so billing stays human.</span></div>
+      <div class="guard-item"><span><strong>Credentials from your vault.</strong> Never in code or logs; least-privilege API / SQL access only.</span></div>
+      <div class="guard-item"><span><strong>Branded, throttled alerts.</strong> jian@ email + Client Portal ticket + Teams &mdash; each with the exact worklist, not just &ldquo;something&rsquo;s wrong.&rdquo;</span></div>
+      <div class="guard-item"><span><strong>MCP-pattern foundation.</strong> SP &rarr; API &rarr; MCP &mdash; the same reference architecture as the live DaisyBill server.</span></div>
+    </div>
+  </div>
+
+  <!-- FOOTER CTA -->
+  <div class="footer-section">
+    <div class="footer-row">
+      <div class="cta-left">
+        <div class="cta-title">Have a revenue-critical app<br><span class="acc">no one is watching?</span> We&rsquo;ll put an agent on it.</div>
+        <div class="cta-sub">From a single feed watchdog to a whole platform &mdash; scoped in days, watching in weeks, on the same engine trusted across 57+ managed environments.</div>
+      </div>
+      <div class="cta-contacts">
+        <div class="cta-contact-item"><span class="ci-icon">&#9993;</span>sales@technijian.com</div>
+        <div class="cta-contact-item"><span class="ci-icon">&#9742;</span>(949) 379-8499</div>
+        <div class="cta-contact-item"><span class="ci-icon">&#127760;</span>technijian.com</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
