@@ -138,7 +138,7 @@
 ### Gaps in current providers / tools
 
 - Vanta/Drata automate *evidence*, not *operations*. Controls still have to be implemented by humans.
-- No 24/7 SOC — she's the SOC.
+- No 24/7 MDR — she's the SOC.
 - No pentest cadence beyond annual.
 - No formal IR coordination.
 - AWS Well-Architected review done once at founding and never repeated.
@@ -170,7 +170,7 @@
 | $ approval threshold solo | $25K – $100K per year; CEO rubber-stamps usually |
 | $ approval threshold with signatory | CEO above threshold |
 | # of vendors compared | 2 – 3 |
-| Key inputs to decision | Peer CTO reference, audit-firm reference, sample SOC 2 project plan, **proof that Technijian is SOC 2 itself**, pricing transparency |
+| Key inputs to decision | Peer CTO reference, audit-firm reference, sample SOC 2 project plan, **proof of Technijian's SOC 2 posture (TPX reliance + CUEC mapping)**, pricing transparency |
 | Response time to outbound | Fast if pitch is sharp, ignore otherwise |
 | Preferred first-touch channel | Peer intro > Slack community (e.g., Rands, Pragmatic Engineers, Locally-Optimistic) > LinkedIn DM > email; phone rarely |
 
@@ -217,7 +217,7 @@
 
 2. **"My team can do this."**
    - **Why:** Engineer pride + budget.
-   - **Reframe:** "Your team can. Should they? Here's what SOC 2 + 24/7 SOC costs vs pulling your staff engineer for 30% of their time over 4 months."
+   - **Reframe:** "Your team can. Should they? Here's what SOC 2 + 24/7 MDR costs vs pulling your staff engineer for 30% of their time over 4 months."
 
 3. **"We don't need U.S.-based / local. We're remote."**
    - **Why:** Remote-first posture.
@@ -233,7 +233,7 @@
 
 6. **"Show me your own SOC 2."**
    - **Why:** Test of credibility.
-   - **Reframe:** Have it ready. Technijian operates a SOC 2 datacenter; we send the bridge letter same day.
+   - **Reframe:** Have it ready. Our equipment is colocated in TPX's SOC 2-audited datacenter; we send TPX's SOC 2 report / bridge letter same day.
 
 7. **"My auditor said I need X."**
    - **Why:** Auditor coupling.
@@ -251,10 +251,10 @@
 
 ### Must-haves
 
-- **Technijian's own SOC 2 Type II** ready to share
+- **TPX's SOC 2 Type II report (our colocation datacenter provider) + our own policies & insurance** ready to share
 - **SOC 2 Type I → Type II** project plan with dates
 - **AWS / Azure expertise** (Well-Architected, IAM, KMS, VPC, Kubernetes)
-- **24/7 SOC** with API-accessible alerting
+- **24/7 MDR** with API-accessible alerting
 - **IR retainer** with documented runbooks
 - **Pentest capability** or partnership (Nexus Assess + Pulse)
 - **Startup-friendly commercial terms** (no 3-year lock-in)
@@ -270,7 +270,7 @@
 ### Vendor-selection priorities (ranked)
 
 1. SOC 2 project credibility
-2. 24/7 SOC depth
+2. 24/7 MDR depth
 3. AWS / Azure expertise
 4. Commercial flexibility
 5. Peer CTO references
@@ -383,7 +383,7 @@
 | Service | Why it fits | Typical entry deal size |
 |---|---|---|
 | My Compliance SOC 2 (readiness + audit prep) | SOC 2 Type I → Type II project with evidence workflow | $25K – $75K project + $1K – $3K/mo ongoing |
-| My Security 24/7 SOC | Continuous monitoring; removes the "we are our own SOC" problem | $40K – $150K/yr |
+| My Security 24/7 MDR | Continuous monitoring; removes the "we are our own SOC" problem | $40K – $150K/yr |
 | My Cloud (AWS / Azure review + FinOps) | Well-Architected review, IAM hardening, cost optimization | $15K – $50K project + $1K – $5K/mo |
 
 ### Expansion path
@@ -411,7 +411,7 @@
 
 ### Differentiators that matter most
 
-1. **Technijian has its own SOC 2** (credible, not aspirational)
+1. **Technijian's SOC 2 posture (TPX reliance + CUEC mapping)** (credible, not aspirational)
 2. **24/7 U.S.-based SOC with 15-min critical SLA**
 3. **Nexus Assess + Pulse** — "AI-enhanced penetration testing" is a CTO-friendly angle (Services/Nexus Assess Pulse-pre-release/assets/Nexus Assess Pulse One-Pager.html)
 4. **Cloud-native + SaaS-fluent team** (not a desktop-support MSP)
@@ -419,7 +419,7 @@
 
 ### Proof points that resonate
 
-- Technijian's own SOC 2 Type II report
+- TPX's SOC 2 Type II report (our colocation datacenter provider) + our own policies & insurance
 - 2 – 3 SaaS CTO reference calls
 - Sample SOC 2 project Gantt + evidence plan
 - Case study: SOC 2 journey with specific audit firm
@@ -427,7 +427,7 @@
 
 ### Messaging angles
 
-- **Headline:** "SOC 2 Type II in 90 – 120 days. 24/7 SOC. Audit-friendly evidence automation."
+- **Headline:** "SOC 2 Type II in 90 – 120 days. 24/7 MDR. Audit-friendly evidence automation."
 - **Open-loop question:** "How many enterprise deals are waiting on your SOC 2 Type II?"
 - **Close angle:** "We've done this 20+ times. We know the auditors. We know the evidence. We know what breaks. Let's start next week."
 
@@ -441,7 +441,7 @@
 
 - SOC 2 Type II report delivered on schedule with zero material exceptions.
 - Enterprise deal-gate removed (track unblocked ARR).
-- 24/7 SOC catches ≥1 incident/quarter.
+- 24/7 MDR catches ≥1 incident/quarter.
 - Monthly cloud spend / ARR declining.
 - Incident MTTR <1 hr.
 - Customer security questionnaire turnaround <48 hrs.
@@ -534,7 +534,7 @@
 
 ### Their elevator pitch for what they need
 
-> "A security and compliance partner that can run my SOC 2 Type II, operate a real 24/7 SOC, review my AWS/Azure architecture, and burst in extra engineering when we need it — all on startup-friendly terms."
+> "A security and compliance partner that can run my SOC 2 Type II, operate a real 24/7 MDR, review my AWS/Azure architecture, and burst in extra engineering when we need it — all on startup-friendly terms."
 
 ---
 
@@ -564,7 +564,7 @@
 ## 21. Source / Evidence
 
 - `Services/My Compliance/assets/My Compliance - SOC 2 One-Pager.html` — "SOC 2 for Technology & SaaS," "Readiness · Type I · Type II · Annual Renewals," "Audit Sherpa"
-- `Services/My Security/assets/My Security One-Pager.html` — 24/7 SOC, 15-min IR, "Technology & SaaS" industry
+- `Services/My Security/assets/My Security One-Pager.html` — 24/7 MDR, 15-min IR, "Technology & SaaS" industry
 - `Services/My Cloud/assets/My Cloud One-Pager.html` — AWS / Azure Well-Architected, FinOps
 - `Services/Nexus Assess Pulse-pre-release/assets/Nexus Assess Pulse One-Pager.html` — AI-enhanced continuous pentest
 - `Services/My Dev/assets/My Dev One-Pager.html` — engineering augmentation
@@ -593,7 +593,7 @@
 
 ### Paid Ads & Social Targeting
 - **LinkedIn Targeting:** Job Titles (CTO, VP Engineering, Founding Engineer, Head of Infrastructure) + Company Size (11-200) + Industry (Technology, Software Development).
-- **Ad Hooks:** "Unblock your enterprise deals. SOC 2 Type II in 90 days." / "You shouldn't be your own 24/7 SOC. Let your engineers sleep."
+- **Ad Hooks:** "Unblock your enterprise deals. SOC 2 Type II in 90 days." / "You shouldn't be your own 24/7 MDR. Let your engineers sleep."
 
 ---
 

@@ -472,7 +472,7 @@ function internSlide() {
     x: 6.78, y: 2.35, w: 6.0, h: 4.45, band: COLORS.blue,
     label: "What changes with a managed partner",
     title: "What a team adds",
-    body: "•  A credentialed team and a 24/7 Security Operations Center behind every laptop\n\n•  Written security standards, applied consistently to all 7 devices\n\n•  One number to call — with defined, guaranteed response times\n\n•  Knowledge that stays — documented and owned by us, not stuck in one person\n\n•  We can mentor your intern alongside us (co-managed), so they grow with you",
+    body: "•  A credentialed team and 24/7 managed detection & response behind every laptop\n\n•  Written security standards, applied consistently to all 7 devices\n\n•  One number to call — with defined, guaranteed response times\n\n•  Knowledge that stays — documented and owned by us, not stuck in one person\n\n•  We can mentor your intern alongside us (co-managed), so they grow with you",
     bodySize: 12, bodyY: 0.95,
   };
   addCard(slide, left);
@@ -495,7 +495,7 @@ function howWeSecureSlide() {
     { title: "Email & web defense", band: COLORS.teal, body: "Phishing and spam filtering, malicious-link protection, and safe web/DNS filtering. Most attacks arrive by email — we stop them before the click." },
     { title: "Data & backup", band: COLORS.chartreuse, body: "Independent, ransomware-resilient backup of your Microsoft 365 data with fast recovery. The cloud by itself is not a backup." },
     { title: "Your people", band: COLORS.green, body: "Short security-awareness training and simulated phishing. Your team becomes your strongest layer instead of the weakest link." },
-    { title: "Eyes on glass, 24/7", band: COLORS.dark, body: "A Security Operations Center watching alerts around the clock, with a defined response when something looks wrong — across every time zone your team works in." },
+    { title: "Eyes on glass, 24/7", band: COLORS.dark, body: "Managed detection & response watching alerts around the clock, with a defined response when something looks wrong — across every time zone your team works in." },
   ];
   layers.forEach((l, i) => {
     const x = 0.55 + (i % 3) * 4.16;
@@ -520,7 +520,7 @@ function stackSlide() {
 
   const services = [
     { title: "My IT", sub: "Managed & Co-Managed", body: "Help desk + monitoring + patching for your laptops and Microsoft 365. We can run it fully, or alongside your intern.", band: COLORS.blue, start: true },
-    { title: "My Security", sub: "24/7 SOC", body: "EDR + email security + MFA-everywhere + 24/7 monitoring and response. This is the core of what you came to us for.", band: COLORS.orange, start: true },
+    { title: "My Security", sub: "24/7 MDR", body: "EDR + email security + MFA-everywhere + 24/7 monitoring and response. This is the core of what you came to us for.", band: COLORS.orange, start: true },
     { title: "My Compliance", sub: "When clients ask", body: "HIPAA, SOC 2, and more — evidence and guidance for when a funder or client asks how you protect their data.", band: COLORS.teal },
     { title: "My Jian", sub: "Our security platform", body: "Technijian-built monitoring that watches across your tools and produces a plain monthly security report.", band: COLORS.chartreuse },
     { title: "My AI / My Dev", sub: "When you're ready", body: "Practical AI and custom builds — a later conversation, only if and when it helps the mission.", band: COLORS.dark },

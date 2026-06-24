@@ -65,7 +65,7 @@
 `My Compliance CMMC Readiness` → `My Cloud` (GCC High enclave) → `My Security` (SIEM, CUI controls) → `My Continuity` (immutable backups) → `My AI Manufacturing` (estimating, quality, docs)
 
 ### 05 Priya Sharma — SaaS CTO
-`My Compliance SOC 2 Readiness` → `My Security` (24/7 SOC) → `My Cloud` (AWS/Azure Well-Architected) → `My Dev` (extra engineering capacity) → `Nexus Assess + Pulse` (ongoing pentest)
+`My Compliance SOC 2 Readiness` → `My Security` (24/7 MDR) → `My Cloud` (AWS/Azure Well-Architected) → `My Dev` (extra engineering capacity) → `Nexus Assess + Pulse` (ongoing pentest)
 
 ### 06 Catherine Weiss — Law Firm Managing Partner
 `My IT + M365` → `My Security` (MFA, EDR, email) → `My Compliance Guardian` (sensitive file protection) → `My Compliance Vault` (secrets) → `My Continuity` → `Chat.AI` (legal research)
@@ -83,7 +83,7 @@
 `My AI Lead Gen` (luxury home buyer lead-gen) → `My IT + My Office` → `My Security` (endpoint + MFA) → `My Cloud` (Azure AD Hybrid) → `My Continuity`
 
 ### 11 Sarah Okafor — Internal IT Director
-`Co-Managed IT` → `My Security` (24/7 SOC) → `My Cloud` (capacity + architecture) → `Nexus Assess + Pulse` (annual pentest) → `My Dev` (extra capacity)
+`Co-Managed IT` → `My Security` (24/7 MDR) → `My Cloud` (capacity + architecture) → `Nexus Assess + Pulse` (annual pentest) → `My Dev` (extra capacity)
 
 ### 12 Jennifer Hayes — Marketing Director
 `My SEO` → `My AI Lead Gen` → `Chat.AI` (workflow automation) → `My Dev` (landing pages, MarTech integrations)

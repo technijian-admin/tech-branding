@@ -350,7 +350,7 @@ const section4 = [
 // ============================================================
 const section5 = [
   ...sectionHeader('Technijian Capability Map', CORE_BLUE, '05'),
-  p('Technijian is an Irvine-based IT services company founded in 2000, with a Panchkula, India delivery center for 24/7 follow-the-sun coverage. We are cybersecurity-first (CISSP-led, with our own Security Operations Center) and AI-forward (we build, not just resell). The table maps our service lines to the categories of need a multi-site benefits fiduciary typically has. Which of these apply to you is a discovery question, not an assumption.', { spaceAfter: 140 }),
+  p('Technijian is an Irvine-based IT services company founded in 2000, with a Panchkula, India delivery center for 24/7 follow-the-sun coverage. We are cybersecurity-first (CISSP-led, delivering managed detection & response via our My Jian SIEM and CrowdStrike/Huntress MDR partners) and AI-forward (we build, not just resell). The table maps our service lines to the categories of need a multi-site benefits fiduciary typically has. Which of these apply to you is a discovery question, not an assumption.', { spaceAfter: 140 }),
   buildTable(
     [{ label: 'Need category', weight: 30 }, { label: 'Technijian service', weight: 22 }, { label: 'What it delivers', weight: 48 }],
     [
@@ -388,7 +388,7 @@ const section6 = [
       [{ text: 'Email & payment fraud', bold: true, color: CORE_BLUE }, 'Anti-phishing, malicious-link protection, and a verification process for payment- and account-change requests.', 'BEC / fund-disbursement risk'],
       [{ text: 'Data, backup & ransomware', bold: true, color: CORE_BLUE }, 'Immutable, tested backups of beneficiary records and accounting systems; rapid, verified recovery.', 'SSA recordkeeping (20 CFR 404.2035)'],
       [{ text: 'Audit-ready records', bold: true, color: CORE_BLUE }, 'Records stored, retained, and retrievable on demand for an SSA onsite review or a VA field examination.', 'SSA / VA oversight reviews'],
-      [{ text: '24/7 SOC & response', bold: true, color: CORE_BLUE }, 'Eyes-on-glass monitoring with a defined response — the around-the-clock coverage a small team cannot staff alone.', 'SSA PII safeguarding'],
+      [{ text: '24/7 MDR & response', bold: true, color: CORE_BLUE }, 'Eyes-on-glass monitoring with a defined response — the around-the-clock coverage a small team cannot staff alone.', 'SSA PII safeguarding'],
     ], { headerColor: CORE_BLUE }),
   spacer(120),
   calloutBox('The control that matters most for a fund-mover',
@@ -459,7 +459,7 @@ const section9 = [
     [{ label: 'Service line', weight: 36 }, { label: 'Market-typical range (2026)', weight: 36 }, { label: 'Note', weight: 28 }],
     [
       ['Managed / co-managed IT (per user / month)', '$110–$400; small organizations toward the lower-to-middle of that band', 'Scales with users & scope'],
-      ['24/7 SOC / managed detection & response', '$10–$30 / endpoint / mo; small orgs often $1,500–$5,000 / mo', 'Directional'],
+      ['24/7 managed detection & response (MDR)', '$10–$30 / endpoint / mo; small orgs often $1,500–$5,000 / mo', 'Directional'],
       ['Email security', '~$3–$6 / user / mo (Technijian My AntiSpam $4.75 in-band)', 'Directional'],
       ['Microsoft 365 / cloud backup', '~$3–$7 / user / mo', 'Directional'],
       ['Security-awareness training', '~$1–$5 / user / mo', 'Directional'],

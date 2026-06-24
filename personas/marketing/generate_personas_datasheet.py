@@ -235,7 +235,7 @@ PERSONAS = [
             '"Our EHR vendor won\'t let anyone else touch integrations"',
         ],
         'criteria': [
-            'Signed BAA pre-engagement, 24/7 SOC with IR SLA',
+            'Signed BAA pre-engagement, 24/7 MDR with IR SLA',
             'Healthcare-specific customer references',
             'HIPAA-fluent vCISO / vCCO on retainer',
         ],
@@ -319,17 +319,17 @@ PERSONAS = [
             'Series A / B funding close approaching',
             'First regulated customer (HIPAA/PCI/FedRAMP)',
         ],
-        'services': 'My Compliance SOC 2, My Security 24/7 SOC, My Cloud (AWS/Azure)',
+        'services': 'My Compliance SOC 2, My Security 24/7 MDR, My Cloud (AWS/Azure)',
         'objections': [
             '"Vanta / Drata handles this, why do I need you?"',
             '"Show me your own SOC 2"',
         ],
         'criteria': [
-            'Technijian\'s own SOC 2 Type II on file',
+            'Technijian\'s SOC 2 posture (TPX reliance + CUEC mapping) on file',
             'AWS / Azure Well-Architected depth (IAM, KMS)',
             'Startup-friendly commercial terms, evidence automation',
         ],
-        'headline': 'SOC 2 Type II in 90-120 days. 24/7 SOC. Audit-friendly evidence automation.',
+        'headline': 'SOC 2 Type II in 90-120 days. 24/7 MDR. Audit-friendly evidence automation.',
         'quote': 'I have three enterprise deals waiting on SOC 2 Type II. Sales wants it yesterday. I\'m one person on security.',
         'holes': 'AWS re:Invent (Dec) | Pragmatic Engineer newsletter | Hacker News / Rands Slack',
     },
@@ -507,7 +507,7 @@ PERSONAS = [
         'criteria': [
             'Co-managed model - extend not replace',
             'RACI documented pre-contract',
-            'Technijian\'s own SOC 2 Type II',
+            'Technijian\'s SOC 2 posture (TPX reliance + CUEC mapping)',
         ],
         'headline': 'Extend your team - don\'t replace it. Co-managed IT that respects your ops.',
         'quote': 'My senior engineer is going to quit if he\'s on-call one more weekend. I can\'t hire fast enough. I need a partner, not a replacement.',

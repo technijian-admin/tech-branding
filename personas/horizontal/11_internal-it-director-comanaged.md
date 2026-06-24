@@ -249,11 +249,11 @@
 ### Must-haves
 
 - **Co-managed model** (not replace-and-own)
-- **24/7 SOC + help desk** with documented SLAs
+- **24/7 MDR + help desk** with documented SLAs
 - **Specialist bench** (cloud, security, M365, identity)
 - **RACI documented pre-contract**
 - **Reporting cadence** — monthly metrics to CFO-ready
-- **Own SOC 2 Type II** (Technijian's)
+- **Technijian's SOC 2 posture (TPX reliance + CUEC mapping)**
 - **Pod / account team continuity**
 - **Change-control integration** with her ITSM
 
@@ -385,7 +385,7 @@
 | Service | Why it fits | Typical entry deal size |
 |---|---|---|
 | My IT Co-Managed | 24/7 + specialists + augmentation, not replace | $60K – $250K Yr 1 |
-| My Security (24/7 SOC) | Covers after-hours + SIEM tuning | $60K – $200K / yr |
+| My Security (24/7 MDR) | Covers after-hours + SIEM tuning | $60K – $200K / yr |
 | My Cloud (AWS/Azure specialists) | Well-Architected + FinOps + migration | $30K – $150K project or retainer |
 
 ### Expansion path
@@ -414,8 +414,8 @@
 ### Differentiators that matter most
 
 1. **Co-managed fluency** (not a conversion play)
-2. **Technijian's own SOC 2** + mature security posture
-3. **24/7 SOC with 15-min IR** (My Security)
+2. **Technijian's SOC 2 posture (TPX reliance + CUEC mapping)** + mature security posture
+3. **24/7 MDR with 15-min IR** (My Security)
 4. **Specialist bench** — cloud, security, identity, AI-dev
 5. **Pod model continuity** (same team every time, no ticket-roulette)
 
@@ -425,7 +425,7 @@
 - Sample RACI
 - Sample monthly co-managed report
 - Sample SLA document
-- Technijian SOC 2 Type II
+- Technijian's SOC 2 posture (TPX reliance + CUEC mapping)
 
 ### Messaging angles
 
@@ -532,7 +532,7 @@
 
 ### Their elevator pitch for what they need
 
-> "A co-managed partner that brings 24/7 SOC + help desk, on-demand cloud and security specialists, project burst capacity, and monthly reports the CFO can read — without replacing my team or fighting me for control."
+> "A co-managed partner that brings 24/7 MDR + help desk, on-demand cloud and security specialists, project burst capacity, and monthly reports the CFO can read — without replacing my team or fighting me for control."
 
 ---
 
@@ -561,7 +561,7 @@
 ## 21. Source / Evidence
 
 - `Services/My IT/assets/My IT One-Pager.html` — "Co-Managed IT — partner with your internal IT team" engagement model
-- `Services/My Security/assets/My Security One-Pager.html` — 24/7 SOC, 15-min IR
+- `Services/My Security/assets/My Security One-Pager.html` — 24/7 MDR, 15-min IR
 - `Services/My Cloud/assets/My Cloud One-Pager.html` — AWS/Azure Well-Architected, FinOps
 - `Services/Nexus Assess Pulse-pre-release/assets/Nexus Assess Pulse One-Pager.html`
 - `Services/My Dev/assets/My Dev One-Pager.html` — engineering augmentation
@@ -572,24 +572,24 @@
 ## 22. Marketing & Campaign Playbook
 
 ### SEO & Search Intent
-- **Short-Tail Keywords:** "Co-managed IT", "IT staff augmentation", "24/7 SOC services", "Azure specialist on demand", "SOC 2 Type II MSP"
-- **Long-Tail Keywords:** "how to build a co-managed IT RACI matrix", "adding a 24/7 SOC without hiring headcount", "preventing IT engineer burnout on-call rotation", "on demand Azure architect for mid-market", "co-managed IT for 500 employee company"
+- **Short-Tail Keywords:** "Co-managed IT", "IT staff augmentation", "24/7 MDR services", "Azure specialist on demand", "SOC 2 Type II MSP"
+- **Long-Tail Keywords:** "how to build a co-managed IT RACI matrix", "adding a 24/7 MDR without hiring headcount", "preventing IT engineer burnout on-call rotation", "on demand Azure architect for mid-market", "co-managed IT for 500 employee company"
 - **Content Pillars to Rank For:** Co-managed IT RACI templates, preventing IT burnout, augmenting vs. replacing IT teams, hybrid cloud architecture.
 - **Search Intent:** Informational (looking for architecture/templates) moving to Transactional (looking for specialized bench strength).
 
 ### Geo-Targeting & Local Strategy
-- **Geo-Targeted Keywords:** "co-managed IT Orange County", "IT staff augmentation Irvine", "24/7 SOC Southern California", "mid-market IT consulting Newport Beach", "Azure specialist Los Angeles"
+- **Geo-Targeted Keywords:** "co-managed IT Orange County", "IT staff augmentation Irvine", "24/7 MDR Southern California", "mid-market IT consulting Newport Beach", "Azure specialist Los Angeles"
 - **Hyper-Local Focus:** Corporate/business parks in Irvine, Costa Mesa, and the Inland Empire.
 - **Geo-Fencing Targets:** Local SIM (Society for Information Management) chapter dinners, ISACA/ISSA local events, Gartner IT Symposium.
 
 ### Email Marketing & Newsletter Strategy
 - **Optimal Cadence:** Bi-weekly. Tuesdays/Thursdays between 10 AM – 12 PM.
-- **Subject Line Formulas:** Peer-to-peer technical tone. (e.g., "Adding a 24/7 SOC without adding headcount", "Template: Co-managed IT RACI Matrix").
+- **Subject Line Formulas:** Peer-to-peer technical tone. (e.g., "Adding a 24/7 MDR without adding headcount", "Template: Co-managed IT RACI Matrix").
 - **Newsletter Content:** Deeply technical updates, zero marketing fluff. Include architecture diagrams, zero-day threat briefings, and actual PowerShell scripts or Terraform modules.
 
 ### Paid Ads & Social Targeting
 - **LinkedIn Targeting:** Job Titles (IT Director, VP IT, Head of Infrastructure) + Company Size (100-800) + Skills (M365, Azure, Cybersecurity, ITIL).
-- **Ad Hooks:** "Extend your team, don't replace it." / "The weekend on-call rotation is burning out your best engineers. Let our 24/7 SOC handle it."
+- **Ad Hooks:** "Extend your team, don't replace it." / "The weekend on-call rotation is burning out your best engineers. Let our 24/7 MDR handle it."
 
 ---
 

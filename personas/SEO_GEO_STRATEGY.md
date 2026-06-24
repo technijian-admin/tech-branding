@@ -75,7 +75,7 @@ Short-tail = 1–3 words, high volume, high competition. Use on service landing 
 
 #### My Security
 - Cybersecurity for business
-- 24/7 SOC services
+- 24/7 MDR services
 - Endpoint security (EDR/MDR)
 - Ransomware recovery
 - Email security
@@ -159,7 +159,7 @@ Long-tail = 4+ words, lower volume, higher intent. Use in blog post titles, H2/H
 
 #### My Security (long-tail)
 - small business cyber insurance requirements checklist
-- adding a 24/7 SOC without hiring headcount
+- adding a 24/7 MDR without hiring headcount
 - preventing IT engineer burnout on-call rotation
 - preventing trust account wire fraud for law firms
 - preventing donor data breaches in non-profits
@@ -249,7 +249,7 @@ Every service page should rank for `[service] + [OC city]` and `[service] + [Sou
 | construction IT support · job site IT services · home builder lead generation · commercial GC MSP · contractor IT consulting | (emphasis Newport, Laguna, Yorba Linda, Anaheim) |
 | municipal IT support · city government MSP · CJIS IT consultant · government IT contractors | (emphasis Orange County, LA, Inland Empire) |
 | e-commerce IT support · Shopify developer · retail MSP · AWS consultant | (emphasis LA Arts District, Culver City, Santa Monica, Costa Mesa) |
-| co-managed IT · IT staff augmentation · 24/7 SOC · mid-market IT consulting · Azure specialist | (emphasis Irvine, Costa Mesa, Inland Empire) |
+| co-managed IT · IT staff augmentation · 24/7 MDR · mid-market IT consulting · Azure specialist | (emphasis Irvine, Costa Mesa, Inland Empire) |
 | SEO agency · AI lead generation · B2B marketing technology · digital growth consulting · marketing IT support | (emphasis Irvine, Newport Beach, Westside LA) |
 
 **Local SEO shortcut:** every `/orange-county/<service>/` page should have a unique H1, ≥800 words of original copy, embedded Google Maps, at least 3 schema.org types (LocalBusiness + Service + FAQPage), and a minimum of 6 persona-specific testimonials. Don't build "doorway pages" — each page must genuinely serve a different buyer.
@@ -272,7 +272,7 @@ One row per persona. Columns map directly to the pages, ads, and blog posts this
 | 08 | Denise Washington — Non-profit ED | non-profit IT support · TechSoup IT consulting · non-profit cybersecurity | maximizing TechSoup Microsoft 365 grants · affordable managed IT for 501c3 organizations · preventing donor data breaches in non-profits | Santa Ana, Irvine, Newport Beach | `/non-profits/managed-it-techsoup/` |
 | 09 | Antonio DiMarco — Restaurant Group | restaurant SEO · increase Google Maps rank · PCI compliance for POS | how to increase Google Maps ranking for restaurants · PCI compliance checklist for Toast POS · preventing restaurant POS downtime during peak hours | Newport Peninsula, Costa Mesa 17th St, Arts District LA | `/restaurants/multi-unit-seo-it/` |
 | 10 | Javier Torres — Construction | Construction IT support · Procore IT integration · job site Wi-Fi | how to set up reliable job site trailer Wi-Fi · preventing wire fraud on commercial construction projects · AI lead generation for luxury home builders | Newport, Laguna, Yorba Linda, Anaheim | `/construction/luxury-builder-it/` |
-| 11 | Sarah Okafor — Internal IT Dir. | co-managed IT · IT staff augmentation · 24/7 SOC services | how to build a co-managed IT RACI matrix · adding a 24/7 SOC without hiring headcount · co-managed IT for 500 employee company | Irvine, Costa Mesa, Inland Empire | `/co-managed-it/` |
+| 11 | Sarah Okafor — Internal IT Dir. | co-managed IT · IT staff augmentation · 24/7 MDR services | how to build a co-managed IT RACI matrix · adding a 24/7 MDR without hiring headcount · co-managed IT for 500 employee company | Irvine, Costa Mesa, Inland Empire | `/co-managed-it/` |
 | 12 | Jennifer Hayes — Mktg Director | unlimited SEO · AI lead generation · reduce CPL | SEO agency with unlimited monthly hours · how to reduce cost per lead with AI · using Claude and ChatGPT for B2B lead generation | Irvine, Newport Beach, Westside LA | `/marketing/unlimited-seo-ai-leadgen/` |
 | 13 | Terry Williams — CFO | cyber insurance IT controls · IT spend optimization · business continuity planning | cyber insurance renewal controls checklist · how to produce SOX/SOC-2 evidence faster · ransomware cost for mid-market | any | `/cfo/it-financial-controls/` — needs Section 22 built |
 | 16 | Marcus Washington — City Manager | CJIS compliant MSP · municipal ransomware defense · FOIA email archiving | how to pass a CJIS audit for local police · WORM compliant email archiving for public records act · ransomware recovery for local government | Civic centers across SoCal | `/local-government/cjis-compliant-it/` |
@@ -344,7 +344,7 @@ One row per persona. Columns map directly to the pages, ads, and blog posts this
 5. How do I pass a 300-question enterprise security questionnaire without pulling my senior engineers for 3 weeks?
 6. What's the best way to run continuous penetration testing for a B2B SaaS product?
 7. Who are the best SOC 2 readiness consultants for Series A–B SaaS companies on AWS?
-8. How do I add a 24/7 SOC without blowing my burn rate?
+8. How do I add a 24/7 MDR without blowing my burn rate?
 9. What's the right IAM and data-classification architecture for a fast-growing SaaS startup?
 10. Should I build security in-house or buy an outsourced SOC until Series C?
 
@@ -410,7 +410,7 @@ One row per persona. Columns map directly to the pages, ads, and blog posts this
 
 ### 5.11 Persona 11 — Sarah Okafor (Internal IT Director — Co-Managed)
 1. What's a co-managed IT RACI matrix template I can actually use?
-2. How do I add 24/7 SOC coverage without hiring three engineers?
+2. How do I add 24/7 MDR coverage without hiring three engineers?
 3. My senior engineer is on-call every weekend and about to quit — how fast can a partner take this over?
 4. What's the right split of work between an internal IT team and an MSP partner?
 5. How do I hire a fractional Azure architect for 20 hours a month?

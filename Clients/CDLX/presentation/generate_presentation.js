@@ -413,7 +413,7 @@ function stackSlide() {
 
   const services = [
     { title: "My IT", sub: "Managed & Co-Managed", body: "24/7 monitoring + help desk + vCIO. Endpoint, network, server lifecycle. Fixed-scope projects when you need them.", band: COLORS.blue },
-    { title: "My Security", sub: "24/7 SOC", body: "15-min critical SLA. EDR + SIEM + email security + MFA-everywhere + conditional access. IR + forensics + Fractional CISO.", band: COLORS.orange },
+    { title: "My Security", sub: "24/7 MDR", body: "15-min critical SLA. EDR + SIEM + email security + MFA-everywhere + conditional access. IR + forensics + Fractional CISO.", band: COLORS.orange },
     { title: "My Compliance", sub: "8 frameworks today", body: "HIPAA, SOC 2, PCI-DSS, CMMC, GDPR, NIST CSF, CIS, ISO 27001. vCCO / vCISO. Audit-prep sherpa. Evidence collection.", band: COLORS.teal },
     { title: "My Jian", sub: "Our cross-vendor SIEM", body: "Technijian-built and operated. Ingests across firewall + EDR + email + DNS + backup + M365. MITRE-tagged. Continuous compliance.", band: COLORS.chartreuse },
     { title: "My Dev / My AI", sub: "Custom & advisory", body: "Custom builds, AI Document Intelligence, knowledge graphs, agent workflows. Fractional AI Advisor on retainer.", band: COLORS.dark },
@@ -576,7 +576,7 @@ function trackBSlide() {
     { title: "What Technijian brings", band: COLORS.orange, label: "Managed wrap", items: [
       "Entra ID / AD integration for the agency",
       "Card lifecycle (issue, rotate, revoke) workflows",
-      "24/7 SOC + 15-minute critical SLA",
+      "24/7 MDR + 15-minute critical SLA",
       "8-framework compliance program + CJIS (Phase 1)",
       "My Jian SIEM for continuous evidence",
       "Audit-evidence pack a state CSO can use",

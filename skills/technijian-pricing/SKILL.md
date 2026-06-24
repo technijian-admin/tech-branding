@@ -37,7 +37,7 @@ The official Technijian service catalog. Every priced item must match a SKU belo
 |---|---|---|---|---|
 | SEC-XDR | CrowdStrike Falcon XDR / EDR | per endpoint / month | $25–$35 | Bundled with management |
 | SEC-EMAIL | Sophos Email Protection | per mailbox / month | $5–$8 | Anti-phishing + DLP |
-| SEC-SOC | 24/7 SOC monitoring & response | per endpoint / month | $18–$28 | Includes monthly threat report |
+| SEC-MDR | 24/7 managed detection & response (MDR) | per endpoint / month | $18–$28 | My Jian SIEM + partner MDR (CrowdStrike/Huntress) + analyst triage; monthly threat report. NOT an in-house SOC |
 | SEC-PHISH | Phishing simulation + training (KnowBe4) | per user / year | $35 | Quarterly campaigns |
 | SEC-PENTEST | External penetration test | flat fee | $4,500–$12,000 | Scoped by attack surface |
 | SEC-INCIDENT | Incident response (retainer) | per month | $750 | First 8 hours free; $295/hr after |

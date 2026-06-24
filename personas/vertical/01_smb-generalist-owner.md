@@ -504,7 +504,7 @@
 | Procurement / legal review depth | Light — his attorney reads MSA in 3 – 5 business days, flags obvious issues |
 | Insurance / indemnification sensitivity | Medium — wants $2M cyber / $2M E&O, standard indemnification reciprocal |
 | Data residency requirements | None explicit; prefers US-based cloud |
-| BAA / DPA / SOC 2 on Technijian | Rarely asked; appreciates that Technijian has its own SOC 2 datacenter |
+| BAA / DPA / SOC 2 on Technijian | Rarely asked; appreciates that Technijian's equipment sits in a SOC 2-audited (TPX) colocation datacenter |
 | Termination / out clause | 60-day convenience termination; no auto-renewal longer than 12 months |
 
 ---

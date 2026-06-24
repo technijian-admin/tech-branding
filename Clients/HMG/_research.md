@@ -39,13 +39,13 @@ A Knox-Keene, URAC-accredited managed behavioral-health plan handling PHI sits a
 - Internal IT works side-by-side; org **keeps strategy + institutional knowledge**, gains MSP tooling/skills/manpower "at a fraction of in-house build cost." (Level.io, Compass MSP)
 - **CompTIA thesis:** primary outsourcing driver is now the **skills gap, not cost** — mid-market can't recruit/retain security+cloud specialists an MSP has at scale. ("68% of MSPs offer co-managed" = secondary blog, **UNVERIFIED**; skills-gap thesis is CompTIA's own.)
 - **Healthcare angle:** continuous HIPAA monitoring; MSP owns security/compliance while in-house keeps **business apps (QuickCap claims, provider/member portals, EAP intake).**
-- **What one admin physically can't staff:** 24/7 SOC/SIEM; after-hours+overflow help desk (so Deric can take PTO); security tooling at scale (EDR/MDR, email, vuln, backup); compliance-evidence production (HIPAA risk analysis, Part 2/CMIA/URAC/DMHC artifacts); project bandwidth (server refresh, M365 hardening, encryption rollout); **vCIO/vCISO** strategic layer.
+- **What one admin physically can't staff:** 24/7 MDR/SIEM; after-hours+overflow help desk (so Deric can take PTO); security tooling at scale (EDR/MDR, email, vuln, backup); compliance-evidence production (HIPAA risk analysis, Part 2/CMIA/URAC/DMHC artifacts); project bandwidth (server refresh, M365 hardening, encryption rollout); **vCIO/vCISO** strategic layer.
 
 ## 5. Cost-Consolidation Ranges (2026) — *market-typical, NOT competitor quotes*
 | Service line | Market-typical range | Note |
 |---|---|---|
 | Managed/Co-managed IT (per user/mo) | **$110–$400**; mid-market 50–250 users **$150–$250** | Velo, VC3 |
-| 24/7 SOC / MDR | **$10–$30 / endpoint/mo**; small orgs **$1,500–$5,000/mo**; deploy $5K–$25K | UnderDefense, Expel |
+| 24/7 MDR | **$10–$30 / endpoint/mo**; small orgs **$1,500–$5,000/mo**; deploy $5K–$25K | UnderDefense, Expel |
 | vCISO | **$3,000–$12,000/mo** (vs FT CISO $270K–$425K/yr) | SideChannel, Cynomi |
 | HIPAA risk assessment / compliance | analysis $2K–$20K; gap $1.5K–$6K; ongoing $2K–$15K/yr | Secureframe, AccountableHQ |
 | Email security | **~$3–$6/user/mo** (My AntiSpam $4.75 in-band) | directional |

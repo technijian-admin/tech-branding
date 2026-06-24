@@ -381,7 +381,7 @@
 
 | Service | Why it fits | Typical entry deal size |
 |---|---|---|
-| My Security (24/7 SOC + SIEM + EDR) | 15-min IR, U.S. analysts, continuous monitoring | $75K – $250K Yr 1 |
+| My Security (24/7 MDR + SIEM + EDR) | 15-min IR, U.S. analysts, continuous monitoring | $75K – $250K Yr 1 |
 | My Compliance vCCO + Audit Prep | Fractional CCO technical support, evidence workflow | $30K – $90K project + retainer |
 | My Continuity (WORM + archival + DR) | 17a-4 aligned immutable archiving integrations | $15K – $40K project + $1K – $4K/mo |
 
@@ -533,7 +533,7 @@
 
 ### Their elevator pitch for what they need
 
-> "A managed security and compliance partner that speaks FINRA, has a SOC 2, runs a real 24/7 SOC, integrates with my archiver, and can carry a 72-hour breach playbook with my outside counsel and cyber broker."
+> "A managed security and compliance partner that speaks FINRA, has a SOC 2, runs a real 24/7 MDR, integrates with my archiver, and can carry a 72-hour breach playbook with my outside counsel and cyber broker."
 
 ---
 

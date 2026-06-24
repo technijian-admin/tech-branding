@@ -209,7 +209,7 @@ const execSummary = [
   spacer(160),
   pRuns([
     { text: 'Front one — protect and co-manage. ', bold: true, color: DARK_CHARCOAL },
-    { text: 'Behavioral-health data sits under HIPAA, 42 CFR Part 2, California’s CMIA, DMHC (Knox-Keene) oversight, and URAC accreditation — simultaneously. That is more continuous security and evidence work than any single in-house administrator can staff around the clock. Co-managed IT keeps your team in charge while Technijian adds the 24/7 SOC, after-hours coverage, security tooling, and audit-ready compliance evidence that one person cannot sustain alone.' },
+    { text: 'Behavioral-health data sits under HIPAA, 42 CFR Part 2, California’s CMIA, DMHC (Knox-Keene) oversight, and URAC accreditation — simultaneously. That is more continuous security and evidence work than any single in-house administrator can staff around the clock. Co-managed IT keeps your team in charge while Technijian adds the 24/7 MDR, after-hours coverage, security tooling, and audit-ready compliance evidence that one person cannot sustain alone.' },
   ], { spaceAfter: 120 }),
   pRuns([
     { text: 'Front two — integrate AI for efficiency. ', bold: true, color: DARK_CHARCOAL },
@@ -317,7 +317,7 @@ const section4 = [
   buildTable(
     [{ label: 'Capability gap', weight: 32 }, { label: 'Why it needs a partner', weight: 68 }],
     [
-      ['24/7 SOC & SIEM monitoring', 'Attacks land after hours and on weekends — exactly when a one-person team is offline. Your own crisis line runs 24/7; your monitoring should too.'],
+      ['24/7 MDR & SIEM monitoring', 'Attacks land after hours and on weekends — exactly when a one-person team is offline. Your own crisis line runs 24/7; your monitoring should too.'],
       ['After-hours & overflow help desk', 'Coverage during evenings, weekends, sick days, and vacations — so your administrator can take time off without the organization going dark.'],
       ['Security tooling at scale', 'EDR/MDR, email security, vulnerability scanning, and backup — bought, integrated, and tuned by specialists rather than assembled solo.'],
       ['Compliance evidence production', 'HIPAA risk analyses and the Part 2 / CMIA / URAC / DMHC artifacts, policy library, and audit support that are a job in themselves.'],
@@ -334,7 +334,7 @@ const section4 = [
 // ============================================================
 const section5 = [
   ...sectionHeader('Technijian Capability Map', CORE_BLUE, '05'),
-  p('Technijian is an Irvine-based IT services company founded in 2000, with a Panchkula, India delivery center for 24/7 follow-the-sun coverage. We are cybersecurity-first (CISSP-led, with our own Security Operations Center) and AI-forward (we build, not just resell). The table maps our actual service lines to the categories of need a behavioral-health plan like yours typically has. Which of these apply to you is a discovery question, not an assumption.', { spaceAfter: 140 }),
+  p('Technijian is an Irvine-based IT services company founded in 2000, with a Panchkula, India delivery center for 24/7 follow-the-sun coverage. We are cybersecurity-first (CISSP-led, delivering managed detection & response via our My Jian SIEM and CrowdStrike/Huntress MDR partners) and AI-forward (we build, not just resell). The table maps our actual service lines to the categories of need a behavioral-health plan like yours typically has. Which of these apply to you is a discovery question, not an assumption.', { spaceAfter: 140 }),
   buildTable(
     [{ label: 'Need category', weight: 30 }, { label: 'Technijian service', weight: 22 }, { label: 'What it delivers', weight: 48 }],
     [
@@ -351,7 +351,7 @@ const section5 = [
   calloutBox('Profile A — Regulated healthcare, co-managed',
     'A multi-site healthcare organization with its own IT lead. Scope: hardened Microsoft 365, EDR across endpoints and servers, a HIPAA Security Rule risk assessment, and audit-ready evidence — delivered alongside the in-house administrator, who kept control throughout.', CORE_BLUE),
   calloutBox('Profile B — On-premises servers + in-house team',
-    'A mid-market organization with on-premises servers and a small internal team carrying the after-hours pager. Scope: a 24/7 SOC overlay and after-hours help desk so the internal staff regained nights and weekends, with patch and backup discipline tightened across the server estate.', CORE_ORANGE),
+    'A mid-market organization with on-premises servers and a small internal team carrying the after-hours pager. Scope: a 24/7 MDR overlay and after-hours help desk so the internal staff regained nights and weekends, with patch and backup discipline tightened across the server estate.', CORE_ORANGE),
   calloutBox('Profile C — Claims / benefits operations',
     'A benefits-operations workflow heavy with manual document handling. Scope: AI document-intelligence and workflow automation explored to reduce repetitive processing — the same pattern we would look at for EAP intake and claims, once the IT foundation is solid.', TEAL),
   subHeader('"Won’t AI cost a fortune?" — the multi-model discipline'),
@@ -372,7 +372,7 @@ const section6 = [
       [{ text: 'Email & web defense', bold: true, color: CORE_BLUE }, 'Anti-phishing, malicious-link protection, DNS/web filtering. Healthcare is the most-phished sector.', 'HIPAA'],
       [{ text: 'Data, backup & ransomware', bold: true, color: CORE_BLUE }, 'Immutable, tested backups of servers and Microsoft 365; rapid, verified recovery. Encryption is the breach safe-harbor.', 'HIPAA (NPRM encryption), CMIA'],
       [{ text: 'Compliance evidence', bold: true, color: CORE_BLUE }, 'Risk analysis, policies, and audit-ready documentation produced continuously, not at audit time.', '42 CFR Part 2, CMIA, DMHC, URAC'],
-      [{ text: '24/7 SOC & response', bold: true, color: CORE_BLUE }, 'Eyes-on-glass monitoring with a defined response — the coverage an in-house team cannot staff alone.', 'HIPAA, URAC'],
+      [{ text: '24/7 MDR & response', bold: true, color: CORE_BLUE }, 'Eyes-on-glass monitoring with a defined response — the coverage an in-house team cannot staff alone.', 'HIPAA, URAC'],
     ], { headerColor: CORE_BLUE }),
   spacer(120),
   calloutBox('Built to where the rules are going',
@@ -429,7 +429,7 @@ const section9 = [
     [{ label: 'Service line', weight: 34 }, { label: 'Market-typical range (2026)', weight: 36 }, { label: 'Note', weight: 30 }],
     [
       ['Co-managed IT (per user / month)', '$110–$400; mid-market 50–250 users $150–$250', 'Velo, VC3'],
-      ['24/7 SOC / MDR', '$10–$30 / endpoint / mo; small orgs $1,500–$5,000 / mo', 'UnderDefense, Expel'],
+      ['24/7 MDR','$10–$30 / endpoint / mo; small orgs $1,500–$5,000 / mo', 'UnderDefense, Expel'],
       ['vCISO', '$3,000–$12,000 / mo (vs. $270K–$425K/yr full-time CISO)', 'SideChannel, Cynomi'],
       ['HIPAA risk assessment / compliance', 'analysis $2K–$20K; ongoing $2K–$15K / yr', 'Secureframe'],
       ['Email security', '~$3–$6 / user / mo (Technijian My AntiSpam $4.75 in-band)', 'directional'],

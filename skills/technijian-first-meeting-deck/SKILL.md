@@ -58,7 +58,7 @@ Optional add-ins *only if the situation calls for it*: a "market shift / why now
 
 If the lead is price-sensitive or asks "how do you compare to other MSPs / agencies," the instinct to show a competitive comparison is right but the *named-competitor price matrix is wrong* — you can't get rivals' real quotes, a rigged table kills your credibility, and it commoditizes you. Do the honest version instead, which converts better anyway:
 
-- **One column: "what you stitch together today"** — the 5–8 separate vendors a company normally pays (Managed IT, 24/7 SOC, compliance/vCISO, marketing agency, sales-data subscription, AI consultant, dev, vCIO), each a *real market monthly range*, summed to a fragmented total.
+- **One column: "what you stitch together today"** — the 5–8 separate vendors a company normally pays (Managed IT, 24/7 MDR, compliance/vCISO, marketing agency, sales-data subscription, AI consultant, dev, vCIO), each a *real market monthly range*, summed to a fragmented total.
 - **Second column: Technijian as one partner** consolidating most of that stack — one relationship, one bill.
 - **The honest cost story:** the US-senior + India-blended model is the structural reason the same outcomes cost less. That is the only "we're more economical" claim to make, because it's true. Present it as a **blended US-led rate** — never expose the offshore/India cost basis or per-hour numbers on a client-facing slide. Ground any figure in the real 2026 rate card; never invent one.
 - **Caveat on the slide:** "market typical ranges, not competitor quotes." A technical buyer respects that and stops shopping.

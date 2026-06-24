@@ -457,7 +457,7 @@ docChildren.push(
       { label: 'Track B — CJIS / MFA Partnership', weight: 3.4 },
     ],
     [
-      [{ text: 'What it is', bold: true }, 'Co-managed IT for a lean internal team (about 5–6 workstations and 2 servers)', 'A channel partnership: CardLogix supplies the credentials, Technijian wraps managed IT, SOC, and CJIS-compliance around them for agency end-customers'],
+      [{ text: 'What it is', bold: true }, 'Co-managed IT for a lean internal team (about 5–6 workstations and 2 servers)', 'A channel partnership: CardLogix supplies the credentials, Technijian wraps managed IT, MDR, and CJIS-compliance around them for agency end-customers'],
       [{ text: 'Who decides', bold: true }, 'Nick Schooler can champion and likely sign', 'Sebastien Goulet (CEO) and Tom Hope (Sales) — Nick warms the door'],
       [{ text: 'Time to value', bold: true }, 'Weeks, once scope is agreed', 'A few quarters — needs at least one joint pilot'],
       [{ text: 'Confidence', bold: true }, 'High — this is what co-managed IT is built for', 'Nick expressed strong interest in our 2026-05-29 conversation in offering this as a joint, customer-facing service — subject to Goulet/Hope sign-off; a pilot proves delivery'],
@@ -587,7 +587,7 @@ docChildren.push(
     [
       ['HID Global', 'The incumbent; full identity ecosystem', 'Wins partly on a complete ecosystem around the credential. A CardLogix + Technijian managed-services wrap is the most direct answer to that advantage.'],
       ['Identiv', 'Hirsch uTrust FIDO2 (CardLogix resells this)', 'A partner-and-peer overlap; underlines that hardware alone is increasingly commoditized — the managed wrap is the differentiator.'],
-      ['Tx Systems', 'CJIS-focused smart-card distributor', 'Competes for the same channel position; does not bring a managed-IT/SOC delivery arm.'],
+      ['Tx Systems', 'CJIS-focused smart-card distributor', 'Competes for the same channel position; does not bring a managed-IT/MDR delivery arm.'],
       ['Yubico', 'YubiKey FIDO2 — the volume MFA pick', 'Many buyers choose YubiKey to satisfy MFA cheaply, without PIV depth. CardLogix wins on credentialing-grade depth; the partnership wins on delivery.'],
       ['Phone-based MFA (Cisco Duo, Okta)', 'The incumbent being displaced', 'The real status quo for most customers: one-time codes pushed to phones. Phones get compromised, and company-vs-personal device ownership is a headache. The phishing-resistant credential — riding the badge people already carry — is the upgrade path, and the joint offer is how it gets deployed.'],
       [{ text: 'CardLogix + Technijian', bold: true, color: CORE_BLUE }, { text: 'Hardware + managed credential environment', bold: true, color: CORE_BLUE }, { text: 'Credentialing-grade cards plus a single accountable partner to deploy and operate them — including the certificate authority — an offer no card maker on this list delivers on the channel side today.', color: CORE_BLUE }],
@@ -622,7 +622,7 @@ docChildren.push(
   ),
   spacer(140),
   capabilityBox(
-    'Proven Build 2 — Managed Security Operations (My Security)',
+    'Proven Build 2 — Managed Detection & Response (My Security)',
     'Technijian operates a 24/7 security program — monitoring and response, endpoint detection, SIEM, MFA-everywhere, and conditional access — built on Microsoft Entra ID and Microsoft Defender.',
     'This is the security half of the CJIS wrap. The same controls an agency needs for the CJIS Security Policy — access control, logging, incident response — are the ones Technijian already runs for other regulated clients.'
   ),
@@ -896,7 +896,7 @@ docChildren.push(
       ['My Cloud + My Security — Managed CA on Cloud HSM (Phase 2)', 'The HSM-backed certificate authority Nick asked us to recommend: a fresh CA key generated inside a CA-grade cloud HSM (AWS / Azure / Google, per the customer), not migrated from the existing software CA. Detailed in the companion CloudHSM analysis.', { text: 'per customer', align: AlignmentType.RIGHT }, { text: 'resold + managed', align: AlignmentType.RIGHT }],
       ['My Compliance — CJIS Practice Build (Phase 2)', 'Formalize a CJIS wrapper on the existing CMMC foundation: control mapping, evidence model, audit posture', { text: '—', align: AlignmentType.RIGHT }, { text: '~$25,000–40,000', align: AlignmentType.RIGHT }],
       ['My AI — Account-Intelligence Engine (Phase 2)', 'Fractional AI advisor + the named-account intelligence, trigger monitoring, and RFP engine', { text: '~$2,000', align: AlignmentType.RIGHT }, { text: '~$24,000', align: AlignmentType.RIGHT }],
-      ['My Security — Managed SOC for Pilot (Phase 2)', 'The 24/7 security operations behind the first joint customer pilot', { text: 'scoped', align: AlignmentType.RIGHT }, { text: 'per pilot', align: AlignmentType.RIGHT }],
+      ['My Security — Managed Detection & Response for Pilot (Phase 2)', 'The 24/7 managed detection & response behind the first joint customer pilot', { text: 'scoped', align: AlignmentType.RIGHT }, { text: 'per pilot', align: AlignmentType.RIGHT }],
       ['My Dev — Card-Lifecycle Automation (Phase 2)', 'Provisioning, identity-binding, and renewal workflow around card issuance', { text: '—', align: AlignmentType.RIGHT }, { text: 'scoped build', align: AlignmentType.RIGHT }],
       [{ text: 'FULL ENGINE (entry + expansion)', bold: true }, { text: 'The partnership engine — built after Track A proves the rhythm', bold: true }, { text: '', align: AlignmentType.RIGHT }, { text: 'scoped at pilot', bold: true, color: CORE_ORANGE, align: AlignmentType.RIGHT }],
     ],
@@ -943,7 +943,7 @@ docChildren.push(
     ],
   ),
   spacer(120),
-  p('* Recovered hours = time spent on after-hours, patching, and provisioning that co-managed IT absorbs. ** Valued at a conservative blended internal rate (~$100/hr). *** Derivation of the ~$30,000/win: a single mid-size LE agency or private firm adopting the managed credential environment is modeled at roughly $2,000–$3,000/mo of recurring managed-services value to the partnership (managed IT + SOC + the CA wrap, ~25–50 seats) — i.e. ~$24,000–$36,000/yr; we use $30,000 as the midpoint. It is an estimate, ranged at discovery against a real pilot, not a promise. † The full entry program (~$31,400) includes the co-managed IT line plus growth investments (authority/SEO foundation + readiness workshop) whose return shows up through partnership wins, not through recovered IT hours — which is why the floor is measured on the IT line, not on the full program. All figures are estimates pending discovery.', { size: 18, italics: true }),
+  p('* Recovered hours = time spent on after-hours, patching, and provisioning that co-managed IT absorbs. ** Valued at a conservative blended internal rate (~$100/hr). *** Derivation of the ~$30,000/win: a single mid-size LE agency or private firm adopting the managed credential environment is modeled at roughly $2,000–$3,000/mo of recurring managed-services value to the partnership (managed IT + MDR + the CA wrap, ~25–50 seats) — i.e. ~$24,000–$36,000/yr; we use $30,000 as the midpoint. It is an estimate, ranged at discovery against a real pilot, not a promise. † The full entry program (~$31,400) includes the co-managed IT line plus growth investments (authority/SEO foundation + readiness workshop) whose return shows up through partnership wins, not through recovered IT hours — which is why the floor is measured on the IT line, not on the full program. All figures are estimates pending discovery.', { size: 18, italics: true }),
   spacer(120),
   calloutBox(
     'How to Read This Range',
@@ -965,7 +965,7 @@ docChildren.push(
     ],
     [
       ['Managed / Co-Managed IT', { text: '$2,000 – $4,000', align: AlignmentType.RIGHT }],
-      ['24/7 Cybersecurity (SOC / MDR / EDR)', { text: '$400 – $1,000', align: AlignmentType.RIGHT }],
+      ['24/7 Cybersecurity (MDR / EDR)', { text: '$400 – $1,000', align: AlignmentType.RIGHT }],
       ['Compliance program + vCISO', { text: '$1,500 – $5,000', align: AlignmentType.RIGHT }],
       ['Digital marketing agency (SEO / content / PPC mgmt)*', { text: '$3,000 – $8,000', align: AlignmentType.RIGHT }],
       ['Sales intelligence / lead data (ZoomInfo, Apollo)', { text: '$150 – $2,500', align: AlignmentType.RIGHT }],
@@ -1099,7 +1099,7 @@ docChildren.push(
   kpiRow([
     { number: 'Since 2000', label: '26 years in continuous operation', color: CORE_BLUE },
     { number: '1,000+', label: 'networks served', color: CORE_ORANGE },
-    { number: '24/7', label: 'SOC — 15-minute critical-response SLA', color: TEAL },
+    { number: '24/7', label: 'MDR — 15-minute critical-response SLA', color: TEAL },
     { number: 'CrowdStrike', label: 'powered cybersecurity', color: DARK_CHARCOAL },
   ]),
   spacer(160),
@@ -1116,7 +1116,7 @@ docChildren.push(
     [{ label: 'Service', weight: 2 }, { label: 'Role in This Blueprint', weight: 5 }],
     [
       ['My IT', 'Co-managed IT for CardLogix’s internal team (Track A) and the managed-IT half of the agency wrap (Track B)'],
-      ['My Security', '24/7 security operations — the SOC, EDR, MFA, and access control behind a CJIS-aligned environment'],
+      ['My Security', '24/7 managed detection & response — MDR, EDR, MFA, and access control behind a CJIS-aligned environment'],
       ['My Compliance', 'Eight frameworks today, with CJIS as the near-term build adjacent to the existing CMMC practice'],
       ['My AI', 'Account intelligence, trigger monitoring, evidence automation, and the readiness workshop'],
       ['My SEO', 'Authority and AEO content aimed at the specific CJIS and smart-card questions agency buyers ask'],

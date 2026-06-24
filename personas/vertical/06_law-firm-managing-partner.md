@@ -148,7 +148,7 @@
 ### Gaps in current providers / tools
 
 - MSP doesn't speak ABA rules / attorney ethics.
-- No 24/7 SOC.
+- No 24/7 MDR.
 - No DMS hygiene project.
 - No AI governance layer.
 - No structured security questionnaire response.
@@ -422,7 +422,7 @@
 
 1. **Ethics-fluent IT partner** (ABA 1.6, CA RPC 1.1 Comment 1)
 2. **DMS + practice-management depth** — iManage, NetDocuments, Worldox, Aderant
-3. **24/7 SOC with 15-min IR** (Rule 1.6 incident notification fluency)
+3. **24/7 MDR with 15-min IR** (Rule 1.6 incident notification fluency)
 4. **AI governance readiness** (Chat.AI with audit trail)
 5. **Local OC presence + pod continuity**
 

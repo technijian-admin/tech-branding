@@ -121,7 +121,7 @@
 ### Gaps in current providers / tools
 
 - The local "break-fix" IT guy doesn't understand CJIS or Gov Cloud.
-- No 24/7 SOC, meaning a Friday night ransomware attack isn't noticed until Monday morning.
+- No 24/7 MDR, meaning a Friday night ransomware attack isn't noticed until Monday morning.
 
 ---
 
@@ -210,7 +210,7 @@
 - CJIS compliance capability / technician background checks.
 - FOIA-compliant WORM email archiving.
 - RFP compliance / willingness to navigate government procurement.
-- 24/7 SOC to protect critical infrastructure (911/PD).
+- 24/7 MDR to protect critical infrastructure (911/PD).
 
 ### Nice-to-haves
 
@@ -294,7 +294,7 @@
 
 | Service | Why it fits | Typical entry deal size |
 |---|---|---|
-| My Security (Ransomware Defense + 24/7 SOC) | Municipalities are top targets for ransomware; 24/7 monitoring is essential. | $40K – $100K / yr |
+| My Security (Ransomware Defense + 24/7 MDR) | Municipalities are top targets for ransomware; 24/7 monitoring is essential. | $40K – $100K / yr |
 | My Compliance (CJIS Edition) | Keeps the police department connected to state databases safely. | $20K – $50K / yr |
 | My Continuity (FOIA WORM Archiving) | Automates public records requests for the City Clerk. | $15K – $40K / yr |
 
@@ -319,7 +319,7 @@
 
 ### Differentiators that matter most to this persona
 
-1. **U.S.-Based 24/7 SOC** (Crucial for CJIS and government data).
+1. **U.S.-Based 24/7 MDR** (Crucial for CJIS and government data).
 2. **FOIA-fluent archiving** (My Continuity).
 3. **Local Presence** (Ability to go physically to City Hall/Police Station).
 
@@ -410,7 +410,7 @@
 
 ## 21. Source / Evidence
 
-- `Services/My Security/assets/My Security One-Pager.html` — 24/7 SOC, Ransomware defense.
+- `Services/My Security/assets/My Security One-Pager.html` — 24/7 MDR, Ransomware defense.
 - `Services/My Compliance/assets/My Compliance One-Pager.html` — CJIS, FOIA archiving.
 
 ---

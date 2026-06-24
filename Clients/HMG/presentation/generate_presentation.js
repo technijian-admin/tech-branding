@@ -46,7 +46,7 @@ const NOTES = {
   heard:
     "Play back what we know so he sees we listened and prepared. Confirm each number LIVE — still ~60 computers? how many physical/virtual servers, and what's on them (file, AD/DC, app, SQL, line-of-business)? what's already in Microsoft 365 vs still on-prem? Is it just him, or a small team? Good probes: \"What's the oldest thing in the rack you worry about?\" / \"When something breaks at 2 AM, who gets the call?\" / \"What's the one project you can never get to?\" Behavioral-health + Knox-Keene + URAC means PHI everywhere — acknowledge the compliance weight but DON'T lecture him on his own regulations; ask how he handles the IT-side evidence today.",
   who:
-    "Earn the right to keep talking — 20 seconds, not a history lesson. The four proof points that matter to a fellow technician: (1) 25+ years, we're not going anywhere; (2) the POD model — a named team that learns YOUR environment, not a different stranger every ticket; (3) security-first, CISSP-led, our own 24/7 SOC; (4) AI-forward, we actually build, not just resell. Land the pod model hardest — it's the antidote to every bad MSP experience he's had. If he's quiet, ask: \"Have you worked with an outside IT shop before — what did you like or hate about it?\"",
+    "Earn the right to keep talking — 20 seconds, not a history lesson. The four proof points that matter to a fellow technician: (1) 25+ years, we're not going anywhere; (2) the POD model — a named team that learns YOUR environment, not a different stranger every ticket; (3) security-first, CISSP-led, our own 24/7 MDR; (4) AI-forward, we actually build, not just resell. Land the pod model hardest — it's the antidote to every bad MSP experience he's had. If he's quiet, ask: \"Have you worked with an outside IT shop before — what did you like or hate about it?\"",
   proof:
     "Credibility BEFORE pitch. These are anonymized industry profiles — scope and effort only, no client names, no invented metrics. Pick the ONE closest to his world and go deeper on it; don't read all three. The point isn't to brag, it's to signal \"we've stood inside a regulated, on-prem, in-house-IT shop exactly like yours and added value without stepping on the admin.\" If he leans in on one, ask what part of that maps to his reality. Honesty rule: if he asks for references or specifics we can't share live, promise a proper case study in the follow-up — never fabricate a number or a logo.",
   coManaged:
@@ -380,7 +380,7 @@ function whoSlide() {
     { label: "The pod model", title: "A team that knows you", band: COLORS.orange,
       body: "You get a dedicated pod — a named team that learns your environment — not a different stranger on every ticket. It's the single thing clients tell us they were missing before." },
     { label: "Security-first", title: "Built in, not bolted on", band: COLORS.teal,
-      body: "CISSP-led, with our own 24/7 Security Operations Center and CrowdStrike / Huntress-grade tooling. Security isn't an add-on line item for us — it's how we run everything." },
+      body: "CISSP-led, delivering 24/7 managed detection & response — our My Jian SIEM correlating across CrowdStrike/Huntress MDR, with our analysts triaging. Security isn't an add-on line item for us — it's how we run everything." },
     { label: "AI-forward", title: "We build, not just resell", band: COLORS.chartreuse,
       body: "We develop practical AI and custom software (our My Jian platform, document intelligence, automation) — so the strategic conversation goes beyond keeping the lights on." },
   ];
@@ -406,7 +406,7 @@ function proofSlide() {
       body: "A multi-site healthcare organization with its own IT lead. Scope: hardened Microsoft 365, EDR across endpoints and servers, a HIPAA Security Rule risk assessment, and audit-ready evidence — run alongside their admin, who stayed in charge throughout.",
       foot: "We added depth; the in-house lead kept control." },
     { label: "Profile B · On-prem + in-house IT", title: "24/7 overlay, nights back", band: COLORS.orange,
-      body: "A mid-market org with on-prem servers and a small internal team carrying the pager. Scope: a 24/7 SOC overlay plus after-hours help-desk so the in-house staff got nights and weekends back, with patch and backup discipline tightened across the server estate.",
+      body: "A mid-market org with on-prem servers and a small internal team carrying the pager. Scope: a 24/7 MDR overlay plus after-hours help-desk so the in-house staff got nights and weekends back, with patch and backup discipline tightened across the server estate.",
       foot: "The internal team got nights and weekends back." },
     { label: "Profile C · Claims / benefits ops", title: "Document & workflow AI", band: COLORS.teal,
       body: "A benefits-operations workflow heavy with manual document handling. Scope: AI document-intelligence and workflow automation explored to cut repetitive processing — the same pattern we'd look at for EAP intake and claims, once the IT foundation is solid.",
@@ -485,7 +485,7 @@ function coManagedSlide() {
 
   const takeaways = [
     { n: "1", t: "You keep control", d: "Your team owns the relationship and the roadmap. We never make changes you didn't approve, and you can see everything we do.", c: COLORS.blue },
-    { n: "2", t: "We cover what one team can't", d: "24/7 SOC, after-hours and weekend response, surge bandwidth for projects, PTO coverage — the things a single in-house team simply can't staff alone.", c: COLORS.teal },
+    { n: "2", t: "We cover what one team can't", d: "24/7 MDR, after-hours and weekend response, surge bandwidth for projects, PTO coverage — the things a single in-house team simply can't staff alone.", c: COLORS.teal },
     { n: "3", t: "Augment, not replace", d: "On your worst week we're the bench you call. On a normal week, you barely notice us — and your admin grows by working next to ours.", c: COLORS.orange },
   ];
   takeaways.forEach((tk, i) => {
@@ -526,7 +526,7 @@ function waysSlide() {
 
   const services = [
     { title: "Co-Managed IT & Help Desk", sub: "Take work off the plate", body: "Tier-1/2 overflow and after-hours / weekend coverage, patching and monitoring, Microsoft 365 administration, and surge bandwidth for the projects you can never get to. Your team sets the priorities; we add the hands.", band: COLORS.blue, foot: "You set the priorities; we add the hands." },
-    { title: "24/7 Security & HIPAA", sub: "Cover what you can't watch", body: "A 24/7 SOC, EDR on every endpoint and server, email security, and identity hardening — plus HIPAA / Knox-Keene / URAC evidence and risk assessments. The coverage and audit trail one team can't sustain alone.", band: COLORS.orange, foot: "The coverage one team can't sustain alone." },
+    { title: "24/7 Security & HIPAA", sub: "Cover what you can't watch", body: "A 24/7 MDR, EDR on every endpoint and server, email security, and identity hardening — plus HIPAA / Knox-Keene / URAC evidence and risk assessments. The coverage and audit trail one team can't sustain alone.", band: COLORS.orange, foot: "The coverage one team can't sustain alone." },
     { title: "Strategic IT + AI Efficiency", sub: "Beyond keeping the lights on", body: "A vCIO/vCISO planning cadence — and practical AI for your operation: EAP intake triage, claims and document intelligence, provider-network matching. The efficiency conversation, once the foundation is solid.", band: COLORS.teal, foot: "The layer most MSPs don't bring." },
   ];
   services.forEach((s, i) => {
@@ -560,7 +560,7 @@ function securitySlide() {
     { title: "Email & web defense", band: COLORS.teal, body: "Anti-phishing, malicious-link protection, and DNS/web filtering. Healthcare is the most-phished sector there is; most attacks arrive in the inbox." },
     { title: "Data, backup & ransomware", band: COLORS.chartreuse, body: "Immutable, tested backups of your servers and Microsoft 365 with fast recovery. Production storage and a sync are not a backup." },
     { title: "Compliance evidence", band: COLORS.green, body: "HIPAA Security Rule risk analysis, policies, and audit-ready documentation — including 42 CFR Part 2, CMIA, Knox-Keene, and URAC IT controls." },
-    { title: "24/7 SOC & response", band: COLORS.dark, body: "Eyes-on-glass monitoring with a defined response when something looks wrong — the around-the-clock coverage an in-house team can't staff alone." },
+    { title: "24/7 MDR & response", band: COLORS.dark, body: "Eyes-on-glass monitoring with a defined response when something looks wrong — the around-the-clock coverage an in-house team can't staff alone." },
   ];
   layers.forEach((l, i) => {
     const x = 0.55 + (i % 3) * 4.16;

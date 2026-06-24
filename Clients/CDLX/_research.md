@@ -87,7 +87,7 @@
 
 ### Track B — CJIS / MFA partnership for law enforcement (the strategic upside)
 - CardLogix sells the HARDWARE (PIV / FIDO2 smart cards, FRAC PIV-I, BIOSID biometric kits) that LE agencies need for CJIS-compliant authentication.
-- They DON'T deliver the MSP/MSSP wrap around it — card lifecycle management, AD/Entra ID integration, ongoing CJIS-compliant managed IT, SOC monitoring, evidence capture for audits.
+- They DON'T deliver the MSP/MSSP wrap around it — card lifecycle management, AD/Entra ID integration, ongoing CJIS-compliant managed IT, managed detection & response (MDR), evidence capture for audits.
 - That's exactly where Technijian can fit on the channel side.
 - The market timing is hot:
   - **CJIS Security Policy 5.9.5** (July 2024) made MFA mandatory for all CJI access as of **October 1, 2024**.

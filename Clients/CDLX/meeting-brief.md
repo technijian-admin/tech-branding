@@ -41,10 +41,10 @@ Frame as a *concept conversation*, not a pitch. The goal of this meeting is to f
 
 The thesis to float, in plain language:
 
-> *"You make the credentials. CJIS 5.9.5 made phishing-resistant MFA mandatory for every LE agency as of October 2024 — and 6.0 tightened it again in December. Smart cards and FIDO2 keys are exactly what satisfies that — that's your edge. But most agencies need somebody to actually deploy the cards into their environment, integrate with their Entra ID / AD / CJIS-Launchpad, and run the ongoing managed-IT and SOC that the rest of the CJIS Security Policy demands. If you don't have a managed-services partner you can hand off to, you're losing those deals to HID, who has the full ecosystem. Is that something you'd want to talk about?"*
+> *"You make the credentials. CJIS 5.9.5 made phishing-resistant MFA mandatory for every LE agency as of October 2024 — and 6.0 tightened it again in December. Smart cards and FIDO2 keys are exactly what satisfies that — that's your edge. But most agencies need somebody to actually deploy the cards into their environment, integrate with their Entra ID / AD / CJIS-Launchpad, and run the ongoing managed-IT and MDR that the rest of the CJIS Security Policy demands. If you don't have a managed-services partner you can hand off to, you're losing those deals to HID, who has the full ecosystem. Is that something you'd want to talk about?"*
 
 If he says yes:
-- Walk through what Technijian DOES have today: My Compliance (8 frameworks — HIPAA, SOC 2, PCI, CMMC, GDPR, NIST CSF, CIS, ISO 27001) + My Security (24/7 SOC, EDR, SIEM, MFA-everywhere, 15-min response SLA) + My IT (managed + co-managed).
+- Walk through what Technijian DOES have today: My Compliance (8 frameworks — HIPAA, SOC 2, PCI, CMMC, GDPR, NIST CSF, CIS, ISO 27001) + My Security (24/7 MDR, EDR, SIEM, MFA-everywhere, 15-min response SLA) + My IT (managed + co-managed).
 - Honest gap (per `feedback_capability_proof_built_vs_service.md`): **we have NOT yet built a CJIS practice the way we've built CMMC**. The Lego pieces are all there — Entra ID, Defender, conditional access, Teramind, Passportal — and CMMC's control families overlap heavily with CJIS. A partnership reason to stand up the CJIS wrapper is exactly the trigger we'd need.
 - Don't promise a CJIS-certified anything in this meeting. Use words like *"natural extension,"* *"close adjacent,"* *"the body of work to formalize is months not years."*
 

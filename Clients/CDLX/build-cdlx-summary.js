@@ -138,7 +138,7 @@ c.push(
   buildTable(
     [{ label: '', weight: 1.4 }, { label: 'Track A — Your Own IT', weight: 3.4 }, { label: 'Track B — MFA / CA Partnership', weight: 3.4 }],
     [
-      [{ text: 'What', bold: true }, 'Co-managed IT for a lean internal team', 'CardLogix supplies the credentials; Technijian wraps managed IT, SOC, compliance, and the certificate authority for end customers'],
+      [{ text: 'What', bold: true }, 'Co-managed IT for a lean internal team', 'CardLogix supplies the credentials; Technijian wraps managed IT, MDR, compliance, and the certificate authority for end customers'],
       [{ text: 'Confidence', bold: true }, 'High — this is what co-managed IT is for', 'Validated on our May 29 call — Nick confirmed it as a joint, customer-facing service'],
       [{ text: 'Time', bold: true }, 'Weeks once scoped', 'A few quarters — needs one joint pilot'],
     ],

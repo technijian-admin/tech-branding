@@ -137,7 +137,7 @@
 ### Gaps in current providers / tools
 
 - MSP doesn't speak HIPAA fluently.
-- No 24/7 SOC — alerts just aren't responded to after hours.
+- No 24/7 MDR — alerts just aren't responded to after hours.
 - No one proactively walks through the OCR audit controls quarterly.
 - EHR vendor and MSP blame each other when integrations break.
 - No evidence-capture discipline — she has no folder ready for an audit.
@@ -253,7 +253,7 @@
 
 - **Signed BAA** before any engagement
 - **HIPAA fluency** demonstrated in discovery (she'll test)
-- **24/7 SOC** with documented incident response SLA
+- **24/7 MDR** with documented incident response SLA
 - **Healthcare-specific references** (MGMA members, specialty society peers)
 - **Evidence workflow** — audit-ready documentation
 - **Incident response retainer** or instant access to IR
@@ -382,7 +382,7 @@
 
 ### Expansion path
 
-- **6 months:** My Security — 24/7 SOC, EDR, email security gateway
+- **6 months:** My Security — 24/7 MDR, EDR, email security gateway
 - **12 months:** Chat.AI Healthcare — HIPAA-safe AI deployment for clinical knowledge retrieval
 - **18 months:** My Dev — EHR integrations & workflow automations
 - **24 months:** Nexus Assess + Pulse — continuous pentest + risk dashboard
@@ -526,7 +526,7 @@
 
 ### Their elevator pitch for what they need
 
-> "A managed IT partner that speaks HIPAA, runs a real 24/7 SOC, tests our backups, coordinates with our EHR vendor, and keeps our evidence folder always audit-ready."
+> "A managed IT partner that speaks HIPAA, runs a real 24/7 MDR, tests our backups, coordinates with our EHR vendor, and keeps our evidence folder always audit-ready."
 
 ---
 

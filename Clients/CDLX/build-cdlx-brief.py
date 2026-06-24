@@ -54,7 +54,7 @@ ul {{ margin:2px 0 0 15px; }} li {{ margin-bottom:2px; }}
 
   <div class="sec">
     <h2>The partnership</h2>
-    <p>CardLogix supplies the credential and owns the customer. Technijian wraps the managed IT, 24/7 security operations, the CJIS-aligned compliance program, and the HSM-backed managed certificate authority around it — and the two co-sell a complete answer to CJIS-bound agencies and insurance-driven private firms. Neither side tells this story alone today.</p>
+    <p>CardLogix supplies the credential and owns the customer. Technijian wraps the managed IT, 24/7 managed detection and response (MDR), the CJIS-aligned compliance program, and the HSM-backed managed certificate authority around it — and the two co-sell a complete answer to CJIS-bound agencies and insurance-driven private firms. Neither side tells this story alone today.</p>
   </div>
 
   <div class="sec t">

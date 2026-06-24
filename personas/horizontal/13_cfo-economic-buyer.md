@@ -400,7 +400,7 @@
 
 ### Differentiators that matter most
 
-1. **Technijian's own SOC 2** + insurance posture
+1. **Technijian's SOC 2 posture (TPX reliance + CUEC mapping)** + insurance posture
 2. **25+ years track record** — stability matters to a CFO
 3. **Audit-ready evidence workflow** (My Compliance suite)
 4. **Insurance-broker partnership** (joint renewal prep)
@@ -549,7 +549,7 @@
 - `Services/My Compliance/assets/My Compliance One-Pager.html` — "Modular compliance services"
 - `Services/My Compliance/assets/My Compliance - Audit One-Pager.html`
 - `Services/My Compliance/assets/My Compliance - Audit Prep One-Pager.html`
-- `Services/My Security/assets/My Security One-Pager.html` — 24/7 SOC
+- `Services/My Security/assets/My Security One-Pager.html` — 24/7 MDR
 - `docs/Technijian_Brand_Guide_2026.md` §10 — compliance messaging guidance
 
 ---
