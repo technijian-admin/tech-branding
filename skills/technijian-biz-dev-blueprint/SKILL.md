@@ -735,11 +735,19 @@ function sectionHeader(text) {
 
 ### TOC config
 
+> **🚫 ANTI-PATTERN THAT KEEPS RECURRING — DO NOT hand-build the TOC (Ravi, 2026-06-17, third occurrence).** The TOC MUST be a live `TableOfContents` field that Word fills with page numbers. Do **NOT** build it as a static list of section titles (`['01','Title'].map(...)` paragraphs) — that produces a TOC with **NO PAGE NUMBERS**, which is exactly the defect that got flagged on HMG, Canusa Hershman, AND Pacific Arena. A real TOC has three non-negotiable parts; if any is missing, page numbers will be absent or stale:
+> 1. **The field:** `new TableOfContents(...)` (code below), `headingStyleRange: "1-1"` for reports with ~15+ sections (sections only), `"1-2"` for shorter ones.
+> 2. **`features: { updateFields: true }`** on the `new Document({ ... })` — writes `<w:updateFields/>` so Word updates the field on open.
+> 3. **Word-COM convert** (NOT `docx2pdf`/`Packer`-only): open the DOCX, `TablesOfContents.Item(i).Update()`, `Fields.Update()`, `Repaginate()`, **`Save()`** (persists the TOC into the DOCX), then export PDF — see "PDF Generation (Word COM)" below.
+>
+> **Verify after build (mandatory):** render the TOC page and read it back — confirm each entry ends in a page number with a dot leader, and spot-check 3 entries land on the right pages. Programmatic check: `TablesOfContents.Item(1).Range.Text.Length > 500` in the saved DOCX, and a regex `\s\d{1,2}$` matches the TOC lines in the PDF. Front-matter pages (a "Contents" page header, a "How to Read" note) should use a NON-Heading1 styled header (`plainHeader`) so they do not list themselves; everything from the Executive Summary onward stays Heading1 so it appears in the field.
+
 ```javascript
-new TableOfContents("Table of Contents", {
+new TableOfContents("Contents — right-click and choose \"Update Field\" to populate page numbers.", {
   hyperlink: true,
-  headingStyleRange: "1-2",   // h3 excluded — keeps TOC compact
+  headingStyleRange: "1-1",   // sections only (Heading 1); use "1-2" only on short reports
 })
+// ...and on the Document:  new Document({ features: { updateFields: true }, ... })
 ```
 
 ### Page setup

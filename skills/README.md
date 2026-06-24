@@ -12,12 +12,13 @@ All skills read from a single source of truth: [`assets/brand-tokens.json`](../a
 |---|---|
 | `technijian-brand` | Master brand reference — colors, typography, voice, UI specs, two-office data |
 
-### Business development (2)
+### Business development (3)
 
 | Skill                          | What It Generates                                                                          |
 | ------------------------------ | ------------------------------------------------------------------------------------------ |
 | `technijian-biz-dev-blueprint` | DOCX+PDF AI growth blueprint — personas, competitors, capability proof, ROI range, roadmap |
 | `technijian-first-meeting-deck`| PPTX first-meeting conversion deck — short, discovery-led: hook, proof, 2–3 seeds, questions, free Nexus Assess next step |
+| `technijian-lead-reply-conversion`| Playbook to convert an outreach REPLY (interested / declined-a-service / hard opt-out) into a blueprint engagement + a drafted email — always to Drafts, honors opt-outs |
 
 ### Document generation (10)
 
