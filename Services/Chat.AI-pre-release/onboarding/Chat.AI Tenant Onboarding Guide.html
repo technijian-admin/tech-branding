@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technijian Chat.AI — Tenant Onboarding Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:#006DB6; --blue-dark:#004d80; --orange:#F67D4B; --orange-dark:#E5663A;
+    --teal:#1EAAC8; --chartreuse:#CBDB2D; --dark:#1A1A2E; --near-black:#2D2D2D;
+    --grey:#59595B; --light-grey:#E9ECEF; --off-white:#F8F9FA; --white:#FFFFFF;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  @page { size: letter; margin:0; }
+  html, body {
+    font-family:'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color:#333; background:var(--off-white);
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ─── PAGE SHELL ─── */
+  .page {
+    width:8.5in; height:11in; background:var(--white);
+    margin:0 auto; overflow:hidden; position:relative;
+    display:flex; flex-direction:column;
+    page-break-after:always; break-after:page;
+  }
+  .page:last-child { page-break-after:auto; break-after:auto; }
+
+  /* running header (pages 2-4) */
+  .rhead {
+    background:var(--dark); display:flex; align-items:center; justify-content:space-between;
+    padding:10px 40px; flex-shrink:0; position:relative; overflow:hidden;
+  }
+  .rhead img { height:24px; display:block; }
+  .rhead .rh-t { font-size:9px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:rgba(255,255,255,0.62); }
+  .rhead-line { height:3px; background:linear-gradient(90deg,var(--orange),var(--teal)); flex-shrink:0; }
+
+  /* page body */
+  .body { flex:1; padding:26px 40px 18px; display:flex; flex-direction:column; min-height:0; }
+
+  /* footer */
+  .pfoot {
+    background:var(--near-black); height:26px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:space-between; padding:0 40px;
+    color:rgba(255,255,255,0.45); font-size:7.5px; letter-spacing:0.3px;
+  }
+  .pfoot b { color:rgba(255,255,255,0.7); font-weight:600; }
+
+  /* ─── PAGE 1 HERO ─── */
+  .hero {
+    background:linear-gradient(135deg, var(--dark) 0%, #0a1628 58%, #0d2847 100%);
+    color:#fff; padding:34px 44px 30px; flex-shrink:0; position:relative; overflow:hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-90px; right:-70px; width:300px; height:300px; background:radial-gradient(circle,rgba(30,170,200,0.16) 0%,transparent 68%); border-radius:50%; }
+  .hero::after { content:''; position:absolute; bottom:-110px; left:18%; width:280px; height:280px; background:radial-gradient(circle,rgba(246,125,75,0.10) 0%,transparent 68%); border-radius:50%; }
+  .hero-inner { position:relative; z-index:1; }
+  .hero img { height:34px; display:block; margin-bottom:20px; }
+  .hero-badge { display:inline-block; background:rgba(30,170,200,0.20); border:1px solid rgba(30,170,200,0.45); color:var(--teal); font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:14px; margin-bottom:14px; }
+  .hero h1 { font-size:33px; font-weight:800; line-height:1.1; margin-bottom:8px; }
+  .hero h1 .o { color:var(--orange); }
+  .hero .sub { font-size:12.5px; color:rgba(255,255,255,0.68); line-height:1.55; max-width:6.3in; }
+
+  /* intro paragraph */
+  .intro { font-size:11.5px; line-height:1.6; color:#444; margin-bottom:14px; }
+  .intro b { color:var(--dark); }
+
+  /* section heading */
+  .sh { font-size:13px; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:1.1px; margin-bottom:9px; padding-bottom:5px; border-bottom:2px solid var(--light-grey); display:flex; align-items:center; gap:8px; }
+  .sh .ic { width:16px; height:16px; border-radius:4px; background:var(--blue); color:#fff; font-size:10px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+  /* prerequisites box */
+  .prereq { background:var(--off-white); border:1px solid var(--light-grey); border-left:4px solid var(--teal); border-radius:0 8px 8px 0; padding:16px 20px; margin-bottom:18px; }
+  .prereq .pt-h { font-size:12px; font-weight:800; color:var(--dark); margin-bottom:9px; }
+  .prereq ul { list-style:none; }
+  .prereq li { font-size:11.25px; color:#444; line-height:1.55; padding:3.5px 0 3.5px 22px; position:relative; }
+  .prereq li::before { content:"\2713"; position:absolute; left:0; color:var(--teal); font-weight:800; }
+  .prereq li b { color:var(--dark); }
+
+  /* at-a-glance steps */
+  .glance { display:grid; grid-template-columns:repeat(4,1fr); gap:11px; margin-bottom:18px; }
+  .gcard { background:var(--white); border:1px solid var(--light-grey); border-radius:8px; padding:15px 13px; box-shadow:0 2px 6px rgba(0,0,0,0.05); position:relative; overflow:hidden; }
+  .gcard::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+  .gcard:nth-child(1)::before { background:var(--blue); }
+  .gcard:nth-child(2)::before { background:var(--orange); }
+  .gcard:nth-child(3)::before { background:var(--teal); }
+  .gcard:nth-child(4)::before { background:var(--chartreuse); }
+  .gcard .gn { font-size:24px; font-weight:800; color:var(--light-grey); line-height:1; margin-bottom:6px; }
+  .gcard .gt { font-size:11.5px; font-weight:700; color:var(--dark); line-height:1.25; margin-bottom:4px; }
+  .gcard .gd { font-size:9.5px; color:var(--grey); line-height:1.4; }
+
+  /* "what happens next" teaser strip */
+  .teaser { background:linear-gradient(135deg,var(--blue),var(--blue-dark)); color:#fff; border-radius:8px; padding:18px 20px; display:flex; align-items:center; gap:18px; }
+  .teaser .ti { font-size:30px; flex-shrink:0; }
+  .teaser .tt { font-size:11.25px; line-height:1.55; }
+  .teaser .tt b { color:#fff; }
+
+  /* ─── STEP CARDS (pages 2-3) ─── */
+  .step { display:flex; gap:14px; padding:13px 16px; background:var(--white); border:1px solid var(--light-grey); border-radius:8px; box-shadow:0 1px 5px rgba(0,0,0,0.05); margin-bottom:11px; }
+  .step-n { width:30px; height:30px; min-width:30px; border-radius:50%; background:linear-gradient(135deg,var(--orange),#f99a72); color:#fff; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(246,125,75,0.32); }
+  .step-c { flex:1; min-width:0; }
+  .step-c h3 { font-size:12.5px; font-weight:800; color:var(--dark); margin-bottom:3px; line-height:1.25; }
+  .step-c p { font-size:10.6px; color:#444; line-height:1.5; }
+  .step-c p + p { margin-top:4px; }
+  .path { color:var(--blue); font-weight:700; }
+  .mono { font-family:'JetBrains Mono', Consolas, monospace; font-size:9.6px; background:#eef2f6; color:var(--dark); padding:1px 5px; border-radius:3px; border:1px solid #dde4ea; white-space:nowrap; }
+
+  /* callout */
+  .callout { border-radius:0 7px 7px 0; padding:9px 14px; margin-top:7px; font-size:9.8px; line-height:1.45; }
+  .callout.warn { background:#fff4ef; border-left:4px solid var(--orange); color:#7a3a1c; }
+  .callout.info { background:#eef6fb; border-left:4px solid var(--blue); color:#0c4a72; }
+  .callout b { font-weight:800; }
+
+  /* permission tables */
+  .perm-h { font-size:11.5px; font-weight:800; color:var(--dark); margin:4px 0 6px; display:flex; align-items:center; gap:8px; }
+  .perm-h .tag { font-size:8px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:#fff; padding:2px 8px; border-radius:10px; }
+  .ptbl-wrap { border-radius:7px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.08); margin-bottom:12px; }
+  .ptbl { width:100%; border-collapse:collapse; }
+  .ptbl th { background:var(--dark); color:#fff; padding:6px 12px; text-align:left; font-size:9px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase; }
+  .ptbl td { padding:6px 12px; font-size:10.2px; border-bottom:0.5px solid var(--light-grey); color:#444; vertical-align:top; background:#fff; }
+  .ptbl tr:nth-child(even) td { background:var(--off-white); }
+  .ptbl td.perm { white-space:nowrap; }
+  .ptbl td.perm code { font-family:'JetBrains Mono', Consolas, monospace; font-size:9.6px; color:var(--blue); font-weight:700; }
+
+  /* ─── PAGE 4 ─── */
+  .send-box { background:linear-gradient(135deg,#0a1628 0%,var(--dark) 55%,#0d2847 100%); color:#fff; border-radius:10px; padding:22px 28px; margin-bottom:20px; position:relative; overflow:hidden; }
+  .send-box::before { content:''; position:absolute; top:-60px; right:-50px; width:200px; height:200px; background:radial-gradient(circle,rgba(246,125,75,0.14) 0%,transparent 68%); border-radius:50%; }
+  .send-box h3 { font-size:15px; font-weight:800; margin-bottom:4px; position:relative; z-index:1; }
+  .send-box h3 .o { color:var(--orange); }
+  .send-box .sb-sub { font-size:10px; color:rgba(255,255,255,0.62); margin-bottom:12px; position:relative; z-index:1; }
+  .send-tbl { width:100%; border-collapse:collapse; position:relative; z-index:1; }
+  .send-tbl th { text-align:left; font-size:8.5px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--teal); padding:0 10px 6px; }
+  .send-tbl td { padding:10px 10px; font-size:10.6px; border-top:1px solid rgba(255,255,255,0.12); vertical-align:top; }
+  .send-tbl td.k { font-weight:800; color:#fff; white-space:nowrap; }
+  .send-tbl td.w { color:rgba(255,255,255,0.7); }
+  .send-tbl td .num { display:inline-block; width:17px; height:17px; border-radius:50%; background:var(--orange); color:#fff; font-size:9px; font-weight:800; text-align:center; line-height:17px; margin-right:7px; }
+
+  .next-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px; }
+  .next-card { background:var(--off-white); border:1px solid var(--light-grey); border-radius:8px; padding:17px 18px; display:flex; gap:12px; align-items:flex-start; }
+  .next-card .nc-n { width:25px; height:25px; min-width:25px; border-radius:6px; background:var(--blue); color:#fff; font-size:12.5px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .next-card .nc-t { font-size:12px; font-weight:700; color:var(--dark); line-height:1.25; margin-bottom:4px; }
+  .next-card .nc-d { font-size:10.3px; color:var(--grey); line-height:1.5; }
+
+  .sec-list { list-style:none; margin-top:3px; }
+  .sec-list li { font-size:11.5px; color:#444; line-height:1.65; padding:7px 0 7px 26px; position:relative; }
+  .sec-list li::before { content:"\1F512"; position:absolute; left:0; font-size:10px; }
+  .sec-list li b { color:var(--dark); }
+
+  .contact { background:var(--dark); color:#fff; border-radius:10px; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:18px; margin-top:auto; }
+  .contact .c-l h4 { font-size:13.5px; font-weight:800; margin-bottom:3px; }
+  .contact .c-l p { font-size:10px; color:rgba(255,255,255,0.6); line-height:1.45; }
+  .contact .c-r { text-align:right; font-size:10.5px; line-height:1.7; flex-shrink:0; }
+  .contact .c-r .row { color:rgba(255,255,255,0.88); }
+  .contact .c-r .row b { color:var(--orange); }
+
+  /* page-2 roomy treatment — fills the lighter page without centering */
+  .page.roomy .body { padding:32px 40px 18px; }
+  .page.roomy .sh { margin-bottom:11px; }
+  .page.roomy .step { padding:18px 20px; margin-bottom:16px; }
+  .page.roomy .step-n { width:34px; height:34px; min-width:34px; font-size:16px; }
+  .page.roomy .step-c h3 { font-size:13.5px; margin-bottom:4px; }
+  .page.roomy .step-c p { font-size:11.4px; line-height:1.58; }
+  .page.roomy .callout { font-size:10.6px; padding:12px 16px; margin-top:9px; }
+
+  @media print {
+    @page { size: letter; margin:0; }
+    html, body { width:8.5in; }
+    .page { margin:0; box-shadow:none; }
+    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ PAGE 1 — COVER + OVERVIEW ══════════════════ -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-inner">
+      <img src="assets/Technijian Logo - white text.png" alt="Technijian">
+      <div class="hero-badge">Client Onboarding Guide</div>
+      <h1>Chat<span class="o">.AI</span> Tenant Onboarding</h1>
+      <div class="sub">A short, one-time setup that connects your organization's Microsoft Entra ID (Azure AD) to Chat.AI, so your team can sign in securely with their existing Microsoft 365 accounts.</div>
+    </div>
+  </div>
+  <div class="rhead-line"></div>
+
+  <div class="body">
+    <p class="intro">Chat.AI signs your people in with the Microsoft accounts they already use &mdash; no new passwords to manage. To make that connection, a <b>Global Administrator</b> in your Microsoft tenant registers a small application, creates one secret, grants a short list of permissions, and sends three values to Technijian. The whole process takes about <b>15&ndash;20 minutes</b>, and you only do it once.</p>
+
+    <div class="sh"><span class="ic">i</span> Before You Begin</div>
+    <div class="prereq">
+      <div class="pt-h">You'll need:</div>
+      <ul>
+        <li>An account with the <b>Global Administrator</b> role in <b>Microsoft Entra ID</b> (formerly Azure Active Directory) &mdash; this lets you both register the app and grant admin consent in Step 9.</li>
+        <li>Access to the <b>Azure portal</b> at <span class="mono">portal.azure.com</span>.</li>
+        <li>A secure place to temporarily note three values (a password manager is ideal).</li>
+        <li>About <b>15&ndash;20 minutes</b>. This is a one-time setup.</li>
+      </ul>
+    </div>
+
+    <div class="sh"><span class="ic">&#9776;</span> What You'll Do &mdash; At a Glance</div>
+    <div class="glance">
+      <div class="gcard"><div class="gn">1</div><div class="gt">Register an App</div><div class="gd">Create an app registration in Microsoft Entra ID.</div></div>
+      <div class="gcard"><div class="gn">2</div><div class="gt">Create a Secret</div><div class="gd">Generate a client secret and copy its value.</div></div>
+      <div class="gcard"><div class="gn">3</div><div class="gt">Grant Permissions</div><div class="gd">Add the required API permissions &amp; admin consent.</div></div>
+      <div class="gcard"><div class="gn">4</div><div class="gt">Send to Us</div><div class="gd">Securely share three values with Technijian.</div></div>
+    </div>
+
+    <div class="sh"><span class="ic">&#10004;</span> Then Technijian Takes It From Here</div>
+    <div class="teaser">
+      <div class="ti">&#129309;</div>
+      <div class="tt">Once we receive your three values, <b>Technijian completes the rest</b> &mdash; we provision your Chat.AI tenant, store your credentials securely, enable your AI models, and activate your subscription. We'll email you your sign-in link and confirm when your team can log in. <b>No further action is needed on your side.</b></div>
+    </div>
+  </div>
+
+  <div class="pfoot"><span>&copy; 2026 <b>Technijian</b> &middot; technology as a solution</span><span>Chat.AI Tenant Onboarding Guide &middot; Page 1 of 4</span></div>
+</div>
+
+<!-- ══════════════════ PAGE 2 — STEPS 1-5 ══════════════════ -->
+<div class="page roomy">
+  <div class="rhead">
+    <img src="assets/Technijian Logo - white text.png" alt="Technijian">
+    <span class="rh-t">Chat.AI Tenant Onboarding</span>
+  </div>
+  <div class="rhead-line"></div>
+
+  <div class="body">
+    <div class="sh"><span class="ic">A</span> Register Your Application &amp; Create a Secret</div>
+    <p class="intro">First, create a dedicated application in your Microsoft tenant and give it one secret. This is the secure handshake that lets Chat.AI verify your users with Microsoft &mdash; Chat.AI never sees or stores their passwords.</p>
+
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-c">
+        <h3>Sign in to the Azure portal</h3>
+        <p>Go to <span class="mono">https://portal.azure.com</span> and sign in with your <b>Global Administrator</b> account.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-c">
+        <h3>Open Microsoft Entra ID</h3>
+        <p>In the search bar at the top, type <span class="path">Microsoft Entra ID</span> and open it. (This was previously called Azure Active Directory.)</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-c">
+        <h3>Create a new App registration</h3>
+        <p>Select <span class="path">App registrations &rarr; New registration</span>. Give it a clear name such as <b>Technijian Chat.AI</b>. Under <i>Supported account types</i>, choose <b>Accounts in this organizational directory only (Single tenant)</b>. You can leave the Redirect URI blank. Click <span class="path">Register</span>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-c">
+        <h3>Copy and save two IDs</h3>
+        <p>On the app's <span class="path">Overview</span> page, copy and save both values &mdash; you'll send these to Technijian later:</p>
+        <p>&bull;&nbsp; <b>Application (client) ID</b> &nbsp;&bull;&nbsp; <b>Directory (tenant) ID</b></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">5</div>
+      <div class="step-c">
+        <h3>Create a client secret</h3>
+        <p>Go to <span class="path">Certificates &amp; secrets &rarr; Client secrets &rarr; New client secret</span>. Add a description (e.g. <i>Chat.AI</i>), choose an expiry (we recommend <b>24 months</b>), then click <span class="path">Add</span>.</p>
+        <div class="callout warn"><b>Important &mdash; copy the secret VALUE now.</b> Copy the text in the <b>Value</b> column immediately and save it somewhere secure. This is <b>not</b> the Secret ID. The Value is shown only once &mdash; if you leave the page you cannot retrieve it and will have to create a new one.</div>
+      </div>
+    </div>
+
+    <div class="callout info" style="margin-top:4px;"><b>You should now have three values saved:</b> the Application (client) ID, the Directory (tenant) ID, and the Client Secret Value. Next you'll grant this app the permissions Chat.AI needs &mdash; continue on the next page.</div>
+  </div>
+
+  <div class="pfoot"><span>&copy; 2026 <b>Technijian</b> &middot; technology as a solution</span><span>Chat.AI Tenant Onboarding Guide &middot; Page 2 of 4</span></div>
+</div>
+
+<!-- ══════════════════ PAGE 3 — STEPS 6-9 ══════════════════ -->
+<div class="page">
+  <div class="rhead">
+    <img src="assets/Technijian Logo - white text.png" alt="Technijian">
+    <span class="rh-t">Chat.AI Tenant Onboarding</span>
+  </div>
+  <div class="rhead-line"></div>
+
+  <div class="body">
+    <div class="sh"><span class="ic">B</span> Grant the Required API Permissions</div>
+
+    <div class="step">
+      <div class="step-n">6</div>
+      <div class="step-c">
+        <h3>Open API permissions</h3>
+        <p>In your app registration, select <span class="path">API permissions</span> from the left menu, then click <span class="path">Add a permission</span>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">7</div>
+      <div class="step-c">
+        <h3>Add Microsoft Graph permissions</h3>
+        <p>Choose <span class="path">Microsoft Graph &rarr; Delegated permissions</span>, then search for and add each of the four permissions below. Click <span class="path">Add permissions</span> when done.</p>
+        <div class="perm-h"><span class="tag" style="background:var(--blue);">Microsoft Graph</span> Delegated permissions</div>
+        <div class="ptbl-wrap">
+          <table class="ptbl">
+            <thead><tr><th style="width:34%;">Permission</th><th>What it allows</th></tr></thead>
+            <tbody>
+              <tr><td class="perm"><code>offline_access</code></td><td>Keeps users signed in by allowing token refresh.</td></tr>
+              <tr><td class="perm"><code>openid</code></td><td>Signs users in using their Microsoft identity (OpenID Connect).</td></tr>
+              <tr><td class="perm"><code>profile</code></td><td>Reads basic profile details (name, etc.) to personalize the app.</td></tr>
+              <tr><td class="perm"><code>User.Read</code></td><td>Reads the signed-in user's profile.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">8</div>
+      <div class="step-c">
+        <h3>Add the Chat.AI API permissions</h3>
+        <p>Click <span class="path">Add a permission</span> again, open the <span class="path">APIs my organization uses</span> tab, and search for <b>TechChatV2 API &mdash; App 2</b>. Choose <span class="path">Delegated permissions</span> and add both below.</p>
+        <div class="perm-h"><span class="tag" style="background:var(--orange);">TechChatV2 API &mdash; App 2</span> Delegated permissions</div>
+        <div class="ptbl-wrap">
+          <table class="ptbl">
+            <thead><tr><th style="width:34%;">Permission</th><th>What it allows</th></tr></thead>
+            <tbody>
+              <tr><td class="perm"><code>Chat.Read</code></td><td>Read access to your organization's Chat.AI conversations and data.</td></tr>
+              <tr><td class="perm"><code>Chat.Write</code></td><td>Create and send messages within your Chat.AI workspace.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout info">Don't see <b>TechChatV2 API &mdash; App 2</b> in the list? Contact your Technijian onboarding team &mdash; we'll provide the API's Application ID so you can search for it directly.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">9</div>
+      <div class="step-c">
+        <h3>Grant admin consent</h3>
+        <p>Back on the <span class="path">API permissions</span> page, click <span class="path">Grant admin consent for &lt;your organization&gt;</span> and confirm. All six permissions should then show a green <b>&#10003; Granted</b> status.</p>
+      </div>
+    </div>
+
+    <div class="callout info" style="margin-top:6px;"><b>That's everything on your side.</b> Your app registration is now ready. Turn to the last page to send your three values to Technijian &mdash; we'll take it from there.</div>
+  </div>
+
+  <div class="pfoot"><span>&copy; 2026 <b>Technijian</b> &middot; technology as a solution</span><span>Chat.AI Tenant Onboarding Guide &middot; Page 3 of 4</span></div>
+</div>
+
+<!-- ══════════════════ PAGE 4 — SEND + NEXT + SECURITY ══════════════════ -->
+<div class="page">
+  <div class="rhead">
+    <img src="assets/Technijian Logo - white text.png" alt="Technijian">
+    <span class="rh-t">Chat.AI Tenant Onboarding</span>
+  </div>
+  <div class="rhead-line"></div>
+
+  <div class="body">
+    <div class="sh"><span class="ic">C</span> Send Three Values to Technijian</div>
+    <div class="send-box">
+      <h3>Share these <span class="o">three values</span> with your Technijian onboarding contact</h3>
+      <div class="sb-sub">These are everything we need to finish your setup.</div>
+      <table class="send-tbl">
+        <thead><tr><th style="width:42%;">Value</th><th>Where to find it</th></tr></thead>
+        <tbody>
+          <tr><td class="k"><span class="num">1</span>Application (client) ID</td><td class="w">App registration &rarr; Overview</td></tr>
+          <tr><td class="k"><span class="num">2</span>Directory (tenant) ID</td><td class="w">App registration &rarr; Overview</td></tr>
+          <tr><td class="k"><span class="num">3</span>Client Secret Value</td><td class="w">Certificates &amp; secrets (copied at Step 5)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sh"><span class="ic">&#10004;</span> What Happens Next &mdash; Technijian Handles This</div>
+    <div class="next-grid">
+      <div class="next-card"><div class="nc-n">1</div><div><div class="nc-t">We create your tenant</div><div class="nc-d">We set up your Chat.AI tenant and register your Directory (tenant) ID.</div></div></div>
+      <div class="next-card"><div class="nc-n">2</div><div><div class="nc-t">We store your credentials</div><div class="nc-d">Your Client ID and secret are stored securely on our side &mdash; you don't need to enter them anywhere.</div></div></div>
+      <div class="next-card"><div class="nc-n">3</div><div><div class="nc-t">We enable your AI models</div><div class="nc-d">We assign the AI models included in your plan to your workspace.</div></div></div>
+      <div class="next-card"><div class="nc-n">4</div><div><div class="nc-t">We activate &amp; notify you</div><div class="nc-d">We activate your subscription and email your sign-in link &mdash; your team is ready to go.</div></div></div>
+    </div>
+
+    <div class="sh"><span class="ic">&#9888;</span> Keeping It Secure</div>
+    <ul class="sec-list">
+      <li><b>Treat the client secret like a password.</b> Don't paste it into a plain email or chat &mdash; ask your Technijian contact for our secure method to share it (or send the secret separately from the two IDs).</li>
+      <li><b>Secrets expire.</b> We'll remind you before yours does. To renew, create a new secret (Step 5) and send us the new Value &mdash; access continues without interruption.</li>
+      <li><b>You stay in control.</b> You can revoke Chat.AI's access at any time by deleting the secret or the app registration in Microsoft Entra ID.</li>
+    </ul>
+
+    <div class="contact">
+      <div class="c-l">
+        <h4>Questions during setup?</h4>
+        <p>Your Technijian onboarding team is here to help &mdash; reach out and we'll walk through any step with you.</p>
+      </div>
+      <div class="c-r">
+        <div class="row"><b>rjain@technijian.com</b></div>
+        <div class="row"><b>949.379.8499</b></div>
+        <div class="row">technijian.com</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pfoot"><span>&copy; 2026 <b>Technijian</b> &middot; 18 Technology Dr. Ste 141, Irvine CA 92618</span><span>Chat.AI Tenant Onboarding Guide &middot; Page 4 of 4</span></div>
+</div>
+
+</body>
+</html>
